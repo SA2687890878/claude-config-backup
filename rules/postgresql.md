@@ -1,3 +1,8 @@
+---
+paths:
+  - "F:/OTD Code WorkSpace/**"
+---
+
 # PostgreSQL 专项规则
 
 ## 连接与配置

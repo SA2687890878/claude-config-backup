@@ -14,6 +14,13 @@
 - 老项目：`F:\Code WorkSpace\` — SQL Server
 - 新项目：`F:\OTD Code WorkSpace\` — PostgreSQL
 
+## 项目速查
+
+| 项目 | 路径前缀 | 数据库 |
+|------|---------|--------|
+| pcs.webbackend | `F:/Code WorkSpace/pcs.webbackend/` | SQL Server |
+| OTD-* | `F:/OTD Code WorkSpace/` | PostgreSQL |
+
 ## 规则优先级
 项目级 `.claude/` > 全局 `rules/*.md` > 本文件
 

@@ -1,3 +1,8 @@
+---
+paths:
+  - "F:/Code WorkSpace/**"
+---
+
 # SQL Server 专项规则
 
 ## 连接与配置

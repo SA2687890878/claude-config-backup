@@ -44,3 +44,5 @@ cc-haha/
 
 # context-mode 数据库（太大）
 context-mode/
+
+*.log
