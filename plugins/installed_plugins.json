@@ -1,0 +1,65 @@
+{
+  "version": 2,
+  "plugins": {
+    "code-review@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\code-review\\3d5017bc1d40",
+        "version": "3d5017bc1d40",
+        "installedAt": "2026-04-30T07:11:42.803Z",
+        "lastUpdated": "2026-06-06T05:20:14.240Z",
+        "gitCommitSha": "3d5017bc1d40ef08c5733243516afeb993a6f5e5"
+      }
+    ],
+    "code-simplifier@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\code-simplifier\\1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-30T07:12:34.986Z",
+        "lastUpdated": "2026-04-30T07:12:34.986Z",
+        "gitCommitSha": "0742692199b49af5c6c33cd68ee674fb2e679d50"
+      }
+    ],
+    "security-guidance@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\security-guidance\\2.0.3",
+        "version": "2.0.3",
+        "installedAt": "2026-04-30T08:14:55.356Z",
+        "lastUpdated": "2026-06-03T10:59:18.741Z",
+        "gitCommitSha": "c917011ca692e188f5dbd32025044cb9fa6b011f"
+      }
+    ],
+    "context7@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\context7\\3d5017bc1d40",
+        "version": "3d5017bc1d40",
+        "installedAt": "2026-04-30T08:15:35.659Z",
+        "lastUpdated": "2026-06-06T05:20:14.235Z",
+        "gitCommitSha": "3d5017bc1d40ef08c5733243516afeb993a6f5e5"
+      }
+    ],
+    "custom-agents@local": [
+      {
+        "scope": "user",
+        "installPath": "C:\\Users\\admin/.claude/plugins/cache/custom-agents/latest",
+        "version": "latest",
+        "installedAt": "2026-06-04T18:30:00.000Z",
+        "lastUpdated": "2026-06-04T18:30:00.000Z",
+        "gitCommitSha": "local"
+      }
+    ],
+    "caveman@caveman": [
+      {
+        "scope": "user",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\caveman\\caveman\\655b7d9c5431",
+        "version": "655b7d9c5431",
+        "installedAt": "2026-06-06T07:28:24.394Z",
+        "lastUpdated": "2026-06-06T07:28:24.394Z",
+        "gitCommitSha": "655b7d9c5431f822264b7732e9901c5578ac84cf"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "primaryApiKey": "any",
+  "servers": {
+    "github": {
+      "mode": "plugin",
+      "required": false,
+      "note": "GitHub MCP plugin - use installed plugin when available"
+    },
+    "context7": {
+      "mode": "plugin",
+      "required": false,
+      "note": "Context7 MCP plugin - deep codebase context"
+    }
+  }
+}

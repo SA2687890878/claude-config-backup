@@ -1,0 +1,27 @@
+{
+  "thedotmack": {
+    "source": {
+      "source": "github",
+      "repo": "thedotmack/claude-mem"
+    },
+    "installLocation": "C:\\Users\\admin\\.claude\\plugins\\marketplaces\\thedotmack",
+    "lastUpdated": "2026-06-06T07:54:25.184Z",
+    "autoUpdate": true
+  },
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "C:\\Users\\admin\\.claude\\plugins\\marketplaces\\claude-plugins-official",
+    "lastUpdated": "2026-06-06T13:15:16.913Z"
+  },
+  "caveman": {
+    "source": {
+      "source": "github",
+      "repo": "JuliusBrussee/caveman"
+    },
+    "installLocation": "C:\\Users\\admin\\.claude\\plugins\\marketplaces\\caveman",
+    "lastUpdated": "2026-06-06T07:28:22.938Z"
+  }
+}

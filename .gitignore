@@ -1,0 +1,46 @@
+# 敏感信息
+.credentials.json
+settings.json
+
+# 会话数据（可能包含敏感对话）
+transcripts/
+sessions/
+session-env/
+history.jsonl
+
+# 运行时和缓存
+.runtime/
+cache/
+daemon/
+debug/
+file-history/
+shell-snapshots/
+telemetry/
+tasks/
+plans/
+
+# 统计和状态
+stats-cache.json
+.last-cleanup
+.caveman-active
+
+# 第三方插件（不需要备份）
+plugins/marketplaces/
+
+# 项目级配置（每个项目单独备份）
+projects/
+
+# 备份目录
+backups/
+
+# IDE 相关
+ide/
+
+# 文档（如果是生成的）
+docs/cc-haha/
+
+# 其他临时文件
+cc-haha/
+
+# context-mode 数据库（太大）
+context-mode/
