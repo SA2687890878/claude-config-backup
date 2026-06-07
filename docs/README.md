@@ -11,6 +11,7 @@
 ```
 docs/
 ├── README.md                         # 本文档（导航中心）
+├── SETUP.md                          # 复用指南（换电脑/分享给同事）
 ├── workflow.md                       # 完整工作流说明
 ├── agent-roles.md                    # Agent 角色定义
 ├── cross-project.md                  # 跨项目工作流
@@ -20,6 +21,26 @@ docs/
 └── templates/
     └── interface-contract.md         # 接口契约模板
 ```
+
+---
+
+## 快速开始
+
+### 1. 换电脑/分享给同事
+
+阅读 [SETUP.md](SETUP.md) 了解如何复用本配置
+
+### 2. 更新全局 CLAUDE.md
+
+将 [CLAUDE-template.md](CLAUDE-template.md) 的内容复制到 `C:\Users\admin\.claude\CLAUDE.md`
+
+### 3. 了解工作流
+
+阅读 [workflow.md](workflow.md) 了解完整工作流
+
+### 4. 了解 Agent 角色
+
+阅读 [agent-roles.md](agent-roles.md) 了解各 Agent 职责
 
 ---
 
@@ -171,4 +192,5 @@ A: `docs/templates/interface-contract.md`，跨项目开发时使用。
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
+| 2026-06-07 | 1.1 | 添加 Hook 防护层（Impact/Quality/Build Guard）、SETUP.md |
 | 2026-06-04 | 1.0 | 初始版本，建立完整工作流体系 |
