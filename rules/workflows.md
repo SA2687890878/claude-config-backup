@@ -14,7 +14,8 @@
 
 | 触发词 | 命令 | 说明 |
 |--------|------|------|
-| 开发/添加/实现 | `/feature-development` | 功能开发全流程 |
+| 讨论/设计/方案/头脑风暴 | `/brainstorming` | 需求探索 → 设计规格（不写代码） |
+| 开发/添加/实现 | `/feature-development` | 功能开发全流程（含 brainstorming） |
 | 修复/bug/报错 | `/bug-fix` | Bug 修复流程 |
 | 优化/慢/性能 | `/perf-optimize` | 性能优化流程 |
 | 审查/review | `/code-review` | 代码审查流程 |
