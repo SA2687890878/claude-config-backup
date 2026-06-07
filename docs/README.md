@@ -12,6 +12,10 @@
 docs/
 ├── README.md                         # 本文档（导航中心）
 ├── SETUP.md                          # 复用指南（换电脑/分享给同事）
+├── ARCHITECTURE.md                   # 架构图 + 组件关系 + 数据流
+├── USAGE.md                          # 日常使用指南 + 工作流示例
+├── HOOKS.md                          # Hook 工作原理 + 触发时机
+├── TOKEN-SAVINGS.md                  # Token 节省机制说明
 ├── workflow.md                       # 完整工作流说明
 ├── agent-roles.md                    # Agent 角色定义
 ├── cross-project.md                  # 跨项目工作流
@@ -30,13 +34,19 @@ docs/
 
 阅读 [SETUP.md](SETUP.md) 了解如何复用本配置
 
-### 2. 更新全局 CLAUDE.md
+### 2. 理解架构
 
-将 [CLAUDE-template.md](CLAUDE-template.md) 的内容复制到 `C:\Users\admin\.claude\CLAUDE.md`
+阅读 [ARCHITECTURE.md](ARCHITECTURE.md) 了解组件关系和数据流
 
-### 3. 了解工作流
+### 3. 学习使用
 
-阅读 [workflow.md](workflow.md) 了解完整工作流
+阅读 [USAGE.md](USAGE.md) 了解日常工作流
+
+### 4. 深入了解
+
+- [HOOKS.md](HOOKS.md)：Hook 工作原理
+- [TOKEN-SAVINGS.md](TOKEN-SAVINGS.md)：Token 节省机制
+- [workflow.md](workflow.md)：完整工作流说明
 
 ### 4. 了解 Agent 角色
 
