@@ -38,3 +38,5 @@
 - 禁止直接 push 到 main/develop 分支
 - 禁止 Read 整个 .cs 文件来理解结构（用 codegraph_explore）
 - 禁止在代码中硬编码密钥/密码/token（secret-guard 会拦截）
+
+@RTK.md
