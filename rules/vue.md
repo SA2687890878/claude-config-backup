@@ -12,3 +12,5 @@ paths:
 - API 调用必须有错误处理
 - 大列表使用虚拟滚动
 - 用户输入做 XSS 防护
+- 访问嵌套对象属性前必须判空（`obj?.prop` 或三元表达式）
+- `trim()` 调用前确保值非 null（用 `String(value).trim()`）
