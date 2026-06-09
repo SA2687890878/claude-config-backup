@@ -47,3 +47,5 @@ context-mode/
 
 *.log
 settings.json.bak
+
+/paste-cache/

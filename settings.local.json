@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(gh auth *)",
-      "Bash(winget install *)"
+      "Bash(winget install *)",
+      "Bash(npm list *)",
+      "Bash(npm install *)",
+      "mcp__exa-search__web_search_exa",
+      "WebSearch"
     ]
   }
 }

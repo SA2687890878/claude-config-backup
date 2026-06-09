@@ -55,6 +55,19 @@
 ## Phase 3: 代码实现（subagent-driven-development）
 
 调用 /subagent-driven-development：
+
+### 垂直切片（Vertical Slices）
+将功能拆分为独立的、可交付的切片：
+1. 数据库变更（表/字段）
+2. 实体类变更
+3. DTO 变更
+4. 服务层变更
+5. 控制器变更
+6. 测试验证
+
+每个切片独立可交付，可以单独提交。
+
+### 实现顺序
 - 严格按顺序：Entity → DTO → Interface → Service → Controller
 - 每个组件完成后执行自检清单
 - 多租户字段 `ComId` 正确处理

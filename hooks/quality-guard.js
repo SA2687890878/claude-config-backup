@@ -137,5 +137,5 @@ process.stdin.on('end', () => {
       warnings.forEach(w => console.error(`  ${w}`));
       console.error('');
     }
-  } catch (e) { }
+  } catch (e) { console.error("[Hook Error] quality-guard: " + e.message); }
 });

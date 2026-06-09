@@ -58,61 +58,50 @@ const FIX_SCHEMA = {
   required: ['fixes', 'summary'],
 }
 
-/**
- * 代码审查工作流
- *
- * 触发词：审查/review/看看代码
- *
- * 流程：
- * 1. 收集变更范围
- * 2. 并行启动 5 个审查 Agent（架构、质量、安全、性能、最佳实践）
- * 3. 汇总问题，按严重程度分类
- * 4. 为 CRITICAL/HIGH 问题提供修复代码
- */
-async function codeReview(args) {
-  const { scope, branch, budget } = args
+// ========== 入口 ==========
+const scope = args?.scope
+const branch = args?.branch
 
-  // Budget 控制：默认 100k
-  const tokenBudget = budget?.total || 100000
+log('开始代码审查工作流')
 
-  log('开始代码审查工作流')
+// ========== 阶段一：变更收集 ==========
+phase('变更收集')
 
-  // ========== 阶段一：变更收集 ==========
-  phase('变更收集')
+log('收集变更信息...')
 
-  log('收集变更信息...')
-
-  const changes = await agent(
-    `你是审查助手，收集代码变更信息。
+const changes = await agent(
+  `你是审查助手，收集代码变更信息。
 
 审查范围：${scope || '当前变更'}
 对比分支：${branch || '暂存区变更'}
 
 请执行：
 1. 运行 git status 查看变更文件
-2. 运行 git diff 查看具体变更
+2. 运行 git diff 查看具体变更（若无暂存变更则运行 git diff HEAD~1）
 3. 使用 codegraph_explore 了解变更代码的调用关系
 
 输出：
 1. 变更文件列表
 2. 每个文件的变更摘要
 3. 关键调用关系`,
-    { label: '变更收集', phase: '变更收集' }
-  )
+  { label: '变更收集', phase: '变更收集' }
+)
 
-  log('变更收集完成')
+log('变更收集完成')
 
-  // ========== 阶段二：并行多维度审查 ==========
-  phase('并行审查')
+// ========== 阶段二：并行多维度审查 ==========
+// 官方依据：orchestrator-subagents 模式 — 每个审查 agent 在独立上下文中直接运行 git diff，
+// 避免通过字符串摘要传递 diff，保证审查者看到原始变更而非二手摘要。
+phase('并行审查')
 
-  log('启动 5 个审查 Agent 并行审查...')
+log('启动 5 个审查 Agent 并行审查（每个 agent 独立读取 git diff）...')
 
-  const [archResult, qualityResult, securityResult, perfResult, bestPracticeResult] = await parallel([
-    () => agent(
-      `你是架构师，审查代码架构。
+const [archResult, qualityResult, securityResult, perfResult, bestPracticeResult] = await parallel([
+  () => agent(
+    `你是架构师，在独立上下文中审查代码架构。
 
-变更信息：
-${changes || '无'}
+第一步：运行 \`git diff\`（若无暂存变更则运行 \`git diff HEAD~1\`）获取本次真实变更。
+仅依据 diff 本身审查，不要假设 diff 之外的内容。
 
 检查以下维度：
 1. 分层与依赖 — 依赖方向是否正确，是否有循环依赖
@@ -123,13 +112,13 @@ ${changes || '无'}
 【审查纪律】只报会影响正确性、可维护性或明确需求的问题；不要报风格偏好，
 不要为「凑数」制造发现。无问题就返回空列表。
 输出审查发现列表。`,
-      { label: '架构审查', phase: '并行审查', schema: FINDINGS_SCHEMA }
-    ),
-    () => agent(
-      `你是 Staff Engineer，审查代码质量。
+    { label: '架构审查', phase: '并行审查', schema: FINDINGS_SCHEMA }
+  ),
+  () => agent(
+    `你是 Staff Engineer，在独立上下文中审查代码质量。
 
-变更信息：
-${changes || '无'}
+第一步：运行 \`git diff\`（若无暂存变更则运行 \`git diff HEAD~1\`）获取本次真实变更。
+仅依据 diff 本身审查，不要假设 diff 之外的内容。
 
 检查以下维度：
 1. 命名规范 — 是否符合项目约定
@@ -141,13 +130,13 @@ ${changes || '无'}
 【审查纪律】只报会影响正确性或可维护性的问题；不要报风格偏好，不要为「凑数」制造发现。
 无问题就返回空列表。
 输出审查发现列表。`,
-      { label: '代码质量', phase: '并行审查', schema: FINDINGS_SCHEMA }
-    ),
-    () => agent(
-      `你是安全工程师，审查代码安全性。
+    { label: '代码质量', phase: '并行审查', schema: FINDINGS_SCHEMA }
+  ),
+  () => agent(
+    `你是安全工程师，在独立上下文中审查代码安全性。
 
-变更信息：
-${changes || '无'}
+第一步：运行 \`git diff\`（若无暂存变更则运行 \`git diff HEAD~1\`）获取本次真实变更。
+仅依据 diff 本身审查，不要假设 diff 之外的内容。
 
 检查以下维度：
 1. SQL 注入 — 是否使用参数化查询
@@ -158,13 +147,13 @@ ${changes || '无'}
 
 【审查纪律】只报真实可利用的安全问题；不要报理论上无害的风格偏好。无问题就返回空列表。
 输出审查发现列表。`,
-      { label: '安全审查', phase: '并行审查', schema: FINDINGS_SCHEMA }
-    ),
-    () => agent(
-      `你是性能工程师，审查代码性能。
+    { label: '安全审查', phase: '并行审查', schema: FINDINGS_SCHEMA }
+  ),
+  () => agent(
+    `你是性能工程师，在独立上下文中审查代码性能。
 
-变更信息：
-${changes || '无'}
+第一步：运行 \`git diff\`（若无暂存变更则运行 \`git diff HEAD~1\`）获取本次真实变更。
+仅依据 diff 本身审查，不要假设 diff 之外的内容。
 
 检查以下维度：
 1. N+1 查询 — 是否有循环查询数据库
@@ -175,13 +164,13 @@ ${changes || '无'}
 
 【审查纪律】只报会实际影响性能的问题，不要为微优化「凑数」。无问题就返回空列表。
 输出审查发现列表。`,
-      { label: '性能审查', phase: '并行审查', schema: FINDINGS_SCHEMA }
-    ),
-    () => agent(
-      `你是高级工程师，审查最佳实践。
+    { label: '性能审查', phase: '并行审查', schema: FINDINGS_SCHEMA }
+  ),
+  () => agent(
+    `你是高级工程师，在独立上下文中审查最佳实践。
 
-变更信息：
-${changes || '无'}
+第一步：运行 \`git diff\`（若无暂存变更则运行 \`git diff HEAD~1\`）获取本次真实变更。
+仅依据 diff 本身审查，不要假设 diff 之外的内容。
 
 检查以下维度：
 1. async/await 一致性 — 是否正确使用异步
@@ -192,61 +181,67 @@ ${changes || '无'}
 
 【审查纪律】只报偏离项目约定且有实际影响的问题；不要报风格偏好。无问题就返回空列表。
 输出审查发现列表。`,
-      { label: '最佳实践', phase: '并行审查', schema: FINDINGS_SCHEMA }
-    ),
-  ])
+    { label: '最佳实践', phase: '并行审查', schema: FINDINGS_SCHEMA }
+  ),
+])
 
-  log('5 个审查 Agent 完成')
+log('5 个审查 Agent 完成')
 
-  // ========== 阶段三：问题汇总 ==========
-  phase('问题汇总')
+// ========== 阶段三：问题汇总 ==========
+phase('问题汇总')
 
-  log('汇总审查结果...')
+log('汇总审查结果...')
 
-  const allFindings = [
-    ...(archResult?.findings || []),
-    ...(qualityResult?.findings || []),
-    ...(securityResult?.findings || []),
-    ...(perfResult?.findings || []),
-    ...(bestPracticeResult?.findings || []),
-  ]
+const allFindings = [
+  ...(archResult?.findings || []),
+  ...(qualityResult?.findings || []),
+  ...(securityResult?.findings || []),
+  ...(perfResult?.findings || []),
+  ...(bestPracticeResult?.findings || []),
+]
 
-  const critical = allFindings.filter(f => f.level === 'CRITICAL')
-  const high = allFindings.filter(f => f.level === 'HIGH')
-  const medium = allFindings.filter(f => f.level === 'MEDIUM')
-  const low = allFindings.filter(f => f.level === 'LOW')
+const critical = allFindings.filter(f => f.level === 'CRITICAL')
+const high = allFindings.filter(f => f.level === 'HIGH')
+const medium = allFindings.filter(f => f.level === 'MEDIUM')
+const low = allFindings.filter(f => f.level === 'LOW')
 
-  log(`审查结果：CRITICAL=${critical.length} HIGH=${high.length} MEDIUM=${medium.length} LOW=${low.length}`)
+log(`审查结果：CRITICAL=${critical.length} HIGH=${high.length} MEDIUM=${medium.length} LOW=${low.length}`)
 
-  if (critical.length > 0) {
-    log('🔴 CRITICAL 问题：')
-    critical.forEach(f => log(`  - ${f.file}:${f.line} — ${f.description}`))
+if (critical.length > 0) {
+  log('🔴 CRITICAL 问题：')
+  critical.forEach(f => log(`  - ${f.file}:${f.line} — ${f.description}`))
+}
+
+if (high.length > 0) {
+  log('🟠 HIGH 问题：')
+  high.forEach(f => log(`  - ${f.file}:${f.line} — ${f.description}`))
+}
+
+// ========== 阶段四：修复建议 ==========
+// Budget 检查：使用全局 budget 变量（系统注入），不从 args 中取
+if (budget.total && budget.remaining() < 20000) {
+  log('⚠️ token 不足，跳过修复建议阶段')
+  return {
+    status: critical.length > 0 ? 'FAIL' : 'CONDITIONAL',
+    summary: { total: allFindings.length, critical: critical.length, high: high.length, medium: medium.length, low: low.length },
+    findings: {
+      architecture: archResult?.findings || [],
+      quality: qualityResult?.findings || [],
+      security: securityResult?.findings || [],
+      performance: perfResult?.findings || [],
+      bestPractice: bestPracticeResult?.findings || [],
+    },
+    note: '修复建议因 token 不足被跳过',
   }
+}
 
-  if (high.length > 0) {
-    log('🟠 HIGH 问题：')
-    high.forEach(f => log(`  - ${f.file}:${f.line} — ${f.description}`))
-  }
+if (critical.length > 0 || high.length > 0) {
+  phase('修复建议')
 
-  // ========== 阶段四：修复建议 ==========
-  // Budget 检查：剩余 token 不足时跳过修复建议
-  if (budget && budget.remaining && budget.remaining() < 20000) {
-    log('⚠️ token 不足，跳过修复建议阶段')
-    return {
-      status: critical.length > 0 ? 'FAIL' : 'CONDITIONAL',
-      summary: { total: allFindings.length, critical: critical.length, high: high.length, medium: medium.length, low: low.length },
-      findings: { architecture: archResult?.findings || [], quality: qualityResult?.findings || [], security: securityResult?.findings || [], performance: perfResult?.findings || [], bestPractice: bestPracticeResult?.findings || [] },
-      note: '修复建议因 token 不足被跳过',
-    }
-  }
+  log('为 CRITICAL/HIGH 问题生成修复建议...')
 
-  if (critical.length > 0 || high.length > 0) {
-    phase('修复建议')
-
-    log('为 CRITICAL/HIGH 问题生成修复建议...')
-
-    const fixResult = await agent(
-      `你是高级工程师，为以下问题提供修复代码。
+  const fixResult = await agent(
+    `你是高级工程师，为以下问题提供修复代码。
 
 CRITICAL 问题：
 ${critical.map(f => `- ${f.file}:${f.line} — ${f.description}\n  建议：${f.suggestion}`).join('\n') || '无'}
@@ -256,37 +251,35 @@ ${high.map(f => `- ${f.file}:${f.line} — ${f.description}\n  建议：${f.sugg
 
 为每个 CRITICAL/HIGH 问题提供具体的修复代码。
 使用 Edit 工具直接修复，或提供代码片段供用户参考。`,
-      { label: '修复建议', phase: '修复建议', schema: FIX_SCHEMA }
-    )
+    { label: '修复建议', phase: '修复建议', schema: FIX_SCHEMA }
+  )
 
-    log('修复建议已生成')
-  }
+  log('修复建议已生成')
+}
 
-  // ========== 返回结果 ==========
-  log('代码审查工作流完成')
+log('代码审查工作流完成')
 
-  return {
-    status: allFindings.length === 0 ? 'PASS' : (critical.length > 0 ? 'FAIL' : 'CONDITIONAL'),
-    summary: {
-      total: allFindings.length,
-      critical: critical.length,
-      high: high.length,
-      medium: medium.length,
-      low: low.length,
-    },
-    findings: {
-      architecture: archResult?.findings || [],
-      quality: qualityResult?.findings || [],
-      security: securityResult?.findings || [],
-      performance: perfResult?.findings || [],
-      bestPractice: bestPracticeResult?.findings || [],
-    },
-    reviews: {
-      architecture: archResult?.summary,
-      quality: qualityResult?.summary,
-      security: securityResult?.summary,
-      performance: perfResult?.summary,
-      bestPractice: bestPracticeResult?.summary,
-    },
-  }
+return {
+  status: allFindings.length === 0 ? 'PASS' : (critical.length > 0 ? 'FAIL' : 'CONDITIONAL'),
+  summary: {
+    total: allFindings.length,
+    critical: critical.length,
+    high: high.length,
+    medium: medium.length,
+    low: low.length,
+  },
+  findings: {
+    architecture: archResult?.findings || [],
+    quality: qualityResult?.findings || [],
+    security: securityResult?.findings || [],
+    performance: perfResult?.findings || [],
+    bestPractice: bestPracticeResult?.findings || [],
+  },
+  reviews: {
+    architecture: archResult?.summary,
+    quality: qualityResult?.summary,
+    security: securityResult?.summary,
+    performance: perfResult?.summary,
+    bestPractice: bestPracticeResult?.summary,
+  },
 }

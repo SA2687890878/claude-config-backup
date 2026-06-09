@@ -1,0 +1,18 @@
+[
+  {
+    "pattern": "tp-[A-Za-z0-9]{32,}",
+    "label": "Proxy auth token",
+    "severity": "LOW",
+    "confidence": 50,
+    "description": "代理认证令牌（已知安全）",
+    "fix": "这是已知的安全令牌，可以忽略"
+  },
+  {
+    "pattern": "hzxiasha\\.gitlab\\.com",
+    "label": "Internal GitLab URL",
+    "severity": "LOW",
+    "confidence": 30,
+    "description": "内部 GitLab URL",
+    "fix": "这是内部 URL，可以忽略"
+  }
+]

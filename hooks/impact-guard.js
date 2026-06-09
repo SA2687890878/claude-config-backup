@@ -25,5 +25,5 @@ process.stdin.on('end', () => {
 
     const fileName = path.basename(filePath);
     console.error(`\n[Impact Guard] 正在修改 ${fileName} — 建议先运行 codegraph_callers 查看调用链\n`);
-  } catch (e) { }
+  } catch (e) { console.error("[Hook Error] impact-guard: " + e.message); }
 });

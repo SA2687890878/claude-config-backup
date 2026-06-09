@@ -95,5 +95,5 @@ process.stdin.on('end', () => {
       process.exit(2); return;
     }
     console.log(data);
-  } catch (e) { console.log(data); }
+  } catch (e) { console.error("[Hook Error] secret-guard: " + e.message); console.error("[Hook Error] Stack: " + e.stack); process.exit(2); }
 });

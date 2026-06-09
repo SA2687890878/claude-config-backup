@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "C# Code Index Configuration",
+  "description": "SQLite 索引系统配置文件",
+
+  "dbDir": "~/.claude/cache/indexes",
+  "analyzerDir": "~/.claude/cache/build-index-analyzer",
+
+  "excludeDirs": [
+    "bin",
+    "obj",
+    "node_modules",
+    ".git",
+    "TestResults",
+    "artifacts",
+    "packages",
+    ".vs",
+    "packages"
+  ],
+
+  "projectRoots": [
+    "F:\\OTD Code WorkSpace\\",
+    "F:\\Code WorkSpace\\"
+  ],
+
+  "sqlite": {
+    "version": "1.0.118",
+    "useWal": true,
+    "busyTimeout": 5000
+  },
+
+  "analyzer": {
+    "roslynVersion": "4.8.0",
+    "targetFramework": "net8.0"
+  }
+}

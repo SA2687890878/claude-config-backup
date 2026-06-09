@@ -11,7 +11,7 @@ export const meta = {
   phases: [
     { title: '问题定位', detail: '收集信息、复现问题、定位代码' },
     { title: '根因分析', detail: '分析代码逻辑、数据流、异常场景' },
-    { title: '修复实施', detail: '编写修复代码、处理边界情况' },
+    { title: '修复实施', detail: 'TDD：先写复现失败测试，再修复使其转绿' },
     { title: '验证审查', detail: '编译测试、代码审查、完成验证' },
   ],
 }
@@ -66,36 +66,24 @@ const REVIEW_SCHEMA = {
   required: ['status', 'summary'],
 }
 
-/**
- * Bug 修复工作流
- *
- * 触发词：修复/bug/报错/异常
- *
- * 流程：
- * 1. 收集问题信息，定位问题代码
- * 2. 分析根因，制定修复策略
- * 3. 实施修复代码
- * 4. 编译验证、代码审查
- */
-async function bugFix(args) {
-  const { issueTitle, issueDescription, errorLog, budget } = args
+// ========== 入口 ==========
+// args.today 由调用方传入（workflow 脚本内禁止 new Date()）
+const issueTitle = args?.issueTitle
+const issueDescription = args?.issueDescription
+const errorLog = args?.errorLog
+const today = args?.today || 'unknown-date'
 
-  // Budget 控制：默认 80k
-  const tokenBudget = budget?.total || 80000
+if (!issueTitle) throw new Error('缺少问题标题，请提供 issueTitle 参数')
 
-  if (!issueTitle) {
-    throw new Error('缺少问题标题，请提供 issueTitle 参数')
-  }
+log(`开始 Bug 修复工作流：${issueTitle}`)
 
-  log(`开始 Bug 修复工作流：${issueTitle}`)
+// ========== 阶段一：问题定位 ==========
+phase('问题定位')
 
-  // ========== 阶段一：问题定位 ==========
-  phase('问题定位')
+log('收集问题信息...')
 
-  log('收集问题信息...')
-
-  const issueInfo = await agent(
-    `你是调试专家，收集和分析问题信息。
+const issueInfo = await agent(
+  `你是调试专家，收集和分析问题信息。
 
 问题标题：${issueTitle}
 问题描述：${issueDescription || '待补充'}
@@ -108,15 +96,15 @@ async function bugFix(args) {
 4. 预期行为 vs 实际行为
 
 使用 codegraph_explore 分析相关代码结构。`,
-    { label: '问题收集', phase: '问题定位', schema: ISSUE_SCHEMA }
-  )
+  { label: '问题收集', phase: '问题定位', schema: ISSUE_SCHEMA }
+)
 
-  log(`问题分类：${issueInfo?.category}，严重程度：${issueInfo?.severity}`)
+log(`问题分类：${issueInfo?.category}，严重程度：${issueInfo?.severity}`)
 
-  log('定位问题代码...')
+log('定位问题代码...')
 
-  const codeLocation = await agent(
-    `你是调试专家，定位问题代码位置。
+const codeLocation = await agent(
+  `你是调试专家，定位问题代码位置。
 
 问题信息：
 - 标题：${issueTitle}
@@ -132,18 +120,18 @@ async function bugFix(args) {
 1. 问题可能所在的文件和函数
 2. 调用链路
 3. 关键代码片段`,
-    { label: '代码定位', phase: '问题定位' }
-  )
+  { label: '代码定位', phase: '问题定位' }
+)
 
-  log('问题定位完成')
+log('问题定位完成')
 
-  // ========== 阶段二：根因分析 ==========
-  phase('根因分析')
+// ========== 阶段二：根因分析 ==========
+phase('根因分析')
 
-  log('分析问题根因...')
+log('分析问题根因...')
 
-  const rootCause = await agent(
-    `你是调试专家，分析问题根本原因。
+const rootCause = await agent(
+  `你是调试专家，分析问题根本原因。
 
 问题信息：
 - 标题：${issueTitle}
@@ -161,21 +149,21 @@ ${codeLocation || '待分析'}
 5. 有什么风险？
 
 使用 codegraph_explore 分析代码逻辑和依赖关系。`,
-    { label: '根因分析', phase: '根因分析', schema: ROOT_CAUSE_SCHEMA }
-  )
+  { label: '根因分析', phase: '根因分析', schema: ROOT_CAUSE_SCHEMA }
+)
 
-  log(`根因：${rootCause?.rootCause?.substring(0, 100)}...`)
-  log(`修复策略：${rootCause?.fixStrategy}`)
+log(`根因：${rootCause?.rootCause?.substring(0, 100)}...`)
+log(`修复策略：${rootCause?.fixStrategy}`)
 
-  // ========== 阶段三：修复实施（TDD：先写复现失败测试） ==========
-  // 官方依据：Best practices — "write a failing test that reproduces the issue, then fix it"。
-  // 先用测试锁定 bug（红），再修复使其转绿，得到可回归的确定性信号。
-  phase('修复实施')
+// ========== 阶段三：修复实施（TDD：先写复现失败测试） ==========
+// 官方依据：Best practices — "write a failing test that reproduces the issue, then fix it"
+// 先用测试锁定 bug（红），再修复使其转绿，得到可回归的确定性信号
+phase('修复实施')
 
-  log('TDD 第 1 步：编写复现该 bug 的失败测试...')
+log('TDD 第 1 步：编写复现该 bug 的失败测试...')
 
-  const failingTest = await agent(
-    `你是测试工程师，按 TDD 为本次 bug 编写一个「复现问题」的失败测试。
+const failingTest = await agent(
+  `你是测试工程师，按 TDD 为本次 bug 编写一个「复现问题」的失败测试。
 
 问题信息：
 - 标题：${issueTitle}
@@ -188,13 +176,13 @@ ${codeLocation || '待分析'}
 3. 运行该测试，确认它当前确实失败，并附上真实失败输出作为证据
 
 输出：测试文件路径、测试方法名、当前运行结果（必须为失败/红）。`,
-    { label: 'TDD-失败测试', phase: '修复实施' }
-  )
+  { label: 'TDD-失败测试', phase: '修复实施' }
+)
 
-  log('TDD 第 2 步：实施修复，使失败测试转绿...')
+log('TDD 第 2 步：实施修复，使失败测试转绿...')
 
-  const fixResult = await agent(
-    `你是实现者，实施 Bug 修复，使上一步的失败测试转为通过。
+const fixResult = await agent(
+  `你是实现者，实施 Bug 修复，使上一步的失败测试转为通过。
 
 问题信息：
 - 标题：${issueTitle}
@@ -212,19 +200,19 @@ ${codeLocation || '待分析'}
 输出：
 1. 修改的文件列表
 2. 每个文件的变更说明`,
-    { label: '修复实施', phase: '修复实施' }
-  )
+  { label: '修复实施', phase: '修复实施' }
+)
 
-  log('修复代码完成')
+log('修复代码完成')
 
-  // ========== 阶段四：验证审查 ==========
-  // 官方依据：验证基于可返回 pass/fail 的确定性信号（build/test 退出码），而非 agent 自述。
-  phase('验证审查')
+// ========== 阶段四：验证审查 ==========
+// 官方依据：验证基于可返回 pass/fail 的确定性信号（build/test 退出码），而非 agent 自述
+phase('验证审查')
 
-  log('确定性验证：编译 + 测试（读取真实退出码）...')
+log('确定性验证：编译 + 测试（读取真实退出码）...')
 
-  const buildResult = await agent(
-    `你是验证执行器，职责是「运行命令并如实回报真实退出码」，不得凭感觉判断。
+const buildResult = await agent(
+  `你是验证执行器，职责是「运行命令并如实回报真实退出码」，不得凭感觉判断。
 
 严格按顺序执行并记录每条命令的真实退出码（exit code）：
 1. \`dotnet build\` → 记录退出码
@@ -236,20 +224,19 @@ ${codeLocation || '待分析'}
 
 不要在未实际运行命令的情况下声称成功，必须给出实际运行的命令与返回内容作为证据。
 输出：状态（PASS/FAIL）、各命令退出码与证据、总结。`,
-    { label: '编译测试验证', phase: '验证审查', schema: REVIEW_SCHEMA }
-  )
+  { label: '编译测试验证', phase: '验证审查', schema: REVIEW_SCHEMA }
+)
 
-  if (buildResult?.status !== 'PASS') {
-    log('⚠️ 编译/测试验证未通过（退出码非 0 或复现测试未转绿）')
-    return { status: 'BLOCKED', reason: '编译/测试验证未通过', findings: buildResult?.findings }
-  }
+if (buildResult?.status !== 'PASS') {
+  log('⚠️ 编译/测试验证未通过（退出码非 0 或复现测试未转绿）')
+  return { status: 'BLOCKED', reason: '编译/测试验证未通过', findings: buildResult?.findings }
+}
 
-  log('编译 + 测试验证通过')
+log('编译 + 测试验证通过')
+log('代码审查（隔离上下文，仅基于 git diff）...')
 
-  log('代码审查（隔离上下文，仅基于 git diff）...')
-
-  const codeReview = await agent(
-    `你是 Staff Engineer，在独立上下文中审查本次 Bug 修复。
+const codeReview = await agent(
+  `你是 Staff Engineer，在独立上下文中审查本次 Bug 修复。
 
 第一步：运行 \`git diff\` 获取本次真实变更，只依据 diff 本身审查。
 
@@ -264,20 +251,19 @@ ${codeLocation || '待分析'}
 【审查纪律】只报会影响正确性、安全或明确需求的问题；不报风格偏好，
 不为「凑数」过度报告导致过度工程。修复正确就判 PASS。
 输出审查报告，包含：状态（PASS/FAIL/CONDITIONAL）、发现列表、总结。`,
-    { label: '代码审查', phase: '验证审查', schema: REVIEW_SCHEMA }
-  )
+  { label: '代码审查', phase: '验证审查', schema: REVIEW_SCHEMA }
+)
 
-  if (codeReview?.status === 'FAIL') {
-    log('⚠️ 代码审查未通过，请检查发现的问题')
-    return { status: 'BLOCKED', reason: '代码审查未通过', findings: codeReview.findings }
-  }
+if (codeReview?.status === 'FAIL') {
+  log('⚠️ 代码审查未通过，请检查发现的问题')
+  return { status: 'BLOCKED', reason: '代码审查未通过', findings: codeReview.findings }
+}
 
-  log('代码审查完成：' + codeReview?.status)
+log('代码审查完成：' + codeReview?.status)
+log('完成验证...')
 
-  log('完成验证...')
-
-  const verification = await agent(
-    `你是最终验证执行器，确认 Bug 已修复且无回归 —— 以确定性信号为准。
+const verification = await agent(
+  `你是最终验证执行器，确认 Bug 已修复且无回归 —— 以确定性信号为准。
 
 问题信息：
 - 标题：${issueTitle}
@@ -294,29 +280,28 @@ ${codeLocation || '待分析'}
 
 不要在未运行测试的情况下声称通过，必须附证据。
 输出验证报告，包含：状态（PASS/FAIL）、退出码与证据、总结。`,
-    { label: '完成验证', phase: '验证审查', schema: REVIEW_SCHEMA }
-  )
+  { label: '完成验证', phase: '验证审查', schema: REVIEW_SCHEMA }
+)
 
-  if (verification?.status !== 'PASS') {
-    log('⚠️ 完成验证未通过（测试退出码非 0 或存在回归）')
-    return { status: 'BLOCKED', reason: '完成验证未通过', findings: verification?.findings }
-  }
+if (verification?.status !== 'PASS') {
+  log('⚠️ 完成验证未通过（测试退出码非 0 或存在回归）')
+  return { status: 'BLOCKED', reason: '完成验证未通过', findings: verification?.findings }
+}
 
-  log('验证通过（测试退出码为 0，复现测试已转绿）')
+log('验证通过（测试退出码为 0，复现测试已转绿）')
 
-  // ========== 生成排查文档 ==========
-  log('生成排查文档...')
+// ========== 生成排查文档 ==========
+log('生成排查文档...')
 
-  const today = new Date().toISOString().split('T')[0]
-  const issueSlug = issueTitle.toLowerCase().replace(/\s+/g, '-').substring(0, 30)
-  const docPath = `docs/issues/${today}-${issueSlug}.md`
+const issueSlug = issueTitle.toLowerCase().replace(/\s+/g, '-').substring(0, 30)
+const docPath = `docs/issues/${today}-${issueSlug}.md`
 
-  await agent(
-    `生成问题排查文档。
+await agent(
+  `生成问题排查文档并使用 Write 工具保存。
 
 文档路径：${docPath}
 
-内容：
+内容（Markdown 格式）：
 # ${issueTitle}
 
 ## 问题信息
@@ -342,28 +327,23 @@ ${rootCause?.risks?.join('\n') || '无'}
 ## 排查过程
 1. 问题定位
 2. 根因分析
-3. 修复实施
-4. 验证通过
+3. TDD 修复（先写复现测试，再使其转绿）
+4. 验证通过`,
+  { label: '生成文档', phase: '验证审查' }
+)
 
-使用 Write 工具保存文档。`,
-    { label: '生成文档', phase: '验证审查' }
-  )
+log(`排查文档已保存到 ${docPath}`)
+log('Bug 修复工作流完成')
 
-  log(`排查文档已保存到 ${docPath}`)
-
-  // ========== 返回结果 ==========
-  log('Bug 修复工作流完成')
-
-  return {
-    status: 'SUCCESS',
-    issue: issueTitle,
-    rootCause: rootCause?.rootCause,
-    fixStrategy: rootCause?.fixStrategy,
-    affectedFiles: rootCause?.affectedFiles,
-    reviews: {
-      code: codeReview,
-      verification: verification,
-    },
-    document: docPath,
-  }
+return {
+  status: 'SUCCESS',
+  issue: issueTitle,
+  rootCause: rootCause?.rootCause,
+  fixStrategy: rootCause?.fixStrategy,
+  affectedFiles: rootCause?.affectedFiles,
+  reviews: {
+    code: codeReview,
+    verification: verification,
+  },
+  document: docPath,
 }

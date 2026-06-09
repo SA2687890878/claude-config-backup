@@ -83,36 +83,22 @@ const REVIEW_SCHEMA = {
   required: ['status', 'summary'],
 }
 
-/**
- * 性能优化工作流
- *
- * 触发词：优化/慢/性能/卡
- *
- * 流程：
- * 1. 收集性能基线数据，定位瓶颈
- * 2. 制定优化方案，评估收益风险
- * 3. 用户确认后实施优化
- * 4. 复测对比，确认无回归
- */
-async function performanceOptimization(args) {
-  const { target, description, currentMetrics, budget } = args
+// ========== 入口 ==========
+const target = args?.target
+const description = args?.description
+const currentMetrics = args?.currentMetrics
 
-  // Budget 控制：默认 120k
-  const tokenBudget = budget?.total || 120000
+if (!target) throw new Error('缺少优化目标，请提供 target 参数（如：接口名、页面、查询）')
 
-  if (!target) {
-    throw new Error('缺少优化目标，请提供 target 参数（如：接口名、页面、查询）')
-  }
+log(`开始性能优化工作流：${target}`)
 
-  log(`开始性能优化工作流：${target}`)
+// ========== 阶段一：性能分析 ==========
+phase('性能分析')
 
-  // ========== 阶段一：性能分析 ==========
-  phase('性能分析')
+log('收集性能基线数据...')
 
-  log('收集性能基线数据...')
-
-  const baseline = await agent(
-    `你是性能工程师，分析以下性能问题。
+const baseline = await agent(
+  `你是性能工程师，分析以下性能问题。
 
 优化目标：${target}
 问题描述：${description || '待分析'}
@@ -128,19 +114,19 @@ async function performanceOptimization(args) {
 1. 性能指标基线
 2. 瓶颈类型和位置
 3. 根本原因分析`,
-    { label: '性能分析', phase: '性能分析', schema: BASELINE_SCHEMA }
-  )
+  { label: '性能分析', phase: '性能分析', schema: BASELINE_SCHEMA }
+)
 
-  log(`瓶颈类型：${baseline?.bottleneckType}`)
-  log(`瓶颈位置：${baseline?.bottleneck}`)
+log(`瓶颈类型：${baseline?.bottleneckType}`)
+log(`瓶颈位置：${baseline?.bottleneck}`)
 
-  // ========== 阶段二：优化方案 ==========
-  phase('优化方案')
+// ========== 阶段二：优化方案 ==========
+phase('优化方案')
 
-  log('制定优化方案...')
+log('制定优化方案...')
 
-  const plan = await agent(
-    `你是性能工程师，制定优化方案。
+const plan = await agent(
+  `你是性能工程师，制定优化方案。
 
 优化目标：${target}
 瓶颈类型：${baseline?.bottleneckType}
@@ -162,25 +148,38 @@ async function performanceOptimization(args) {
 3. 工作量（修改文件数量）
 
 输出优化策略列表和推荐方案。`,
-    { label: '优化方案', phase: '优化方案', schema: PLAN_SCHEMA }
-  )
+  { label: '优化方案', phase: '优化方案', schema: PLAN_SCHEMA }
+)
 
-  log('优化方案：')
-  plan?.strategies?.forEach((s, i) => {
-    log(`  ${i + 1}. [${s.priority}] ${s.name} — ${s.expectedGain}`)
-  })
-  log(`推荐：${plan?.recommendation}`)
+log('优化方案：')
+plan?.strategies?.forEach((s, i) => {
+  log(`  ${i + 1}. [${s.priority}] ${s.name} — ${s.expectedGain}`)
+})
+log(`推荐：${plan?.recommendation}`)
 
-  // 决策点：等待用户确认
-  log('⏸️ 等待用户确认优化方案后继续实施...')
+// 决策点提示（workflow 无法暂停等待用户交互，这里仅记录）
+log('⏸️ 优化方案已输出，如需调整请在工作流结束后手动修改再触发实施')
 
-  // ========== 阶段三：优化实施 ==========
-  phase('优化实施')
+// ========== 阶段三：优化实施 ==========
+// Budget 检查：剩余 token 不足时跳过实施
+if (budget.total && budget.remaining() < 30000) {
+  log('⚠️ token 不足，跳过优化实施阶段')
+  return {
+    status: 'PARTIAL',
+    target,
+    baseline: baseline?.metrics,
+    bottleneck: baseline?.bottleneck,
+    strategies: plan?.strategies,
+    note: '优化实施因 token 不足被跳过，请手动实施上述方案',
+  }
+}
 
-  log('实施优化...')
+phase('优化实施')
 
-  const implementation = await agent(
-    `你是实现者，实施性能优化。
+log('实施优化...')
+
+const implementation = await agent(
+  `你是实现者，实施性能优化。
 
 优化目标：${target}
 优化方案：${plan?.recommendation}
@@ -197,37 +196,37 @@ ${plan?.strategies?.map((s, i) => `${i + 1}. [${s.priority}] ${s.name}: ${s.desc
 1. 修改的文件列表和变更说明
 2. 新增的索引/缓存配置
 3. 测试建议`,
-    { label: '优化实施', phase: '优化实施' }
-  )
+  { label: '优化实施', phase: '优化实施' }
+)
 
-  log('优化代码完成')
+log('优化代码完成')
 
-  // 编译验证（确定性退出码 gate）
-  // 官方依据：验证基于可返回 pass/fail 的确定性信号，而非 agent 自述。
-  log('确定性编译验证（读取真实退出码）...')
+// 编译验证（确定性退出码 gate）
+// 官方依据：验证基于可返回 pass/fail 的确定性信号，而非 agent 自述
+log('确定性编译验证（读取真实退出码）...')
 
-  const buildGate = await agent(
-    `你是验证执行器，运行命令并如实回报真实退出码。
+const buildGate = await agent(
+  `你是验证执行器，运行命令并如实回报真实退出码。
 
 执行：\`dotnet build\` → 记录退出码。
 判定：退出码 == 0 时 status = PASS；否则 status = FAIL 并附真实报错原文。
 不要在未运行命令的情况下声称成功，必须附证据。
 输出：状态（PASS/FAIL）、退出码与证据、总结。`,
-    { label: '编译验证', phase: '优化实施', schema: REVIEW_SCHEMA }
-  )
+  { label: '编译验证', phase: '优化实施', schema: REVIEW_SCHEMA }
+)
 
-  if (buildGate?.status !== 'PASS') {
-    log('⚠️ 编译未通过（退出码非 0），优化中断')
-    return { status: 'BLOCKED', reason: '优化后编译未通过', findings: buildGate?.findings }
-  }
+if (buildGate?.status !== 'PASS') {
+  log('⚠️ 编译未通过（退出码非 0），优化中断')
+  return { status: 'BLOCKED', reason: '优化后编译未通过', findings: buildGate?.findings }
+}
 
-  // ========== 阶段四：复测验证 ==========
-  phase('复测验证')
+// ========== 阶段四：复测验证 ==========
+phase('复测验证')
 
-  log('复测性能...')
+log('复测性能...')
 
-  const retest = await agent(
-    `你是性能工程师，复测优化效果。
+const retest = await agent(
+  `你是性能工程师，复测优化效果。
 
 优化目标：${target}
 优化前基线：
@@ -244,32 +243,31 @@ ${baseline?.metrics?.map(m => `- ${m.name}: ${m.value} ${m.unit}`).join('\n') ||
 - 检查 EF Core 日志确认 SQL 变更
 
 输出优化前后对比报告。`,
-    { label: '复测性能', phase: '复测验证' }
-  )
+  { label: '复测性能', phase: '复测验证' }
+)
 
-  log('功能回归测试（确定性退出码 gate）...')
+log('功能回归测试（确定性退出码 gate）...')
 
-  const regressionGate = await agent(
-    `你是验证执行器，运行回归测试并如实回报真实退出码。
+const regressionGate = await agent(
+  `你是验证执行器，运行回归测试并如实回报真实退出码。
 
 执行：\`dotnet test\` → 记录退出码与「通过/失败/跳过」数量。
 判定：退出码 == 0（无失败用例）时 status = PASS；否则 status = FAIL 并附失败用例原文。
 性能优化绝不能以牺牲正确性为代价 —— 任一测试失败即判 FAIL。
 必须附实际运行命令与返回内容作为证据。
 输出：状态（PASS/FAIL）、退出码与证据、总结。`,
-    { label: '回归测试', phase: '复测验证', schema: REVIEW_SCHEMA }
-  )
+  { label: '回归测试', phase: '复测验证', schema: REVIEW_SCHEMA }
+)
 
-  if (regressionGate?.status !== 'PASS') {
-    log('⚠️ 回归测试未通过（存在失败用例），建议回滚优化')
-    return { status: 'BLOCKED', reason: '优化引入功能回归', findings: regressionGate?.findings }
-  }
+if (regressionGate?.status !== 'PASS') {
+  log('⚠️ 回归测试未通过（存在失败用例），建议回滚优化')
+  return { status: 'BLOCKED', reason: '优化引入功能回归', findings: regressionGate?.findings }
+}
 
-  // 完成验证
-  log('完成验证...')
+log('完成验证...')
 
-  const verification = await agent(
-    `你是最终验证者，确认本次性能优化「有效且无回归」。
+const verification = await agent(
+  `你是最终验证者，确认本次性能优化「有效且无回归」。
 
 优化目标：${target}
 优化前基线：
@@ -282,27 +280,24 @@ ${baseline?.metrics?.map(m => `- ${m.name}: ${m.value} ${m.unit}`).join('\n') ||
 3. 改善需用真实测量数据支撑，不接受「应该变快了」这类主观断言
 
 输出验证报告，包含：状态（PASS/FAIL）、前后指标对比证据、总结。`,
-    { label: '完成验证', phase: '复测验证', schema: REVIEW_SCHEMA }
-  )
+  { label: '完成验证', phase: '复测验证', schema: REVIEW_SCHEMA }
+)
 
-  if (verification?.status !== 'PASS') {
-    log('⚠️ 完成验证未通过（无可量化改善或存在问题）')
-    return { status: 'BLOCKED', reason: '完成验证未通过', findings: verification?.findings }
-  }
+if (verification?.status !== 'PASS') {
+  log('⚠️ 完成验证未通过（无可量化改善或存在问题）')
+  return { status: 'BLOCKED', reason: '完成验证未通过', findings: verification?.findings }
+}
 
-  log('验证通过（编译/测试退出码为 0，且有可量化性能改善）')
+log('验证通过（编译/测试退出码为 0，且有可量化性能改善）')
+log('性能优化工作流完成')
 
-  // ========== 返回结果 ==========
-  log('性能优化工作流完成')
-
-  return {
-    status: 'SUCCESS',
-    target: target,
-    baseline: baseline?.metrics,
-    bottleneck: baseline?.bottleneck,
-    strategies: plan?.strategies,
-    reviews: {
-      verification: verification,
-    },
-  }
+return {
+  status: 'SUCCESS',
+  target,
+  baseline: baseline?.metrics,
+  bottleneck: baseline?.bottleneck,
+  strategies: plan?.strategies,
+  reviews: {
+    verification: verification,
+  },
 }
