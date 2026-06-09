@@ -106,6 +106,36 @@ Claude：[进入性能优化流程]
 
 ---
 
+### 场景 6：查询加密源码的代码结构
+
+公司源码经过加密编码，Read 工具和 CodeGraph 均无法直接读取。使用 SQLite 索引查询：
+
+```
+你：查一下 OrderService 的调用链
+
+Claude：
+  → powershell search.ps1 -Callers "OrderService.CreateOrder" -ProjectPath "项目路径"
+  → 返回调用者列表（文件、行号、签名）
+```
+
+**常用查询**：
+
+```powershell
+# 查类
+search.ps1 -Query "OrderController" -Type class -ProjectPath "项目.csproj 所在目录"
+
+# 查方法调用链
+search.ps1 -Callers "OrderService.CreateOrder" -ProjectPath "项目.csproj 所在目录"
+search.ps1 -Callees "OrderService.CreateOrder" -ProjectPath "项目.csproj 所在目录"
+
+# 索引统计
+search.ps1 -Stats -ProjectPath "项目.csproj 所在目录"
+```
+
+> 索引在写入 .cs 文件时**自动更新**（PostToolUse hook），无需手动触发。
+
+---
+
 ## 自动化 Hook
 
 ### 写代码时自动触发

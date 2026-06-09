@@ -10,6 +10,7 @@
 |------|----------|------|
 | **RTK** | ~61% | CLI 输出压缩 |
 | **CodeGraph** | ~80% | 代码结构探索，不读整个文件 |
+| **SQLite Index** ⭐ | ~95% | 加密源码项目：符号查询替代 PowerShell 转码+Read |
 | **Context-mode** | ~95% | 大文件沙箱处理 |
 | **Grep/Glob** | ~90% | 精确搜索，不读无关内容 |
 
@@ -87,6 +88,36 @@ Claude 会自动选择 CodeGraph 而不是 Read 整个文件。
 
 ---
 
+## SQLite Index（加密源码项目索引）
+
+> 适用场景：源码经过加密编码，Read/CodeGraph 均无法读取的项目
+
+### 工作原理
+
+```
+传统方式：PowerShell UTF-8 转码 → Read 整个 .cs 文件（15KB）
+    │
+    └─→ 15KB token 消耗
+
+SQLite Index：search.ps1 -Query "ClassName"（200B）
+    │
+    └─→ 200B token 消耗
+    └─→ 节省 95%
+```
+
+### 自动触发
+
+- **索引更新**：写入 .cs 文件时 PostToolUse hook 自动触发增量更新
+- **索引查询**：Claude 在需要理解加密源码时自动调用 search.ps1
+
+### 查看统计
+
+```powershell
+search.ps1 -IndexStats -ProjectPath "项目.csproj 所在目录"
+```
+
+---
+
 ## Context-mode（大文件处理）
 
 ### 工作原理
@@ -155,6 +186,7 @@ Grep：只返回匹配行（1KB）
 ```
 RTK 累计节省：2.7M tokens（61.3%）
 CodeGraph 节省：每次调用约 10-50KB
+SQLite Index 节省：每次调用约 10-15KB（加密源码项目）
 Context-mode 节省：每次调用约 50KB+
 Grep/Glob 节省：每次调用约 10KB+
 ```
@@ -185,6 +217,7 @@ ctx_stats
 | **不要手动 Read 大文件** | 用 Context-mode 处理 |
 | **用 Grep 代替 Read** | 搜索关键词时用 Grep |
 | **用 CodeGraph 理解结构** | 不要 Read 整个 .cs 文件 |
+| **用 SQLite Index 查加密源码** | 加密项目走索引，不走 PowerShell 转码+Read |
 
 ---
 
@@ -195,11 +228,14 @@ ctx_stats
 ```markdown
 # Token 优化规则
 
-## CodeGraph 优先级
-- 理解结构 → codegraph_explore
-- 精确查找 → Grep / Glob
-- 读单符号 → codegraph_node(includeCode: true)
-- 调用链 → codegraph_callers / codegraph_callees
+## 代码分析工具选择
+
+| 场景 | 工具 | 原因 |
+|------|------|------|
+| 非加密项目 | CodeGraph（codegraph_explore 等） | 实时索引，精度高 |
+| 加密项目 | SQLite 本地索引 | CodeGraph/Read 均无法读取加密源码 |
+
+**判断方法**：尝试 `codegraph_files`，返回空或报错则切换 SQLite 索引。
 
 ## 禁止
 - Read 整个 .cs 文件来理解结构

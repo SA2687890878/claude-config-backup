@@ -41,8 +41,11 @@
         ├─→ Quality Guard：检查最佳实践
         │   └─→ SQL 注入/Null 安全/资源释放？→ 警告
         │
-        └─→ Build Guard：提示构建
-            └─→ 修改了 .cs 文件？→ 提示运行 build
+        ├─→ Build Guard：提示构建
+        │   └─→ 修改了 .cs 文件？→ 提示运行 build
+        │
+        └─→ SQLite Index Update ⭐：自动索引更新（加密源码项目）
+            └─→ 修改了 .cs 文件？→ 后台触发 update.ps1 更新 SQLite 索引
 ```
 
 ---
@@ -127,6 +130,21 @@
   ```
   [Build Guard] 已修改 UserService.cs — 建议运行: rtk dotnet build
   ```
+
+#### SQLite Index Update ⭐
+- **触发**：Write/Edit .cs 文件（属于已配置的项目根）
+- **检查**：向上查找最近的 `.csproj` 目录确定项目路径
+- **动作**：fire-and-forget 后台触发 `update.ps1` 增量更新 SQLite 索引
+- **特点**：不阻塞主流程（`detached: true`），失败静默处理
+- **示例**：
+  ```
+  [SQLite Index] 已触发增量更新：otd.pcs.webbackend
+  ```
+
+#### Git Commit Review（PreToolUse）
+- **触发**：Bash 命令包含 `git commit` / `git push` / `git reset --hard`
+- **检查**：force push、受保护分支、提交信息中的密钥、跳过钩子
+- **动作**：输出安全提醒（不阻断）
 
 ---
 

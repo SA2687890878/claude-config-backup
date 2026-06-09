@@ -202,5 +202,6 @@ A: `docs/templates/interface-contract.md`，跨项目开发时使用。
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
+| 2026-06-09 | 1.2 | 修复 4 个 workflow 脚本（顶层执行/Date/budget）；新增 SQLite 索引系统（加密源码）+ 自动更新 hook；新增 Git Commit Review hook；settings.json 权限白名单 |
 | 2026-06-07 | 1.1 | 添加 Hook 防护层（Impact/Quality/Build Guard）、SETUP.md |
 | 2026-06-04 | 1.0 | 初始版本，建立完整工作流体系 |

@@ -38,11 +38,12 @@
 │                     Hook 管线                                    │
 │                                                                  │
 │  PreToolUse（执行前）         PostToolUse（执行后）              │
-│  ┌─────────────────┐         ┌─────────────────┐                │
-│  │ Secret Guard     │         │ CS Guard        │                │
-│  │ Write Guard      │         │ Quality Guard   │                │
-│  │ Impact Guard     │         │ Build Guard     │                │
-│  └─────────────────┘         └─────────────────┘                │
+│  ┌─────────────────┐         ┌─────────────────────────────┐   │
+│  │ Secret Guard     │         │ CS Guard                    │   │
+│  │ Write Guard      │         │ Quality Guard               │   │
+│  │ Impact Guard     │         │ Build Guard                 │   │
+│  │ Git Commit Review│         │ SQLite Index Update ⭐ 自动索引│   │
+│  └─────────────────┘         └─────────────────────────────┘   │
 └────────────────────────────┬────────────────────────────────────┘
                              │
                              ▼
@@ -50,10 +51,15 @@
 │                     Token 优化层                                  │
 │                                                                  │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐             │
-│  │ RTK Hook    │  │ CodeGraph   │  │ Context-mode│             │
-│  │ CLI 压缩    │  │ 代码图谱    │  │ 沙箱处理    │             │
+│  │ RTK Hook    │  │ CodeGraph   │  │ SQLite Index│             │
+│  │ CLI 压缩    │  │ 代码图谱    │  │ 加密源码索引│             │
 │  │ 节省 61%    │  │ 节省 80%    │  │ 节省 95%    │             │
 │  └─────────────┘  └─────────────┘  └─────────────┘             │
+│  ┌─────────────┐                                                │
+│  │ Context-mode│                                                │
+│  │ 沙箱处理    │                                                │
+│  │ 节省 95%    │                                                │
+│  └─────────────┘                                                │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -86,12 +92,14 @@ CLAUDE.md（项目指令）
         ├── PreToolUse              → 执行前检查
         │   ├── Secret Guard        → 密钥检测
         │   ├── Write Guard         → 路径安全
-        │   └── Impact Guard        → 影响提醒
+        │   ├── Impact Guard        → 影响提醒
+        │   └── Git Commit Review   → Git 安全检查
         │
         └── PostToolUse             → 执行后检查
             ├── CS Guard            → 语法检查
             ├── Quality Guard       → 质量检查
-            └── Build Guard         → 构建提示
+            ├── Build Guard         → 构建提示
+            └── SQLite Index Update → 自动索引更新（加密源码项目）
 ```
 
 ---
