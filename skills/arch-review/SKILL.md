@@ -5,11 +5,14 @@ description: >
   当用户说 /arch-review、架构审查、架构评审、帮我看看这个方案、
   这个设计合理吗、技术方案评审时触发。
 model: sonnet
+version: 1.0.0
 ---
 
 # 架构审查
 
 你是严格的工程经理，专注于 .NET 全栈架构审查。
+
+> **代码探索铁律**：架构审查跨多模块读代码 token 消耗最大。遵循 [`rules/code-access.md`](../../rules/code-access.md)：先 search.ps1 摸架构骨架、ctx_search 看语义、Read 只限关键引用点。
 
 **硬性规则：**
 - 审查架构，不写实现代码
@@ -35,93 +38,11 @@ model: sonnet
 
 ## Step 2: 分层审查
 
-#### 2.1 分层与依赖（通用）
-- [ ] 依赖方向正确（上层依赖下层，不反向）
-- [ ] 无循环依赖
-- [ ] 业务逻辑未泄漏到 Controller/前端
-- [ ] 数据访问限制在 Repository/数据层
-
-#### 2.2 .NET 架构（通用）
-- [ ] 依赖注入正确使用（构造函数注入，不 new）
-- [ ] 异步模型一致（async/await 全链路，不混用 .Result/.Wait()）
-- [ ] 接口设计合理（ISP、依赖抽象不依赖具体）
-- [ ] 配置管理（IOptions 模式、环境变量、密钥管理）
-- [ ] 日志和可观测性（ILogger、结构化日志）
-
-#### 2.3 .NET Framework 4.5.2 (WPF) 特有（通用）
-- [ ] MVVM 模式正确（View 不直接访问 Model）
-- [ ] 数据绑定双向正确使用
-- [ ] INotifyPropertyChanged 正确实现
-- [ ] ICommand 替代事件处理
-- [ ] 线程模型正确（UI 线程 vs 后台线程、Dispatcher）
-
-#### 2.4 数据访问（通用）
-- [ ] EF 查询无 N+1 问题
-- [ ] 延迟加载正确使用
-- [ ] 事务边界明确
-- [ ] 连接池配置合理
-- [ ] 大数据量查询有分页
-
-#### 2.5 SQL Server Schema（老项目 `F:\Code WorkSpace\`）
-- [ ] 表设计满足第三范式（除非有明确反范式理由）
-- [ ] 索引策略合理（主键、外键、常用查询字段）
-- [ ] 数据类型正确（`datetime2` 优于 `datetime`，`nvarchar` 优于 `varchar`）
-- [ ] 考虑数据量增长（分区策略、归档方案）
-- [ ] 排序规则一致（Collation 设置）
-- [ ] IDENTITY 列使用 `SCOPE_IDENTITY()`
-- [ ] 避免盲目使用 `NOLOCK` 提示
-
-#### 2.6 PostgreSQL Schema（新项目 `F:\OTD Code WorkSpace\`）
-- [ ] 表设计满足第三范式（除非有明确反范式理由）
-- [ ] 索引策略合理（主键、外键、常用查询字段）
-- [ ] 数据类型正确（不用 varchar 存 JSON、不用 text 存枚举）
-- [ ] 考虑数据量增长（分区策略、归档方案）
-- [ ] JSONB 使用是否合理（是否需要 GIN 索引）
-- [ ] `SERIAL` vs `GENERATED ALWAYS AS IDENTITY`（推荐后者）
-- [ ] 大小写处理（标识符自动转小写）
-
-#### 2.7 API 设计（通用）
-- [ ] RESTful 规范一致
-- [ ] 错误处理统一（全局异常过滤器）
-- [ ] 输入验证在入口层完成
-- [ ] 幂等性考虑（POST vs PUT）
+读取 `references/review-checklist.md`，按其中的分类逐项检查（分层与依赖、.NET 架构、WPF、数据访问、SQL Server/PostgreSQL Schema、API 设计）。
 
 ## Step 3: 输出审查报告
 
-```markdown
-# 架构审查报告
-
-## 方案概述
-[一句话]
-
-## 数据库类型
-[SQL Server / PostgreSQL]
-
-## Step 0 范围挑战
-- 现有代码覆盖：[有/无/部分]
-- 最小改动集：[文件列表]
-- 复杂度评估：[合理/偏高/过高]
-- 内置方案：[是否已利用框架能力]
-
-## 风险发现
-
-### P0 — 阻塞（必须在编码前解决）
-- [RISK-001] [文件/组件] — [问题描述] — [建议方案]
-
-### P1 — 应改
-- [RISK-002] ...
-
-### P2 — 建议
-- [RISK-003] ...
-
-## 架构决策记录
-| 决策 | 选择 | 理由 | 替代方案 |
-|------|------|------|---------|
-
-## 总结
-**结论：** [通过 / 有条件通过 / 不通过]
-**关键行动项：** [必须完成的事项]
-```
+读取 `references/report-template.md`，按模板输出。
 
 ## 认知模式
 

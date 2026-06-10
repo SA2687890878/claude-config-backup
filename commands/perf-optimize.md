@@ -1,88 +1,62 @@
-<!-- Command: 人类可读的流程文档（详细步骤 + 决策点 + 自检清单）
-     对应 Workflow: ~/.claude/workflows/performance-optimization.js（机器可执行编排） -->
-性能优化流程。先量后优，用数据说话。
+<!-- Command: 性能调优流程编排
+     配套 Workflow: ~/.claude/workflows/perf-optimize.js -->
+性能调优流程。先量后优，用数据说话。
+
+> **代码访问**：定位热点优先用 `search.ps1 -Callers/-Callees` 追调用链，不要 Read 整个文件。详见 [`rules/code-access.md`](../rules/code-access.md)。
+
+## 执行方式
+
+**优先使用 Workflow 工具执行**：
+
+```
+Workflow({scriptPath: "~/.claude/workflows/perf-optimize.js"})
+```
+
+如果 Workflow 工具不可用，按以下流程手动执行。
 
 ## 标准流程
 
 ```
-/perf-tune（分析） → 方案确认 → 优化实施
-→ /perf-tune（复测） → /verification-before-completion
+/perf-tune(性能分析) → 优化方案 → 优化实施 → /verification-before-completion(复测验证)
 ```
 
 ---
 
-## Phase 1: 性能分析（perf-tune）
+## Phase 1: 性能分析
 
-调用 /perf-tune，收集信息：
-- **慢在哪里？** 接口响应慢 / 页面加载慢 / 批量操作慢 / 启动慢
-- **慢了多少？** 具体数字（响应时间、吞吐量）
-- **什么时候开始慢的？** 一直慢 / 最近变慢 / 特定条件慢
-- **数据量？** 多少条记录、多大的表
+调用 `/perf-tune`：
+- 确认问题类型：响应慢 / 资源高 / 吞吐低
+- 收集基线数据：响应时间、CPU、内存、数据库查询
+- 定位瓶颈：用数据说话，不猜
 
-瓶颈分类：
-
-| 瓶颈类型 | 分析工具 |
-|---------|---------|
-| 数据库查询 | `EXPLAIN ANALYZE` / pg_stat_activity |
-| 代码逻辑 | 日志计时 / codegraph_explore 调用链 |
-| N+1 查询 | EF Core 日志 / SQL 抓包 |
-| 内存泄漏 | GC 日志 / 对象生命周期 |
-| 并发阻塞 | 查找 `.Result`/`.Wait()` |
-
-**PostgreSQL 慢查询诊断：**
-```sql
--- 执行计划（不要在生产跑 ANALYZE）
-EXPLAIN (BUFFERS, FORMAT TEXT) <SQL>;
-
--- 全表扫描检测
-SELECT relname, seq_scan, idx_scan FROM pg_stat_user_tables
-ORDER BY seq_tup_read DESC LIMIT 20;
-```
-
-**输出**：量化基线数据 + 瓶颈定位
+**决策点**：瓶颈定位 → Phase 2
 
 ---
 
 ## Phase 2: 优化方案
 
-基于分析结果制定策略。每个优化点评估：
-- **预期收益**：响应时间/吞吐量提升幅度
-- **改动风险**：可能影响的数据一致性/兼容性
-- **工作量**：需要修改的文件数量
+制定优化策略：
+- 预期收益（量化）
+- 风险评估
+- 回滚方案
 
-常见手段：
-- 索引优化 → `EXPLAIN` 验证
-- 消除 N+1 → `Include()`/`Join()` 替代循环查询
-- `AsNoTracking()` 用于只读查询
-- 引入缓存（MemoryCache/Redis）
-- 异步化 IO 操作
-
-**决策点**：用户确认方案 → Phase 3
+**决策点**：用户批准方案 → Phase 3
 
 ---
 
 ## Phase 3: 优化实施
 
-按确认方案实施。执行：
+按方案实施代码变更。每改一项就验证一项。
+
+---
+
+## Phase 4: 复测验证
+
+调用 `/verification-before-completion`：
 ```bash
-dotnet build
+dotnet build --configuration Release
+dotnet test
+# 性能测试命令
 ```
 
----
-
-## Phase 4: 复测验证（perf-tune）
-
-重新调用 /perf-tune 复测，对比优化前后指标：
-- 响应时间变化
-- 吞吐量变化
-- 资源使用变化
-
-确认无功能回归：`dotnet test`
-
----
-
-## Phase 5: 完成验证（verification-before-completion）
-
-调用 /verification-before-completion，确认可以提交。
-
-调用 `/commit` 提交优化。
+对比优化前后指标。无回归 + 有改善 → 完成。

@@ -8,172 +8,199 @@
 
 | 类型 | 触发时机 | 用途 |
 |------|----------|------|
+| **SessionStart** | 会话启动时 | 注入 git 状态、项目信息、任务进度 |
+| **UserPromptSubmit** | 用户输入时 | 自动路由 workflow、注入规则上下文 |
 | **PreToolUse** | 工具执行前 | 拦截危险操作、提醒注意事项 |
-| **PostToolUse** | 工具执行后 | 检查代码质量、提示构建 |
-| **SessionStart** | 会话启动时 | 初始化环境 |
-| **UserPromptSubmit** | 用户输入时 | 处理用户输入 |
+| **PostToolUse** | 工具执行后 | 检查代码质量、自动索引更新 |
+| **Stop** | 会话结束时 | 编译 + 测试双门禁验证 |
 
 ---
 
 ## 执行流程
 
 ```
-用户输入 / Claude 调用工具
+会话启动
     │
-    ├─→ PreToolUse Hook（执行前）
-    │   │
-    │   ├─→ Secret Guard：检查密钥泄露
-    │   │   └─→ 发现密钥？→ 阻断（exit 2）
-    │   │
-    │   ├─→ Write Guard：检查路径安全
-    │   │   └─→ 路径不安全？→ 阻断（exit 2）
-    │   │
-    │   └─→ Impact Guard：提醒查调用链
-    │       └─→ 修改现有代码？→ 提醒（不阻断）
+    └─→ SessionStart: session-start.js
+        └─→ 注入 git 状态 + 项目检测 + task-state 恢复
+
+用户输入
     │
-    ├─→ 工具执行（Write/Edit/Bash）
+    └─→ UserPromptSubmit
+        ├─→ inject-git-rules.js: git 关键词 → 注入 git.md
+        ├─→ inject-token-rules.js: 代码分析关键词 → 注入 token-optimization.md
+        └─→ workflow-router.js: 触发词匹配 → 自动路由到对应 workflow ⭐
+
+Claude 调用工具（Write/Edit）
     │
-    └─→ PostToolUse Hook（执行后）
-        │
-        ├─→ CS Guard：检查 C# 语法
-        │   └─→ 花括号不匹配？→ 警告
-        │
-        ├─→ Quality Guard：检查最佳实践
-        │   └─→ SQL 注入/Null 安全/资源释放？→ 警告
-        │
-        ├─→ Build Guard：提示构建
-        │   └─→ 修改了 .cs 文件？→ 提示运行 build
-        │
-        └─→ SQLite Index Update ⭐：自动索引更新（加密源码项目）
-            └─→ 修改了 .cs 文件？→ 后台触发 update.ps1 更新 SQLite 索引
+    ├─→ PreToolUse（执行前）
+    │   ├─→ secret-guard.js: 硬编码密钥？→ 阻断
+    │   ├─→ write-guard.js: 主目录垃圾文件？→ 阻断
+    │   └─→ impact-guard.js: 修改 .cs？→ 提醒查调用链
+    │
+    ├─→ 工具执行
+    │
+    └─→ PostToolUse（执行后）
+        ├─→ cs-guard.js: C# 语法检查
+        ├─→ quality-guard.js: SQL 注入/null 安全/资源释放
+        ├─→ test-reminder.js: 提示运行测试
+        ├─→ sqlite-index-update.js: 自动增量更新 SQLite 索引 ⭐
+        └─→ git-commit-review.js: git 操作安全检查（Bash）
+
+会话结束
+    │
+    └─→ Stop: build-verify.js
+        ├─→ dotnet build（编译验证）
+        └─→ dotnet test（测试验证，如有测试项目）
+        → 任一失败 → 阻断会话结束
 ```
 
 ---
 
 ## Hook 详细说明
 
+### SessionStart
+
+#### session-start.js
+- **触发**：会话启动
+- **功能**：
+  - 注入 git 状态（分支、上次提交、未提交改动数）
+  - 项目检测（OTD → PostgreSQL / Code WorkSpace → SQL Server）
+  - 任务进度恢复（检查 memory/task-state.md，有未完成任务时注入）
+
+---
+
+### UserPromptSubmit
+
+#### workflow-router.js ⭐
+- **触发**：用户输入包含 workflow 触发词
+- **功能**：自动注入路由上下文，告诉 LLM 该调用哪个 Skill
+- **触发词映射**：
+  - 讨论/设计/方案 → /requirements
+  - 开发/添加/实现 → /feature-development
+  - 修复/bug/报错 → /bug-fix
+  - 优化/慢/性能 → /perf-optimize
+  - 审查/review → /code-review
+  - 测试/跑测试 → /test-runner
+  - 数据库/表/字段 → /sql-best-practices
+  - 保存经验/进度 → /memory-save
+  - 继续工作 → 恢复 task-state.md
+  - 提交/commit → /commit
+  - 文档/doc → /docs
+
+#### inject-git-rules.js
+- **触发**：用户输入包含 git 命令或中文 git 关键词
+- **功能**：注入 hooks/rules/git.md（分支命名、提交格式、禁止操作）
+
+#### inject-token-rules.js
+- **触发**：用户输入涉及 codegraph、sqlite-index、token 优化
+- **功能**：注入 hooks/rules/token-optimization.md
+
+---
+
 ### PreToolUse（执行前）
 
-#### Secret Guard
+#### secret-guard.js
 - **触发**：Write/Edit/Bash
-- **检查**：硬编码密钥、密码、Token
+- **检查**：硬编码密钥、密码、Token、AWS Key、私钥
 - **动作**：发现则阻断（exit 2）
-- **示例**：
-  ```csharp
-  // ❌ 会被拦截
-  var password = "123456";
-  var apiKey = "sk-abc123...";
-  ```
 
-#### Write Guard
+#### write-guard.js
 - **触发**：Write/Edit
 - **检查**：文件路径是否安全
-- **动作**：路径不安全则阻断（exit 2）
-- **示例**：
-  ```
-  ❌ 在用户主目录根下创建文件
-  ✅ 在项目目录下创建文件
-  ```
+- **动作**：在用户主目录根下创建垃圾文件则阻断
 
-#### Impact Guard
-- **触发**：Edit（修改现有文件）
+#### impact-guard.js
+- **触发**：Edit (*.cs)
 - **检查**：是否修改 .cs 文件
 - **动作**：提醒查调用链（不阻断）
-- **示例**：
-  ```
-  [Impact Guard] 正在修改 UserService.cs — 建议先运行 codegraph_callers 查看调用链
-  ```
+- **示例**：`[Impact Guard] 正在修改 UserService.cs — 建议先运行 codegraph_callers 查看调用链`
 
 ---
 
 ### PostToolUse（执行后）
 
-#### CS Guard
+#### cs-guard.js
 - **触发**：Write/Edit .cs 文件
-- **检查**：
-  - 花括号匹配
-  - async 方法有 await
-  - 没有空 catch 块
-  - 没有 .Result/.Wait()
+- **检查**：花括号匹配、async 无 await、空 catch 块、.Result/.Wait()
 - **动作**：发现问题则警告
-- **示例**：
-  ```
-  [C# Guard] UserService.cs:
-    ⚠ Brace mismatch: { = 5, } = 4
-    ⚠ Async method without await
-  ```
 
-#### Quality Guard
+#### quality-guard.js
 - **触发**：Write/Edit .cs 文件
-- **检查**：
-  - SQL 注入风险
-  - 硬编码 IP/端口
-  - Null 安全（Find/FirstOrDefault 后检查）
-  - 资源释放（using）
-  - CancellationToken
-  - 异常处理（空 catch 块）
+- **检查**：SQL 注入风险、硬编码 IP/端口、Null 安全、资源释放、CancellationToken、异常处理
 - **动作**：发现问题则警告
-- **示例**：
-  ```
-  [Quality Guard] UserService.cs:
-    ⚠ Find/FirstOrDefault 后未检查 null（第 4 行）
-    ⚠ 资源未 using 释放（第 8 行）
-    ⚠ async 方法缺少 CancellationToken（第 2 行）
-    ⚠ catch (Exception) 块为空（第 11 行）— 至少记录日志
-  ```
 
-#### Build Guard
+#### test-reminder.js
 - **触发**：Write/Edit .cs 文件
-- **检查**：是否修改了 .cs 文件
-- **动作**：提示运行 build
-- **示例**：
-  ```
-  [Build Guard] 已修改 UserService.cs — 建议运行: rtk dotnet build
-  ```
+- **检查**：向上查找对应的测试项目（*.Tests.csproj）
+- **动作**：找到测试项目则提示运行 dotnet test
 
-#### SQLite Index Update ⭐
+#### sqlite-index-update.js
 - **触发**：Write/Edit .cs 文件（属于已配置的项目根）
-- **检查**：向上查找最近的 `.csproj` 目录确定项目路径
-- **动作**：fire-and-forget 后台触发 `update.ps1` 增量更新 SQLite 索引
-- **特点**：不阻塞主流程（`detached: true`），失败静默处理
-- **示例**：
-  ```
-  [SQLite Index] 已触发增量更新：otd.pcs.webbackend
-  ```
+- **检查**：向上查找 .csproj 目录确定项目路径
+- **动作**：fire-and-forget 后台触发 update.ps1 增量更新 SQLite 索引
+- **特点**：不阻塞主流程（detached: true），失败静默处理
 
-#### Git Commit Review（PreToolUse）
-- **触发**：Bash 命令包含 `git commit` / `git push` / `git reset --hard`
-- **检查**：force push、受保护分支、提交信息中的密钥、跳过钩子
+#### git-commit-review.js
+- **触发**：Bash 命令包含 git commit/push/reset/clean
+- **检查**：force push、受保护分支、提交信息中的密钥、跳过钩子、硬重置
 - **动作**：输出安全提醒（不阻断）
+
+---
+
+### Stop（会话结束）
+
+#### build-verify.js
+- **触发**：会话结束
+- **流程**：
+  1. `git status --porcelain -- "*.cs"` 找出改动的 .cs 文件
+  2. 向上查找 .csproj，逐个 `dotnet build`
+  3. 编译通过后，查找测试项目（*.Tests.csproj），运行 `dotnet test`
+  4. 编译失败 → 阻断会话结束
+  5. 测试失败 → 阻断会话结束
+  6. 全部通过 → 提示 commit
 
 ---
 
 ## 配置位置
 
-Hook 配置在 `settings.json` 的 `hooks` 字段：
+Hook 配置在 `settings.json` 的 `hooks` 字段。
+
+### 完整注册表
 
 ```json
 {
   "hooks": {
+    "SessionStart": [
+      { "hooks": [{ "type": "command", "command": "node", "args": ["session-start.js"] }] }
+    ],
+    "UserPromptSubmit": [
+      { "hooks": [
+        { "type": "command", "command": "node", "args": ["inject-git-rules.js"] },
+        { "type": "command", "command": "node", "args": ["inject-token-rules.js"] },
+        { "type": "command", "command": "node", "args": ["workflow-router.js"] }
+      ]}
+    ],
     "PreToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          { "type": "command", "command": "node ~/.claude/hooks/secret-guard.js", "timeout": 10 },
-          { "type": "command", "command": "node ~/.claude/hooks/write-guard.js", "timeout": 10 },
-          { "type": "command", "command": "node ~/.claude/hooks/impact-guard.js", "timeout": 10 }
-        ]
-      }
+      { "matcher": "Write|Edit", "hooks": [
+        { "type": "command", "command": "node", "args": ["secret-guard.js"] },
+        { "type": "command", "command": "node", "args": ["write-guard.js"] },
+        { "type": "command", "command": "node", "args": ["impact-guard.js"], "if": "Edit(*.cs)" }
+      ]}
     ],
     "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          { "type": "command", "command": "node ~/.claude/hooks/cs-guard.js", "timeout": 25 },
-          { "type": "command", "command": "node ~/.claude/hooks/quality-guard.js", "timeout": 15 },
-          { "type": "command", "command": "node ~/.claude/hooks/build-guard.js", "timeout": 15 }
-        ]
-      }
+      { "matcher": "Write|Edit", "hooks": [
+        { "type": "command", "command": "node", "args": ["cs-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+        { "type": "command", "command": "node", "args": ["quality-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+        { "type": "command", "command": "node", "args": ["test-reminder.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+        { "type": "command", "command": "node", "args": ["sqlite-index-update.js"], "if": "Write(*.cs)|Edit(*.cs)" }
+      ]},
+      { "matcher": "Bash", "hooks": [
+        { "type": "command", "command": "node", "args": ["git-commit-review.js"] }
+      ]}
+    ],
+    "Stop": [
+      { "hooks": [{ "type": "command", "command": "node", "args": ["build-verify.js"] }] }
     ]
   }
 }
@@ -214,29 +241,19 @@ process.stdin.on('end', () => {
 
 ### 注册 Hook
 
-在 `settings.json` 的 `hooks` 中添加：
-
-```json
-{
-  "matcher": "Write|Edit",
-  "hooks": [
-    { "type": "command", "command": "node ~/.claude/hooks/my-hook.js", "timeout": 10 }
-  ]
-}
-```
+在 `settings.json` 的 `hooks` 中添加对应事件和 matcher。
 
 ---
 
 ## 调试 Hook
 
-### 测试 Hook
-
 ```bash
 # 模拟输入
 echo '{"tool_name":"Write","tool_input":{"file_path":"test.cs","content":"..."}}' | node ~/.claude/hooks/my-hook.js
-```
 
-### 查看 Hook 输出
+# 模拟 Bash 输入
+echo '{"tool_name":"Bash","tool_input":{"command":"git push --force"}}' | node ~/.claude/hooks/git-commit-review.js
+```
 
 Hook 的 stderr 输出会显示给用户，stdout 输出会注入到 Claude 的上下文。
 
@@ -251,3 +268,4 @@ Hook 的 stderr 输出会显示给用户，stdout 输出会注入到 Claude 的�
 | **保持 Hook 快速** | timeout 不要太长 |
 | **只检查必要的** | 不要过度检查 |
 | **错误处理** | 用 try-catch 包裹逻辑 |
+| **加密源码** | PostToolUse 读 tool_input.file_path，向上找 .csproj，后台 spawn PowerShell |

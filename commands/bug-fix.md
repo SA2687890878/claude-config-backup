@@ -1,19 +1,31 @@
-<!-- Command: 人类可读的流程文档（详细步骤 + 决策点 + 自检清单）
-     对应 Workflow: ~/.claude/workflows/bug-fix.js（机器可执行编排） -->
+<!-- Command: Bug 修复流程编排
+     配套 Workflow: ~/.claude/workflows/bug-fix.js -->
 Bug 修复流程。按顺序执行，每个阶段完成后等待用户确认。
+
+> **代码访问**：定位 bug 调用链优先用 `search.ps1 -Callers`；查错误信息/日志关键字用 `ctx_search`（仅 READABLE）。详见 [`rules/code-access.md`](../rules/code-access.md)。
+
+## 执行方式
+
+**优先使用 Workflow 工具执行**：
+
+```
+Workflow({scriptPath: "~/.claude/workflows/bug-fix.js"})
+```
+
+如果 Workflow 工具不可用，按以下流程手动执行。
 
 ## 标准流程
 
 ```
-/systematic-debugging → /test-driven-development（先写复现失败测试）→ 修复实施
-→ /dotnet-review（隔离 diff）→ /verification-before-completion（确定性退出码 gate）
+/systematic-debugging → /generate-tests(写复现失败测试) → 修复实施
+→ /code-review-workflow(执行审查) → /verification-before-completion
 ```
 
 ---
 
-## Phase 1: 问题定位（systematic-debugging）
+## Phase 1: 问题定位
 
-调用 /systematic-debugging：
+调用 `/systematic-debugging`：
 
 先收集信息（信息不全就问，不要猜）：
 - **错误信息**：完整的异常堆栈/错误日志
@@ -30,29 +42,19 @@ Bug 修复流程。按顺序执行，每个阶段完成后等待用户确认。
 | P2 | 非核心功能异常 |
 | P3 | 体验问题、UI 瑕疵 |
 
-用 `codegraph_explore` 分析调用链，定位根因。
-
 **输出**：根因确认 + 修复方案
 
 ---
 
 ## Phase 2: 修复实施（TDD：先写复现失败测试）
 
-> 官方实践：先写一个能复现该 bug 的失败测试（红），再修复使其转绿。
-> 这样得到可回归的确定性信号，而非靠肉眼判断"修好了"。
-
 **第 1 步 — 写复现失败测试**：
-- 针对根因写测试，断言「正确行为」
-- 运行测试，确认当前确实失败（红），保留失败输出作为证据
-- 不得为迁就错误行为而弱化断言
+
+调用 `/generate-tests`，针对根因写测试。运行测试确认当前确实失败（红）。
 
 **第 2 步 — 实施修复使测试转绿**：
 
-最小改动原则：
-- 只改必须改的
-- 保持向后兼容
-- 不借机重构（除非必要）
-- 修复要针对根因，不得改测试来"凑绿"
+最小改动原则：只改必须改的、保持向后兼容、不借机重构。
 
 自检清单：
 ```
@@ -60,13 +62,11 @@ Bug 修复流程。按顺序执行，每个阶段完成后等待用户确认。
 □ 根因已修复（不是只修表面症状）
 □ 修复后失败测试转绿
 □ 不会引入新问题
-□ 边界条件已考虑
 □ 异步方法正确使用（无 .Result/.Wait()）
 □ 资源正确释放
-□ 多租户 ComId 正确处理
 ```
 
-执行确定性验证（读真实退出码）：
+执行确定性验证：
 ```bash
 dotnet build
 dotnet test
@@ -76,24 +76,20 @@ dotnet test
 
 ---
 
-## Phase 3: 代码审查（dotnet-review）
+## Phase 3: 代码审查
 
-调用 /dotnet-review，审查修复变更：
-```bash
-git diff
-```
+调用 `/code-review-workflow`，走执行审查分支，审查修复变更。
 - CRITICAL → 返回 Phase 2
 - PASS → Phase 4
 
 ---
 
-## Phase 4: 完成验证（verification-before-completion）
+## Phase 4: 完成验证
 
-调用 /verification-before-completion：
+调用 `/test-runner`，运行完整测试套件确认无回归。全部通过后调用 `/verification-before-completion`：
 ```bash
 dotnet build --configuration Release
 dotnet test
-git diff --stat
 ```
 
 ---
