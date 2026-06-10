@@ -1,115 +1,110 @@
-<!-- Command: 人类可读的流程文档（详细步骤 + 决策点 + 自检清单）
-     对应 Workflow: ~/.claude/workflows/feature-development.js（机器可执行编排） -->
+<!-- Command: 功能开发流程编排
+     配套 Workflow: ~/.claude/workflows/feature-development.js -->
 功能开发流程。按以下顺序执行，每个阶段完成后等待用户确认再继续。
 
-## 标准流程（Harness 最佳实践）
+> **代码访问**：架构探查优先委托 `architect` agent（隔离 context）、实现期委托 `builder` agent。调用代码遵循 [`rules/code-access.md`](../rules/code-access.md) 决策树：先 search.ps1、后 ctx_search、最后 Read。
+
+## 执行方式
+
+**优先使用 Workflow 工具执行**，获得结构化编排、并行 agent、schema 验证：
 
 ```
-/brainstorming → /writing-plans → /using-git-worktrees → /subagent-driven-development
-→ /arch-review → /dotnet-review → /verification-before-completion
-→ /finishing-a-development-branch
+Workflow({scriptPath: "~/.claude/workflows/feature-development.js"})
+```
+
+如果 Workflow 工具不可用，按以下流程手动执行。
+
+## 标准流程
+
+```
+/requirements(头脑风暴) → /dev-workflow(写计划) → /git-workspace(创建工作区)
+→ /dev-workflow(执行计划) → /arch-review → /code-review-workflow(执行审查)
+→ /verification-before-completion → /git-workspace(完成分支)
 ```
 
 ---
 
-## Phase 1: 需求探索（brainstorming）
+## Phase 1: 需求探索
 
-调用 /brainstorming：
+调用 `/requirements`，走头脑风暴分支：
 - 探索项目上下文（检查文件、文档、近期提交）
 - 逐一提问，澄清目标/约束/成功标准
 - 提出 2-3 个方案及权衡，给出推荐
-- 呈现设计，用户批准后写设计文档到 `docs/superpowers/specs/YYYY-MM-DD-[name]-design.md`
+- 呈现设计，用户批准后写设计文档
 - 用户审阅文档后进入下一阶段
 
 **决策点**：用户批准设计 → Phase 2
 
 ---
 
-## Phase 2: 实现规划（writing-plans）
+## Phase 2: 实现规划
 
-调用 /writing-plans：
-- 基于设计文档拆分任务
+调用 `/dev-workflow`，走写计划分支：
+- 基于设计文档拆分 bite-sized tasks
 - 每个任务：文件映射 + 分步骤（TDD：先写失败测试）
-- 保存到 `docs/superpowers/plans/YYYY-MM-DD-[name].md`（writing-plans 标准路径）
-- 同步更新 `docs/features/[name]/04-tasks.md`（项目文档中心链接）
-- 计划头部必须包含 Harness 标准头（Goal / Architecture / Tech Stack）
+- 保存计划文件
 
-**决策点**：规划完成 → Phase 2.5
+**决策点**：规划完成 → Phase 3
 
 ---
 
-## Phase 2.5: 隔离工作区（using-git-worktrees）
+## Phase 3: 隔离工作区
 
-调用 /using-git-worktrees：
+调用 `/git-workspace`，走创建工作区分支：
 - 检查当前是否已在隔离 worktree 中
-- 如未隔离，询问用户是否创建 worktree（保护当前分支）
-- 创建 `worktrees/[feature-name]` 隔离分支
-- 后续所有代码改动在此 worktree 中进行
+- 如未隔离，创建 worktree 保护当前分支
 
-> 若用户拒绝或已在 worktree 中，直接跳到 Phase 3。
+> 若用户拒绝或已在 worktree 中，直接跳到 Phase 4。
 
-**决策点**：工作区就绪 → Phase 3
+**决策点**：工作区就绪 → Phase 4
 
 ---
 
-## Phase 3: 代码实现（subagent-driven-development）
+## Phase 4: 代码实现
 
-调用 /subagent-driven-development：
+调用 `/dev-workflow`，走执行计划分支：
+- 按计划逐 task 执行
+- 每个 task 派 fresh subagent + 两阶段审查
+- 完成后执行 `dotnet build`
 
-### 垂直切片（Vertical Slices）
-将功能拆分为独立的、可交付的切片：
-1. 数据库变更（表/字段）
-2. 实体类变更
-3. DTO 变更
-4. 服务层变更
-5. 控制器变更
-6. 测试验证
-
-每个切片独立可交付，可以单独提交。
-
-### 实现顺序
-- 严格按顺序：Entity → DTO → Interface → Service → Controller
-- 每个组件完成后执行自检清单
-- 多租户字段 `ComId` 正确处理
-- 使用 `AsNoTracking()` 读只读数据
-- 完成后执行：`dotnet build`
-
-**决策点**：编译通过 → Phase 4
+**决策点**：编译通过 → Phase 5
 
 ---
 
-## Phase 4: 代码审查
+## Phase 5: 代码审查
 
-### 4a. 架构审查（arch-review）
-调用 /arch-review，检查分层/依赖/SOLID/数据库设计。
-- PASS → 继续 4b
-- FAIL → 返回 Phase 3 修复
+### 5a. 架构审查
 
-### 4b. 代码审查（dotnet-review）
-调用 /dotnet-review，读取 `git diff` 审查变更。
-- CRITICAL/HIGH → 返回 Phase 3 修复
-- PASS → Phase 5
+调用 `/arch-review`，检查分层/依赖/SOLID/数据库设计。
+- PASS → 继续 5b
+- FAIL → 返回 Phase 4 修复
+
+### 5b. 代码审查
+
+调用 `/code-review-workflow`，走执行审查分支，审查 `git diff` 变更。
+- CRITICAL/HIGH → 返回 Phase 4 修复
+- PASS → Phase 6
 
 ---
 
-## Phase 5: 完成验证（verification-before-completion）
+## Phase 6: 完成验证
 
-调用 /verification-before-completion：
+调用 `/test-runner`，运行完整测试套件。全部通过后调用 `/verification-before-completion`：
 ```bash
 dotnet build --configuration Release
 dotnet test
 git diff --stat
 ```
-检查：无临时代码残留、无硬编码密钥、异步一致性、DB 查询安全。
 
-**决策点**：全部 PASS → Phase 6
+> 如果涉及数据库变更（加表/加字段/改结构），在此之前调用 `/sql-best-practices` 走数据库变更分支（DB-first scaffold）。
+
+**决策点**：全部 PASS → Phase 7
 
 ---
 
-## Phase 6: 收尾（finishing-a-development-branch）
+## Phase 7: 收尾
 
-调用 /finishing-a-development-branch：
+调用 `/git-workspace`，走完成分支：
 - 验证测试通过
-- 检测环境（普通仓库/worktree）
-- 呈现选项：merge / PR / stash / 继续开发
+- 呈现选项：merge / PR / 保留 / 丢弃
 - 执行用户选择并清理

@@ -25,34 +25,19 @@ process.stdin.on('end', () => {
     const normalizedParent = path.dirname(resolvedPath).replace(/\\/g, '/').replace(/\/+$/, '');
 
     const isMdOrTxt = /\.(md|txt)$/i.test(p);
+    if (!isMdOrTxt) return;
 
-    if (isMdOrTxt) {
-      const isSpecialFile = /(README|CLAUDE|AGENTS|CONTRIBUTING|CHANGELOG)\.md$/i.test(path.basename(resolvedPath));
-      if (isSpecialFile) {
-        console.log(data);
-        return;
-      }
+    const isSpecialFile = /(README|CLAUDE|AGENTS|CONTRIBUTING|CHANGELOG)\.md$/i.test(path.basename(resolvedPath));
+    if (isSpecialFile) return;
 
-      const isSystemDir = /[\/]\.claude[\/](skills|plans|commands|hooks|workflows)[\/]/i.test(normalizedPath);
-      if (isSystemDir) {
-        console.log(data);
-        return;
-      }
+    const isSystemDir = /[\/]\.claude[\/](skills|plans|commands|hooks|workflows)[\/]/i.test(normalizedPath);
+    if (isSystemDir) return;
 
-      if (normalizedParent === normalizedHome) {
-        console.error('[Hook] BLOCKED: Unnecessary documentation file in home directory');
-        console.error('[Hook] File: ' + normalizedPath);
-        console.error('[Hook] Tip: Move to a project directory or use README.md');
-        process.exit(2);
-        return;
-      }
-
-      console.log(data);
-      return;
+    if (normalizedParent === normalizedHome) {
+      console.error('[Hook] BLOCKED: Unnecessary documentation file in home directory');
+      console.error('[Hook] File: ' + normalizedPath);
+      console.error('[Hook] Tip: Move to a project directory or use README.md');
+      process.exit(2);
     }
-
-    console.log(data);
-  } catch (e) {
-    console.log(data);
-  }
+  } catch (e) { /* 静默失败 */ }
 });

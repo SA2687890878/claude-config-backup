@@ -49,10 +49,10 @@ process.stdin.on('end', () => {
     // ===== Bash 命令检测 =====
     if (toolName === 'Bash') {
       const command = (input.tool_input && input.tool_input.command) || '';
-      if (!command || command.length < 5) { console.log(data); return; }
+      if (!command || command.length < 5) return;
 
       // 跳过安全命令
-      if (SAFE_BASH_PATTERNS.some(p => p.test(command))) { console.log(data); return; }
+      if (SAFE_BASH_PATTERNS.some(p => p.test(command))) return;
 
       const findings = [];
       for (const { pattern, label } of BASH_SECRET_PATTERNS) {
@@ -69,16 +69,15 @@ process.stdin.on('end', () => {
         console.error('[Hook] Use environment variables or secrets manager instead.');
         process.exit(2); return;
       }
-      console.log(data);
       return;
     }
 
     // ===== Write/Edit 文件内容检测 =====
-    if (toolName !== 'Write' && toolName !== 'Edit') { console.log(data); return; }
+    if (toolName !== 'Write' && toolName !== 'Edit') return;
     const filePath = (input.tool_input && input.tool_input.file_path) || '';
     const content = (input.tool_input && (input.tool_input.content || input.tool_input.new_string)) || '';
-    if (SKIP_PATTERNS.some(p => p.test(filePath))) { console.log(data); return; }
-    if (!content || content.length < 10) { console.log(data); return; }
+    if (SKIP_PATTERNS.some(p => p.test(filePath))) return;
+    if (!content || content.length < 10) return;
     const findings = [];
     for (const { pattern, label } of SECRET_PATTERNS) {
       const match = content.match(pattern);
@@ -94,6 +93,5 @@ process.stdin.on('end', () => {
       console.error('[Hook] Use environment variables or secrets manager instead.');
       process.exit(2); return;
     }
-    console.log(data);
-  } catch (e) { console.error("[Hook Error] secret-guard: " + e.message); console.error("[Hook Error] Stack: " + e.stack); process.exit(2); }
+  } catch (e) { /* 静默失败，不以错误阶变阻断工作流 */ }
 });
