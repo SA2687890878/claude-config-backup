@@ -1,6 +1,6 @@
 # 日常使用指南
 
-> 安装完成后，如何使用这套 Harness Engineering。
+> 基于《Harness Engineering 建设指南》构建的配置体系使用说明
 
 ---
 
@@ -14,11 +14,13 @@ claude
 ```
 
 Claude 会自动加载：
-- `CLAUDE.md`（项目指令）
-- `rules/`（编码规范）
-- `skills/`（工作流组件）
-- `commands/`（自定义命令）
-- `hooks/（生命周期钩子）
+- `CLAUDE.md`（全局指令）
+- `commands/`（斜杠命令）
+- `workflows/`（工作流）
+- `agents/`（角色）
+- `skills/`（技能）
+- `rules/`（规则）
+- `hooks/`（自动化）
 
 ---
 
@@ -29,16 +31,19 @@ Claude 会自动加载：
 ```
 你：开发一个设备点检功能
 
-Claude：[自动进入功能开发流程]
-  → Phase 1: 需求探索（/brainstorming）
-  → Phase 2: 实现规划（/writing-plans）
-  → Phase 3: 代码实现
-  → Phase 4: 代码审查（/dotnet-review）
-  → Phase 5: 完成验证（/verification-before-completion）
-  → Phase 6: 收尾
+Claude：[自动进入构建流程]
+  → /build 触发 build.js 工作流
+  → Phase 1: 需求探索（requirements skill）
+  → Phase 2: 设计（arch-review skill）→ Design Gate
+  → Phase 3: 编码（builder-agent）→ Code Gate
+  → Phase 4: 测试（test-runner skill）→ Test Gate
+  → Phase 5: 验证（verification-before-completion）→ Release Gate
+  → 输出：Requirement.md, Architecture.md, Design.md, Code, TestPlan.md
 ```
 
-**触发词**：开发、添加、实现
+**触发词**：开发、添加、实现、构建
+
+**命令**：`/build`
 
 ---
 
@@ -47,15 +52,18 @@ Claude：[自动进入功能开发流程]
 ```
 你：这个接口报错了
 
-Claude：[自动进入 Bug 修复流程]
-  → Phase 1: 问题定位（/systematic-debugging）
-  → Phase 2: 修复实施（TDD）
-  → Phase 3: 代码审查（/dotnet-review）
-  → Phase 4: 完成验证
-  → Phase 5: 收尾
+Claude：[自动进入运维流程]
+  → /operate 触发 operate.js 工作流
+  → Phase 1: 问题定位（systematic-debugging skill）
+  → Phase 2: 根因分析（operator-agent）
+  → Phase 3: 修复实施（TDD）
+  → Phase 4: 验证闭环（Code Gate + Test Gate）
+  → 输出：RCA.md, 修复代码
 ```
 
-**触发词**：修复、bug、报错
+**触发词**：修复、bug、报错、排查
+
+**命令**：`/operate`
 
 ---
 
@@ -64,183 +72,181 @@ Claude：[自动进入 Bug 修复流程]
 ```
 你：讨论一下这个功能的架构
 
-Claude：[进入头脑风暴]
-  → 探索项目上下文
-  → 逐一提问，澄清需求
-  → 提出 2-3 个方案
-  → 呈现设计，等待批准
+Claude：[进入探索流程]
+  → /explore 触发 explore.js 工作流
+  → Phase 1: 需求探索（5W1H 分析）
+  → Phase 2: 方案设计（2-3 个方案对比）
+  → Phase 3: 决策记录
+  → 输出：Requirement.md, Decision.md
 ```
 
-**触发词**：讨论、设计、方案、头脑风暴
+**触发词**：讨论、设计、方案、探索
+
+**命令**：`/explore`
 
 ---
 
 ### 场景 4：代码审查
 
 ```
-你：审查一下这个模块
+你：帮我看看这段代码
 
-Claude：[进入代码审查流程]
-  → 读取 git diff
-  → 检查架构、安全性、性能
-  → 输出审查报告
+Claude：[进入审查流程]
+  → /review 命令触发
+  → 5 个维度并行审查：架构、质量、安全、性能、最佳实践
+  → 按严重级别分类：CRITICAL / HIGH / MEDIUM / LOW
+  → 输出：审查报告 + 修复建议
 ```
 
 **触发词**：审查、review
 
----
-
-### 场景 5：性能优化
-
-```
-你：这个接口太慢了
-
-Claude：[进入性能优化流程]
-  → 分析瓶颈（/perf-tune）
-  → 制定优化方案
-  → 实施优化
-  → 复测验证
-```
-
-**触发词**：优化、慢、性能
+**命令**：`/review`
 
 ---
 
-### 场景 6：查询加密源码的代码结构
-
-公司源码经过加密编码，Read 工具和 CodeGraph 均无法直接读取。使用 SQLite 索引查询：
+### 场景 5：运行测试
 
 ```
-你：查一下 OrderService 的调用链
+你：跑一下测试
 
-Claude：
-  → powershell search.ps1 -Callers "OrderService.CreateOrder" -ProjectPath "项目路径"
-  → 返回调用者列表（文件、行号、签名）
+Claude：[进入测试流程]
+  → /test 命令触发
+  → 运行 dotnet test
+  → 分析失败原因
+  → 修复并验证
+  → 输出：测试结果报告
 ```
 
-**常用查询**：
+**触发词**：测试、跑测试
 
-```powershell
-# 查类
-search.ps1 -Query "OrderController" -Type class -ProjectPath "项目.csproj 所在目录"
-
-# 查方法调用链
-search.ps1 -Callers "OrderService.CreateOrder" -ProjectPath "项目.csproj 所在目录"
-search.ps1 -Callees "OrderService.CreateOrder" -ProjectPath "项目.csproj 所在目录"
-
-# 索引统计
-search.ps1 -Stats -ProjectPath "项目.csproj 所在目录"
-```
-
-> 索引在写入 .cs 文件时**自动更新**（PostToolUse hook），无需手动触发。
+**命令**：`/test`
 
 ---
 
-## 自动化 Hook
-
-### 写代码时自动触发
+### 场景 6：提交代码
 
 ```
-你写 .cs 文件
-    │
-    ├─→ [PreToolUse] Secret Guard：检查密钥泄露
-    ├─→ [PreToolUse] Write Guard：检查路径安全
-    ├─→ [PreToolUse] Impact Guard：提醒查调用链
-    │
-    ├─→ [你的编辑操作]
-    │
-    ├─→ [PostToolUse] CS Guard：检查语法
-    ├─→ [PostToolUse] Quality Guard：检查最佳实践
-    └─→ [PostToolUse] Build Guard：提醒构建
+你：提交
+
+Claude：[进入提交流程]
+  → /commit 命令触发
+  → 分析 git diff
+  → 生成符合规范的提交信息
+  → 确认后执行提交
 ```
 
-### 运行命令时自动触发
+**触发词**：提交、commit
 
-```
-你运行 Bash 命令
-    │
-    ├─→ [PreToolUse] Secret Guard：检查命令中的密钥
-    └─→ [PreToolUse] RTK Wrapper：压缩输出（节省 61% token）
-```
+**命令**：`/commit`
 
 ---
 
-## 常用命令
+## 自动化行为
 
-| 命令 | 用途 |
-|------|------|
-| `/brainstorming` | 需求探索 |
-| `/writing-plans` | 实现规划 |
-| `/verification-before-completion` | 完成前验证 |
-| `/memory-save` | 保存经验 |
-| `/commit` | 生成提交信息 |
-| `/code-review` | 代码审查 |
-| `/bug-fix` | Bug 修复 |
-| `/perf-optimize` | 性能优化 |
+### 会话启动时
+
+`session-start.js` 自动：
+- 检测当前项目（OTD / 旧项目）
+- 显示 git 状态摘要
+- 检查是否有未完成任务（task-state.md）
+
+### 代码修改时
+
+Hooks 自动执行：
+- `cs-guard.js` — C# 语法检查
+- `quality-guard.js` — SQL 注入/null 安全/资源释放检查
+- `test-reminder.js` — 提示运行测试
+- `sqlite-index-update.js` — 自动更新 SQLite 索引
+
+### 会话结束时
+
+`build-verify.js` 自动：
+- 检测修改的 .cs 文件
+- 运行 dotnet build（编译验证）
+- 运行 dotnet test（测试验证）
+- 任一失败 → 阻断会话结束
 
 ---
 
-## 最佳实践
+## 质量门禁
 
-### 1. 渐进式开发
+每个工作流阶段必须通过对应的质量门禁：
 
-```
-❌ 错误：一次性让 Claude 实现整个功能
-✅ 正确：分步骤，每步确认后再继续
-```
+| 门禁 | 时机 | 检查内容 |
+|------|------|---------|
+| **Requirement Gate** | 需求探索完成后 | 完整性、无歧义、可验收 |
+| **Design Gate** | 设计完成后 | 满足需求、可扩展、风险 |
+| **Code Gate** | 编码完成后 | 编译通过、审查通过 |
+| **Test Gate** | 测试完成后 | 测试通过、覆盖率、回归 |
+| **Release Gate** | 发布前 | 风险评估、回滚方案 |
 
-### 2. 先探索后实现
+**铁律：没有新鲜的验证证据，不许宣称完成。**
 
-```
-❌ 错误：直接让 Claude 写代码
-✅ 正确：先讨论设计方案，确认后再写
-```
+---
 
-### 3. 利用 Hook 自动检查
+## Token 节省技巧
 
-```
-❌ 错误：手动检查代码质量
-✅ 正确：Hook 自动检查，你只关注业务逻辑
-```
-
-### 4. 保存经验
-
-```
-❌ 错误：排查完问题就结束
-✅ 正确：用 /memory-save 保存经验，下次直接复用
-```
+| 机制 | 节省率 | 使用方式 |
+|------|--------|---------|
+| RTK 代理 | ~61% | 自动生效（Bash 输出压缩） |
+| SQLite 索引 | ~95% | 用 search.ps1 查符号 |
+| Skills 拆分 | ~70% | 核心指令 + references 分离 |
+| Hooks 自动化 | ~30% | 确定性验证不交给 AI |
 
 ---
 
 ## 常见问题
 
-### Q: Hook 不生效？
+### Q: 如何继续上次未完成的工作？
 
-A: 检查 `settings.json` 中的路径是否正确，Node.js 是否安装。
+```
+你：继续工作
 
-### Q: 触发词没反应？
+Claude：[自动恢复]
+  → 读取 memory/task-state.md
+  → 报告上次进度
+  → 询问是否继续
+```
 
-A: 检查 `rules/workflows.md` 中的触发词映射。
+### Q: 如何保存当前进度？
 
-### Q: Token 节省不明显？
+```
+你：保存进度
 
-A: 确认 RTK 已安装：`rtk --version`
+Claude：[调用 /verification-before-completion]
+  → 保存当前任务状态到 memory/task-state.md
+  → 下次会话可恢复
+```
 
-### Q: 如何跳过某个 Hook？
+### Q: 如何切换到压缩模式？
 
-A: Hook 是自动执行的，无法跳过。如果需要临时禁用，从 `settings.json` 中删除对应条目。
+```
+你：caveman mode
+
+Claude：[切换到压缩输出]
+  → 删减冠词、填充词、客套话
+  → 保持技术精度
+  → 节省 ~75% token
+```
+
+### Q: 如何查看当前配置状态？
+
+```
+你：/status
+
+Claude：[显示状态]
+  → 当前项目
+  → Git 状态
+  → 未完成任务
+  → Token 使用情况
+```
 
 ---
 
-## 工作流触发词速查
+## 更新记录
 
-| 触发词 | 命令 | 场景 |
-|--------|------|------|
-| 讨论/设计/方案/头脑风暴 | `/brainstorming` | 需求探索 |
-| 开发/添加/实现 | `/feature-development` | 功能开发 |
-| 修复/bug/报错 | `/bug-fix` | Bug 修复 |
-| 优化/慢/性能 | `/perf-optimize` | 性能优化 |
-| 审查/review | `/code-review` | 代码审查 |
-| 提交 | `/commit` | Git 提交 |
-| 开始/继续 | 直接触发 | git status + task list |
-| 文档 | `docs` skill | 生成文档 |
+| 日期 | 版本 | 内容 |
+|------|------|------|
+| 2026-06-11 | 3.0 | 更新为符合《建设指南》的配置体系；新增 Commands/Workflows/Agents 说明 |
+| 2026-06-10 | 2.0 | 添加自动化行为说明 |
+| 2026-06-04 | 1.0 | 初始版本 |

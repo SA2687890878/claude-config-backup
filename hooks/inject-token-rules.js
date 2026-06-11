@@ -27,7 +27,7 @@ async function main() {
     // 匹配代码分析相关关键词（避免"优化"等日常词汇误触发）
     if (/codegraph|search\.ps1|sqlite[-_]?index|代码索引|token.{0,3}优化|rtk\s+(gain|proxy|discover)/i.test(prompt)) {
 
-      const tokenRulesPath = path.join(process.env.USERPROFILE || process.env.HOME, '.claude', 'hooks', 'rules', 'token-optimization.md');
+      const tokenRulesPath = path.join(process.env.USERPROFILE || process.env.HOME, '.claude', 'rules', 'tools', 'token-optimization.md');
 
       if (fs.existsSync(tokenRulesPath)) {
         const tokenRules = fs.readFileSync(tokenRulesPath, 'utf8');
