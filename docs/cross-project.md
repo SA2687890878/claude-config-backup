@@ -181,3 +181,11 @@ await agent('集成审查员', { prompt: '检查接口对接' })
 接口契约：
 - 事件驱动：OrderCreated → 库存扣减 → PaymentProcessed
 ```
+
+---
+
+## 更新记录
+
+| 日期 | 版本 | 内容 |
+|------|------|------|
+| 2026-06-11 | 3.0 | 兼容 Harness Engineering v3.0 配置体系 |

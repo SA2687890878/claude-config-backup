@@ -83,11 +83,11 @@ cp ~/.claude/settings.example.json ~/.claude/settings.json
 
 | 文件 | 用途 |
 |------|------|
-| `rules/csharp.md` | C# 编码规范 |
-| `rules/git.md` | Git 提交规范 |
-| `rules/security.md` | 安全规则 |
-| `rules/token-optimization.md` | Token 优化规则 |
-| `rules/workflows.md` | 工作流触发规则 |
+| `rules/languages/csharp.md` | C# 编码规范 |
+| `rules/workflows/git.md` | Git 提交规范 |
+| `rules/tools/security.md` | 安全规则 |
+| `rules/tools/token-optimization.md` | Token 优化规则 |
+| `rules/workflows/workflows.md` | 工作流触发规则 |
 
 ### 5. Skills 清单
 
@@ -189,3 +189,11 @@ cd ~/.claude && git pull
 |------|------|
 | 2026-06-07 | 添加 Impact Guard、Quality Guard、Build Guard |
 | 2026-06-04 | 初始版本 |
+
+---
+
+## 更新记录
+
+| 日期 | 版本 | 内容 |
+|------|------|------|
+| 2026-06-11 | 3.0 | 兼容 Harness Engineering v3.0 配置体系 |

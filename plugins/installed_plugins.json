@@ -4,11 +4,11 @@
     "code-review@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\code-review\\6cf7e6331ec6",
-        "version": "6cf7e6331ec6",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\code-review\\9eae436aa296",
+        "version": "9eae436aa296",
         "installedAt": "2026-04-30T07:11:42.803Z",
-        "lastUpdated": "2026-06-06T15:19:49.228Z",
-        "gitCommitSha": "6cf7e6331ec6d6c21b46cf4847c537ecbeb96ac1"
+        "lastUpdated": "2026-06-11T00:45:40.570Z",
+        "gitCommitSha": "9eae436aa2968ada86d8535634d0be5162d720b8"
       }
     ],
     "code-simplifier@claude-plugins-official": [
@@ -24,21 +24,21 @@
     "security-guidance@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\security-guidance\\2.0.3",
-        "version": "2.0.3",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\security-guidance\\2.0.4",
+        "version": "2.0.4",
         "installedAt": "2026-04-30T08:14:55.356Z",
-        "lastUpdated": "2026-06-03T10:59:18.741Z",
-        "gitCommitSha": "c917011ca692e188f5dbd32025044cb9fa6b011f"
+        "lastUpdated": "2026-06-11T00:45:40.654Z",
+        "gitCommitSha": "9eae436aa2968ada86d8535634d0be5162d720b8"
       }
     ],
     "context7@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\context7\\6cf7e6331ec6",
-        "version": "6cf7e6331ec6",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\context7\\9eae436aa296",
+        "version": "9eae436aa296",
         "installedAt": "2026-04-30T08:15:35.659Z",
-        "lastUpdated": "2026-06-06T15:19:49.216Z",
-        "gitCommitSha": "6cf7e6331ec6d6c21b46cf4847c537ecbeb96ac1"
+        "lastUpdated": "2026-06-11T00:45:40.541Z",
+        "gitCommitSha": "9eae436aa2968ada86d8535634d0be5162d720b8"
       }
     ],
     "custom-agents@local": [

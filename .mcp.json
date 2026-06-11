@@ -5,8 +5,8 @@
       "args": []
     },
     "codegraph": {
-      "command": "codegraph",
-      "args": ["serve", "--mcp"]
+      "command": "node",
+      "args": ["C:\\Users\\admin\\.claude\\hooks\\codegraph-wrapper.js"]
     }
   }
 }

@@ -269,3 +269,11 @@ Hook 的 stderr 输出会显示给用户，stdout 输出会注入到 Claude 的�
 | **只检查必要的** | 不要过度检查 |
 | **错误处理** | 用 try-catch 包裹逻辑 |
 | **加密源码** | PostToolUse 读 tool_input.file_path，向上找 .csproj，后台 spawn PowerShell |
+
+---
+
+## 更新记录
+
+| 日期 | 版本 | 内容 |
+|------|------|------|
+| 2026-06-11 | 3.0 | 兼容 Harness Engineering v3.0 配置体系 |

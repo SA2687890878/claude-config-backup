@@ -29,7 +29,7 @@ async function main() {
     if (/git\s+(commit|push|branch|merge|rebase|checkout|stash|reset|cherry-pick|revert)/i.test(prompt) ||
         /提交|推送|分支|合并|变基|暂存|回滚/i.test(prompt)) {
 
-      const gitRulesPath = path.join(process.env.USERPROFILE || process.env.HOME, '.claude', 'hooks', 'rules', 'git.md');
+      const gitRulesPath = path.join(process.env.USERPROFILE || process.env.HOME, '.claude', 'rules', 'workflows', 'git.md');
 
       if (fs.existsSync(gitRulesPath)) {
         const gitRules = fs.readFileSync(gitRulesPath, 'utf8');
