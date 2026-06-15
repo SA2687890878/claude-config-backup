@@ -34,7 +34,7 @@ function findCsprojDir(filePath) {
       if (entries.some(f => f.toLowerCase().endsWith('.csproj'))) {
         return dir;
       }
-    } catch (e) { break; }
+    } catch (e) { process.stderr.write('[sqlite-index-update] Cannot read dir: ' + dir + ' - ' + e.message + '\n'); break; }
     const parent = path.dirname(dir);
     if (parent === dir) break; // 到达根目录
     dir = parent;
@@ -86,6 +86,6 @@ process.stdin.on('end', () => {
     process.stderr.write(`[SQLite Index] 已触发增量更新：${shortDir}\n`);
 
   } catch (e) {
-    // 静默失败，不影响主流程
+    console.error('[sqlite-index-update] Error:', e.message);
   }
 });

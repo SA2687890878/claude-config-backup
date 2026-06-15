@@ -1,0 +1,3416 @@
+{
+  "version": 1,
+  "sessions": {
+    "ff6e0f8c46164dcca7c558000bf208cc": {
+      "sid": "ff6e0f8c46164dcca7c558000bf208cc",
+      "createdAt": "2026-06-15T11:26:36.7830129+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 49836,
+      "processName": "powershell",
+      "parentPid": 50880,
+      "hwnd": 8131402,
+      "hwndHex": "0x7C134A",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ .NET 8.0 Options模式读取配置",
+      "windowDisplayName": "⠐ .NET 8.0 Options模式读取配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 8131402,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ .NET 8.0 Options模式读取配置",
+      "processChain": [
+        {
+          "pid": 49836,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50880,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 35456,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "40996cde25b4417a8a63e07fa8e7e3c6": {
+      "sid": "40996cde25b4417a8a63e07fa8e7e3c6",
+      "createdAt": "2026-06-15T11:26:51.6719388+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 44960,
+      "processName": "powershell",
+      "parentPid": 44532,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "process-chain-window",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 133496,
+      "foregroundPid": 15400,
+      "foregroundTitle": "花链",
+      "processChain": [
+        {
+          "pid": 44960,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 44532,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 45532,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41672,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41352,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34128,
+          "processName": "WindowsTerminal",
+          "mainWindowHandle": 8131402,
+          "mainWindowTitle": "⠂ .NET 8.0 Options模式读取配置"
+        }
+      ],
+      "suppressed": false
+    },
+    "30da93ef532042f0ba781ff9c7dda567": {
+      "sid": "30da93ef532042f0ba781ff9c7dda567",
+      "createdAt": "2026-06-15T11:27:40.5357729+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 47160,
+      "processName": "powershell",
+      "parentPid": 29332,
+      "hwnd": 8131402,
+      "hwndHex": "0x7C134A",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "✳ .NET 8.0 Options模式读取配置",
+      "windowDisplayName": "✳ .NET 8.0 Options模式读取配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 8131402,
+      "foregroundPid": 34128,
+      "foregroundTitle": "✳ .NET 8.0 Options模式读取配置",
+      "processChain": [
+        {
+          "pid": 47160,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 29332,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 51620,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "251fd42503444c6d85cda61716004ac9": {
+      "sid": "251fd42503444c6d85cda61716004ac9",
+      "createdAt": "2026-06-15T11:27:57.4756152+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 28648,
+      "processName": "powershell",
+      "parentPid": 45612,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "process-chain-window",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 8131402,
+      "foregroundPid": 34128,
+      "foregroundTitle": "✳ .NET 8.0 Options模式读取配置",
+      "processChain": [
+        {
+          "pid": 28648,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 45612,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 46704,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41672,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41352,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34128,
+          "processName": "WindowsTerminal",
+          "mainWindowHandle": 8131402,
+          "mainWindowTitle": "✳ .NET 8.0 Options模式读取配置"
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "recent done notification for same window ageSeconds=66"
+    },
+    "e508c389b40f429b8bd82f10b893cca8": {
+      "sid": "e508c389b40f429b8bd82f10b893cca8",
+      "createdAt": "2026-06-15T11:29:51.9546999+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "测试通知：安装成功",
+      "pid": 9048,
+      "processName": "powershell",
+      "parentPid": 16260,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 9048,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 16260,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 38960,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37068,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "adec7ead551846f0ba5ca1bb77fa847a": {
+      "sid": "adec7ead551846f0ba5ca1bb77fa847a",
+      "createdAt": "2026-06-15T11:30:25.0543875+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "Claude Code 等待你的输入",
+      "pid": 32716,
+      "processName": "powershell",
+      "parentPid": 48808,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 32716,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 48808,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 29728,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 32128,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "recent done notification for same window ageSeconds=33"
+    },
+    "d491406809114fefbc443904927289f9": {
+      "sid": "d491406809114fefbc443904927289f9",
+      "createdAt": "2026-06-15T11:31:29.2344076+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 17452,
+      "processName": "powershell",
+      "parentPid": 37728,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 17452,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37728,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41232,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "396b7a23d52c46e39f47b08174158279": {
+      "sid": "396b7a23d52c46e39f47b08174158279",
+      "createdAt": "2026-06-15T11:32:00.1906225+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "测试：来自 otd.pcs.webbackend 项目的任务已完成",
+      "pid": 24320,
+      "processName": "powershell",
+      "parentPid": 8200,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 24320,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 8200,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 42792,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 26632,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "ad173391bf0f46ff96386f9a76089222": {
+      "sid": "ad173391bf0f46ff96386f9a76089222",
+      "createdAt": "2026-06-15T11:32:15.8792106+08:00",
+      "type": "permission",
+      "title": "Claude Code",
+      "message": "需要确认：执行 dotnet build",
+      "pid": 21780,
+      "processName": "powershell",
+      "parentPid": 19220,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 21780,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 19220,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 24364,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 24920,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "7c4908eb264f4952869d78e1614fc358": {
+      "sid": "7c4908eb264f4952869d78e1614fc358",
+      "createdAt": "2026-06-15T11:32:27.591211+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 27664,
+      "processName": "powershell",
+      "parentPid": 44184,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 27664,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 44184,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 51272,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "9f87c4491dbc4fc2a2d6a87d27676f84": {
+      "sid": "9f87c4491dbc4fc2a2d6a87d27676f84",
+      "createdAt": "2026-06-15T11:32:56.8103499+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 10256,
+      "processName": "powershell",
+      "parentPid": 29132,
+      "hwnd": 8131402,
+      "hwndHex": "0x7C134A",
+      "hwndPid": 34128,
+      "hwndSource": "process-chain-window",
+      "windowTitle": "⠐ .NET 8.0 Options模式读取配置",
+      "windowDisplayName": "⠐ .NET 8.0 Options模式读取配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 10256,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 29132,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 47244,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41672,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41352,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34128,
+          "processName": "WindowsTerminal",
+          "mainWindowHandle": 9836204,
+          "mainWindowTitle": "⠐ 查看 Claude 任务完成通知配置"
+        }
+      ],
+      "suppressed": false
+    },
+    "7659111328944ad399dd03503c94c0bd": {
+      "sid": "7659111328944ad399dd03503c94c0bd",
+      "createdAt": "2026-06-15T11:34:01.3972943+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 31120,
+      "processName": "powershell",
+      "parentPid": 32572,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "process-chain-window",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 8131402,
+      "foregroundPid": 34128,
+      "foregroundTitle": "✳ .NET 8.0 Options模式读取配置",
+      "processChain": [
+        {
+          "pid": 31120,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 32572,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50620,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41672,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41352,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34128,
+          "processName": "WindowsTerminal",
+          "mainWindowHandle": 8131402,
+          "mainWindowTitle": "✳ .NET 8.0 Options模式读取配置"
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "recent done notification for same window ageSeconds=121"
+    },
+    "a6635da9db194588ad6e777c93228660": {
+      "sid": "a6635da9db194588ad6e777c93228660",
+      "createdAt": "2026-06-15T11:36:54.3467255+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 45616,
+      "processName": "powershell",
+      "parentPid": 14004,
+      "hwnd": 8131402,
+      "hwndHex": "0x7C134A",
+      "hwndPid": 34128,
+      "hwndSource": "process-chain-window",
+      "windowTitle": "⠐ .NET 8.0 Options模式读取配置",
+      "windowDisplayName": "⠐ .NET 8.0 Options模式读取配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 4197092,
+      "foregroundPid": 20848,
+      "foregroundTitle": "Windows 默认锁屏界面",
+      "processChain": [
+        {
+          "pid": 45616,
+          "processName": "powershell",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 14004,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 49092,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41672,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41352,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34128,
+          "processName": "WindowsTerminal",
+          "mainWindowHandle": 9836204,
+          "mainWindowTitle": "⠐ 查看 Claude 任务完成通知配置"
+        }
+      ],
+      "suppressed": false
+    },
+    "7060fd43e87a48799ff385694d59960c": {
+      "sid": "7060fd43e87a48799ff385694d59960c",
+      "createdAt": "2026-06-15T11:37:59.2075984+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 26524,
+      "processName": "pwsh",
+      "parentPid": 15284,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "process-chain-window",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 4197092,
+      "foregroundPid": 20848,
+      "foregroundTitle": "Windows 默认锁屏界面",
+      "processChain": [
+        {
+          "pid": 26524,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 15284,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 51796,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41672,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41352,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34128,
+          "processName": "WindowsTerminal",
+          "mainWindowHandle": 9836204,
+          "mainWindowTitle": "⠐ 查看 Claude 任务完成通知配置"
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "recent done notification for same window ageSeconds=359"
+    },
+    "b65c21d1a6e94083afab96d425473105": {
+      "sid": "b65c21d1a6e94083afab96d425473105",
+      "createdAt": "2026-06-15T11:38:19.1790736+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "测试：任务已完成",
+      "pid": 29736,
+      "processName": "pwsh",
+      "parentPid": 9800,
+      "hwnd": 0,
+      "hwndHex": "",
+      "hwndPid": 0,
+      "hwndSource": "",
+      "windowTitle": "",
+      "windowDisplayName": "PowerShell 7",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 4197092,
+      "foregroundPid": 20848,
+      "foregroundTitle": "Windows 默认锁屏界面",
+      "processChain": [
+        {
+          "pid": 29736,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 9800,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 48864,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 49324,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "db034d2d032645fab1aba591f186d22d": {
+      "sid": "db034d2d032645fab1aba591f186d22d",
+      "createdAt": "2026-06-15T11:38:52.5582809+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "🔔 Claude Code 任务完成测试",
+      "pid": 26632,
+      "processName": "pwsh",
+      "parentPid": 43196,
+      "hwnd": 0,
+      "hwndHex": "",
+      "hwndPid": 0,
+      "hwndSource": "",
+      "windowTitle": "",
+      "windowDisplayName": "PowerShell 7",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 4197092,
+      "foregroundPid": 20848,
+      "foregroundTitle": "Windows 默认锁屏界面",
+      "processChain": [
+        {
+          "pid": 26632,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 43196,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 44136,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 45224,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "6a9e9535e7fc4eaba67f1226e16508c6": {
+      "sid": "6a9e9535e7fc4eaba67f1226e16508c6",
+      "createdAt": "2026-06-15T11:40:22.6522632+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 7528,
+      "processName": "pwsh",
+      "parentPid": 51524,
+      "hwnd": 0,
+      "hwndHex": "",
+      "hwndPid": 0,
+      "hwndSource": "",
+      "windowTitle": "",
+      "windowDisplayName": "PowerShell 7",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 4197092,
+      "foregroundPid": 20848,
+      "foregroundTitle": "Windows 默认锁屏界面",
+      "processChain": [
+        {
+          "pid": 7528,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 51524,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 25796,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "69d76a5c432b41b3a492f86d1fa1fa8f": {
+      "sid": "69d76a5c432b41b3a492f86d1fa1fa8f",
+      "createdAt": "2026-06-15T11:41:26.7951146+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 36840,
+      "processName": "pwsh",
+      "parentPid": 50352,
+      "hwnd": 0,
+      "hwndHex": "",
+      "hwndPid": 0,
+      "hwndSource": "",
+      "windowTitle": "",
+      "windowDisplayName": "PowerShell 7",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 4197092,
+      "foregroundPid": 20848,
+      "foregroundTitle": "Windows 默认锁屏界面",
+      "processChain": [
+        {
+          "pid": 36840,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50352,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 22620,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "recent done notification for same window ageSeconds=65"
+    },
+    "f7176b36e8b646a1b12c59c983c0e491": {
+      "sid": "f7176b36e8b646a1b12c59c983c0e491",
+      "createdAt": "2026-06-15T12:18:40.6187538+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 50724,
+      "processName": "pwsh",
+      "parentPid": 35036,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 50724,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 35036,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 20912,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "22fc71444b3448bd8934f751e13d7070": {
+      "sid": "22fc71444b3448bd8934f751e13d7070",
+      "createdAt": "2026-06-15T12:19:40.5144069+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 19980,
+      "processName": "pwsh",
+      "parentPid": 49388,
+      "hwnd": 0,
+      "hwndHex": "",
+      "hwndPid": 0,
+      "hwndSource": "",
+      "windowTitle": "",
+      "windowDisplayName": "PowerShell 7",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 4592656,
+      "foregroundPid": 29100,
+      "foregroundTitle": "Process (F:\\OTD Code WorkSpace\\otd.pcs.agv.webapi\\)",
+      "processChain": [
+        {
+          "pid": 19980,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 49388,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50392,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "19023d05ccba420998d1ab1b44058454": {
+      "sid": "19023d05ccba420998d1ab1b44058454",
+      "createdAt": "2026-06-15T12:20:44.5310595+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 47352,
+      "processName": "pwsh",
+      "parentPid": 30464,
+      "hwnd": 0,
+      "hwndHex": "",
+      "hwndPid": 0,
+      "hwndSource": "",
+      "windowTitle": "",
+      "windowDisplayName": "PowerShell 7",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 131864,
+      "foregroundPid": 5172,
+      "foregroundTitle": "微信",
+      "processChain": [
+        {
+          "pid": 47352,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 30464,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 16196,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "recent done notification for same window ageSeconds=65"
+    },
+    "8420f5da1569496c802af8366c144698": {
+      "sid": "8420f5da1569496c802af8366c144698",
+      "createdAt": "2026-06-15T12:23:28.7999203+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 22792,
+      "processName": "pwsh",
+      "parentPid": 40444,
+      "hwnd": 8131402,
+      "hwndHex": "0x7C134A",
+      "hwndPid": 34128,
+      "hwndSource": "process-chain-window",
+      "windowTitle": "⠐ .NET 8.0 Options模式读取配置",
+      "windowDisplayName": "⠐ .NET 8.0 Options模式读取配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 1711510,
+      "foregroundPid": 16128,
+      "foregroundTitle": "Your Stars - Google Chrome",
+      "processChain": [
+        {
+          "pid": 22792,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 40444,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 26016,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41672,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41352,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34128,
+          "processName": "WindowsTerminal",
+          "mainWindowHandle": 8131402,
+          "mainWindowTitle": "⠐ .NET 8.0 Options模式读取配置"
+        }
+      ],
+      "suppressed": false
+    },
+    "59979045a4014895b83637c48d45e5d6": {
+      "sid": "59979045a4014895b83637c48d45e5d6",
+      "createdAt": "2026-06-15T12:26:39.1967978+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 29772,
+      "processName": "pwsh",
+      "parentPid": 32644,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 1711510,
+      "foregroundPid": 16128,
+      "foregroundTitle": "fathah/hermes-desktop: Desktop Companion for Hermes Agent - Google Chrome",
+      "processChain": [
+        {
+          "pid": 29772,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 32644,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 52148,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "8f44d9f41baf47eb82fae76f8adc7557": {
+      "sid": "8f44d9f41baf47eb82fae76f8adc7557",
+      "createdAt": "2026-06-15T12:29:33.5735519+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 49440,
+      "processName": "pwsh",
+      "parentPid": 35400,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 49440,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 35400,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37268,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "b3a454c8f9a74d0792d111a572a04cdc": {
+      "sid": "b3a454c8f9a74d0792d111a572a04cdc",
+      "createdAt": "2026-06-15T12:30:51.130862+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 43200,
+      "processName": "pwsh",
+      "parentPid": 45224,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 43200,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 45224,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50208,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "a2436c92c98f4d9580395fd80d0e7227": {
+      "sid": "a2436c92c98f4d9580395fd80d0e7227",
+      "createdAt": "2026-06-15T12:31:54.6299491+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 21600,
+      "processName": "pwsh",
+      "parentPid": 21816,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "✳ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 21600,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 21816,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 39492,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "b7e1a87db37649dfbaa535fa5b31c5a6": {
+      "sid": "b7e1a87db37649dfbaa535fa5b31c5a6",
+      "createdAt": "2026-06-15T12:34:17.3740252+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 19948,
+      "processName": "pwsh",
+      "parentPid": 21088,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 19948,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 21088,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6396,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "67ff5be25f0c4152a17f0113f8f8d1ba": {
+      "sid": "67ff5be25f0c4152a17f0113f8f8d1ba",
+      "createdAt": "2026-06-15T12:35:20.8094374+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 39864,
+      "processName": "pwsh",
+      "parentPid": 38656,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "✳ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 39864,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 38656,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 47616,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "duplicate input notification for same window ageSeconds=207"
+    },
+    "f8eec9f2ab8b40738ea813f3f52fff5b": {
+      "sid": "f8eec9f2ab8b40738ea813f3f52fff5b",
+      "createdAt": "2026-06-15T12:42:23.9752484+08:00",
+      "type": "permission",
+      "title": "Claude Code",
+      "message": "需要权限确认",
+      "pid": 50304,
+      "processName": "pwsh",
+      "parentPid": 50704,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 4197092,
+      "foregroundPid": 20848,
+      "foregroundTitle": "Windows 默认锁屏界面",
+      "processChain": [
+        {
+          "pid": 50304,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50704,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 52168,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "8f13b7cb738348a4832d492849ea6a0f": {
+      "sid": "8f13b7cb738348a4832d492849ea6a0f",
+      "createdAt": "2026-06-15T13:04:21.7233207+08:00",
+      "type": "permission",
+      "title": "Claude Code",
+      "message": "需要权限确认",
+      "pid": 41112,
+      "processName": "pwsh",
+      "parentPid": 31720,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 41112,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 31720,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 27744,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "ef128a583aca4e9d8a89cb793328c0fb": {
+      "sid": "ef128a583aca4e9d8a89cb793328c0fb",
+      "createdAt": "2026-06-15T13:11:18.7873196+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 49056,
+      "processName": "pwsh",
+      "parentPid": 23132,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 49056,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 23132,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 24104,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "cf62b0cd7c0144c0bf9a731d3ab8a3cd": {
+      "sid": "cf62b0cd7c0144c0bf9a731d3ab8a3cd",
+      "createdAt": "2026-06-15T13:12:21.3426711+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 13124,
+      "processName": "pwsh",
+      "parentPid": 16420,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 1643016,
+      "foregroundPid": 10396,
+      "foregroundTitle": "INDEX.md - .claude - Visual Studio Code",
+      "processChain": [
+        {
+          "pid": 13124,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 16420,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 33852,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "86be799216d74bf38ab444352e9987da": {
+      "sid": "86be799216d74bf38ab444352e9987da",
+      "createdAt": "2026-06-15T13:20:07.3947962+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 2576,
+      "processName": "pwsh",
+      "parentPid": 36772,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 1711510,
+      "foregroundPid": 16128,
+      "foregroundTitle": "silverbulletmd/silverbullet：一个基于 Markdown 构建的开源个人效率平台，并利用 Lua 的脚本功能进行了大幅增强。 - Google Chrome",
+      "processChain": [
+        {
+          "pid": 2576,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 36772,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 22388,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "5e1e9cde798548ff898fe227b15ca9a3": {
+      "sid": "5e1e9cde798548ff898fe227b15ca9a3",
+      "createdAt": "2026-06-15T13:21:10.1193863+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 17636,
+      "processName": "pwsh",
+      "parentPid": 34204,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "✳ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 17636,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34204,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 38004,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "duplicate input notification for same window ageSeconds=529"
+    },
+    "2b26c27483134b76817ff15e622210c2": {
+      "sid": "2b26c27483134b76817ff15e622210c2",
+      "createdAt": "2026-06-15T13:23:57.4568297+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 33664,
+      "processName": "pwsh",
+      "parentPid": 40948,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 131140,
+      "foregroundPid": 13772,
+      "foregroundTitle": "*新文件2 - Notepad++",
+      "processChain": [
+        {
+          "pid": 33664,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 40948,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 33692,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "6bf5c628aec147819c72f58be8745a55": {
+      "sid": "6bf5c628aec147819c72f58be8745a55",
+      "createdAt": "2026-06-15T13:25:00.12972+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 14464,
+      "processName": "pwsh",
+      "parentPid": 36640,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 1643016,
+      "foregroundPid": 10396,
+      "foregroundTitle": "CLAUDE.md - .claude - Visual Studio Code",
+      "processChain": [
+        {
+          "pid": 14464,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 36640,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 21832,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "duplicate input notification for same window ageSeconds=230"
+    },
+    "1d891b6278794391b156b30683eea87e": {
+      "sid": "1d891b6278794391b156b30683eea87e",
+      "createdAt": "2026-06-15T13:28:12.4792431+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 50300,
+      "processName": "pwsh",
+      "parentPid": 26508,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 50300,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 26508,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 32684,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "2c5f6d99faf849df88eac21f3f7eac1a": {
+      "sid": "2c5f6d99faf849df88eac21f3f7eac1a",
+      "createdAt": "2026-06-15T13:31:08.5208797+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 8976,
+      "processName": "pwsh",
+      "parentPid": 50732,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 8976,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50732,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50860,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "fe993a7ea7e648a181ae398b304652ad": {
+      "sid": "fe993a7ea7e648a181ae398b304652ad",
+      "createdAt": "2026-06-15T13:32:10.2789426+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 47276,
+      "processName": "pwsh",
+      "parentPid": 36172,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 65874,
+      "foregroundPid": 6504,
+      "foregroundTitle": "Program Manager",
+      "processChain": [
+        {
+          "pid": 47276,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 36172,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 13544,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "d7f8a0d0ec104b1cb4cd3e7ebab4a018": {
+      "sid": "d7f8a0d0ec104b1cb4cd3e7ebab4a018",
+      "createdAt": "2026-06-15T13:33:12.9857802+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 38892,
+      "processName": "pwsh",
+      "parentPid": 23320,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 65874,
+      "foregroundPid": 6504,
+      "foregroundTitle": "Program Manager",
+      "processChain": [
+        {
+          "pid": 38892,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 23320,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 13628,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "duplicate input notification for same window ageSeconds=493"
+    },
+    "db9bbefc9f0146b4b4def5062656607e": {
+      "sid": "db9bbefc9f0146b4b4def5062656607e",
+      "createdAt": "2026-06-15T13:40:50.1285798+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 48420,
+      "processName": "pwsh",
+      "parentPid": 52208,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 48420,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 52208,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 44080,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "a96035c6946442f6997a4ad8f4cfe2b4": {
+      "sid": "a96035c6946442f6997a4ad8f4cfe2b4",
+      "createdAt": "2026-06-15T13:41:52.7837125+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 15104,
+      "processName": "pwsh",
+      "parentPid": 48048,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "✳ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 15104,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 48048,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 48240,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": true,
+      "suppressionReason": "duplicate input notification for same window ageSeconds=521"
+    },
+    "64f960e1d8e748529d88234865831ae5": {
+      "sid": "64f960e1d8e748529d88234865831ae5",
+      "createdAt": "2026-06-15T13:43:03.6162657+08:00",
+      "type": "permission",
+      "title": "Claude Code",
+      "message": "需要权限确认",
+      "pid": 42800,
+      "processName": "pwsh",
+      "parentPid": 36800,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 464114,
+      "foregroundPid": 15400,
+      "foregroundTitle": "Jiawei Feng/冯佳伟分享的图片",
+      "processChain": [
+        {
+          "pid": 42800,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 36800,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 41380,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "6338050ea84e4c2588e3b0d4aac87ea3": {
+      "sid": "6338050ea84e4c2588e3b0d4aac87ea3",
+      "createdAt": "2026-06-15T13:51:15.4404258+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 51120,
+      "processName": "pwsh",
+      "parentPid": 47796,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 133496,
+      "foregroundPid": 15400,
+      "foregroundTitle": "花链",
+      "processChain": [
+        {
+          "pid": 51120,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 47796,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 3296,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "5c781dc53b824c05bdf3bc4f40a7f784": {
+      "sid": "5c781dc53b824c05bdf3bc4f40a7f784",
+      "createdAt": "2026-06-15T13:57:08.7215799+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 43344,
+      "processName": "pwsh",
+      "parentPid": 16460,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 1576410,
+      "foregroundPid": 6504,
+      "foregroundTitle": "SH-SMT-MPIPrint - 文件资源管理器",
+      "processChain": [
+        {
+          "pid": 43344,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 16460,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50092,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "4002f21f205147b4add3b2f6526b4b3b": {
+      "sid": "4002f21f205147b4add3b2f6526b4b3b",
+      "createdAt": "2026-06-15T14:02:41.6198961+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 42436,
+      "processName": "pwsh",
+      "parentPid": 46104,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 463284,
+      "foregroundPid": 51592,
+      "foregroundTitle": "SH-PCS – MainWindow.xaml.cs",
+      "processChain": [
+        {
+          "pid": 42436,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 46104,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 51764,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "defefa209b9f401ab46e1596477c682b": {
+      "sid": "defefa209b9f401ab46e1596477c682b",
+      "createdAt": "2026-06-15T14:03:44.1884246+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 49968,
+      "processName": "pwsh",
+      "parentPid": 33988,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 464114,
+      "foregroundPid": 15400,
+      "foregroundTitle": "Wei Xie/谢炜分享的图片",
+      "processChain": [
+        {
+          "pid": 49968,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 33988,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34652,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "ed4a5fa511d441c1816694ebf5ff315d": {
+      "sid": "ed4a5fa511d441c1816694ebf5ff315d",
+      "createdAt": "2026-06-15T14:07:28.3493113+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 52052,
+      "processName": "pwsh",
+      "parentPid": 4744,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 463284,
+      "foregroundPid": 51592,
+      "foregroundTitle": "SH-PCS – MainViewModel.cs",
+      "processChain": [
+        {
+          "pid": 52052,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 4744,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 39472,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "0476406d2c5049e9a277d04b5c4ae876": {
+      "sid": "0476406d2c5049e9a277d04b5c4ae876",
+      "createdAt": "2026-06-15T14:10:56.6068606+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 15136,
+      "processName": "pwsh",
+      "parentPid": 48312,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 463284,
+      "foregroundPid": 51592,
+      "foregroundTitle": "SH-PCS – MainViewModel.cs",
+      "processChain": [
+        {
+          "pid": 15136,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 48312,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34896,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "c526c0d3b08d47e8b695a93b6bd1acf4": {
+      "sid": "c526c0d3b08d47e8b695a93b6bd1acf4",
+      "createdAt": "2026-06-15T14:16:16.4900258+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 43888,
+      "processName": "pwsh",
+      "parentPid": 18984,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 5573622,
+      "foregroundPid": 13772,
+      "foregroundTitle": "查找",
+      "processChain": [
+        {
+          "pid": 43888,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 18984,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 44284,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "5737001cbdd4418db5fa041fa19e9e6e": {
+      "sid": "5737001cbdd4418db5fa041fa19e9e6e",
+      "createdAt": "2026-06-15T14:19:10.3499429+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 20020,
+      "processName": "pwsh",
+      "parentPid": 38040,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 918026,
+      "foregroundPid": 5172,
+      "foregroundTitle": "Weixin",
+      "processChain": [
+        {
+          "pid": 20020,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 38040,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 23080,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "862ed59fdbb742c5874f7dbdc953e12e": {
+      "sid": "862ed59fdbb742c5874f7dbdc953e12e",
+      "createdAt": "2026-06-15T14:20:13.7398446+08:00",
+      "type": "input",
+      "title": "Claude Code",
+      "message": "等待你的输入",
+      "pid": 17636,
+      "processName": "pwsh",
+      "parentPid": 50540,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "✳ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "✳ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 2626796,
+      "foregroundPid": 5172,
+      "foregroundTitle": "图片和视频",
+      "processChain": [
+        {
+          "pid": 17636,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 50540,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 27128,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "d793b75dda7f49fca5e0055ea464a3ff": {
+      "sid": "d793b75dda7f49fca5e0055ea464a3ff",
+      "createdAt": "2026-06-15T14:36:09.4094591+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 36164,
+      "processName": "pwsh",
+      "parentPid": 51828,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 36164,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 51828,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34008,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "0aaa749a85ae47c3ab6fd4ad4cb63718": {
+      "sid": "0aaa749a85ae47c3ab6fd4ad4cb63718",
+      "createdAt": "2026-06-15T14:40:13.6123722+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 29564,
+      "processName": "pwsh",
+      "parentPid": 43920,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 133496,
+      "foregroundPid": 15400,
+      "foregroundTitle": "花链",
+      "processChain": [
+        {
+          "pid": 29564,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 43920,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 12532,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "437561731b604e5489a6dd1021640a3b": {
+      "sid": "437561731b604e5489a6dd1021640a3b",
+      "createdAt": "2026-06-15T14:42:38.1223962+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 50764,
+      "processName": "pwsh",
+      "parentPid": 18892,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "single-terminal-fallback",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 3741806,
+      "foregroundPid": 15400,
+      "foregroundTitle": "",
+      "processChain": [
+        {
+          "pid": 50764,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 18892,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 51796,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "04c8e90b39134db080e756d8be8645a5": {
+      "sid": "04c8e90b39134db080e756d8be8645a5",
+      "createdAt": "2026-06-15T14:44:27.9485757+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 19968,
+      "processName": "pwsh",
+      "parentPid": 20496,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠂ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠂ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 19968,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 20496,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 38420,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    },
+    "34c1ecb81f1e489b8e8242afa154cdff": {
+      "sid": "34c1ecb81f1e489b8e8242afa154cdff",
+      "createdAt": "2026-06-15T14:48:44.2858373+08:00",
+      "type": "done",
+      "title": "Claude Code",
+      "message": "任务已完成",
+      "pid": 9424,
+      "processName": "pwsh",
+      "parentPid": 46824,
+      "hwnd": 9836204,
+      "hwndHex": "0x9616AC",
+      "hwndPid": 34128,
+      "hwndSource": "foreground-terminal",
+      "windowTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "windowDisplayName": "⠐ 查看 Claude 任务完成通知配置",
+      "consoleHwnd": 0,
+      "foregroundHwnd": 9836204,
+      "foregroundPid": 34128,
+      "foregroundTitle": "⠐ 查看 Claude 任务完成通知配置",
+      "processChain": [
+        {
+          "pid": 9424,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 46824,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 44492,
+          "processName": "bash",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 37940,
+          "processName": "claude",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 34660,
+          "processName": "pwsh",
+          "mainWindowHandle": 0,
+          "mainWindowTitle": ""
+        },
+        {
+          "pid": 6504,
+          "processName": "explorer",
+          "mainWindowHandle": 199060,
+          "mainWindowTitle": ""
+        }
+      ],
+      "suppressed": false
+    }
+  },
+  "updatedAt": "2026-06-15T14:48:44.3914175+08:00"
+}

@@ -13,7 +13,7 @@ function readStdin() {
     process.stdin.on('data', (chunk) => { data += chunk; });
     process.stdin.on('end', () => resolve(data));
     // 超时保护
-    setTimeout(() => resolve(''), 1000);
+    setTimeout(() => resolve(data), 10000);
   });
 }
 
@@ -29,15 +29,17 @@ async function main() {
     if (/git\s+(commit|push|branch|merge|rebase|checkout|stash|reset|cherry-pick|revert)/i.test(prompt) ||
         /提交|推送|分支|合并|变基|暂存|回滚/i.test(prompt)) {
 
-      const gitRulesPath = path.join(process.env.USERPROFILE || process.env.HOME, '.claude', 'rules', 'workflows', 'git.md');
+      const gitRulesPath = path.join(process.env.USERPROFILE || process.env.HOME || '', '.claude', 'rules', 'workflows', 'git.md');
 
       if (fs.existsSync(gitRulesPath)) {
         const gitRules = fs.readFileSync(gitRulesPath, 'utf8');
-        console.log(JSON.stringify({ additionalContext: gitRules }));
+        // 只注入前 40 行（核心规则），避免浪费 token
+        const lines = gitRules.split('\n').slice(0, 40).join('\n');
+        console.log(JSON.stringify({ additionalContext: lines }));
       }
     }
   } catch (e) {
-    // 静默失败
+    console.error('[inject-git-rules] Error:', e.message);
   }
   process.exit(0);
 }

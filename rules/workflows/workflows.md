@@ -2,6 +2,16 @@
 
 > 触发词映射唯一定义处。CLAUDE.md 引用此文件。详细流程见各 command 文件。
 
+## ⚠️ 铁律
+
+**收到 `/build`、`/explore`、`/operate` 命令时，必须第一步调用 Workflow 工具，禁止跳过直接编码。**
+
+跳过 Workflow 会：
+- 跳过 Requirement Gate → 需求理解不充分
+- 跳过 Design Gate → 没有检查已有代码
+- 跳过 Code Gate → 没有参考已有模块风格
+- 导致重复返工、浪费 token
+
 ## 路由机制
 
 **路由由 `workflow-router.js` hook 自动处理。** 用户输入包含触发词时，hook 自动注入路由上下文，LLM 遵循注入的提示调用对应 Skill。
@@ -32,7 +42,6 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 | 修复/bug/报错/排查 | `/operate` | 问题排查、根因分析、性能调优 |
 | 审查/review | `/review` | 多维度代码审查 |
 | 测试/跑测试 | `/test` | 测试执行、失败修复 |
-| 提交/创建工作区/完成分支 | `/commit` | Git 提交与工作空间管理 |
 
 ### Skills（技能）
 
@@ -49,6 +58,9 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 | 系统化调试 | `/systematic-debugging` | 四阶段调试流程 |
 | 测试执行 | `/test-runner` | 测试执行闭环 |
 | 验证门禁 | `/verification-before-completion` | 验证与进度保存 |
+| 对抗审查 | `/adversarial-review` | 多角度对抗性代码审查 |
+| 技能管理 | `/skill-manager` | 技能注册与管理 |
+| 提交/commit/创建工作区/完成分支 | `/commit` | Git 提交与工作空间管理 |
 
 ### 自动触发
 
@@ -84,3 +96,9 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 | inject-git-rules.js | UserPromptSubmit | git 关键词 | 注入 git 规则 |
 | inject-token-rules.js | UserPromptSubmit | 代码分析关键词 | 注入 token 优化规则 |
 | build-verify.js | Stop | 会话结束 | 编译验证，失败则阻断 |
+| notify.ps1 | Stop/Notification | 任务完成/等待输入 | Windows Toast 通知 |
+| prompt-optimizer.js | UserPromptSubmit | 所有输入 | 输入清晰度检查 |
+| project-knowledge.js | SessionStart | 会话启动 | 加载项目 learnings |
+| learning-recorder.js | Stop | 会话结束 | 记录经验到 learnings.md |
+| metrics-collector.js | PostToolUse | 所有工具 | 记录调用统计 |
+| metrics-report.js | Stop | 会话结束 | 输出度量报告 |

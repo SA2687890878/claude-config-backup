@@ -26,10 +26,12 @@ version: 2.0.0
 产出全面的实现计划，假设执行者对代码库零上下文。DRY. YAGNI. 频繁提交。
 
 **核心原则：**
+- Phase 0 必须先做：文档发现，确认 API 真实存在
 - 范围检查：多个独立子系统 → 拆成多个计划
 - 文件结构映射：定义 task 前先规划文件
 - 粒度：每个步骤是一个动作（2-5 分钟）
 - 禁止占位符：绝不写 TBD、TODO
+- Subagent 报告契约：每个发现必须有来源引用
 
 读取 `references/plan-details.md` 了解完整流程和自检清单。
 
@@ -40,10 +42,11 @@ version: 2.0.0
 **核心流程：**
 1. 加载并审查计划文件
 2. 逐 task 执行：标记 in_progress → 执行 → 验证 → 标记 completed
-3. 连续执行，不在 task 之间暂停
-4. 碰到阻塞立即停下求助
+3. 每阶段验证：反模式扫描 + 代码质量快查，通过才进入下一 task
+4. 连续执行，不在 task 之间暂停
+5. 碰到阻塞立即停下求助
 
-读取 `references/execution-details.md` 了解 subagent 模式和模型选择。
+读取 `references/execution-details.md` 了解 subagent 模式、每阶段验证和模型选择。
 
 ---
 

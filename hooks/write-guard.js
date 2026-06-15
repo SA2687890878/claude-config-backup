@@ -39,5 +39,5 @@ process.stdin.on('end', () => {
       console.error('[Hook] Tip: Move to a project directory or use README.md');
       process.exit(2);
     }
-  } catch (e) { /* 静默失败 */ }
+  } catch (e) { console.error('[write-guard] Error:', e.message); }
 });

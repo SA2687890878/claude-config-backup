@@ -36,23 +36,29 @@ Claude 调用工具（Write/Edit）
     ├─→ PreToolUse（执行前）
     │   ├─→ secret-guard.js: 硬编码密钥？→ 阻断
     │   ├─→ write-guard.js: 主目录垃圾文件？→ 阻断
-    │   └─→ impact-guard.js: 修改 .cs？→ 提醒查调用链
+    │   ├─→ impact-guard.js: 修改 .cs？→ 提醒查调用链
+    │   └─→ encrypted-write-guard.js: 加密项目？→ 警告
     │
     ├─→ 工具执行
     │
     └─→ PostToolUse（执行后）
         ├─→ cs-guard.js: C# 语法检查
         ├─→ quality-guard.js: SQL 注入/null 安全/资源释放
+        ├─→ logic-guard.js: foreach await/字符串判断/Dispose
+        ├─→ vue-guard.js: Vue 2/Element UI 检查
         ├─→ test-reminder.js: 提示运行测试
+        ├─→ review-trigger.js: 提示运行代码审查
         ├─→ sqlite-index-update.js: 自动增量更新 SQLite 索引 ⭐
+        ├─→ learning-recorder.js: 记录修改到 learnings.md ⭐
+        ├─→ metrics-collector.js: 记录工具调用统计 ⭐
         └─→ git-commit-review.js: git 操作安全检查（Bash）
 
 会话结束
     │
-    └─→ Stop: build-verify.js
-        ├─→ dotnet build（编译验证）
-        └─→ dotnet test（测试验证，如有测试项目）
-        → 任一失败 → 阻断会话结束
+    └─→ Stop
+        ├─→ build-verify.js: dotnet build + test（警告不阻断）
+        ├─→ metrics-report.js: 输出度量报告 ⭐
+        └─→ notify.ps1: Windows Toast 通知 ⭐
 ```
 
 ---

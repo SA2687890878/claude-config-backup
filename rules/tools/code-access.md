@@ -187,6 +187,34 @@ mcp__context-mode__ctx_execute({ language: "shell", code: "node -e \"...\"" })
 
 ---
 
+## 写入规则（铁律）
+
+**编辑加密 .cs 文件时，必须用 PowerShell 脚本写入，禁止用 node.exe 写入。**
+
+| 操作 | node.exe | PowerShell | bash |
+|------|---------|------------|------|
+| 读取 | ✅ 明文 | ✅ 明文 | ❌ 乱码 |
+| 写入 | ❌ 破坏格式 | ✅ 保持加密 | ❌ 不可用 |
+
+**正确写入方式：**
+```javascript
+const psScript = `
+$filePath = Join-Path '<项目路径>' '相对路径'
+$content = Get-Content -Path $filePath -Raw
+$content = $content.Replace('旧内容', '新内容')
+[System.IO.File]::WriteAllText($filePath, $content)
+`;
+execSync(`powershell -ExecutionPolicy Bypass -File "${scriptPath}"`);
+```
+
+**禁止：**
+```javascript
+// ❌ node.exe 写入会破坏加密格式
+fs.writeFileSync(path, content, 'utf8');
+```
+
+---
+
 ## 反模式（禁止）
 
 - ❌ 直接 Read 整个 .cs 文件来理解结构（用 search.ps1）
@@ -196,3 +224,5 @@ mcp__context-mode__ctx_execute({ language: "shell", code: "node -e \"...\"" })
 - ❌ 用 context-mode JavaScript 沙箱读加密项目的 .cs（会读到乱码）
 - ❌ 用 ctx_search 查加密项目的 .cs（需要先索引，且不支持源码搜索）
 - ❌ 在 workflows 中写死提示词（用专门的 agents）
+- ❌ 用 node.exe 写入加密 .cs 文件（会破坏加密格式）
+- ❌ 开发新功能前不搜索已有实体（可能已有映射到目标表的实体）
