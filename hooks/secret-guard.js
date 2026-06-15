@@ -37,7 +37,8 @@ const BASH_SECRET_PATTERNS = [
   { pattern: /\btp-[A-Za-z0-9]{32,}/, label: 'Anthropic/proxy auth token in command' },
   { pattern: /\bsk-[A-Za-z0-9]{32,}/, label: 'OpenAI-style API key in command' },
 ];
-const SAFE_BASH_PATTERNS = [/\$\{?\w+\}?/, /rtk\s+/, /git\s+/];
+// 只跳过安全的 git 只读命令（不跳过 push/commit，让检测覆盖）
+const SAFE_BASH_PATTERNS = [/\$\{?\w+\}?/, /rtk\s+/, /\bgit\s+(?:status|log|diff|branch|show|remote|fetch|stash\s+list)\b/];
 
 let data = '';
 process.stdin.on('data', chunk => data += chunk);
@@ -67,7 +68,7 @@ process.stdin.on('end', () => {
         console.error('[Hook] BLOCKED: Potential secret leak in Bash command');
         findings.forEach(f => console.error('[Hook]   - ' + f.label + ': "' + f.matched + '..."'));
         console.error('[Hook] Use environment variables or secrets manager instead.');
-        process.exit(2); return;
+        process.exit(2);
       }
       return;
     }
@@ -91,7 +92,7 @@ process.stdin.on('end', () => {
       console.error('[Hook] BLOCKED: Potential hardcoded secrets detected');
       findings.forEach(f => console.error('[Hook]   - ' + f.label + ': "' + f.matched + '..."'));
       console.error('[Hook] Use environment variables or secrets manager instead.');
-      process.exit(2); return;
+      process.exit(2);
     }
-  } catch (e) { /* 静默失败，不以错误阶变阻断工作流 */ }
+  } catch (e) { console.error('[secret-guard] Error:', e.message); }
 });

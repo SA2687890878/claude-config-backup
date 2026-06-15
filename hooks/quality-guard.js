@@ -32,7 +32,7 @@ const PATTERN_CHECKS = [
     tag: '📝'
   },
   {
-    re: /\/\/\s*(?:if|for|while|var|return|public|private|protected)\b/g,
+    re: /\/\/\s*(?:if\s*\(|for\s*\(|while\s*\(|var\s+\w+\s*=|return\s+\w+\s*;|public\s+\w+|private\s+\w+|protected\s+\w+)/g,
     msg: '注释掉的代码（考虑删除）',
     tag: '💡'
   }
@@ -113,28 +113,51 @@ process.stdin.on('end', () => {
 
     const content = (input.tool_input && (input.tool_input.content || input.tool_input.new_string)) || '';
     if (!content) return;
-    // Write 用 content，Edit 用 new_string；两者长度不同，统一用 30 作为下限
     if (content.length < 30) return;
 
     const fileName = path.basename(filePath);
     const lines = content.split('\n');
     const warnings = [];
+    const blocks = [];
 
     // Pattern checks
     for (const chk of PATTERN_CHECKS) {
       const m = content.match(chk.re);
-      if (m && m.length > 0) warnings.push(`${chk.tag} ${chk.msg}（${m.length} 处）`);
+      if (m && m.length > 0) {
+        // SQL 注入 → 拦截
+        if (chk.msg.includes('SQL 注入')) {
+          blocks.push(`${chk.msg}（${m.length} 处）`);
+        } else {
+          warnings.push(`${chk.tag} ${chk.msg}（${m.length} 处）`);
+        }
+      }
     }
 
-    // Logic checks
-    warnings.push(...checkNullSafety(lines));
-    warnings.push(...checkResourceDisposal(lines));
-    warnings.push(...checkCancellationToken(lines));
-    warnings.push(...checkExceptionHandling(lines));
+    // Logic checks → 高风险阻断
+    const nullSafety = checkNullSafety(lines);
+    const resourceDisposal = checkResourceDisposal(lines);
+    const cancellationToken = checkCancellationToken(lines);
+    const exceptionHandling = checkExceptionHandling(lines);
 
+    // null 安全、资源未 using、空 catch → 阻断
+    if (nullSafety.length > 0) blocks.push(...nullSafety);
+    if (resourceDisposal.length > 0) blocks.push(...resourceDisposal);
+    if (exceptionHandling.length > 0) blocks.push(...exceptionHandling);
+
+    // CancellationToken → 警告（不阻断）
+    warnings.push(...cancellationToken);
+
+    // CRITICAL/HIGH 级别问题 → 警告（PostToolUse 不阻断，避免回滚用户修改）
+    if (blocks.length > 0) {
+      console.error(`\n[Quality Guard] ${fileName}:`);
+      blocks.forEach(w => console.error(`  🚫 ${w}`));
+      console.error('[Quality Guard] ⚠️ 请修复上述问题。');
+    }
+
+    // MEDIUM/LOW 级别问题 → 警告（不阻断）
     if (warnings.length > 0) {
       console.error(`\n[Quality Guard] ${fileName}:`);
-      warnings.forEach(w => console.error(`  ${w}`));
+      warnings.forEach(w => console.error(`  ⚠️ ${w}`));
       console.error('');
     }
   } catch (e) { console.error("[Hook Error] quality-guard: " + e.message); }

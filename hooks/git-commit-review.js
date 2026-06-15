@@ -30,7 +30,7 @@ const GIT_SECURITY_CHECKS = [
 // 置信度评分
 // ============================================================
 
-function calculateConfidence(match, pattern, context) {
+function calculateConfidence(pattern, context) {
   let confidence = pattern.confidence || 70;
   if (context.branch && /test|dev|feature/.test(context.branch)) confidence -= 10;
   return Math.max(0, Math.min(100, confidence));
@@ -63,10 +63,19 @@ process.stdin.on('end', () => {
 
     const findings = [];
 
+    // 获取当前分支用于置信度计算
+    let currentBranch = '';
+    try {
+      const cwd = input.cwd || process.cwd();
+      currentBranch = require('child_process').execSync('git rev-parse --abbrev-ref HEAD', {
+        cwd, encoding: 'utf8', timeout: 3000
+      }).trim();
+    } catch (e) { process.stderr.write('[git-commit-review] Cannot get branch: ' + e.message + '\n'); }
+
     for (const pattern of GIT_SECURITY_CHECKS) {
       const match = command.match(pattern.pattern);
       if (match) {
-        const confidence = calculateConfidence(match[0], pattern, {});
+        const confidence = calculateConfidence(pattern, { branch: currentBranch });
         if (confidence >= 60) {
           findings.push({
             label: pattern.label,
@@ -90,8 +99,20 @@ process.stdin.on('end', () => {
         process.stderr.write(`[Hook]     建议: ${f.fix}\n`);
       });
 
-      // 对于高严重性问题，输出警告但不阻塞
-      const highSeverity = findings.filter(f => f.severity === 'HIGH');
+      // CRITICAL: force push 和 push to main/master 必须拦截
+      const blockPatterns = ['Force push detected', 'Push to protected branch'];
+      const blockFindings = findings.filter(f => blockPatterns.includes(f.label));
+      if (blockFindings.length > 0) {
+        const reasons = blockFindings.map(f => f.description).join('; ');
+        console.log(JSON.stringify({
+          decision: 'block',
+          reason: `[git-commit-review] ${reasons}。请使用 Pull Request 流程。`
+        }));
+        process.exit(0);
+      }
+
+      // 其他 HIGH 级别问题仅警告
+      const highSeverity = findings.filter(f => f.severity === 'HIGH' && !blockPatterns.includes(f.label));
       if (highSeverity.length > 0) {
         process.stderr.write('[Hook] ⚠️ 请确认以上安全问题\n');
       }

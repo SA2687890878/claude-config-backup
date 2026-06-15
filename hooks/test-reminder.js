@@ -26,7 +26,7 @@ process.stdin.on('end', () => {
       try {
         const entries = fs.readdirSync(dir);
         if (entries.some(f => f.toLowerCase().endsWith('.csproj'))) { csprojDir = dir; break; }
-      } catch (_) { return; }
+      } catch (e) { process.stderr.write('[test-reminder] Access error: ' + dir + ' - ' + e.message + '\n'); return; }
       const parent = path.dirname(dir);
       if (parent === dir) return;
       dir = parent;
@@ -44,10 +44,10 @@ process.stdin.on('end', () => {
         const csprojs = fs.readdirSync(path.join(parent, c.name)).filter(f => f.toLowerCase().endsWith('.csproj'));
         if (csprojs.length > 0) { testProj = path.join(parent, c.name, csprojs[0]); break; }
       }
-    } catch (_) {}
+    } catch (e) { process.stderr.write('[test-reminder] Error reading test dirs: ' + e.message + '\n'); }
 
     if (testProj) {
       console.error(`[test-reminder] .cs 已修改 → 建议运行：dotnet test "${testProj}"`);
     }
-  } catch (_) {}
+  } catch (e) { console.error('[test-reminder] Error:', e.message); }
 });

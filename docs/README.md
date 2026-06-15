@@ -35,6 +35,19 @@ docs/
 ├── CLAUDE-template.md                # 全局 CLAUDE.md 模板
 └── templates/
     └── interface-contract.md         # 接口契约模板
+
+新增文件（2026-06-15）：
+├── skills/INDEX.md                   # Skills 目录索引
+├── rules/INDEX.md                    # Rules 目录索引
+├── rules/quality/hooks-standards.md  # Hook 代码质量标准
+├── rules/workflows/task-management.md # 任务管理规则
+├── rules/languages/javascript.md     # JavaScript/TypeScript 规范
+├── hooks/learning-recorder.js        # 经验沉淀（PostToolUse）
+├── hooks/project-knowledge.js        # 经验加载（SessionStart）
+├── hooks/metrics-collector.js        # 度量收集（PostToolUse）
+├── hooks/metrics-report.js           # 度量报告（Stop）
+├── hooks/notify.ps1                  # Windows Toast 通知
+└── learnings.md                      # 核心经验（每次加载）
 ```
 
 ---

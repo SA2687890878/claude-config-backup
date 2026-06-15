@@ -18,7 +18,7 @@ function readStdin() {
     process.stdin.setEncoding('utf8');
     process.stdin.on('data', (chunk) => { data += chunk; });
     process.stdin.on('end', () => resolve(data));
-    setTimeout(() => resolve(''), 1000);
+    setTimeout(() => resolve(data), 10000);
   });
 }
 
@@ -41,32 +41,32 @@ const ROUTES = [
   {
     // 功能开发
     pattern: /(?:开发|添加|实现|写一个|写个|新建).*(?:功能|接口|页面|模块|服务|组件)|(?:帮我|给我).*(?:开发|实现|添加)/i,
-    workflow: '/feature-development',
-    hint: '触发 /feature-development 功能开发流程',
+    workflow: '/build',
+    hint: '触发 /build 功能开发流程',
   },
   {
     // Bug 修复
     pattern: /(?:修复|修|改|排查|定位|解决).*(?:bug|报错|错误|异常|失败|问题|崩)|(?:有|出|这个).*(?:bug|报错|异常|问题)|修复.*(?:一下|吧)/i,
-    workflow: '/bug-fix',
-    hint: '触发 /bug-fix Bug 修复流程',
+    workflow: '/operate',
+    hint: '触发 /operate 问题排查流程',
   },
   {
     // 性能优化
     pattern: /(?:优化|调优|加速|慢|卡|性能).*(?:一下|吧|问题)|(?:接口|查询|页面).*(?:慢|卡|超时)/i,
-    workflow: '/perf-optimize',
-    hint: '触发 /perf-optimize 性能优化流程',
+    workflow: '/perf-tune',
+    hint: '触发 /perf-tune 性能调优流程',
   },
   {
     // 代码审查
     pattern: /(?:审查|review|检查|看看).*(?:代码|改动|diff|提交)|(?:帮我|给我).*(?:review|审查)/i,
-    workflow: '/code-review',
-    hint: '触发 /code-review 代码审查流程',
+    workflow: '/review',
+    hint: '触发 /review 代码审查流程',
   },
   {
     // 测试
     pattern: /(?:跑|运行|执行|跑一下).*(?:测试|test)|(?:测试|test).*(?:失败|通过|过了|跑一下)|回归测试/i,
-    workflow: '/test-runner',
-    hint: '触发 /test-runner 测试执行流程',
+    workflow: '/test',
+    hint: '触发 /test 测试执行流程',
   },
   {
     // 数据库变更
@@ -97,20 +97,20 @@ const ROUTES = [
 async function main() {
   try {
     const raw = await readStdin();
-    if (!raw) { process.exit(0); return; }
+    if (!raw || !raw.trim()) process.exit(0);
 
     const input = JSON.parse(raw);
     const prompt = input.prompt || '';
 
     // 太短的输入不处理（避免误触发）
-    if (prompt.length < 4) { process.exit(0); return; }
+    if (prompt.length < 4) process.exit(0);
 
     // 跳过已经是 slash command 的输入
-    if (/^\s*\//.test(prompt)) { process.exit(0); return; }
+    if (/^\s*\//.test(prompt)) process.exit(0);
 
     // 跳过纯讨论/提问（没有执行意图的词）
     if (/^(?:什么是|怎么理解|为什么|如何看|介绍一下|解释|tell me|what is|why|how)/i.test(prompt)) {
-      process.exit(0); return;
+      process.exit(0);
     }
 
     for (const route of ROUTES) {
@@ -119,9 +119,12 @@ async function main() {
 
         if (route.action === 'restore-task-state') {
           // 恢复任务进度
+          // 从 cwd 动态生成项目目录名
+          const cwd = input.cwd || process.cwd();
+          const projectPath = cwd.replace(/:/g, '-').replace(/[\/\\]/g, '-');
           const taskStatePath = path.join(
-            process.env.USERPROFILE || process.env.HOME,
-            '.claude', 'projects', 'C--Users-admin', 'memory', 'task-state.md'
+            process.env.USERPROFILE || process.env.HOME || '',
+            '.claude', 'projects', projectPath, 'memory', 'task-state.md'
           );
           if (fs.existsSync(taskStatePath)) {
             const content = fs.readFileSync(taskStatePath, 'utf8');
@@ -151,7 +154,7 @@ async function main() {
       }
     }
   } catch (e) {
-    // 静默失败
+    console.error('[workflow-router] Error:', e.message);
   }
   process.exit(0);
 }

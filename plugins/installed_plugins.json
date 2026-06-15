@@ -4,11 +4,11 @@
     "code-review@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\code-review\\9eae436aa296",
-        "version": "9eae436aa296",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\code-review\\be88f154f6ab",
+        "version": "be88f154f6ab",
         "installedAt": "2026-04-30T07:11:42.803Z",
-        "lastUpdated": "2026-06-11T00:45:40.570Z",
-        "gitCommitSha": "9eae436aa2968ada86d8535634d0be5162d720b8"
+        "lastUpdated": "2026-06-15T02:28:49.378Z",
+        "gitCommitSha": "be88f154f6ab4f0c5142585ede3d9763aca38bd4"
       }
     ],
     "code-simplifier@claude-plugins-official": [
@@ -24,21 +24,21 @@
     "security-guidance@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\security-guidance\\2.0.4",
-        "version": "2.0.4",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\security-guidance\\2.0.6",
+        "version": "2.0.6",
         "installedAt": "2026-04-30T08:14:55.356Z",
-        "lastUpdated": "2026-06-11T00:45:40.654Z",
-        "gitCommitSha": "9eae436aa2968ada86d8535634d0be5162d720b8"
+        "lastUpdated": "2026-06-15T01:59:38.669Z",
+        "gitCommitSha": "ed282ece77f743e4a0ddaed8eb06d9d5e91137f7"
       }
     ],
     "context7@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\context7\\9eae436aa296",
-        "version": "9eae436aa296",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\context7\\be88f154f6ab",
+        "version": "be88f154f6ab",
         "installedAt": "2026-04-30T08:15:35.659Z",
-        "lastUpdated": "2026-06-11T00:45:40.541Z",
-        "gitCommitSha": "9eae436aa2968ada86d8535634d0be5162d720b8"
+        "lastUpdated": "2026-06-15T02:28:49.337Z",
+        "gitCommitSha": "be88f154f6ab4f0c5142585ede3d9763aca38bd4"
       }
     ],
     "custom-agents@local": [
@@ -49,16 +49,6 @@
         "installedAt": "2026-06-04T18:30:00.000Z",
         "lastUpdated": "2026-06-04T18:30:00.000Z",
         "gitCommitSha": "local"
-      }
-    ],
-    "caveman@caveman": [
-      {
-        "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\caveman\\caveman\\655b7d9c5431",
-        "version": "655b7d9c5431",
-        "installedAt": "2026-06-06T15:12:19.468Z",
-        "lastUpdated": "2026-06-09T04:28:44.301Z",
-        "gitCommitSha": "655b7d9c5431f822264b7732e9901c5578ac84cf"
       }
     ]
   }

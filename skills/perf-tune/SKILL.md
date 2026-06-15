@@ -4,6 +4,7 @@ description: >
   性能调优 — .NET + SQL Server + PostgreSQL + WPF 性能诊断与优化。用数据说话，先量后优。
   当用户说 /perf-tune、性能调优、性能优化、慢查询、性能问题、
   响应很慢、CPU 高、内存泄漏、数据库卡时触发。
+version: 2.0.0
 model: sonnet
 ---
 
