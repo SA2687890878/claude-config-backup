@@ -23,6 +23,15 @@ plans/
 stats-cache.json
 .last-cleanup
 .caveman-active
+.last-update-result.json
+window-state.json
+
+# 度量数据（每日生成，不提交）
+metrics/daily/
+metrics/sessions/
+
+# 插件缓存
+plugins/known_marketplaces.json
 
 # 第三方插件（不需要备份）
 plugins/marketplaces/
