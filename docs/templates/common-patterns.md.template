@@ -1,0 +1,278 @@
+# 常用模式和最佳实践
+
+> 项目级可复用的设计模式和编码模式。
+
+## Repository 模式
+
+### 接口定义
+```csharp
+public interface IUserRepository
+{
+    Task<User> GetByIdAsync(long userId, long comId);
+    Task<List<User>> GetListAsync(long comId, int page, int pageSize);
+    Task<User> CreateAsync(User user);
+    Task<User> UpdateAsync(User user);
+    Task DeleteAsync(long userId, long comId);
+}
+```
+
+### 实现规范
+- 所有查询必须加 `ComId` 过滤
+- 使用 `AsNoTracking()` 避免不必要的跟踪
+- 异步方法后缀 `Async`
+
+---
+
+## Service 模式
+
+### 接口定义
+```csharp
+public interface IUserService
+{
+    Task<UserDto> GetByIdAsync(long userId);
+    Task<PageResult<UserDto>> GetListAsync(int page, int pageSize);
+    Task<UserDto> CreateAsync(CreateUserRequest request);
+    Task<UserDto> UpdateAsync(long userId, UpdateUserRequest request);
+    Task DeleteAsync(long userId);
+}
+```
+
+### 职责划分
+- Service：业务逻辑、权限校验、事务管理
+- Repository：数据访问、查询优化
+
+---
+
+## DTO 模式
+
+### 请求 DTO
+```csharp
+public class CreateUserRequest
+{
+    [Required(ErrorMessage = "用户名不能为空")]
+    [StringLength(50, ErrorMessage = "用户名长度不能超过50")]
+    public string Username { get; set; }
+
+    [Required(ErrorMessage = "邮箱不能为空")]
+    [EmailAddress(ErrorMessage = "邮箱格式不正确")]
+    public string Email { get; set; }
+}
+```
+
+### 响应 DTO
+```csharp
+public class UserDto
+{
+    public long UserId { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public int Status { get; set; }
+    public DateTime CreatedAt { get; set; }
+}
+```
+
+### 映射
+```csharp
+// 使用 AutoMapper 或手动映射
+var dto = new UserDto
+{
+    UserId = user.UserId,
+    Username = user.Username,
+    Email = user.Email,
+    Status = user.Status,
+    CreatedAt = user.CreatedAt
+};
+```
+
+---
+
+## 分页模式
+
+### 请求
+```csharp
+public class PageRequest
+{
+    public int Page { get; set; } = 1;
+    public int PageSize { get; set; } = 20;
+}
+```
+
+### 响应
+```csharp
+public class PageResult<T>
+{
+    public List<T> Items { get; set; }
+    public int Total { get; set; }
+    public int Page { get; set; }
+    public int PageSize { get; set; }
+    public int TotalPages => (int)Math.Ceiling((double)Total / PageSize);
+}
+```
+
+### 实现
+```csharp
+public async Task<PageResult<UserDto>> GetListAsync(int page, int pageSize)
+{
+    var query = _db.Users.Where(u => u.ComId == _currentUser.ComId);
+
+    var total = await query.CountAsync();
+    var items = await query
+        .OrderByDescending(u => u.CreatedAt)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+    return new PageResult<UserDto>
+    {
+        Items = items.Select(MapToDto).ToList(),
+        Total = total,
+        Page = page,
+        PageSize = pageSize
+    };
+}
+```
+
+---
+
+## 事务模式
+
+### 显式事务
+```csharp
+using var transaction = await _db.Database.BeginTransactionAsync();
+try
+{
+    // 业务操作
+    await _userRepository.CreateAsync(user);
+    await _auditLogRepository.CreateAsync(log);
+
+    await transaction.CommitAsync();
+}
+catch
+{
+    await transaction.RollbackAsync();
+    throw;
+}
+```
+
+### UnitOfWork 模式
+```csharp
+public interface IUnitOfWork
+{
+    Task<int> SaveChangesAsync();
+    Task BeginTransactionAsync();
+    Task CommitAsync();
+    Task RollbackAsync();
+}
+```
+
+---
+
+## 异常处理模式
+
+### 全局异常处理
+```csharp
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var error = context.Features.Get<IExceptionHandlerFeature>();
+        var exception = error?.Error;
+
+        var response = new ErrorResponse
+        {
+            Success = false,
+            Message = exception?.Message ?? "服务器内部错误",
+            Code = 500
+        };
+
+        context.Response.StatusCode = 500;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsJsonAsync(response);
+    });
+});
+```
+
+### 业务异常
+```csharp
+public class BusinessException : Exception
+{
+    public int Code { get; set; }
+
+    public BusinessException(string message, int code = 400)
+        : base(message)
+    {
+        Code = code;
+    }
+}
+
+// 使用
+if (existingUser != null)
+    throw new BusinessException("用户名已存在", 10002);
+```
+
+---
+
+## 日志模式
+
+### 结构化日志
+```csharp
+_logger.LogInformation(
+    "用户登录成功: UserId={UserId}, ComId={ComId}, IP={IP}",
+    userId, comId, ipAddress
+);
+```
+
+### 性能日志
+```csharp
+var sw = Stopwatch.StartNew();
+try
+{
+    // 业务操作
+}
+finally
+{
+    sw.Stop();
+    if (sw.ElapsedMilliseconds > 1000)
+    {
+        _logger.LogWarning("慢查询: {Method}, 耗时={Elapsed}ms",
+            "GetUsers", sw.ElapsedMilliseconds);
+    }
+}
+```
+
+---
+
+## 缓存模式
+
+### 简单缓存
+```csharp
+public async Task<User> GetByIdAsync(long userId)
+{
+    var cacheKey = $"user:{userId}";
+    var cached = await _cache.GetStringAsync(cacheKey);
+    if (cached != null)
+        return JsonSerializer.Deserialize<User>(cached);
+
+    var user = await _db.Users.FindAsync(userId);
+    await _cache.SetStringAsync(cacheKey,
+        JsonSerializer.Serialize(user),
+        new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5) }
+    );
+
+    return user;
+}
+```
+
+### 缓存失效
+```csharp
+public async Task UpdateAsync(User user)
+{
+    await _db.SaveChangesAsync();
+    await _cache.RemoveAsync($"user:{user.UserId}");
+}
+```
+
+---
+
+## 最后更新
+YYYY-MM-DD

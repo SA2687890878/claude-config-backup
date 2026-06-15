@@ -127,12 +127,17 @@ async function main() {
             '.claude', 'projects', projectPath, 'memory', 'task-state.md'
           );
           if (fs.existsSync(taskStatePath)) {
-            const content = fs.readFileSync(taskStatePath, 'utf8');
-            lines.push('## 自动恢复：上次任务进度');
-            lines.push('');
-            lines.push(content);
-            lines.push('');
-            lines.push('> 请读取上述进度，报告给用户并询问是否继续。');
+            try {
+              const content = fs.readFileSync(taskStatePath, 'utf8');
+              lines.push('## 自动恢复：上次任务进度');
+              lines.push('');
+              lines.push(content);
+              lines.push('');
+              lines.push('> 请读取上述进度，报告给用户并询问是否继续。');
+            } catch (e) {
+              lines.push('## 提示');
+              lines.push('检测到任务进度文件，但读取失败: ' + e.message);
+            }
           } else {
             lines.push('## 提示');
             lines.push('没有找到保存的任务进度（memory/task-state.md）。');

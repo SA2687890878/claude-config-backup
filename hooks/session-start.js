@@ -110,7 +110,27 @@ function readStdin() {
       sections.push(`- 数据库：${project.db}`);
     }
 
-    // === 3. 任务进度恢复 ===
+    // === 3. 项目初始化检测 ===
+    const projectName = cwd.replace(/:/g, '-').replace(/[\/\\]/g, '-');
+    const hasClaudeDir = fs.existsSync(path.join(cwd, '.claude'));
+    const hasArtifactsDir = fs.existsSync(path.join(cwd, '.claude', 'artifacts'));
+    const hasProjectMemory = fs.existsSync(path.join(HOME, '.claude', 'projects', projectName, 'memory'));
+
+    if (isGitRepo && (!hasClaudeDir || !hasArtifactsDir || !hasProjectMemory)) {
+      sections.push('');
+      sections.push('## ⚠️ 项目未完全初始化');
+      const missing = [];
+      if (!hasClaudeDir) missing.push('`.claude/` 目录');
+      if (!hasArtifactsDir) missing.push('`.claude/artifacts/` 目录');
+      if (!hasProjectMemory) missing.push('Memory 目录');
+      sections.push(`- 缺失：${missing.join('、')}`);
+      sections.push('- 建议：运行项目启动 Checklist 完成初始化');
+      sections.push('  ```bash');
+      sections.push('  cat ~/.claude/docs/PROJECT-INIT-CHECKLIST.md');
+      sections.push('  ```');
+    }
+
+    // === 4. 任务进度恢复 ===
     const taskState = readTaskState(cwd);
     if (taskState && taskState.includes('- [ ]')) {
       // 有未完成的任务

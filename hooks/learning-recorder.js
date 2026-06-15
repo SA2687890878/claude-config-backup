@@ -56,7 +56,11 @@ function ensureFile(filePath, header) {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(filePath, header, 'utf8');
+    try {
+      fs.writeFileSync(filePath, header, 'utf8');
+    } catch (e) {
+      console.error('[learning-recorder] Failed to create file:', filePath, '-', e.message);
+    }
   }
 }
 
@@ -106,7 +110,11 @@ function ensureFile(filePath, header) {
       const lastDayIndex = content.lastIndexOf(dayHeader);
       const daySection = lastDayIndex >= 0 ? content.substring(lastDayIndex) : '';
       if (!daySection.includes('`' + relativePath + '`')) {
-        fs.appendFileSync(projectLearnings, entry, 'utf8');
+        try {
+          fs.appendFileSync(projectLearnings, entry, 'utf8');
+        } catch (e) {
+          console.error('[learning-recorder] Failed to append:', e.message);
+        }
       }
     }
 

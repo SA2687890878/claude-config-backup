@@ -174,50 +174,63 @@ ${architecture?.title}
 
 log('详细设计完成')
 
-// 保存设计文档
-const featureDir = `docs/features/${featureName}`
-await Write(`${featureDir}/architecture.md`, `# ${architecture?.title}
+// 保存设计文档（Artifact）
+const timestamp = new Date().toISOString().split('T')[0]
+const slug = featureName?.toLowerCase().replace(/[^\w一-龥]+/g, '-').substring(0, 30) || 'feature'
+const artifactDir = `.claude/artifacts`
+const architectureFile = `${artifactDir}/Architecture-${timestamp}-${slug}.md`
+const designFile = `${artifactDir}/Design-${timestamp}-${slug}.md`
+
+// 确保目录存在（用 Bash 工具更可靠）
+try {
+  await agent('mkdir -p .claude/artifacts 2>/dev/null || true', { label: '创建目录', phase: '详细设计' })
+} catch (e) {
+  log('⚠️ 创建目录失败，将尝试直接写入')
+}
+
+await Write(architectureFile, `# ${architecture?.title || '架构设计'}
 
 ## 模块设计
-${architecture?.modules?.map(m => `### ${m.name}
-**职责：** ${m.responsibility}
-**依赖：** ${m.dependencies?.join(', ') || '无'}
-`).join('\n')}
+${architecture?.modules?.length > 0 ? architecture.modules.map(m => `### ${m.name || '模块'}
+**职责：** ${m.responsibility || '待定义'}
+**依赖：** ${m.dependencies?.length > 0 ? m.dependencies.join(', ') : '无'}
+`).join('\n') : '待设计'}
 
 ## 数据流
-${architecture?.dataFlow}
+${architecture?.dataFlow || '待定义'}
 
 ## 技术栈
-${architecture?.techStack?.join('\n- ')}
+${architecture?.techStack?.length > 0 ? architecture.techStack.join('\n- ') : '待确定'}
 
 ## 风险
-${architecture?.risks?.join('\n- ')}
+${architecture?.risks?.length > 0 ? architecture.risks.join('\n- ') : '无'}
 `)
 
-await Write(`${featureDir}/design.md`, `# ${design?.title}
+await Write(designFile, `# ${design?.title || '详细设计'}
 
 ## API 设计
-${design?.apiDesign?.map(a => `### ${a.method} ${a.endpoint}
-${a.description}
-**请求：** ${a.request}
-**响应：** ${a.response}
-`).join('\n')}
+${design?.apiDesign?.length > 0 ? design.apiDesign.map(a => `### ${a.method || 'GET'} ${a.endpoint || '/api/endpoint'}
+${a.description || '待描述'}
+**请求：** ${a.request || '待定义'}
+**响应：** ${a.response || '待定义'}
+`).join('\n') : '待设计'}
 
 ## 数据库设计
-${design?.databaseDesign?.map(d => `### ${d.table}
-**字段：** ${d.columns?.join(', ')}
-**索引：** ${d.indexes?.join(', ') || '无'}
-**关系：** ${d.relations?.join(', ') || '无'}
-`).join('\n')}
+${design?.databaseDesign?.length > 0 ? design.databaseDesign.map(d => `### ${d.table || '表名'}
+**字段：** ${d.columns?.length > 0 ? d.columns.join(', ') : '待定义'}
+**索引：** ${d.indexes?.length > 0 ? d.indexes.join(', ') : '无'}
+**关系：** ${d.relations?.length > 0 ? d.relations.join(', ') : '无'}
+`).join('\n') : '待设计'}
 
 ## 接口设计
-${design?.interfaceDesign?.map(i => `### ${i.name}
-${i.description}
-**方法：** ${i.methods?.join(', ')}
-`).join('\n')}
+${design?.interfaceDesign?.length > 0 ? design.interfaceDesign.map(i => `### ${i.name || '接口名'}
+${i.description || '待描述'}
+**方法：** ${i.methods?.length > 0 ? i.methods.join(', ') : '待定义'}
+`).join('\n') : '待设计'}
 `)
 
-log(`设计文档已保存到 ${featureDir}`)
+log(`架构文档已保存到 ${architectureFile}`)
+log(`设计文档已保存到 ${designFile}`)
 
 // ========== 阶段三：编码实现 ==========
 phase('编码实现')
@@ -350,6 +363,10 @@ log('构建工作流完成')
 
 return {
   status: 'SUCCESS',
+  artifacts: {
+    architecture: architectureFile,
+    design: designFile,
+  },
   feature: featureName,
   architecture: {
     modules: architecture?.modules?.map(m => m.name),

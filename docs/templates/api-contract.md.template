@@ -1,0 +1,186 @@
+# API 约定
+
+> 项目级 API 设计规范，供团队统一遵循。
+
+## RESTful API 设计
+
+### 路由规范
+```
+GET    /api/users          # 获取用户列表
+GET    /api/users/{id}     # 获取单个用户
+POST   /api/users          # 创建用户
+PUT    /api/users/{id}     # 更新用户
+DELETE /api/users/{id}     # 删除用户
+```
+
+### 命名约定
+- 使用复数名词（users 而非 user）
+- 使用小写字母和连字符（user-orders 而非 userOrders）
+- 避免动词（GET /api/getUsers → GET /api/users）
+
+---
+
+## 请求格式
+
+### Query 参数（GET）
+```
+GET /api/users?page=1&pageSize=20&status=active&keyword=张三
+```
+
+### Body 参数（POST/PUT）
+```json
+POST /api/users
+Content-Type: application/json
+
+{
+  "username": "zhangsan",
+  "email": "zhangsan@example.com",
+  "role": "admin"
+}
+```
+
+---
+
+## 响应格式
+
+### 成功响应
+```json
+{
+  "success": true,
+  "data": { ... },
+  "message": "操作成功",
+  "code": 200
+}
+```
+
+### 列表响应
+```json
+{
+  "success": true,
+  "data": {
+    "items": [...],
+    "total": 100,
+    "page": 1,
+    "pageSize": 20
+  },
+  "message": "查询成功",
+  "code": 200
+}
+```
+
+### 错误响应
+```json
+{
+  "success": false,
+  "data": null,
+  "message": "用户名已存在",
+  "code": 400,
+  "errors": [
+    {
+      "field": "username",
+      "message": "用户名已存在"
+    }
+  ]
+}
+```
+
+---
+
+## 状态码
+
+| 状态码 | 说明 | 使用场景 |
+|--------|------|---------|
+| 200 | 成功 | 请求成功 |
+| 201 | 已创建 | 资源创建成功 |
+| 204 | 无内容 | 删除成功 |
+| 400 | 请求参数错误 | 参数校验失败 |
+| 401 | 未认证 | Token 无效或过期 |
+| 403 | 无权限 | 没有访问权限 |
+| 404 | 资源不存在 | 用户不存在 |
+| 409 | 冲突 | 用户名已存在 |
+| 500 | 服务器内部错误 | 未捕获的异常 |
+
+---
+
+## 分页规范
+
+### 请求参数
+```
+page: 页码（从 1 开始）
+pageSize: 每页条数（默认 20，最大 100）
+```
+
+### 响应格式
+```json
+{
+  "items": [...],
+  "total": 100,
+  "page": 1,
+  "pageSize": 20,
+  "totalPages": 5
+}
+```
+
+---
+
+## 排序规范
+
+### 请求参数
+```
+sortBy: 排序字段（createdAt, updatedAt, name）
+sortOrder: 排序方向（asc, desc）
+```
+
+### 示例
+```
+GET /api/users?sortBy=createdAt&sortOrder=desc
+```
+
+---
+
+## 过滤规范
+
+### 请求参数
+```
+filter[字段名]: 过滤值
+```
+
+### 示例
+```
+GET /api/users?filter[status]=active&filter[role]=admin
+```
+
+---
+
+## 认证规范
+
+### Authorization Header
+```
+Authorization: Bearer <token>
+```
+
+### Token 刷新
+```
+POST /api/auth/refresh
+Authorization: Bearer <refresh_token>
+```
+
+---
+
+## 错误码定义
+
+| 错误码 | 说明 |
+|--------|------|
+| 10001 | 参数校验失败 |
+| 10002 | Token 无效 |
+| 10003 | Token 过期 |
+| 10004 | 无权限 |
+| 20001 | 用户不存在 |
+| 20002 | 用户名已存在 |
+| 30001 | 订单不存在 |
+| 30002 | 订单状态不允许操作 |
+
+---
+
+## 最后更新
+YYYY-MM-DD

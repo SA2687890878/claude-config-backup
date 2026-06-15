@@ -84,21 +84,27 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 | Hook | 事件 | 触发条件 | 功能 |
 |------|------|---------|------|
 | workflow-router.js | UserPromptSubmit | 所有输入 | 自动路由到对应 workflow |
-| session-start.js | SessionStart | 会话启动 | 注入 git 状态 + 项目信息 + 任务进度 |
+| session-start.js | SessionStart | 会话启动 | 注入 git 状态 + 项目信息 + 任务进度 + 初始化检测 |
+| context-injector.js | UserPromptSubmit | 关键词匹配 | 智能注入 git/token/security 规则 |
 | secret-guard.js | PreToolUse | Write\|Edit | 拦截硬编码密钥 |
 | write-guard.js | PreToolUse | Write\|Edit | 拦截主目录垃圾文件 |
-| impact-guard.js | PreToolUse | Edit (*.cs) | 修改前提示查看调用链 |
-| cs-guard.js | PostToolUse | Write\|Edit (*.cs) | C# 语法检查 |
-| quality-guard.js | PostToolUse | Write\|Edit (*.cs) | SQL 注入、null 安全、资源释放检查 |
-| test-reminder.js | PostToolUse | Write\|Edit (*.cs) | 提示运行测试 |
-| sqlite-index-update.js | PostToolUse | Write\|Edit (*.cs) | 自动增量更新 SQLite 索引 |
+| bash-guard.js | PreToolUse | Bash | Bash 命令安全检查 |
+| commit-gate.js | PreToolUse | Bash(git commit) | 提交前强制编译和测试验证 |
+| encrypted-write-guard.js | PreToolUse | Write\|Edit(*.cs) | 加密文件写入防护 |
+| impact-guard.js | PreToolUse | Edit(*.cs) | 修改前提示查看调用链 |
+| cs-guard.js | PostToolUse | Write\|Edit(*.cs) | C# 语法检查 |
+| quality-guard.js | PostToolUse | Write\|Edit(*.cs) | SQL 注入、null 安全、资源释放检查 |
+| logic-guard.js | PostToolUse | Write\|Edit(*.cs) | 逻辑错误检查 |
+| vue-guard.js | PostToolUse | Write\|Edit(*.vue) | Vue 代码检查 |
+| test-reminder.js | PostToolUse | Write\|Edit(*.cs) | 提示运行测试 |
+| sqlite-index-update.js | PostToolUse | Write\|Edit(*.cs) | 自动增量更新 SQLite 索引 |
 | git-commit-review.js | PostToolUse | Bash | 阻止 force push、密钥泄露 |
-| inject-git-rules.js | UserPromptSubmit | git 关键词 | 注入 git 规则 |
-| inject-token-rules.js | UserPromptSubmit | 代码分析关键词 | 注入 token 优化规则 |
-| build-verify.js | Stop | 会话结束 | 编译验证，失败则阻断 |
-| notify.ps1 | Stop/Notification | 任务完成/等待输入 | Windows Toast 通知 |
-| prompt-optimizer.js | UserPromptSubmit | 所有输入 | 输入清晰度检查 |
+| review-trigger.js | PostToolUse | Write\|Edit | 代码审查提醒 |
+| artifact-index-update.js | PostToolUse | Write | 自动更新 Artifact INDEX.md |
+| build-verify.js | Stop | 会话结束 | 编译验证报告（非阻断） |
+| notify.ps1 | Stop | 任务完成/等待输入 | Windows Toast 通知 |
 | project-knowledge.js | SessionStart | 会话启动 | 加载项目 learnings |
-| learning-recorder.js | Stop | 会话结束 | 记录经验到 learnings.md |
-| metrics-collector.js | PostToolUse | 所有工具 | 记录调用统计 |
-| metrics-report.js | Stop | 会话结束 | 输出度量报告 |
+| learning-recorder.js | PostToolUse | Write\|Edit | 记录修改到 learnings.md |
+| knowledge-sync-reminder.js | SessionStart | 会话启动 | Memory → Knowledge 同步提醒 |
+| metrics-collector.js | PostToolUse | 关键工具 | 只记录高成本/质量工具 |
+| metrics-report.js | Stop | 会话结束 | 输出简化的度量报告 |

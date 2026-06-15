@@ -1,0 +1,260 @@
+# [项目名称] Claude 工程指南
+
+> 项目级 Context，供 Claude 理解项目特点、技术栈、架构约定。
+
+---
+
+## 技术栈
+
+### 后端
+- 框架：.NET 8.0 / .NET Framework 4.5.2
+- ORM：Entity Framework Core / Entity Framework 6
+- 数据库：SQL Server 2019 / PostgreSQL 13
+- 构建工具：MSBuild / dotnet CLI
+
+### 前端
+- 框架：Vue 2 / React 18
+- 状态管理：Vuex / Redux
+- 构建工具：Webpack / Vite
+- UI 库：Element UI / Ant Design
+
+### 测试
+- 单元测试：xUnit / NUnit / Jest
+- Mock 框架：Moq / Sinon
+- 集成测试：TestContainers
+
+### 其他
+- 缓存：Redis
+- 消息队列：RabbitMQ / Kafka
+- 日志：Serilog / NLog
+- CI/CD：Jenkins / GitHub Actions
+
+---
+
+## 关键约束
+
+### 业务约束
+- **多租户隔离**：ComId 必须始终正确处理，所有查询必须加 ComId 过滤
+- **数据权限**：用户只能访问自己权限范围内的数据
+- **审计日志**：关键操作必须记录审计日志（谁、何时、做了什么）
+
+### 性能约束
+- **API 响应时间**：< 200ms（P95）
+- **数据库查询**：避免 N+1 查询，单查询不超过 1000 行
+- **大数据导出**：使用流式处理，避免一次性加载
+
+### 安全约束
+- **用户输入**：所有用户输入必须参数化，防止 SQL 注入
+- **权限校验**：所有 API 必须先校验权限，再执行业务逻辑
+- **敏感数据**：密码、Token 等敏感数据必须加密存储
+
+---
+
+## 架构决策
+
+### 分层架构
+```
+Controller（API 层）
+  ↓
+Service（业务逻辑层）
+  ↓
+Repository（数据访问层）
+  ↓
+Database（数据持久化层）
+```
+
+### 关键模式
+- **Repository 模式**：解耦业务逻辑和数据访问
+- **DTO 模式**：API 请求/响应使用 DTO，不直接暴露实体
+- **工作单元模式**：事务管理由 UnitOfWork 统一处理
+- **依赖注入**：所有服务通过 DI 容器管理
+
+### 命名约定
+- **类名**：PascalCase（UserService、OrderController）
+- **方法名**：PascalCase（GetUserById、CreateOrder）
+- **变量名**：camelCase（userId、orderList）
+- **接口**：I 前缀（IUserService、IOrderRepository）
+- **异步方法**：Async 后缀（GetUserByIdAsync）
+
+---
+
+## 数据库设计
+
+### 核心表
+- **Users**：用户表（主键：UserId，多租户字段：ComId）
+- **Orders**：订单表（主键：OrderId，外键：UserId、ComId）
+- **Products**：产品表（主键：ProductId，外键：ComId）
+
+### 索引策略
+- **多租户查询**：所有表的 ComId 字段必须有索引
+- **外键字段**：外键字段必须有索引
+- **常用查询条件**：Status、CreatedAt 等常用查询字段建索引
+
+### 数据迁移
+- **版本控制**：使用 EF Migrations 管理数据库版本
+- **幂等性**：迁移脚本必须是幂等的（IF NOT EXISTS）
+- **回滚方案**：每个迁移必须有对应的回滚脚本
+
+---
+
+## API 约定
+
+### RESTful API 设计
+```
+GET    /api/users          # 获取用户列表
+GET    /api/users/{id}     # 获取单个用户
+POST   /api/users          # 创建用户
+PUT    /api/users/{id}     # 更新用户
+DELETE /api/users/{id}     # 删除用户
+```
+
+### 响应格式
+```json
+{
+  "success": true,
+  "data": { ... },
+  "message": "操作成功",
+  "code": 200
+}
+```
+
+### 错误码
+- 200：成功
+- 400：请求参数错误
+- 401：未认证
+- 403：无权限
+- 404：资源不存在
+- 500：服务器内部错误
+
+---
+
+## 常见操作
+
+### 编译与测试
+```bash
+# 编译（Release 模式）
+dotnet build --configuration Release
+
+# 运行测试
+dotnet test --configuration Release --no-build
+
+# 生成迁移
+dotnet ef migrations add MigrationName
+
+# 应用迁移
+dotnet ef database update
+```
+
+### 前端开发
+```bash
+# 启动开发服务器
+npm run dev
+
+# 构建生产版本
+npm run build
+
+# 运行单元测试
+npm run test
+```
+
+### 代码检查
+```bash
+# C# 代码分析
+dotnet format --verify-no-changes
+
+# JavaScript/TypeScript 检查
+npm run lint
+```
+
+---
+
+## 源码保护
+
+### 加密状态
+- **C# 源码**：✅ 加密（DGClient）
+- **Vue/JS 源码**：❌ 未加密
+- **配置文件**：❌ 未加密
+
+### 访问方式
+**加密的 .cs 文件**：
+```bash
+# 禁止直接 Read（会读到乱码）
+# 使用 SQLite 索引
+powershell -ExecutionPolicy Bypass -File "C:\Users\admin\.claude\tools\sqlite-index\search.ps1" \
+  -Query "ClassName" \
+  -ProjectPath "F:\项目路径"
+
+# 或使用 CodeGraph
+mcp__codegraph__codegraph_search({ query: "ClassName" })
+mcp__codegraph__codegraph_node({ symbol: "ClassName.MethodName", includeCode: true })
+```
+
+**未加密文件**：
+```bash
+# 可直接 Read
+Read({ file_path: "src/views/UserList.vue" })
+
+# 或使用 Glob + Grep
+Glob({ pattern: "src/**/*.vue" })
+Grep({ pattern: "UserList", type: "vue" })
+```
+
+---
+
+## 项目特定规则覆盖
+
+如果本项目的规则与全局规则不同，可在此覆盖：
+
+### C# 规则覆盖
+```markdown
+# 本项目使用 .NET Framework 4.5.2，不支持某些 C# 8.0 特性
+- 不使用 Nullable Reference Types
+- 不使用 async streams（IAsyncEnumerable<T>）
+```
+
+### SQL Server 规则覆盖
+```markdown
+# 本项目使用 SQL Server 2016，不支持某些 2019 特性
+- 不使用 STRING_AGG 函数
+- 不使用 APPROX_COUNT_DISTINCT 函数
+```
+
+---
+
+## 项目知识索引
+
+### Knowledge 链接
+- [API 响应格式约定](../../knowledge/project/<project-name>/api-contract.md)
+- [数据库 Schema 设计](../../knowledge/project/<project-name>/database-schema.md)
+- [常用模式和最佳实践](../../knowledge/project/<project-name>/common-patterns.md)
+
+### Artifact 链接
+- [功能需求文档](.claude/artifacts/)
+- [架构设计文档](.claude/artifacts/)
+- [RCA 根因分析](.claude/artifacts/)
+
+---
+
+## 人员角色
+
+- **架构负责人**：[姓名]
+- **后端负责人**：[姓名]
+- **前端负责人**：[姓名]
+- **测试负责人**：[姓名]
+
+---
+
+## 特殊说明
+
+### 已知问题
+- [问题描述及临时解决方案]
+
+### 技术债务
+- [技术债务描述及优先级]
+
+### 未来计划
+- [功能规划或架构升级计划]
+
+---
+
+**最后更新**：YYYY-MM-DD

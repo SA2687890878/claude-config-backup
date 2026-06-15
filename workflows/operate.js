@@ -344,45 +344,69 @@ if (codeReview?.status === 'FAIL') {
 
 log('代码审查完成：' + codeReview?.status)
 
-// 生成排查文档
-log('生成排查文档...')
+// 生成排查文档（RCA Artifact）
+log('生成 RCA 文档...')
 
-const issueSlug = issueTitle.toLowerCase().replace(/\s+/g, '-').substring(0, 30)
-const docPath = `docs/issues/${today}-${issueSlug}.md`
+const timestamp = new Date().toISOString().split('T')[0]
+const issueSlug = issueTitle?.toLowerCase().replace(/[^\w一-龥]+/g, '-').substring(0, 30) || 'issue'
+const artifactDir = `.claude/artifacts`
+const rcaFile = `${artifactDir}/RCA-${timestamp}-${issueSlug}.md`
 
-await Write(docPath, `# ${issueTitle}
+// 确保目录存在（用 Bash 工具更可靠）
+try {
+  await agent('mkdir -p .claude/artifacts 2>/dev/null || true', { label: '创建目录', phase: '验证闭环' })
+} catch (e) {
+  log('⚠️ 创建目录失败，将尝试直接写入')
+}
+
+await Write(rcaFile, `# RCA: ${issueTitle || '问题排查'}
 
 ## 问题信息
-- 分类：${issueInfo?.category}
-- 严重程度：${issueInfo?.severity}
-- 发现时间：${today}
+- 分类：${issueInfo?.category || '待分类'}
+- 严重程度：${issueInfo?.severity || 'P2'}
+- 发现时间：${timestamp}
 
 ## 问题描述
-${issueDescription}
+${issueDescription || '待补充'}
+
+## 复现步骤
+${issueInfo?.reproduceSteps?.length > 0 ? issueInfo.reproduceSteps.map((step, i) => `${i+1}. ${step}`).join('\n') : '待补充'}
 
 ## 根因分析
-${rootCause?.rootCause}
+${rootCause?.rootCause || '待分析'}
 
 ## 修复方案
-${rootCause?.fixStrategy}
+${rootCause?.fixStrategy || '待确定'}
 
 ## 影响范围
-${rootCause?.affectedFiles?.join('\n') || '无'}
+**影响文件：**
+${rootCause?.affectedFiles?.length > 0 ? '\n- ' + rootCause.affectedFiles.join('\n- ') : '无'}
+
+**影响函数：**
+${rootCause?.affectedFunctions?.length > 0 ? '\n- ' + rootCause.affectedFunctions.join('\n- ') : '无'}
 
 ## 预防措施
-${rootCause?.risks?.join('\n') || '无'}
+${rootCause?.risks?.length > 0 ? rootCause.risks.join('\n- ') : '无'}
 
 ## 验证结果
-- 编译：${buildResult?.status}
-- 测试：${buildResult?.status}
-- 审查：${codeReview?.status}
+- 编译：${buildResult?.status || '未验证'}
+- 测试：${testResult?.status || '未验证'}
+- 审查：${codeReview?.status || '未审查'}
+
+## 改进建议
+- 增加相关场景的单元测试
+- 完善错误处理
+- 更新相关文档
 `)
 
-log(`排查文档已保存到 ${docPath}`)
-log('运维工作流完成')
+log(`RCA 文档已保存到 ${rcaFile}`)
+log('运维工作流完成 — RCA.md 已生成')
 
 return {
   status: 'SUCCESS',
+  artifacts: {
+    rca: rcaFile,
+  },
   issue: issueTitle,
   category: issueInfo?.category,
   severity: issueInfo?.severity,

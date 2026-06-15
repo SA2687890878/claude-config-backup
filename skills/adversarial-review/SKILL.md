@@ -111,51 +111,18 @@ Agent 提示词模板：
 ## 审查策略详情
 
 ### 策略 1：C# 审查
-
 **审查清单**：[references/dotnet-checklist.md](references/dotnet-checklist.md)
 
-**认知模式**：
-1. **生产环境优先** — 并发访问、大数据量、异常情况
-2. **数据流追踪** — 数据从哪来、到哪去、中间处理
-3. **防御性编程** — 输入合法性、外部依赖可用性
-
-**重点关注**：
-- 空指针引用（Find/FirstOrDefault 后未检查 null）
-- 资源泄露（IDisposable 未 using）
-- 异步阻塞（.Result/.Wait()）
-- SQL 注入（字符串拼接 SQL）
-- 并发死锁（共享状态无锁保护）
-
 ### 策略 2：Vue 审查
-
 **审查清单**：[references/vue-checklist.md](references/vue-checklist.md)
 
-**重点关注**：
-- v-for 缺少 :key
-- computed 中有副作用
-- 事件监听未在 beforeDestroy 移除
-- XSS 风险（v-html、用户输入）
-- 大列表未使用虚拟滚动
-
 ### 策略 3：SQL 审查
-
 **审查清单**：[references/sql-checklist.md](references/sql-checklist.md)
 
-**重点关注**：
-- SQL 注入（字符串拼接）
-- 全表扫描（缺少 WHERE、缺少索引）
-- N+1 查询
-- 事务边界
-
 ### 策略 4：配置审查
-
 **审查清单**：[references/config-checklist.md](references/config-checklist.md)
 
-**重点关注**：
-- 密钥硬编码
-- 敏感信息暴露
-- CORS 配置过宽
-- 调试模式未关闭
+**详细的审查重点和认知模式** → 读取对应的 checklist 文件
 
 ## 审查原则
 

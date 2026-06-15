@@ -1,6 +1,8 @@
-# Harness Engineering 复用指南
+# Harness Engineering: 复用指南
 
 > 换电脑或分享给同事时使用本指南。
+
+**版本**：v1.0.0 | **最后更新**：2026-06-15
 
 ---
 
@@ -95,10 +97,279 @@ cp ~/.claude/settings.example.json ~/.claude/settings.json
 |-------|------|
 | `commit` | Git 提交信息生成 |
 | `docs` | 文档生成 |
-| `memory-save` | 经验保存 |
-| `dotnet-review` | .NET 代码审查 |
-| `security-scan` | 安全扫描 |
-| ... | 见 `skills/` 目录 |
+| `sync-knowledge` | Memory → Knowledge 同步 |
+| `adversarial-review` | 对抗性代码审查 |
+| ... | 见 `skills/INDEX.md` |
+
+### 6. 项目初始化
+
+每个项目启动时，需要初始化本地 Memory：
+
+```bash
+# 进入项目目录
+cd /path/to/your/project
+
+# 检查初始化清单（自动检测缺失项）
+cat ~/.claude/docs/PROJECT-INIT-CHECKLIST.md
+
+# 如果缺失 .claude/artifacts/ 等目录，按清单手动创建或自动执行
+```
+
+初始化后目录结构：
+```
+项目根目录/
+├── .claude/
+│   ├── artifacts/           # Artifact 产物存储
+│   │   └── INDEX.md        # 自动维护的产物索引
+│   └── rules/              # 项目级规则（可选）
+
+~/.claude/projects/<project-name>/memory/
+├── MEMORY.md               # Memory 索引
+├── learnings.md            # 经验记录（自动写入）
+└── task-state.md           # 任务进度（手动维护）
+```
+
+---
+
+## 迁移检查清单
+
+### 环境检查（首次使用）
+
+```bash
+# 1. 检查 Node.js
+node --version
+
+# 预期输出（版本 >= 18.0.0）：
+# v18.17.0
+# v20.5.1
+# v22.6.0
+
+# 2. 检查 Git
+git --version
+
+# 预期输出（版本 >= 2.30.0）：
+# git version 2.42.0.windows.1
+# git version 2.41.0
+
+# 3. 检查 Claude Code 已启动
+claude --version
+
+# 预期输出：
+# Claude Code 1.0.x
+# 或类似版本号
+
+# 4. 验证 Hook 工作
+node ~/.claude/hooks/secret-guard.js < /dev/null
+
+# 预期输出（无错误，正常退出）：
+# （无输出或简单日志）
+# 确认：echo $?  # 应该返回 0
+
+# 5. 检查规则被加载
+ls -la ~/.claude/rules/languages/
+
+# 预期输出（看到 5 个规则文件）：
+# total 0
+# drwxr-xr-x 1 admin ... .
+# drwxr-xr-x 1 admin ... ..
+# -rw-r--r-- 1 admin ... csharp.md
+# -rw-r--r-- 1 admin ... vue.md
+# -rw-r--r-- 1 admin ... javascript.md
+# -rw-r--r-- 1 admin ... postgresql.md
+# -rw-r--r-- 1 admin ... sqlserver.md
+```
+
+### 完整验证脚本
+
+```bash
+#!/bin/bash
+echo "=== Harness Engineering 环境检查 ==="
+
+echo -e "\n1. Node.js 版本："
+node --version
+
+echo -e "\n2. Git 版本："
+git --version
+
+echo -e "\n3. Claude Code 版本："
+claude --version
+
+echo -e "\n4. 检查关键目录："
+for dir in hooks skills rules docs; do
+  if [ -d ~/.claude/$dir ]; then
+    echo "✅ ~/.claude/$dir 存在"
+  else
+    echo "❌ ~/.claude/$dir 不存在"
+  fi
+done
+
+echo -e "\n5. 检查关键文件："
+for file in CLAUDE.md settings.example.json; do
+  if [ -f ~/.claude/$file ]; then
+    echo "✅ ~/.claude/$file 存在"
+  else
+    echo "❌ ~/.claude/$file 不存在"
+  fi
+done
+
+echo -e "\n=== 检查完成 ==="
+```
+
+**预期输出**：
+```
+=== Harness Engineering 环境检查 ===
+
+1. Node.js 版本：
+v20.5.1
+
+2. Git 版本：
+git version 2.42.0.windows.1
+
+3. Claude Code 版本：
+Claude Code 1.0.20
+
+4. 检查关键目录：
+✅ ~/.claude/hooks 存在
+✅ ~/.claude/skills 存在
+✅ ~/.claude/rules 存在
+✅ ~/.claude/docs 存在
+
+5. 检查关键文件：
+✅ ~/.claude/CLAUDE.md 存在
+✅ ~/.claude/settings.example.json 存在
+
+=== 检查完成 ===
+```
+
+### 权限检查（Windows 用户）
+
+```bash
+# 如果 Hook 不执行，检查权限
+icacls ~/.claude/hooks/*.js /grant %USERNAME%:F
+
+# 如果 PowerShell 脚本不运行，修改执行策略
+powershell -ExecutionPolicy RemoteSigned -Command "..."
+```
+
+### 路径替换（重要！）
+
+克隆后必须替换所有硬编码路径：
+
+| 原路径 | 替换为 |
+|--------|--------|
+| `C:/Users/admin/` | 你的用户主目录，如 `C:/Users/zhangsan/` |
+| `F:\OTD Code WorkSpace` | 你的项目工作区路径 |
+| `SA2687890878` | 你的 GitHub 用户名 |
+
+文件列表：
+- `~/.claude/CLAUDE.md`
+- `~/.claude/hooks/session-start.js`
+- `~/.claude/hooks/project-knowledge.js`
+- `~/.claude/hooks/artifact-index-update.js`
+- `~/.claude/docs/SETUP.md`
+
+---
+
+## 常见问题排查
+
+### 问题 1：Hook 无法执行
+
+**症状**：修改代码后没有自动检查
+
+**排查步骤**：
+```bash
+# 1. 检查 settings.json 路径
+cat ~/.claude/settings.json | grep -i "hook"
+
+# 2. 手动测试 Hook
+echo '{"tool": "Write", "params": {"file_path": "test.cs"}}' | \
+  node ~/.claude/hooks/cs-guard.js
+
+# 3. 检查错误日志
+tail -100 ~/.claude/hooks/.log  # 如果有日志文件
+```
+
+### 问题 2：Skills 找不到
+
+**症状**：输入 `/sync-knowledge` 无反应
+
+**排查步骤**：
+```bash
+# 1. 检查 skills 目录
+ls ~/.claude/skills/sync-knowledge/
+
+# 2. 检查 SKILL.md 格式
+cat ~/.claude/skills/sync-knowledge/SKILL.md | head -10
+
+# 3. 检查 INDEX.md 注册
+grep -n "sync-knowledge" ~/.claude/skills/INDEX.md
+```
+
+### 问题 3：Memory 不保存
+
+**症状**：learnings.md 没有新增记录
+
+**排查步骤**：
+```bash
+# 1. 检查 Memory 目录是否存在
+ls -la ~/.claude/projects/C--Users-admin--claude/memory/
+
+# 2. 检查 learnings.md 权限
+chmod 666 ~/.claude/projects/C--Users-admin--claude/memory/learnings.md
+
+# 3. 检查 learning-recorder.js 是否存在
+ls ~/.claude/hooks/learning-recorder.js
+```
+
+### 问题 4：路径转换错误
+
+**症状**：项目路径识别错误
+
+**排查步骤**：
+```bash
+# 路径转换规则：C:\Users\admin → C--Users-admin
+# 验证：
+projectPath=$(pwd | sed 's|:|/|g; s|[/\\]|-|g')
+echo "Expected memory path: ~/.claude/projects/$projectPath/memory/"
+```
+
+---
+
+## 分享给同事
+
+如果要分享此配置：
+
+1. **公开部分**（可上传 GitHub）
+   - `~/.claude/` 除了 `settings.json`
+   - `~/.claude/docs/`
+   - `~/.claude/hooks/`
+   - `~/.claude/skills/`
+   - `~/.claude/rules/`
+
+2. **私密部分**（不上传）
+   - `settings.json`（含 API Token）
+   - `~/.claude/projects/`（项目级数据）
+   - `~/.claude/metrics/`（度量数据）
+
+3. **分享方式**
+   ```bash
+   # 创建 .gitignore
+   echo "settings.json
+   projects/
+   metrics/
+   *.swp" >> ~/.claude/.gitignore
+   
+   # 上传到 GitHub
+   cd ~/.claude
+   git remote add origin https://github.com/YOUR-USERNAME/claude-config.git
+   git push -u origin main
+   ```
+
+4. **同事如何使用**
+   - 同事克隆你的配置
+   - 复制 `settings.example.json` → `settings.json`
+   - 填入自己的 API Token
+   - 替换所有硬编码路径
 
 ---
 
@@ -196,4 +467,5 @@ cd ~/.claude && git pull
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
+| 2026-06-15 | 3.1 | 补完迁移指南：初始化、检查清单、排查步骤、分享指南 |
 | 2026-06-11 | 3.0 | 兼容 Harness Engineering v3.0 配置体系 |

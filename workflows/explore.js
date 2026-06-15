@@ -175,61 +175,78 @@ ${design?.options?.map(o => `- ${o.name}: ${o.description}`).join('\n')}
   { label: '决策记录', phase: '决策记录', schema: DECISION_SCHEMA, agentType: 'Builder' }
 )
 
-// 保存文档
+// 保存文档（Artifact）
 const timestamp = new Date().toISOString().split('T')[0]
-const slug = question.toLowerCase().replace(/\s+/g, '-').substring(0, 30)
-const docDir = `docs/explore/${timestamp}-${slug}`
+const slug = requirement?.title?.toLowerCase().replace(/[^\w一-龥]+/g, '-').substring(0, 30) || 'requirement'
+const artifactDir = `.claude/artifacts`
+const requirementFile = `${artifactDir}/Requirement-${timestamp}-${slug}.md`
 
-await Write(`${docDir}/requirement.md`, `# ${requirement?.title}
+// 确保目录存在（用 Bash 工具更可靠）
+try {
+  await agent('mkdir -p .claude/artifacts 2>/dev/null || true', { label: '创建目录', phase: '决策记录' })
+} catch (e) {
+  log('⚠️ 创建目录失败，将尝试直接写入')
+}
+
+await Write(requirementFile, `# ${requirement?.title || '需求文档'}
 
 ## 背景
-${requirement?.background}
+${requirement?.background || '待补充'}
 
 ## 干系人
-${requirement?.stakeholders?.join('\n- ')}
+${requirement?.stakeholders?.length > 0 ? requirement.stakeholders.join('\n- ') : '待确认'}
 
 ## 功能需求
-${requirement?.functionalRequirements?.join('\n- ')}
+${requirement?.functionalRequirements?.length > 0 ? requirement.functionalRequirements.join('\n- ') : '待定义'}
 
 ## 非功能需求
-${requirement?.nonFunctionalRequirements?.join('\n- ')}
+${requirement?.nonFunctionalRequirements?.length > 0 ? requirement.nonFunctionalRequirements.join('\n- ') : '待定义'}
 
 ## 约束条件
-${requirement?.constraints?.join('\n- ')}
+${requirement?.constraints?.length > 0 ? requirement.constraints.join('\n- ') : '无'}
 
 ## 验收标准
-${requirement?.acceptanceCriteria?.join('\n- ')}
+${requirement?.acceptanceCriteria?.length > 0 ? requirement.acceptanceCriteria.join('\n- ') : '待定义'}
 
 ## 风险
-${requirement?.risks?.join('\n- ')}
+${requirement?.risks?.length > 0 ? requirement.risks.join('\n- ') : '无'}
 `)
 
-await Write(`${docDir}/decision.md`, `# 决策记录
+// 可选：Decision.md（如果有多方案对比）
+if (design?.options?.length > 1) {
+  const decisionFile = `${artifactDir}/Decision-${timestamp}-${slug}.md`
+  await Write(decisionFile, `# 决策记录：${requirement?.title || '技术决策'}
 
 ## 决策
-${decision?.decision}
+${decision?.decision || '待确定'}
 
 ## 理由
-${decision?.rationale}
+${decision?.rationale || '待补充'}
 
 ## 替代方案
-${decision?.alternatives?.join('\n- ')}
+${decision?.alternatives?.length > 0 ? decision.alternatives.join('\n- ') : '无'}
 
 ## 约束条件
-${decision?.constraints?.join('\n- ')}
+${decision?.constraints?.length > 0 ? decision.constraints.join('\n- ') : '无'}
 
 ## 下一步
-${decision?.nextSteps?.join('\n- ')}
+${decision?.nextSteps?.length > 0 ? decision.nextSteps.join('\n- ') : '待确认'}
 
 ## 待解决问题
-${decision?.openQuestions?.join('\n- ')}
+${decision?.openQuestions?.length > 0 ? decision.openQuestions.join('\n- ') : '无'}
 `)
+  log(`决策文档已保存到 ${decisionFile}`)
+}
 
-log(`文档已保存到 ${docDir}`)
-log('探索工作流完成')
+log(`需求文档已保存到 ${requirementFile}`)
+log('探索工作流完成 — Requirement.md 已生成')
 
 return {
   status: 'SUCCESS',
+  artifacts: {
+    requirement: requirementFile,
+    decision: design?.options?.length > 1 ? `${artifactDir}/Decision-${timestamp}-${slug}.md` : null,
+  },
   requirement: {
     title: requirement?.title,
     functionalRequirements: requirement?.functionalRequirements,
@@ -243,5 +260,4 @@ return {
     decision: decision?.decision,
     nextSteps: decision?.nextSteps,
   },
-  documentDir: docDir,
 }

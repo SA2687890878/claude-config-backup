@@ -1,6 +1,8 @@
-# Harness Engineering 文档中心
+# Harness Engineering: 文档中心
 
 > 基于《Harness Engineering 建设指南（个人研发效能版）》构建的个人研发效能系统
+
+**版本**：v1.0.0 | **最后更新**：2026-06-15
 
 ## 文档总览
 
@@ -21,10 +23,14 @@ Claude Code 全自动工作流配置，覆盖需求→设计→开发→测试�
 ```
 docs/
 ├── README.md                         # 本文档（导航中心）
-├── claude-code-commands.md           # Claude Code 命令完整参考
+├── HARNESS-ENGINEERING.md            # ⭐ Harness Engineering 理念与设计（必读）
 ├── SETUP.md                          # 复用指南（换电脑/分享给同事）
+├── USAGE.md                          # 日常使用指南 + 10 个场景 + 最佳实践
+├── QUICK-REFERENCE.md                # ⭐ 一页纸速查表（命令/Skills/Hooks）
+├── SETTINGS-GUIDE.md                 # settings.json 配置详解
+├── LONG-CONVERSATION-PITFALLS.md     # 长对话陷阱与解决方案
+├── claude-code-commands.md           # Claude Code 命令完整参考
 ├── ARCHITECTURE.md                   # 架构图 + 组件关系 + 数据流
-├── USAGE.md                          # 日常使用指南 + 工作流示例
 ├── HOOKS.md                          # Hook 工作原理 + 触发时机
 ├── TOKEN-SAVINGS.md                  # Token 节省机制说明
 ├── workflow.md                       # 完整工作流说明
@@ -32,23 +38,61 @@ docs/
 ├── cross-project.md                  # 跨项目工作流
 ├── review-audit.md                   # 审查审计机制
 ├── iteration.md                      # 自动迭代机制
+├── MEMORY.md                         # Memory 机制说明
+├── PROJECTS.md                       # 项目管理说明
+├── PROJECT-INIT-CHECKLIST.md         # 项目启动清单
 ├── CLAUDE-template.md                # 全局 CLAUDE.md 模板
 └── templates/
+    ├── CLAUDE.md.template            # CLAUDE.md 模板
+    ├── api-contract.md.template      # API 契约模板
+    ├── database-schema.md.template   # 数据库设计模板
+    ├── common-patterns.md.template   # 常见模式模板
     └── interface-contract.md         # 接口契约模板
-
-新增文件（2026-06-15）：
-├── skills/INDEX.md                   # Skills 目录索引
-├── rules/INDEX.md                    # Rules 目录索引
-├── rules/quality/hooks-standards.md  # Hook 代码质量标准
-├── rules/workflows/task-management.md # 任务管理规则
-├── rules/languages/javascript.md     # JavaScript/TypeScript 规范
-├── hooks/learning-recorder.js        # 经验沉淀（PostToolUse）
-├── hooks/project-knowledge.js        # 经验加载（SessionStart）
-├── hooks/metrics-collector.js        # 度量收集（PostToolUse）
-├── hooks/metrics-report.js           # 度量报告（Stop）
-├── hooks/notify.ps1                  # Windows Toast 通知
-└── learnings.md                      # 核心经验（每次加载）
 ```
+
+**附：其他系统文件（不在 docs/ 下）**
+
+```
+~/.claude/
+├── rules/                            # 全局规则库
+│   ├── INDEX.md                      # Rules 索引
+│   ├── tools/                        # 工具规则
+│   ├── quality/                      # 质量规则
+│   ├── workflows/                    # 工作流规则
+│   └── languages/                    # 语言规范
+├── hooks/                            # 25 个 Hook 脚本
+├── skills/                           # 16 个 Skills 定义
+│   └── INDEX.md                      # Skills 索引
+├── projects/                         # 项目级 Memory
+│   └── <project>/memory/
+│       ├── MEMORY.md
+│       ├── learnings.md
+│       └── task-state.md
+└── knowledge/                        # 跨项目知识库
+    ├── engineering/                  # 工程规范（工具使用、性能优化等）
+    ├── project/                      # 项目知识（API 约定、数据库设计等）
+    └── business/                     # 业务知识（流程、规则、术语等）
+```
+
+**使用说明**：
+
+- **knowledge/**：跨项目复用的工程知识
+  - `engineering/`：通用工程知识（5 个文件，来自项目经验）
+  - `project/`：项目特定知识（通过 /sync-knowledge 从 learnings.md 同步）
+  - `business/`：业务领域知识（订单流程、退款政策等）
+  - 详细规则见 `rules/workflows/task-management.md`
+
+- **templates/**：项目启动和文档模板
+  - `CLAUDE-template.md`：项目级 CLAUDE.md 模板
+  - `api-contract.md.template`：API 契约模板
+  - `database-schema.md.template`：数据库设计模板
+  - `common-patterns.md.template`：常见模式模板
+  - 使用方式：复制到项目中并修改
+
+- **metrics/**：度量数据（不上传到 git）
+  - `daily/`：每日度量数据
+  - `sessions/`：会话度量数据
+  - 由 metrics-collector.js 和 metrics-report.js 自动维护
 
 ---
 
@@ -270,10 +314,31 @@ Delivery (输出交付物)
 
 ## 快速开始
 
-1. 阅读 [SETUP.md](SETUP.md) 了解如何复用本配置
-2. 阅读 [ARCHITECTURE.md](ARCHITECTURE.md) 了解组件关系
-3. 阅读 [USAGE.md](USAGE.md) 了解日常工作流
-4. 阅读 [HOOKS.md](HOOKS.md) 了解 Hook 工作原理
+### 第一次使用（推荐阅读顺序）
+
+1. **了解理念**（15 分钟）
+   - 阅读 [HARNESS-ENGINEERING.md](HARNESS-ENGINEERING.md)
+   - 理解 6 个原则、为什么这样设计
+
+2. **本地复用**（30 分钟）
+   - 按照 [SETUP.md](SETUP.md) 的 3 步快速复用
+   - 更新路径、验证环境
+
+3. **日常使用**（10 分钟/工作流）
+   - 阅读 [USAGE.md](USAGE.md) 中对应的场景
+   - 运行对应的 Workflow 或 Skill
+
+### 换电脑使用
+
+1. 按照 [SETUP.md](SETUP.md) 的"迁移检查清单"
+2. 替换所有硬编码路径
+3. 验证 Hook 和 Skills
+
+### 分享给同事
+
+- 按照 [SETUP.md](SETUP.md) 的"分享给同事"部分
+- 去掉 settings.json 和 projects/ 目录
+- 同事自己填入 API Token 和路径
 
 ---
 

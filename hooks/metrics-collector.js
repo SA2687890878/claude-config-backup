@@ -1,23 +1,32 @@
 #!/usr/bin/env node
 /**
- * PostToolUse hook: 记录工具调用统计
+ * PostToolUse hook: 记录关键工具调用统计（优化版）
  *
  * 功能：
- * 1. 记录工具调用次数
- * 2. 记录调用时间
+ * 1. 只记录关键工具（高成本、质量信号）
+ * 2. 跳过低价值工具（Read、Bash等日常查询）
  * 3. 写入 metrics 目录
  *
- * 符合 Claude 官方 hook 规范：
- * - stdin: 读取 JSON 输入 { tool_name, tool_input }
- * - stdout: 无输出
- * - stderr: 信息性提示
- * - exit code: 0
+ * 符合 Claude 官方 hook 规范
  */
 const fs = require('fs');
 const path = require('path');
 
 const HOME = process.env.USERPROFILE || process.env.HOME || '';
 const METRICS_DIR = path.join(HOME, '.claude', 'metrics');
+
+// 关键工具白名单
+const TRACKED_TOOLS = new Set([
+  // 高成本操作
+  'Agent', 'Workflow',
+  // 外部调用
+  'WebSearch', 'WebFetch', 'mcp__exa-search__web_search_exa', 'mcp__exa-search__web_fetch_exa',
+  'mcp__codegraph__codegraph_explore', 'mcp__codegraph__codegraph_node',
+  // 质量信号（代码修改）
+  'Edit', 'Write',
+  // Build/Test
+  'Build', 'Test'
+]);
 
 function readStdin() {
   return new Promise((resolve) => {
@@ -44,6 +53,9 @@ function getNow() {
     const input = JSON.parse(raw);
     const toolName = input.tool_name || 'unknown';
 
+    // 过滤：只记录关键工具
+    if (!TRACKED_TOOLS.has(toolName)) process.exit(0);
+
     const today = getToday();
     const now = getNow();
 
@@ -67,10 +79,10 @@ function getNow() {
       }
     }
 
-    // 初始化今日统计（只初始化缺失字段，不覆盖已有数据）
+    // 初始化今日统计
     if (!dailyStats.date) dailyStats.date = today;
     if (!dailyStats.tools) dailyStats.tools = {};
-    if (!dailyStats.totalCalls) dailyStats.totalCalls = 0;
+    if (!dailyStats.trackedCalls) dailyStats.trackedCalls = 0;
     if (!dailyStats.firstCall) dailyStats.firstCall = now;
 
     // 更新统计
@@ -83,11 +95,15 @@ function getNow() {
     }
     dailyStats.tools[toolName].count++;
     dailyStats.tools[toolName].lastCall = now;
-    dailyStats.totalCalls++;
+    dailyStats.trackedCalls++;
     dailyStats.lastCall = now;
 
     // 写入文件
-    fs.writeFileSync(dailyFile, JSON.stringify(dailyStats, null, 2), 'utf8');
+    try {
+      fs.writeFileSync(dailyFile, JSON.stringify(dailyStats, null, 2), 'utf8');
+    } catch (e) {
+      console.error('[metrics-collector] Failed to write metrics:', e.message);
+    }
 
   } catch (e) { console.error('[metrics-collector] Error:', e.message); }
   process.exit(0);

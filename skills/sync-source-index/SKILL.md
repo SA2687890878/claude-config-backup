@@ -1,7 +1,11 @@
 ---
 name: sync-source-index
-description: 同步加密源码到可读副本并重建 context-mode 索引。触发词：同步源码、刷新索引、sync source、重新索引
+description: >
+  同步加密源码到可读副本并重建 context-mode 索引。
+  当用户说 同步源码、刷新索引、sync source、重新索引时触发。
+  转换加密文件为可读格式，清除旧索引，重建新索引，验证可搜索性。
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Agent, mcp__context-mode__ctx_index, mcp__context-mode__ctx_purge, mcp__context-mode__ctx_search
+version: 1.0.0
 ---
 
 # 源码同步与索引

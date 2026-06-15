@@ -26,7 +26,8 @@
 |------|------|------|
 | Git 规范 | `workflows/git.md` | 分支命名、提交信息格式 |
 | 触发规则 | `workflows/workflows.md` | 触发词映射、路由机制 |
-| 任务管理 | `workflows/task-management.md` | 经验沉淀和任务归档规则 |
+| 任务管理 | `workflows/task-management.md` | 经验沉淀、任务归档、Memory→Knowledge 同步 |
+| Artifact 管理 | `workflows/artifact-management.md` | 产物清单、存储位置、生命周期、验证标准 |
 
 ## 语言规则
 
@@ -42,14 +43,19 @@
 
 ## Rules 统计
 
-- **总计**：16 个 Rules
+- **总计**：17 个 Rules
 - **工具**：4 个
 - **质量**：4 个
-- **工作流**：3 个
+- **工作流**：4 个
 - **语言**：5 个
 
 ## 优先级
 
 ```
-项目级 .claude/ > 全局 rules/*.md > CLAUDE.md
+项目级 .claude/rules/ > 全局 ~/.claude/rules/ > 项目级 CLAUDE.md
 ```
+
+**说明**：
+- 项目根目录的 `.claude/rules/languages/` 会覆盖全局规则
+- 全局规则为所有项目的基线，支持多技术栈切换
+- 项目的 CLAUDE.md 用于记录项目级 context（技术栈、架构、约定）
