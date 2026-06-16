@@ -121,4 +121,46 @@
 | 日期 | 版本 | 内容 |
 |------|------|------|
 | 2026-06-16 | 2.0 | 文档中心重组：分类整理、添加链接、删除重复内容 |
+| 2026-06-16 | 2.0 | Rules 架构优化：核心规则+参考规则分离，节省 82% token |
+| 2026-06-16 | 2.0 | Knowledge 层次化索引：总索引→分类索引→具体文件 |
+| 2026-06-16 | 2.0 | 路径修正：所有引用 knowledge/engineering/rules/ 的路径更新 |
+| 2026-06-16 | 2.0 | 知识沉淀：创建 3 个沉淀文件 + 2 个高价值知识文件 |
 | 2026-06-11 | 1.0 | 初始版本 |
+
+### 本次优化详情
+
+#### 1. Rules 架构优化
+- 实现核心规则 + 参考规则分离
+- 核心规则精简到 104 行（节省 82% token）
+- 参考规则移动到 knowledge/rules/ 目录
+
+#### 2. Knowledge 层次化索引
+- 创建各分类 INDEX.md
+- 总索引只链接到分类索引
+- 实现按需加载
+
+#### 3. 文档中心重组
+- 创建 5 个子目录分类（01-getting-started、02-guides、03-architecture、04-reference、templates）
+- 更新 README.md 添加所有文档链接
+- 删除重复内容
+
+#### 4. 路径修正
+- 修正所有引用 knowledge/engineering/rules/ 的路径
+- 更新 context-injector.js 路径基准
+- 确保路径一致性 100%
+
+#### 5. 知识沉淀
+- 创建 rules-architecture.md（Rules 架构设计）
+- 创建 knowledge-sync-method.md（知识同步方法）
+- 创建 index-design.md（索引设计原则）
+- 提炼 2 个高价值知识文件（dotnet-async-constraints、dotnet8-options-pattern）
+
+#### 优化成果
+
+| 成果 | 量化 |
+|------|------|
+| Token 节省 | 82%（574 行 → 104 行） |
+| 知识库结构 | 层次化索引（总索引 → 分类索引 → 具体文件） |
+| 规则架构 | 核心规则 + 参考规则分离 |
+| 沉淀文件 | 3 个（rules-architecture、knowledge-sync-method、index-design） |
+| 路径一致性 | 100%（0 个旧路径） |

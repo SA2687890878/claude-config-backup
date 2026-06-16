@@ -278,4 +278,5 @@ Hook 的 stderr 输出会显示给用户，stdout 输出会注入到 Claude 的�
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
+| 2026-06-16 | 3.1 | 更新 context-injector.js 描述，合并旧 hook 名称 |
 | 2026-06-11 | 3.0 | 兼容 Harness Engineering v3.0 配置体系 |
