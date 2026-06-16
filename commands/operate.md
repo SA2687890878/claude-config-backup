@@ -9,15 +9,26 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, Workflow
 
 **必须使用 Workflow 工具执行，禁止手动执行！**
 
-收到此命令后，第一步必须调用：
+收到此命令后，第一步必须调用 Workflow 工具，将用户的消息文本作为参数传递。
 
-```
-Workflow({scriptPath: "~/.claude/workflows/operate.js"})
-```
+## 参数传递规则
 
-**禁止跳过 Workflow 直接排查。**
+**关键：必须把用户的问题描述传递给工作流！**
+
+- 用户输入 `/operate 订单金额计算错误` → `args: "订单金额计算错误"`
+- 用户输入 `/operate` 后单独描述 → 把用户的问题文本作为 `args` 传入
+- 如果用户没有提供问题描述，先询问再调用 Workflow
 
 ## 执行方式
+
+```
+Workflow({
+  scriptPath: "~/.claude/workflows/operate.js",
+  args: "<用户的问题描述文本>"
+})
+```
+
+或者使用对象形式：
 
 ```
 Workflow({
@@ -33,7 +44,7 @@ Workflow({
 
 ## 参数
 
-- `issueTitle` — 问题标题（必需）
+- `issueTitle` / 直接字符串 — 问题标题（必需）
 - `issueDescription` — 问题描述（可选）
 - `errorLog` — 错误日志（可选）
 - `type` — 问题类型：bug / performance / data（默认 bug）

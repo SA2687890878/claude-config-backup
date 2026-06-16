@@ -106,13 +106,21 @@ const REVIEW_SCHEMA = {
 }
 
 // ========== 入口 ==========
-const issueTitle = args?.issueTitle
+// 兼容多种调用方式：对象参数、字符串参数、数组参数
+let issueTitle = args?.issueTitle
 const issueDescription = args?.issueDescription
 const errorLog = args?.errorLog
 const issueType = args?.type || 'bug' // bug | performance | data
 const today = args?.today || new Date().toISOString().split('T')[0]
 
-if (!issueTitle) throw new Error('缺少问题标题，请提供 issueTitle 参数')
+if (!issueTitle && typeof args === 'string' && args.trim()) {
+  issueTitle = args.trim()
+}
+if (!issueTitle && Array.isArray(args) && args.length > 0) {
+  issueTitle = args.filter(a => typeof a === 'string').join(' ').trim()
+}
+
+if (!issueTitle) throw new Error('缺少问题标题，请提供 issueTitle 参数。用法：/operate <问题描述>')
 
 log(`开始运维工作流：${issueTitle}`)
 log(`问题类型：${issueType}`)

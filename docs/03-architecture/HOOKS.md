@@ -94,13 +94,9 @@ Claude 调用工具（Write/Edit）
   - 提交/commit → /commit
   - 文档/doc → /docs
 
-#### inject-git-rules.js
-- **触发**：用户输入包含 git 命令或中文 git 关键词
-- **功能**：注入 hooks/rules/git.md（分支命名、提交格式、禁止操作）
-
-#### inject-token-rules.js
-- **触发**：用户输入涉及 codegraph、sqlite-index、token 优化
-- **功能**：注入 hooks/rules/token-optimization.md
+#### context-injector.js（合并了 inject-git-rules.js、inject-token-rules.js）
+- **触发**：用户输入包含 git 命令、token 优化、安全相关关键词
+- **功能**：根据关键词自动注入对应的规则文件（knowledge/rules/ 目录）
 
 ---
 

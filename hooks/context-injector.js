@@ -52,7 +52,7 @@ async function main() {
     const matched = rules.filter(r => r.keywords.test(prompt));
     if (matched.length === 0) process.exit(0);
 
-    const rulesDir = path.join(process.env.USERPROFILE || process.env.HOME || '', '.claude', 'rules');
+    const rulesDir = path.join(process.env.USERPROFILE || process.env.HOME || '', '.claude', 'knowledge', 'rules');
     const contexts = [];
 
     for (const rule of matched) {

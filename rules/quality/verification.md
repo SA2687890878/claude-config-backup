@@ -2,49 +2,23 @@
 
 > 所有验证（agent、workflow、skill）引用此文件，不重复定义。
 
-## 验证规则（确定性，不允许主观放宽）
-
-### PASS 条件
+## PASS 条件
 - build 退出码 == 0
 - test 退出码 == 0
 - 无测试失败
 
-### FAIL 条件
+## FAIL 条件
 - 任一退出码 != 0
 - 有测试失败
 - 有编译错误
-
-## 验证流程
-
-1. **运行编译**：`dotnet build --configuration Release`
-2. **运行测试**：`dotnet test`
-3. **记录退出码**：每条命令的真实退出码
-4. **返回结果**：确定性的 PASS/FAIL
-
-## 输出格式
-
-```
-## 验证结果：PASS/FAIL
-
-### 编译验证
-- 命令：dotnet build --configuration Release
-- 退出码：0/1
-- 输出：（只保留错误信息）
-
-### 测试验证
-- 命令：dotnet test
-- 退出码：0/1
-- 统计：通过 N / 失败 N / 跳过 N
-- 失败详情：（只保留失败测试名和错误）
-
-### 证据
-- [实际运行的命令]
-- [实际返回的内容]
-```
 
 ## 验证纪律
 
 - **退出码为王**：只看退出码，不看 agent 自述
 - **必须运行命令**：不能声称成功但没有实际运行
 - **必须给出证据**：实际运行的命令和返回内容
-- **不主观放宽**：退出码 != 0 就是 FAIL，没有"应该通过"
+
+## 详细参考
+
+- 验证流程：`~/.claude/knowledge/rules/verification/flow.md`
+- 验证纪律：`~/.claude/knowledge/rules/verification/discipline.md`

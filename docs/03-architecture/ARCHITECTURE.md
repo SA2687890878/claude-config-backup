@@ -140,19 +140,34 @@
 │   ├── commit/            → Shared
 │   └── verification-before-completion/ → Shared
 │
-├── rules/（规则）
+├── rules/（核心规则 - 自动加载）
 │   ├── quality/
-│   │   ├── gates.md       → 5 级质量门禁
-│   │   ├── review-checklist.md → 审查清单
-│   │   └── verification.md → 验证规则
-│   ├── tools/
-│   │   ├── code-access.md → 代码访问规则
-│   │   ├── model-strategy.md → 模型策略
-│   │   ├── security.md    → 安全规则
-│   │   └── token-optimization.md → Token 优化
-│   └── workflows/
-│       ├── git.md         → Git 规范
-│       └── workflows.md   → 工作流触发规则
+│   │   ├── gates.md       → 5 级质量门禁（33 行）
+│   │   └── verification.md → 验证规则（24 行）
+│   └── tools/
+│       ├── code-access.md → 代码访问规则（26 行）
+│       └── token-optimization.md → Token 优化（21 行）
+│
+├── knowledge/（知识库 - 按需加载）
+│   ├── rules/              → 按需加载的 rules（详细说明）
+│   │   ├── INDEX.md        → 规则索引
+│   │   ├── code-access/    → 代码访问规则详细说明
+│   │   ├── gates/          → 质量门禁详细说明
+│   │   ├── verification/   → 验证规则详细说明
+│   │   ├── token-optimization/ → Token 优化详细说明
+│   │   ├── workflows/      → 工作流规则
+│   │   ├── quality/        → 质量规则
+│   │   ├── tools/          → 工具规则
+│   │   └── languages/      → 语言规则
+│   ├── engineering/        → 工程知识
+│   │   ├── INDEX.md        → 工程知识索引
+│   │   └── *.md            → 具体知识文件
+│   ├── project/            → 项目知识
+│   │   ├── INDEX.md        → 项目知识索引
+│   │   └── *.md            → 具体知识文件
+│   └── business/           → 业务知识
+│       ├── INDEX.md        → 业务知识索引
+│       └── *.md            → 具体知识文件
 │
 ├── hooks/（自动化）
 │   ├── PreToolUse: secret-guard, write-guard, impact-guard
@@ -161,14 +176,46 @@
 │   ├── SessionStart: session-start
 │   └── Stop: build-verify
 │
-├── memory/（决策/约束/进度）
-│   ├── harness-engineering-lessons.md
-│   └── long-conversation-pitfalls.md
+├── memory/（决策/约束/进度 - 自动加载）
+│   ├── MEMORY.md              → 记忆索引
+│   ├── harness-engineering-lessons.md → Harness Engineering 建设教训
+│   ├── long-conversation-pitfalls.md → 长对话陷阱
+│   └── *.md                   → 其他经验文件
 │
-└── knowledge/（技术知识）
-    ├── engineering/  → 工程规范
-    ├── project/      → 项目知识
-    └── business/     → 业务知识
+├── docs/（文档中心 - 给人看的）
+│   ├── README.md              → 导航中心
+│   ├── DIRECTORY-GUIDE.md     → 目录结构指南
+│   ├── HARNESS-ENGINEERING.md → Harness Engineering 理念与设计
+│   └── *.md                   → 其他文档
+│
+├── skills/（技能 - 按需调用）
+│   ├── INDEX.md               → Skills 索引
+│   ├── requirements/          → 需求分析
+│   ├── arch-review/           → 架构审查
+│   ├── dev-workflow/          → 开发工作流
+│   ├── code-review-workflow/  → 代码审查
+│   ├── generate-tests/        → 生成测试
+│   ├── test-runner/           → 测试执行
+│   ├── systematic-debugging/  → 系统化调试
+│   ├── perf-tune/             → 性能调优
+│   ├── sql-best-practices/    → SQL 最佳实践
+│   ├── docs/                  → 文档生成
+│   ├── commit/                → Git 提交
+│   ├── adversarial-review/    → 对抗审查
+│   ├── verification-before-completion/ → 验证门禁
+│   ├── sync-knowledge/        → 知识同步
+│   ├── skill-manager/         → 技能管理
+│   └── sync-source-index/     → 源码索引同步
+│
+├── agents/（Agent - 按需调用）
+│   ├── builder-agent.md       → 设计/开发/测试 Agent
+│   └── operator-agent.md      → 排查/优化/运维 Agent
+│
+└── projects/（项目级数据）
+    └── <project-path>/
+        └── memory/
+            ├── MEMORY.md      → 项目记忆索引
+            └── *.md           → 项目经验文件
 ```
 
 ---
@@ -258,6 +305,90 @@
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
+| 2026-06-16 | 4.0 | 本次优化：核心规则+参考规则分离、knowledge层次化索引、路径修正 |
 | 2026-06-11 | 3.0 | 重构架构图，符合《建设指南》运行模型；新增组件关系图和数据流图 |
 | 2026-06-10 | 2.0 | 添加 workflow-router、session-start、build-verify |
 | 2026-06-04 | 1.0 | 初始版本 |
+
+---
+
+## 本次优化（v4.0）
+
+### 优化内容
+
+#### 1. 核心规则 + 参考规则分离
+
+**问题**：Claude Code 会递归扫描 `~/.claude/rules/` 目录，所有规则都会被自动加载。
+
+**解决方案**：
+- **核心规则**（`~/.claude/rules/`）：自动加载，只保留最关键的规则（104 行）
+- **参考规则**（`~/.claude/knowledge/rules/`）：按需加载，包含完整的说明、示例、最佳实践
+
+**效果**：
+- Token 节省 82%（574 行 → 104 行）
+- 核心规则精简到 1.5k tokens
+
+#### 2. knowledge 层次化索引
+
+**问题**：`knowledge/MEMORY.md` 直接链接到所有文件，内容太长。
+
+**解决方案**：
+- **总索引**（`knowledge/MEMORY.md`）：只链接到各分类索引
+- **分类索引**（`knowledge/*/INDEX.md`）：链接到该分类下的具体文件
+- **具体文件**：实际的知识内容
+
+**效果**：
+- 层次清晰：总索引 → 分类索引 → 具体文件
+- 易于维护：每个分类有自己的索引
+- 按需加载：可以只加载某个分类的索引
+
+#### 3. 路径修正
+
+**问题**：rules 从 `engineering/rules/` 移动到 `knowledge/rules/`，需要更新所有引用路径。
+
+**解决方案**：
+- 更新了所有引用 `knowledge/engineering/rules/` 的地方
+- 检查了所有引用 rules 的地方，确保路径正确
+
+**效果**：
+- 路径一致性 100%（0 个旧路径）
+- 所有配置文件路径正确
+
+#### 4. 知识同步方法
+
+**问题**：项目经验如何正确提炼到全局知识库？
+
+**解决方案**：
+- 不能直接复制项目经验
+- 要先读取内容、判断是否过时、分析通用性
+- 只提炼真正有价值的通用知识
+
+**效果**：
+- 创建了 2 个高价值知识文件
+- 建立了知识同步方法论
+
+#### 5. 索引设计原则
+
+**问题**：索引文件应该包含什么内容？
+
+**解决方案**：
+- 给 Claude 读取的索引：只保留索引内容（名称、路径、简短说明）
+- 给人看的文档：放在 docs/ 目录，包含详细说明、示例、使用方法
+
+**效果**：
+- 区分了两种不同的文档类型
+- 索引文件更加简洁
+
+### 优化成果
+
+| 成果 | 量化 |
+|------|------|
+| Token 节省 | 82%（574 行 → 104 行） |
+| 知识库结构 | 层次化索引（总索引 → 分类索引 → 具体文件） |
+| 规则架构 | 核心规则 + 参考规则分离 |
+| 沉淀文件 | 3 个（rules-architecture、knowledge-sync-method、index-design） |
+| 路径一致性 | 100%（0 个旧路径） |
+
+### 详细说明
+
+详见 [DIRECTORY-GUIDE.md](DIRECTORY-GUIDE.md)（目录结构指南）。

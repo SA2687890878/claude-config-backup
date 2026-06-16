@@ -9,15 +9,26 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, Workflow
 
 **必须使用 Workflow 工具执行，禁止手动执行！**
 
-收到此命令后，第一步必须调用：
+收到此命令后，第一步必须调用 Workflow 工具，将用户的消息文本作为参数传递。
 
-```
-Workflow({scriptPath: "~/.claude/workflows/build.js"})
-```
+## 参数传递规则
 
-**禁止跳过 Workflow 直接编码。** 不这样做会跳过质量门禁（Requirement Gate、Design Gate、Code Gate），导致需求理解不充分、重复返工。
+**关键：必须把用户的功能描述传递给工作流！**
+
+- 用户输入 `/build 用户导出功能` → `args: "用户导出功能"`
+- 用户输入 `/build` 后单独描述 → 把用户的问题文本作为 `args` 传入
+- 如果用户没有提供功能描述，先询问再调用 Workflow
 
 ## 执行方式
+
+```
+Workflow({
+  scriptPath: "~/.claude/workflows/build.js",
+  args: "<用户的功能描述文本>"
+})
+```
+
+或者使用对象形式：
 
 ```
 Workflow({
@@ -31,7 +42,7 @@ Workflow({
 
 ## 参数
 
-- `featureName` — 功能名称（必需）
+- `featureName` / 直接字符串 — 功能名称（必需）
 - `requirementDoc` — 需求文档路径（可选）
 - `decisionDoc` — 决策记录路径（可选）
 

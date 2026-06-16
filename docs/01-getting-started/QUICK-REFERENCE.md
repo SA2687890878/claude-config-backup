@@ -302,8 +302,8 @@ cat ~/.claude/skills/INDEX.md
 # 查看 Hooks
 ls ~/.claude/hooks/
 
-# 查看 Rules
-cat ~/.claude/rules/INDEX.md
+# 查看 Rules（按需加载）
+cat ~/.claude/knowledge/rules/INDEX.md
 ```
 
 ### 项目初始化
