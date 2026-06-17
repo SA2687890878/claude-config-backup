@@ -20,6 +20,10 @@ const PROJECT_ROOTS = [
 const CONVERT_SCRIPT = 'C:\\Users\\admin\\.claude\\skills\\sync-source-index\\scripts\\convert-source.ps1';
 const TEMP_BASE = path.join(process.env.TEMP || process.env.USERPROFILE || '', 'claude-source-sync');
 
+// 节流：同一项目 60 秒内不重复触发
+const THROTTLE_MS = 60 * 1000;
+const lastSyncMap = new Map();
+
 // 文件扩展名 → 转换参数
 const EXT_MAP = {
   '.cs': '*.cs',
@@ -93,6 +97,12 @@ process.stdin.on('end', () => {
 
     // 确保 src 目录存在（Vue 项目可能在根目录）
     const actualSrcDir = fs.existsSync(srcDir) ? srcDir : projectDir;
+
+    // 节流：同一项目 60 秒内不重复触发
+    const now = Date.now();
+    const lastSync = lastSyncMap.get(projectDir) || 0;
+    if (now - lastSync < THROTTLE_MS) return;
+    lastSyncMap.set(projectDir, now);
 
     // 后台执行：转换 → 索引
     const psScript = `
