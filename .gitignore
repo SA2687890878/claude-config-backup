@@ -1,6 +1,8 @@
 # 敏感信息
 .credentials.json
 settings.json
+settings.json.bak
+settings.json.orig
 
 # 会话数据（可能包含敏感对话）
 transcripts/

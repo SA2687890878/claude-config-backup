@@ -27,7 +27,7 @@ tools: Read, Grep, Glob, Bash, Edit, Write, mcp__context-mode__ctx_search
 @rules/tools/code-access.md
 
 **审查清单：**
-@rules/quality/review-checklist.md
+@knowledge/rules/quality/review-checklist.md
 
 **验证规则：**
 @rules/quality/verification.md

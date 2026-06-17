@@ -10,43 +10,43 @@
 
 | 文档 | 用途 | 字数 | 推荐阅读时间 |
 |------|------|------|-------------|
-| [HARNESS-ENGINEERING.md](HARNESS-ENGINEERING.md) | 理念与设计、6 原则、架构、生命周期 | 1224 | 15 分钟 |
+| [HARNESS-ENGINEERING.md](01-getting-started/HARNESS-ENGINEERING.md) | 理念与设计、6 原则、架构、生命周期 | 1224 | 15 分钟 |
 
 ### 使用指南（📖 实操）
 
 | 文档 | 用途 | 字数 | 推荐阅读时间 |
 |------|------|------|-------------|
-| [SETUP.md](SETUP.md) | 复用指南、换电脑、分享给同事 | 983 | 30 分钟 |
-| [USAGE.md](USAGE.md) | 日常使用指南、10 个场景、最佳实践 | 1131 | 15 分钟 |
-| [QUICK-REFERENCE.md](QUICK-REFERENCE.md) | 一页纸速查表（命令/Skills/Hooks） | 800+ | 5 分钟 |
-| [SETTINGS-GUIDE.md](SETTINGS-GUIDE.md) | settings.json 配置详解 | 600+ | 10 分钟 |
+| [SETUP.md](02-guides/SETUP.md) | 复用指南、换电脑、分享给同事 | 983 | 30 分钟 |
+| [USAGE.md](02-guides/USAGE.md) | 日常使用指南、10 个场景、最佳实践 | 1131 | 15 分钟 |
+| [QUICK-REFERENCE.md](01-getting-started/QUICK-REFERENCE.md) | 一页纸速查表（命令/Skills/Hooks） | 800+ | 5 分钟 |
+| [SETTINGS-GUIDE.md](04-reference/SETTINGS-GUIDE.md) | settings.json 配置详解 | 600+ | 10 分钟 |
 
 ### 避坑指南
 
 | 文档 | 用途 | 字数 | 推荐阅读时间 |
 |------|------|------|-------------|
-| [LONG-CONVERSATION-PITFALLS.md](LONG-CONVERSATION-PITFALLS.md) | 长对话陷阱与解决方案 | 570+ | 10 分钟 |
+| [LONG-CONVERSATION-PITFALLS.md](04-reference/LONG-CONVERSATION-PITFALLS.md) | 长对话陷阱与解决方案 | 570+ | 10 分钟 |
 
 ### 参考文档（🔍 查询）
 
 | 文档 | 用途 |
 |------|------|
-| [ARCHITECTURE.md](ARCHITECTURE.md) | 系统架构图 + 组件关系 + 数据流 |
-| [HOOKS.md](HOOKS.md) | Hook 工作原理 + 触发时机 |
-| [TOKEN-SAVINGS.md](TOKEN-SAVINGS.md) | Token 节省机制说明 |
-| [workflow.md](workflow.md) | 完整工作流说明 |
-| [agent-roles.md](agent-roles.md) | Agent 角色定义 |
-| [cross-project.md](cross-project.md) | 跨项目工作流 |
-| [review-audit.md](review-audit.md) | 审查审计机制 |
-| [iteration.md](iteration.md) | 自动迭代机制 |
+| [ARCHITECTURE.md](03-architecture/ARCHITECTURE.md) | 系统架构图 + 组件关系 + 数据流 |
+| [HOOKS.md](03-architecture/HOOKS.md) | Hook 工作原理 + 触发时机 |
+| [TOKEN-SAVINGS.md](03-architecture/TOKEN-SAVINGS.md) | Token 节省机制说明 |
+| [workflow.md](03-architecture/workflow.md) | 完整工作流说明 |
+| [agent-roles.md](03-architecture/agent-roles.md) | Agent 角色定义 |
+| [cross-project.md](03-architecture/cross-project.md) | 跨项目工作流 |
+| [review-audit.md](03-architecture/review-audit.md) | 审查审计机制 |
+| [iteration.md](03-architecture/iteration.md) | 自动迭代机制 |
 
 ### 系统文档（🔧 维护）
 
 | 文档 | 用途 |
 |------|------|
-| [MEMORY.md](MEMORY.md) | Memory 机制说明 |
-| [PROJECTS.md](PROJECTS.md) | 项目管理说明 |
-| [PROJECT-INIT-CHECKLIST.md](PROJECT-INIT-CHECKLIST.md) | 项目启动清单 |
+| [MEMORY.md](03-architecture/MEMORY.md) | Memory 机制说明 |
+| [PROJECTS.md](03-architecture/PROJECTS.md) | 项目管理说明 |
+| [PROJECT-INIT-CHECKLIST.md](02-guides/PROJECT-INIT-CHECKLIST.md) | 项目启动清单 |
 
 ### 模板文档（📝 复用）
 
@@ -100,50 +100,50 @@
 
 ### 从 QUICK-REFERENCE.md
 
-- 详细使用 → [USAGE.md](USAGE.md)
-- 配置修改 → [SETTINGS-GUIDE.md](SETTINGS-GUIDE.md)
-- 迁移/复用 → [SETUP.md](SETUP.md)
-- 问题排查 → [LONG-CONVERSATION-PITFALLS.md](LONG-CONVERSATION-PITFALLS.md)
-- 系统架构 → [ARCHITECTURE.md](ARCHITECTURE.md)
-- Hook 工作原理 → [HOOKS.md](HOOKS.md)
+- 详细使用 → [USAGE.md](02-guides/USAGE.md)
+- 配置修改 → [SETTINGS-GUIDE.md](04-reference/SETTINGS-GUIDE.md)
+- 迁移/复用 → [SETUP.md](02-guides/SETUP.md)
+- 问题排查 → [LONG-CONVERSATION-PITFALLS.md](04-reference/LONG-CONVERSATION-PITFALLS.md)
+- 系统架构 → [ARCHITECTURE.md](03-architecture/ARCHITECTURE.md)
+- Hook 工作原理 → [HOOKS.md](03-architecture/HOOKS.md)
 
 ### 从 USAGE.md
 
-- 快速查找 → [QUICK-REFERENCE.md](QUICK-REFERENCE.md)
-- 配置说明 → [SETTINGS-GUIDE.md](SETTINGS-GUIDE.md)
-- 长对话避坑 → [LONG-CONVERSATION-PITFALLS.md](LONG-CONVERSATION-PITFALLS.md)
-- 复用/迁移 → [SETUP.md](SETUP.md)
-- 理念设计 → [HARNESS-ENGINEERING.md](HARNESS-ENGINEERING.md)
-- Skills 详细说明 → [skills/INDEX.md](../skills/INDEX.md)
-- Hooks 详细说明 → [HOOKS.md](HOOKS.md)
+- 快速查找 → [QUICK-REFERENCE.md](01-getting-started/QUICK-REFERENCE.md)
+- 配置说明 → [SETTINGS-GUIDE.md](04-reference/SETTINGS-GUIDE.md)
+- 长对话避坑 → [LONG-CONVERSATION-PITFALLS.md](04-reference/LONG-CONVERSATION-PITFALLS.md)
+- 复用/迁移 → [SETUP.md](02-guides/SETUP.md)
+- 理念设计 → [HARNESS-ENGINEERING.md](01-getting-started/HARNESS-ENGINEERING.md)
+- Skills 详细说明 → [../skills/INDEX.md](../skills/INDEX.md)
+- Hooks 详细说明 → [HOOKS.md](03-architecture/HOOKS.md)
 
 ### 从 SETUP.md
 
-- 日常使用 → [USAGE.md](USAGE.md)
-- 快速查找 → [QUICK-REFERENCE.md](QUICK-REFERENCE.md)
-- 配置说明 → [SETTINGS-GUIDE.md](SETTINGS-GUIDE.md)
-- 理念设计 → [HARNESS-ENGINEERING.md](HARNESS-ENGINEERING.md)
+- 日常使用 → [USAGE.md](02-guides/USAGE.md)
+- 快速查找 → [QUICK-REFERENCE.md](01-getting-started/QUICK-REFERENCE.md)
+- 配置说明 → [SETTINGS-GUIDE.md](04-reference/SETTINGS-GUIDE.md)
+- 理念设计 → [HARNESS-ENGINEERING.md](01-getting-started/HARNESS-ENGINEERING.md)
 
 ### 从 SETTINGS-GUIDE.md
 
-- 快速查找 → [QUICK-REFERENCE.md](QUICK-REFERENCE.md)
-- 日常使用 → [USAGE.md](USAGE.md)
-- 复用/迁移 → [SETUP.md](SETUP.md)
-- Hook 工作原理 → [HOOKS.md](HOOKS.md)
+- 快速查找 → [QUICK-REFERENCE.md](01-getting-started/QUICK-REFERENCE.md)
+- 日常使用 → [USAGE.md](02-guides/USAGE.md)
+- 复用/迁移 → [SETUP.md](02-guides/SETUP.md)
+- Hook 工作原理 → [HOOKS.md](03-architecture/HOOKS.md)
 
 ### 从 LONG-CONVERSATION-PITFALLS.md
 
-- 快速查找 → [QUICK-REFERENCE.md](QUICK-REFERENCE.md)
-- 日常使用 → [USAGE.md](USAGE.md)
-- Token 节省 → [TOKEN-SAVINGS.md](TOKEN-SAVINGS.md)
+- 快速查找 → [QUICK-REFERENCE.md](01-getting-started/QUICK-REFERENCE.md)
+- 日常使用 → [USAGE.md](02-guides/USAGE.md)
+- Token 节省 → [TOKEN-SAVINGS.md](03-architecture/TOKEN-SAVINGS.md)
 
 ### 从 HARNESS-ENGINEERING.md
 
-- 快速查找 → [QUICK-REFERENCE.md](QUICK-REFERENCE.md)
-- 日常使用 → [USAGE.md](USAGE.md)
-- 配置修改 → [SETTINGS-GUIDE.md](SETTINGS-GUIDE.md)
-- 迁移/复用 → [SETUP.md](SETUP.md)
-- 问题排查 → [LONG-CONVERSATION-PITFALLS.md](LONG-CONVERSATION-PITFALLS.md)
+- 快速查找 → [QUICK-REFERENCE.md](01-getting-started/QUICK-REFERENCE.md)
+- 日常使用 → [USAGE.md](02-guides/USAGE.md)
+- 配置修改 → [SETTINGS-GUIDE.md](04-reference/SETTINGS-GUIDE.md)
+- 迁移/复用 → [SETUP.md](02-guides/SETUP.md)
+- 问题排查 → [LONG-CONVERSATION-PITFALLS.md](04-reference/LONG-CONVERSATION-PITFALLS.md)
 
 ---
 
@@ -161,4 +161,4 @@
 
 ---
 
-**最后更新**：2026-06-15
+**最后更新**：2026-06-17
