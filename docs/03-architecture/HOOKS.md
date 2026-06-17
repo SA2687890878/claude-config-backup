@@ -94,13 +94,9 @@ Claude 调用工具（Write/Edit）
   - 提交/commit → /commit
   - 文档/doc → /docs
 
-#### inject-git-rules.js
-- **触发**：用户输入包含 git 命令或中文 git 关键词
-- **功能**：注入 hooks/rules/git.md（分支命名、提交格式、禁止操作）
-
-#### inject-token-rules.js
-- **触发**：用户输入涉及 codegraph、sqlite-index、token 优化
-- **功能**：注入 hooks/rules/token-optimization.md
+#### context-injector.js（合并了 inject-git-rules.js、inject-token-rules.js）
+- **触发**：用户输入包含 git 命令、token 优化、安全相关关键词
+- **功能**：根据关键词自动注入对应的规则文件（knowledge/rules/ 目录）
 
 ---
 
@@ -282,4 +278,5 @@ Hook 的 stderr 输出会显示给用户，stdout 输出会注入到 Claude 的�
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
+| 2026-06-16 | 3.1 | 更新 context-injector.js 描述，合并旧 hook 名称 |
 | 2026-06-11 | 3.0 | 兼容 Harness Engineering v3.0 配置体系 |

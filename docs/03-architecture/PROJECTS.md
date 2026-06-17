@@ -253,7 +253,7 @@ Claude 优先使用项目特定规则
   ├─ 编码规范：<project>/.claude/rules/languages/csharp.md
   ├─ 工具规则：~/.claude/rules/tools/code-access.md（如果项目未覆盖）
   ├─ 质量门禁：~/.claude/rules/quality/gates.md
-  └─ 工作流规则：~/.claude/rules/workflows/workflows.md
+  └─ 工作流规则：~/.claude/knowledge/rules/workflows/workflows.md（按需加载）
   ↓
 用户完成功能，执行 git commit
   ↓

@@ -75,11 +75,21 @@ const DECISION_SCHEMA = {
 }
 
 // ========== 入口 ==========
-const question = args?.question
+// 兼容两种调用方式：
+// 1. Workflow({ args: { question: "..." } })
+// 2. Workflow({ args: "用户的问题描述" }) — command 文件传入的原始文本
+let question = args?.question
 const context = args?.context
 const domain = args?.domain
 
-if (!question) throw new Error('缺少问题描述，请提供 question 参数')
+if (!question && typeof args === 'string' && args.trim()) {
+  question = args.trim()
+}
+if (!question && Array.isArray(args) && args.length > 0) {
+  question = args.filter(a => typeof a === 'string').join(' ').trim()
+}
+
+if (!question) throw new Error('缺少问题描述，请提供 question 参数。用法：/explore <需求描述>')
 
 log(`开始探索工作流：${question}`)
 

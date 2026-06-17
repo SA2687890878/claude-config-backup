@@ -30,7 +30,7 @@
 - 加密 .cs 文件：SQLite 索引定位 → CodeGraph 看源码
 - 非加密文件：直接 Read/Grep
 - 影响分析：CodeGraph
-- 详细规则：`~/.claude/rules/tools/code-access.md`
+- 详细规则：见 `@rules/tools/code-access.md`
 
 ## 规则优先级
 项目级 `.claude/` > 全局 `rules/*.md` > 本文件
@@ -39,12 +39,16 @@
 当压缩对话时，始终保留：修改文件列表、测试命令、验证结果。
 
 ## 任务与经验
-- 任务状态/归档规则：`@rules/workflows/task-management.md`
+- 任务状态/归档规则：见 `~/.claude/knowledge/rules/workflows/task-management.md`
 - 经验沉淀到项目级 `.claude/learnings.md`，跨项目经验到全局 `~/.claude/learnings.md`
+- 模型选择策略：见 `~/.claude/knowledge/rules/tools/model-strategy.md`
+- RTK 使用说明：见 `~/.claude/RTK.md`
 
-## 规则引用
-@rules/tools/model-strategy.md
+## 核心规则（每次加载）
+@rules/tools/code-access.md
 @rules/quality/gates.md
-@RTK.md
-@skills/INDEX.md
-@rules/INDEX.md
+@rules/quality/verification.md
+@rules/tools/token-optimization.md
+
+## 知识库索引
+@knowledge/MEMORY.md

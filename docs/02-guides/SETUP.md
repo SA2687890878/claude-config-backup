@@ -89,7 +89,7 @@ cp ~/.claude/settings.example.json ~/.claude/settings.json
 | `rules/workflows/git.md` | Git 提交规范 |
 | `rules/tools/security.md` | 安全规则 |
 | `rules/tools/token-optimization.md` | Token 优化规则 |
-| `rules/workflows/workflows.md` | 工作流触发规则 |
+| `knowledge/rules/workflows/workflows.md` | 工作流触发规则（按需加载） |
 
 ### 5. Skills 清单
 

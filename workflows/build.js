@@ -113,11 +113,19 @@ const REVIEW_SCHEMA = {
 }
 
 // ========== 入口 ==========
-const featureName = args?.featureName
+// 兼容多种调用方式：对象参数、字符串参数、数组参数
+let featureName = args?.featureName
 const requirementDoc = args?.requirementDoc
 const decisionDoc = args?.decisionDoc
 
-if (!featureName) throw new Error('缺少功能名称，请提供 featureName 参数')
+if (!featureName && typeof args === 'string' && args.trim()) {
+  featureName = args.trim()
+}
+if (!featureName && Array.isArray(args) && args.length > 0) {
+  featureName = args.filter(a => typeof a === 'string').join(' ').trim()
+}
+
+if (!featureName) throw new Error('缺少功能名称，请提供 featureName 参数。用法：/build <功能名称>')
 
 log(`开始构建工作流：${featureName}`)
 
