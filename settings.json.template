@@ -69,6 +69,7 @@
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/sqlite-index-update.js"], "if": "Write(*.cs)|Edit(*.cs)" },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/learning-recorder.js"] },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/vue-guard.js"], "if": "Write(*.vue)|Edit(*.vue)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/source-sync-update.js"], "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)" },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/review-trigger.js"] },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/artifact-index-update.js"] }
         ]
