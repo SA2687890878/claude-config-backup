@@ -5,32 +5,36 @@
 ## 获取 git SHAs
 
 ```bash
-BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main
-HEAD_SHA=$(git rev-parse HEAD)
+# 获取当前分支的最新提交
+git rev-parse HEAD
+
+# 获取目标分支的最新提交（通常是 main）
+git rev-parse main
 ```
 
 ## 构造审查上下文
 
-用 Agent 工具，填以下信息：
-- **DESCRIPTION** — 简述你做了什么
-- **PLAN_OR_REQUIREMENTS** — 应该做什么
-- **BASE_SHA** — 起始 commit
-- **HEAD_SHA** — 结束 commit
+```
+审查请求：
 
-## 处理反馈
+分支：[当前分支]
+提交：[当前提交]
+目标：[目标分支]
 
-- **Critical** — 立即修复
-- **Important** — 继续之前修复
-- **Minor** — 记录，稍后处理
-- **Reviewer 错了** — 用技术理由 push back
+变更文件：
+[文件列表]
 
-## 何时请求
+变更内容：
+[git diff 输出]
+```
 
-**必须：**
-- 完成主要功能后
-- 合并到 main 前
+## 派发 subagent
 
-**建议：**
-- 卡住时（新视角）
-- 重构前（基线检查）
-- 修复杂 bug 后
+使用 Agent 工具派发独立的 code reviewer subagent。
+
+## 按严重级别处理反馈
+
+- **CRITICAL** — 立即修复
+- **HIGH** — 尽快修复
+- **MEDIUM** — 计划修复
+- **LOW** — 可选修复

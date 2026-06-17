@@ -3,49 +3,35 @@
 ## Step 1: 确定审查范围
 
 - git 仓库中：`git diff` 获取变更
-- 用户指定文件：直接审查
-- 没有明确范围：问用户
+- 非 git 仓库：用 glob 查找最近修改的文件
 
-## Step 2: 读取审查清单
+## Step 2: 自动选择审查策略
 
-读取 `references/checklist.md`，了解所有检查项。
+根据变更类型自动选择：
 
-## Step 3: 执行审查
+| 变更规模 | 策略 | 读取 |
+|----------|------|------|
+| < 50 行 | 快速审查 | `references/quick-review.md` |
+| 50-200 行 | 标准审查 | `references/checklist.md` |
+| > 200 行 | 深度审查 | `prompts/full-audit.md` |
+| 涉及 auth/crypto/database | 安全审查 | `references/dotnet-checklist.md` |
+| 涉及 test 文件 | 测试审查 | `references/checklist.md` |
 
-按 checklist 分类逐项检查。记录发现格式：`[严重级别] (置信度: N/10) 文件:行号 — 描述`
+## Step 3: 按文件类型选择检查清单
 
-**严重级别：**
-- **CRITICAL** — 生产必炸（数据丢失、安全漏洞、死锁）
-- **HIGH** — 很可能出问题（未处理异常、资源泄漏）
-- **MEDIUM** — 可能出问题（边界条件、性能隐患）
-- **LOW** — 代码质量（命名、冗余、可读性）
+| 文件类型 | 审查清单 |
+|----------|----------|
+| `.cs` | `references/dotnet-checklist.md` |
+| `.vue` | `references/vue-checklist.md` |
+| `.sql` | `references/sql-checklist.md` |
+| `*.json` / `*.xml` | `references/config-checklist.md` |
 
-## Step 4: 输出审查报告
+## Step 4: 执行审查
 
-```markdown
-# .NET 代码审查报告
+1. 读取对应的检查清单
+2. 按清单逐项检查
+3. 记录发现的问题
 
-## 审查范围
-- 文件数：N
-- 变更行数：N
+## Step 5: 输出报告
 
-## 结论：PASS / FAIL / CONDITIONAL
-
-## 发现
-
-### CRITICAL
-- [C-001] (置信度: 9/10) `File.cs:42` — [描述]
-
-### HIGH
-- [H-001] (置信度: 8/10) ...
-
-### MEDIUM / LOW
-...
-
-## 已自动修复
-- [文件:行号] — [修复内容]
-
-## 审查统计
-| 类别 | 检查项数 | 发现数 |
-|------|---------|--------|
-```
+读取 `templates/audit-report.md` 获取标准报告格式。
