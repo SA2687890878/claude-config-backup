@@ -8,7 +8,6 @@
       "mcp__exa-search__web_search_exa",
       "WebSearch",
       "WebFetch(domain:github.com)",
-      "Bash(node \"C:\\\\Users\\\\admin\\\\.claude\\\\hooks\\\\inject-git-rules.js\")",
       "Bash(echo \"---EXIT:$?\")",
       "Bash(gh repo *)"
     ]

@@ -36,7 +36,7 @@ version: 1.0.0
 对每个项目执行 PowerShell 脚本：
 
 ```bash
-powershell.exe -ExecutionPolicy Bypass -File "${CLAUDE_SKILL_DIR}/scripts/convert-source.ps1" \
+powershell.exe -ExecutionPolicy Bypass -File "${CLAUDE_SKILL_DIR}/scripts/convert-source.ps1" `
   -SrcDir "<项目src路径>" -DstDir "<临时目录>" -Extensions "*.cs"
 ```
 
