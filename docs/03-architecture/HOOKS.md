@@ -87,7 +87,7 @@ Claude 调用工具（Write/Edit）
   - 修复/bug/报错 → /bug-fix
   - 优化/慢/性能 → /perf-optimize
   - 审查/review → /code-review
-  - 测试/跑测试 → /test-runner
+  - 测试/跑测试 → /test
   - 数据库/表/字段 → /sql-best-practices
   - 保存经验/进度 → /memory-save
   - 继续工作 → 恢复 task-state.md

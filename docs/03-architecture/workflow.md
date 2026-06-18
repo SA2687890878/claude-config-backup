@@ -138,7 +138,7 @@ Quality Gate 检查
 | bug-fix.js | operate.js | 合并 |
 | perf-optimize.js | operate.js | 合并 |
 | code-review.js | - | 移除（用 /review 命令） |
-| test-runner.js | - | 移除（用 /test 命令） |
+| test-runner.js | - | 移除（用 /test skill） |
 | - | explore.js | 新增 |
 
 ---

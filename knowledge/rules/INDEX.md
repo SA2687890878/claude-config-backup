@@ -30,6 +30,7 @@
 | Code Gate | `~/.claude/knowledge/rules/gates/code.md` |
 | Test Gate | `~/.claude/knowledge/rules/gates/test.md` |
 | Release Gate | `~/.claude/knowledge/rules/gates/release.md` |
+| 问题库 | `~/.claude/rules/quality/question-bank.md` |
 
 ### 验证
 | Rule | 路径 |

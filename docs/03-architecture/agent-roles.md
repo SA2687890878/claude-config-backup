@@ -112,7 +112,7 @@ tools: Read, Grep, Glob, Bash, Edit, Write, mcp__context-mode__ctx_search
 | code-reviewer | Builder | 合并 |
 | doc-writer | Builder | 合并 |
 | requirement-analyst | Builder | 合并 |
-| test-runner | Builder | 合并 |
+| test | Builder | 合并 |
 | verifier | Builder | 合并 |
 | debugger | Operator | 合并 |
 | investigator | Operator | 合并 |

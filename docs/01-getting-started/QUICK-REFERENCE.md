@@ -266,9 +266,9 @@ Requirement  Architecture  Code    Git
 ### Bug 修复（30 分钟-1 小时）
 
 ```
-/operate → /adversarial-review → /commit
-    ↓              ↓               ↓
-   RCA.md      修复建议        Git commit
+/operate → /review → /commit
+    ↓          ↓          ↓
+   RCA.md  修复建议    Git commit
 ```
 
 ### 代码审查（15-30 分钟）
@@ -316,7 +316,7 @@ mkdir -p .claude/artifacts
 cat ~/.claude/projects/<project>/memory/learnings.md | grep -v "已同步"
 
 # 同步到知识库
-/sync-knowledge
+/sync
 ```
 
 ### Token 节省

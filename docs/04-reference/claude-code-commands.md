@@ -152,13 +152,14 @@ tools: Read, Grep, Glob, Bash, Edit, Write
 
 | 分类 | Skills | 数量 |
 |------|--------|------|
-| **Requirement** | requirements | 1 |
+| **Requirement** | requirements, research | 2 |
 | **Design** | arch-review, sql-best-practices | 2 |
-| **Coding** | code-review-workflow, dev-workflow | 2 |
-| **Testing** | generate-tests, test-runner | 2 |
+| **Coding** | review, dev-workflow | 2 |
+| **Testing** | test | 1 |
+| **Sync** | sync | 1 |
 | **Troubleshooting** | systematic-debugging, perf-tune | 2 |
 | **Shared** | docs, commit, verification-before-completion | 3 |
-| **总计** | | **12** |
+| **总计** | | **14** |
 
 ### 5.2 技能格式
 
