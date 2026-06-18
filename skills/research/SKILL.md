@@ -1,6 +1,8 @@
 ---
-name: deep-research
-description: "专业级调研报告生成 — 多 agent 并行协作、自动获取最新数据、多语言输出、内置质量检查。触发词：/research、调研、竞品分析、技术选型、深度调研、research report"
+name: research
+description: >
+  深度调研报告生成 — 多 agent 并行协作、自动获取最新数据、多语言输出、内置质量检查。
+  当用户说 /research、调研、竞品分析、技术选型、深度调研、research report 时触发。
 version: 3.0.0
 updated: 2026-06-08
 risk: medium
