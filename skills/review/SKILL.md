@@ -66,11 +66,61 @@ version: 1.0.0
 
 **适用场景：** 变更 > 200 行，需要全面审计。
 
-**读取：** `references/execute-review.md` + `prompts/full-audit.md`
+**核心流程：**
+1. 读取 `references/execute-review.md` 了解审查流程
+2. 读取 `prompts/full-audit.md` 获取25个审计维度
+3. 根据审计维度，读取对应的 prompts 文件
+4. 读取 `rubrics/scoring.md` 获取评分标准
+5. 读取 `templates/audit-report.md` 获取报告格式
 
-**评分标准：** 读取 `rubrics/scoring.md`
+**按审计维度选择 prompts：**
 
-**报告模板：** 读取 `templates/audit-report.md`
+| 审查领域 | 读取 |
+|----------|------|
+| 架构 | `prompts/architecture-audit.md` |
+| 安全 | `prompts/security-audit.md` |
+| 稳定性 | `prompts/stability-audit.md` |
+| 性能 | `prompts/performance-audit.md` |
+| 测试 | `prompts/testing-audit.md` |
+| 可维护性 | `prompts/maintainability-audit.md` |
+| 设计 | `prompts/design-audit.md` |
+| 发布 | `prompts/release-audit.md` |
+| 文档 | `prompts/documentation-audit.md` |
+| 可观测性 | `prompts/observability-audit.md` |
+| 配置 | `prompts/configuration-audit.md` |
+| 数据完整性 | `prompts/data-integrity-audit.md` |
+| 隐私 | `prompts/privacy-audit.md` |
+| 可访问性 | `prompts/accessibility-audit.md` |
+| 供应链 | `prompts/supply-chain-audit.md` |
+| 成本 | `prompts/cost-audit.md` |
+| AI安全 | `prompts/ai-safety-audit.md` |
+| 降级 | `prompts/fallback-audit.md` |
+| 测试真实性 | `prompts/testing-authenticity-audit.md` |
+| 类型安全 | `prompts/type-safety-audit.md` |
+| 前端状态 | `prompts/frontend-state-audit.md` |
+| 后端API | `prompts/backend-api-audit.md` |
+| 依赖权重 | `prompts/dependency-weight-audit.md` |
+| 代码一致性 | `prompts/code-consistency-audit.md` |
+| 注释覆盖 | `prompts/comment-coverage-audit.md` |
+
+**按审查需求选择 rubrics：**
+
+| 需求 | 读取 |
+|------|------|
+| 评分标准 | `rubrics/scoring.md` |
+| 严重程度定义 | `rubrics/severity.md` |
+| 证据要求 | `rubrics/evidence.md` |
+| 置信度定义 | `rubrics/confidence.md` |
+| 覆盖度要求 | `rubrics/coverage.md` |
+| 审查原则 | `rubrics/principles.md` |
+
+**按输出格式选择 templates：**
+
+| 需求 | 读取 |
+|------|------|
+| 审查报告 | `templates/audit-report.md` |
+| 问题卡片 | `templates/issue-card.md` |
+| 修复计划 | `templates/remediation-plan.md` |
 
 ---
 
