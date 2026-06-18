@@ -283,23 +283,23 @@ Release Gate（发布前）
 ```
 用户输入
   ↓
-Hook Router（workflow-router.js）
+Hook Router（skill-router.js）
   ├─ 关键词匹配
   ├─ 意图识别
-  └─ 路由到对应 Workflow
+  └─ 路由到对应 Skill
   ↓
-3 个 Workflows
-  ├─ explore.js（需求探索）
+14 个 Skills
+  ├─ /explore（需求探索）
   │  ├─ Requirement Gate
   │  └─ 输出：Requirement.md, Decision.md
   │
-  ├─ build.js（功能开发）
+  ├─ /build（功能开发）
   │  ├─ Design Gate
   │  ├─ Code Gate
   │  ├─ Test Gate
   │  └─ 输出：Architecture.md, Design.md, Code, TestPlan.md
   │
-  └─ operate.js（问题排查）
+  └─ /operate（问题排查）
      ├─ Code Gate
      ├─ Test Gate
      └─ 输出：RCA.md, Improvement.md
@@ -449,7 +449,7 @@ Week 2: 经验升级
 
 | 指标 | 定义 | 支持方式 | 目标 |
 |------|------|---------|------|
-| **Lead Time** | 需求到交付时间 | Workflows 标准化 | 降低 50% |
+| **Lead Time** | 需求到交付时间 | Skills 标准化 | 降低 50% |
 | **Defect Rate** | 缺陷率（生产问题数） | Quality Gates 防护 | 降低 70% |
 | **Context Cost** | 平均 Token 消耗 | Skills 拆分 + RTK | 降低 60% |
 | **Knowledge Reuse** | 跨项目知识复用率 | Memory → Knowledge 机制 | 提升 80% |
@@ -459,7 +459,7 @@ Week 2: 经验升级
 
 ```
 metrics-collector.js（PostToolUse）
-  ├─ 记录高成本操作（Agent、Workflow）
+  ├─ 记录高成本操作（Agent、Skill）
   ├─ 记录质量信号（Build 失败、Test 失败）
   └─ 写入 ~/.claude/metrics/daily/<date>.json
 
@@ -681,7 +681,7 @@ metrics-report.js（Stop）
 **Harness Engineering 的优势**：
 ```
 ✅ 完整流程：
-  - 3 个 Workflows（探索/构建/运维）
+  - 14 个 Skills（探索/构建/运维）
   - 5 级 Quality Gates
   - Artifact 产物管理
   - Memory/Knowledge 经验积累
@@ -710,7 +710,7 @@ metrics-report.js（Stop）
   - Automation First：能 Hook 的不交给 AI
 
 ✅ 完整体系：
-  - 3 个 Workflows（explore/build/operate）
+  - 14 个 Skills（explore/build/operate）
   - 16 个 Skills（专业能力）
   - 25 个 Hooks（自动防护）
   - 5 级 Quality Gates（质量保障）
@@ -742,7 +742,7 @@ metrics-report.js（Stop）
 
 | 维度 | 其他方案 | Harness Engineering |
 |------|---------|-------------------|
-| **工作流** | 无或零散 | 3 个完整流程 |
+| **工作流** | 无或零散 | 14 个 Skills |
 | **质量** | 无保障 | 5 级质量门禁 |
 | **知识** | 无法积累 | Memory + Knowledge |
 | **复用** | 每次重来 | 一键迁移 |

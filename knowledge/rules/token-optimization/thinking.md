@@ -17,9 +17,9 @@
 - 构建/测试输出 → 只看 ERROR/FAIL
 - 日志文件 → 用 `ctx_execute_file` 过滤异常行
 
-## Workflow Budget
+## Token Budget
 
-每个 workflow 设置 budget 上限。当剩余 token 不足时跳过低优先级阶段，返回 PARTIAL 结果。
+复杂任务设置 token 预算上限。当剩余 token 不足时跳过低优先级步骤，返回部分结果。
 
 ## How to apply
 

@@ -103,13 +103,13 @@ claude
 
 ---
 
-## 🔄 Workflows 速查
+## 🔄 Skills 速查
 
-| Workflow | 触发 | 包含 Skills | 输出产物 |
+| Skill | 触发 | 输入 | 输出产物 |
 |----------|------|-----------|---------|
-| **explore.js** | `/explore` 或 "讨论" | requirements | Requirement.md, Decision.md |
-| **build.js** | `/build` 或 "开发" | arch-review, review, dev-workflow, test | Architecture.md, Design.md, Code, TestPlan.md |
-| **operate.js** | `/operate` 或 "修复" | systematic-debugging, perf-tune | RCA.md, Improvement.md |
+| requirements + research | `/explore` 或 "讨论" | requirements | Requirement.md, Decision.md |
+| arch-review + dev-workflow + review + test | `/build` 或 "开发" | arch-review, review, dev-workflow, test | Architecture.md, Design.md, Code, TestPlan.md |
+| systematic-debugging + perf-tune | `/operate` 或 "修复" | systematic-debugging, perf-tune | RCA.md, Improvement.md |
 
 ---
 
@@ -153,7 +153,7 @@ Release Gate（发布前）
 
 | Hook | 功能 |
 |------|------|
-| workflow-router.js | 自动路由到对应 workflow |
+| skill-router.js | 自动路由到对应 skill |
 | context-injector.js | 智能注入 git/token/security 规则 |
 
 ### PreToolUse（工具调用前）

@@ -29,7 +29,7 @@
     └─→ UserPromptSubmit
         ├─→ inject-git-rules.js: git 关键词 → 注入 git.md
         ├─→ inject-token-rules.js: 代码分析关键词 → 注入 token-optimization.md
-        └─→ workflow-router.js: 触发词匹配 → 自动路由到对应 workflow ⭐
+        └─→ skill-router.js: 触发词匹配 → 自动路由到对应 workflow ⭐
 
 Claude 调用工具（Write/Edit）
     │
@@ -78,7 +78,7 @@ Claude 调用工具（Write/Edit）
 
 ### UserPromptSubmit
 
-#### workflow-router.js ⭐
+#### skill-router.js ⭐
 - **触发**：用户输入包含 workflow 触发词
 - **功能**：自动注入路由上下文，告诉 LLM 该调用哪个 Skill
 - **触发词映射**：
@@ -180,7 +180,7 @@ Hook 配置在 `settings.json` 的 `hooks` 字段。
       { "hooks": [
         { "type": "command", "command": "node", "args": ["inject-git-rules.js"] },
         { "type": "command", "command": "node", "args": ["inject-token-rules.js"] },
-        { "type": "command", "command": "node", "args": ["workflow-router.js"] }
+        { "type": "command", "command": "node", "args": ["skill-router.js"] }
       ]}
     ],
     "PreToolUse": [

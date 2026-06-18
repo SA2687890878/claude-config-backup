@@ -8,7 +8,7 @@
 
 - [一、官方命令](#一官方命令)
 - [二、自定义 Commands](#二自定义-commands)
-- [三、Workflows](#三workflows)
+- [三、Skills](#三workflows)
 - [四、Agents](#四agents)
 - [五、Skills](#五skills)
 - [六、Hooks](#六hooks)
@@ -62,11 +62,11 @@
 
 ### 2.1 工作流命令
 
-| 命令 | 说明 | 对应 Workflow |
+| 命令 | 说明 | 对应 Skill |
 |------|------|--------------|
-| `/explore` | 需求探索、技术调研、方案比较 | explore.js |
-| `/build` | 功能开发全流程 | build.js |
-| `/operate` | 问题排查、性能调优 | operate.js |
+| `/explore` | 需求探索、技术调研、方案比较 | /explore |
+| `/build` | 功能开发全流程 | /build |
+| `/operate` | 问题排查、性能调优 | /operate |
 | `/review` | 多维度代码审查 | - |
 | `/test` | 测试执行、失败修复 | - |
 | `/commit` | Git 提交与工作空间管理 | - |
@@ -86,29 +86,29 @@ argument-hint: [参数提示]
 
 ---
 
-## 三、Workflows
+## 三、Skills
 
-### 3.1 工作流列表
+### 3.1 技能列表
 
-| 工作流 | 文件 | 职责 | 输入 | 输出 |
+| Skill | 职责 | 输入 | 输出 |
 |--------|------|------|------|------|
-| **Explore** | explore.js | 需求探索、技术调研 | 问题 | Requirement.md, Decision.md |
-| **Build** | build.js | 架构设计、功能设计、编码、测试 | Requirement | Architecture.md, Code |
-| **Operate** | operate.js | 问题排查、日志分析、性能分析 | 故障 | RCA.md, Improvement.md |
+| **Explore** | /explore | 需求探索、技术调研 | 问题 | Requirement.md, Decision.md |
+| **Build** | /build | 架构设计、功能设计、编码、测试 | Requirement | Architecture.md, Code |
+| **Operate** | /operate | 问题排查、日志分析、性能分析 | 故障 | RCA.md, Improvement.md |
 
-### 3.2 工作流格式
+### 3.2 技能格式
 
 ```javascript
 export const meta = {
-  name: 'workflow-name',
-  description: '工作流描述',
+  name: 'skill-name',
+  description: '技能描述',
   phases: [
     { title: 'Phase 1', detail: '阶段描述' },
     { title: 'Phase 2', detail: '阶段描述' },
   ],
 }
 
-// 工作流逻辑...
+// 技能逻辑...
 ```
 
 ---
@@ -207,7 +207,7 @@ skill-name/
 | 事件 | Hook | 功能 |
 |------|------|------|
 | **SessionStart** | session-start.js | git 状态 + 项目检测 + task-state 恢复 |
-| **UserPromptSubmit** | workflow-router.js | 自动路由到对应 workflow |
+| **UserPromptSubmit** | skill-router.js | 自动路由到对应 workflow |
 | **UserPromptSubmit** | inject-git-rules.js | 注入 git 规则 |
 | **UserPromptSubmit** | inject-token-rules.js | 注入 token 优化规则 |
 | **PreToolUse** | secret-guard.js | 拦截硬编码密钥 |
@@ -259,6 +259,6 @@ export default {
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
-| 2026-06-11 | 3.0 | 重构为符合《建设指南》的命令体系；新增 Commands/Workflows/Agents/Quality Gates |
+| 2026-06-11 | 3.0 | 重构为符合《建设指南》的命令体系；新增 Commands/Skills/Agents/Quality Gates |
 | 2026-06-10 | 2.0 | 添加 workflow-router 自动路由 |
 | 2026-06-04 | 1.0 | 初始版本 |

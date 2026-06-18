@@ -26,15 +26,15 @@
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Context Router                               │
-│              workflow-router.js (Hook)                          │
+│              skill-router.js (Hook)                          │
 │              自动检测触发词 → 注入路由上下文                      │
 └────────────────────────────┬────────────────────────────────────┘
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Workflows（工作流）                           │
+│                    Skills（技能）                           │
 │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐            │
-│  │  explore.js  │ │  build.js    │ │  operate.js  │            │
+│  │  /explore  │ │  /build    │ │  /operate  │            │
 │  │  需求探索    │ │  功能开发    │ │  问题排查    │            │
 │  └──────────────┘ └──────────────┘ └──────────────┘            │
 └────────────────────────────┬────────────────────────────────────┘
@@ -117,10 +117,10 @@
 │   ├── test.md         → /test（测试执行）
 │   └── commit.md       → /commit（Git 提交）
 │
-├── workflows/（工作流 - 复杂编排）
-│   ├── explore.js      → 需求探索流程
-│   ├── build.js        → 功能开发流程
-│   └── operate.js      → 问题排查流程
+├── workflows/（已废弃，保留为空目录）
+│   ├── /explore      → 需求探索流程
+│   ├── /build        → 功能开发流程
+│   └── /operate      → 问题排查流程
 │
 ├── agents/（角色 - 执行单元）
 │   ├── builder-agent.md   → 设计、开发、测试
@@ -173,7 +173,7 @@
 ├── hooks/（自动化）
 │   ├── PreToolUse: secret-guard, write-guard, impact-guard
 │   ├── PostToolUse: cs-guard, quality-guard, test-reminder, sqlite-index-update, git-commit-review
-│   ├── UserPromptSubmit: workflow-router, inject-git-rules, inject-token-rules
+│   ├── UserPromptSubmit: skill-router, inject-git-rules, inject-token-rules
 │   ├── SessionStart: session-start
 │   └── Stop: build-verify
 │
@@ -224,10 +224,10 @@
 ```
 用户输入 "开发一个设备管理功能"
     │
-    ├─→ workflow-router.js 检测到"开发"关键词
+    ├─→ skill-router.js 检测到"开发"关键词
     │   └─→ 注入路由上下文：建议使用 /build
     │
-    ├─→ /build 命令触发 build.js 工作流
+    ├─→ /build 命令触发 /build 工作流
     │   ├─→ Phase 1: 需求探索（调用 requirements skill）
     │   │   └─→ 输出 Requirement.md
     │   │
@@ -259,10 +259,10 @@
 
 | 组件 | 职责 | 触发方式 | 输出 |
 |------|------|---------|------|
-| **Commands** | 用户入口 | `/命令` | 调用 Workflow |
-| **Workflows** | 流程编排 | Command 触发 | 阶段性交付物 |
-| **Agents** | 任务执行 | Workflow 调用 | 分析结果 |
-| **Skills** | 专业能力 | Agent/Workflow 调用 | 专业输出 |
+| **Commands** | 用户入口 | `/命令` | 调用 Skill |
+| **Skills** | 流程编排 | Skill 触发 | 阶段性交付物 |
+| **Agents** | 任务执行 | Skill 调用 | 分析结果 |
+| **Skills** | 专业能力 | Agent/Skill 调用 | 专业输出 |
 | **Quality Gates** | 质量把关 | 阶段完成时 | 通过/不通过 |
 | **Hooks** | 自动化 | 生命周期事件 | 拦截/注入/验证 |
 | **Rules** | 规范约束 | 条件加载 | 指导性规则 |
@@ -279,7 +279,7 @@
 - 详细材料放在 references/ 按需加载
 
 ### 2. Artifact First（交付物驱动）
-- 每个 Workflow 有明确的输入/输出
+- 每个 Skill 有明确的输入/输出
 - 输出必须是具体交付物（.md, .code, .test）
 
 ### 3. Evidence First（证据优先）
@@ -306,7 +306,7 @@
 |------|------|------|
 | 2026-06-16 | 4.0 | 本次优化：核心规则+参考规则分离、knowledge层次化索引、路径修正 |
 | 2026-06-11 | 3.0 | 重构架构图，符合《建设指南》运行模型；新增组件关系图和数据流图 |
-| 2026-06-10 | 2.0 | 添加 workflow-router、session-start、build-verify |
+| 2026-06-10 | 2.0 | 添加 skill-router、session-start、build-verify |
 | 2026-06-04 | 1.0 | 初始版本 |
 
 ---

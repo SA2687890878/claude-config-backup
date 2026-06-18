@@ -1,18 +1,18 @@
-# 工作流体系
+# Skill + Subagent 体系
 
-> 基于《Harness Engineering 建设指南》构建的工作流体系
+> 基于《Harness Engineering 建设指南》构建的 Skill + Subagent 体系
 
 ---
 
 ## 概述
 
-根据指南要求，最终只保留 3 个工作流：
+根据指南要求，架构已从 Workflow 工具编排改为 Skill + Subagent 模式：
 
-| 工作流 | 职责 | 文件 |
+| Skill | 职责 | 触发命令 |
 |--------|------|------|
-| **Explore** | 需求沟通、需求澄清、技术调研、方案比较 | explore.js |
-| **Build** | 架构设计、功能设计、数据库设计、API 设计、编码、测试 | build.js |
-| **Operate** | 问题排查、日志分析、SQL 分析、性能分析、根因分析 | operate.js |
+| **Explore** | 需求沟通、需求澄清、技术调研、方案比较 | /explore |
+| **Build** | 架构设计、功能设计、数据库设计、API 设计、编码、测试 | /build |
+| **Operate** | 问题排查、日志分析、SQL 分析、性能分析、根因分析 | /operate |
 
 ---
 
@@ -113,13 +113,13 @@
 ```
 用户输入
     ↓
-workflow-router.js (Hook)
+skill-router.js (Hook)
     ↓ 检测触发词
     ↓ 注入路由上下文
     ↓
 对应 Command (/explore, /build, /operate)
     ↓
-对应 Workflow (explore.js, build.js, operate.js)
+对应 Skill (/explore, /build, /operate)
     ↓
 Phase 1 → Phase 2 → Phase 3 → ...
     ↓
@@ -134,12 +134,12 @@ Quality Gate 检查
 
 | 旧工作流 | 新工作流 | 变化 |
 |---------|---------|------|
-| feature-development.js | build.js | 合并 |
-| bug-fix.js | operate.js | 合并 |
-| perf-optimize.js | operate.js | 合并 |
+| feature-development.js | /build | 合并 |
+| bug-fix.js | /operate | 合并 |
+| perf-optimize.js | /operate | 合并 |
 | code-review.js | - | 移除（用 /review 命令） |
 | test-runner.js | - | 移除（用 /test skill） |
-| - | explore.js | 新增 |
+| - | /explore | 新增 |
 
 ---
 

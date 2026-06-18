@@ -196,9 +196,9 @@
 
 ## 自动化审查工具
 
-### Workflow 工具
+### Skill + Subagent
 
-使用 Workflow 工具实现自动化审查：
+使用 Skill + Subagent实现自动化审查：
 
 ```javascript
 // 流程审查

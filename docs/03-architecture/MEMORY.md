@@ -160,7 +160,7 @@
 
 **用途**：
 - ✅ 会话中断后，新会话快速恢复进度
-- ✅ `workflow-router.js` 在 SessionStart 时自动加载，提醒用户继续之前的工作
+- ✅ `skill-router.js` 在 SessionStart 时自动加载，提醒用户继续之前的工作
 - ✅ 跨天工作时，不丢失上下文
 
 **何时更新**：
@@ -183,7 +183,7 @@ project-knowledge.js 运行
   ↓
 Claude 根据 Memory 内容调整推理
   ↓
-如果有未完成任务，workflow-router.js 提醒用户继续
+如果有未完成任务，skill-router.js 提醒用户继续
 ```
 
 ### 场景2：开发新功能
@@ -213,7 +213,7 @@ task-state.md 记录了未完成的任务
   ↓
 新会话启动
   ↓
-加载 task-state.md，workflow-router.js 提醒："上次还有这些任务"
+加载 task-state.md，skill-router.js 提醒："上次还有这些任务"
   ↓
 用户说"继续"，自动路由回原有工作
 ```
@@ -290,7 +290,7 @@ learnings.md（人工经验）+ task-state.md（任务状态）
 |------|------|--------|------|---------|
 | 1 | MEMORY.md | Claude 自动 | 知识索引 | SessionStart 自动加载 |
 | 2 | learnings.md | 用户手动 | 经验沉淀 | project-knowledge.js 加载 |
-| 3 | task-state.md | 用户手动 | 任务状态 | workflow-router.js 恢复 |
+| 3 | task-state.md | 用户手动 | 任务状态 | skill-router.js 恢复 |
 
 **理想状态**：
 - MEMORY.md 由项目的最佳实践自动更新

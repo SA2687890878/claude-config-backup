@@ -108,7 +108,7 @@
 
 ## Agent 调度方式
 
-### 方式 1：Workflow 工具（推荐）
+### 方式 1：Skill + Subagent（推荐）
 
 ```javascript
 // 自动发现项目

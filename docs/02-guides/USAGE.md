@@ -18,7 +18,7 @@ claude
 Claude 会自动加载：
 - `CLAUDE.md`（全局指令）
 - `commands/`（斜杠命令）
-- `workflows/`（工作流）
+- `workflows/`（已废弃，保留为空目录）
 - `agents/`（角色）
 - `skills/`（技能）
 - `rules/`（规则）
@@ -278,7 +278,7 @@ Claude：[进入系统化调试流程]
 
 ---
 
-## Skills 使用速查表
+## Commands 速查表
 
 | Skill | 触发词 | 何时用 |
 |-------|--------|--------|
@@ -299,27 +299,27 @@ Claude：[进入系统化调试流程]
 
 ---
 
-## 工作流对应表
+## Skill 映射表
 
-| 工作流 | 触发方式 | 包含 Skills | 输出产物 | 预期时间 |
+| Skill | 触发方式 | 输入 | 输出产物 | 预期时间 |
 |--------|---------|-----------|---------|---------|
-| **explore.js** | `/explore` 或 "讨论" | requirements, research | Requirement.md, Decision.md | 15-30 分钟 |
-| **build.js** | `/build` 或 "开发" | arch-review, review, dev-workflow, test | Architecture.md, Design.md, Code, TestPlan.md | 4-8 小时（小功能）<br>1-2 天（中功能）<br>3-5 天（大功能） |
-| **operate.js** | `/operate` 或 "修复" | systematic-debugging, perf-tune | RCA.md, Improvement.md | 1-2 小时（简单问题）<br>4-6 小时（复杂问题） |
+| requirements + research | `/explore` 或 "讨论" | requirements, research | Requirement.md, Decision.md | 15-30 分钟 |
+| arch-review + dev-workflow + review + test | `/build` 或 "开发" | arch-review, review, dev-workflow, test | Architecture.md, Design.md, Code, TestPlan.md | 4-8 小时（小功能）<br>1-2 天（中功能）<br>3-5 天（大功能） |
+| systematic-debugging + perf-tune | `/operate` 或 "修复" | systematic-debugging, perf-tune | RCA.md, Improvement.md | 1-2 小时（简单问题）<br>4-6 小时（复杂问题） |
 
 ### 时间估算说明
 
-**explore.js（需求探索）**
+**requirements + research（需求探索）**
 - 简单需求（已明确）：15 分钟
 - 中等需求（需要讨论）：30 分钟
 - 复杂需求（多个方案）：1 小时
 
-**build.js（功能开发）**
+**arch-review + dev-workflow + review + test（功能开发）**
 - 小功能（1-2 个文件）：4-6 小时
 - 中功能（5-10 个文件）：1-2 天
 - 大功能（10+ 文件）：3-5 天
 
-**operate.js（问题排查）**
+**systematic-debugging + perf-tune（问题排查）**
 - 简单问题（明显错误）：1-2 小时
 - 中等问题（需要调试）：4-6 小时
 - 复杂问题（多个因素）：1-2 天
@@ -642,6 +642,6 @@ byte[] content = file.ReadAllBytes();
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
-| 2026-06-11 | 3.0 | 更新为符合《建设指南》的配置体系；新增 Commands/Workflows/Agents 说明 |
+| 2026-06-11 | 3.0 | 更新为符合《建设指南》的配置体系；新增 Commands/Skills/Agents 说明 |
 | 2026-06-10 | 2.0 | 添加自动化行为说明 |
 | 2026-06-04 | 1.0 | 初始版本 |

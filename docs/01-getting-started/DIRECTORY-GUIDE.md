@@ -75,7 +75,7 @@
 │   ├── gates/                   # 质量门禁详细说明
 │   ├── verification/            # 验证规则详细说明
 │   ├── token-optimization/      # Token 优化详细说明
-│   ├── workflows/               # 工作流规则
+│   ├── workflows/               # 已废弃，保留为空目录
 │   ├── quality/                 # 质量规则
 │   ├── tools/                   # 工具规则
 │   └── languages/               # 语言规则
@@ -112,7 +112,7 @@
 - **gates/**：5 个质量门禁的详细检查项
 - **verification/**：验证流程、验证纪律
 - **token-optimization/**：RTK 使用、工具选择、Think-in-Code
-- **workflows/**：任务管理、Artifact 管理、触发规则、Git 规范
+- **workflows/**：已废弃，保留为空目录
 - **quality/**：审查清单、Hooks 标准
 - **tools/**：模型策略、安全规则
 - **languages/**：C#、JavaScript、Vue、SQL Server、PostgreSQL 规范
@@ -278,7 +278,7 @@
 ```
 
 ### 作用
-- **按需调用**：被 Skills 或 Workflows 调用
+- **按需调用**：被 Skills 调用
 - **执行单元**：负责具体的执行任务
 - **角色分离**：不同角色负责不同任务
 
@@ -291,7 +291,7 @@
 
 ### 调用方式
 - **被 Skills 调用**：Skills 内部调用 Agent 执行任务
-- **被 Workflows 调用**：Workflows 内部调用 Agent 执行任务
+- **被 Skills 调用**：Skills 内部调用 Agent 执行任务
 - **手动调用**：Claude 根据上下文自动选择
 
 ---
@@ -304,7 +304,7 @@
 ├── session-start.js              # SessionStart: 加载项目知识
 ├── project-knowledge.js          # SessionStart: 加载项目经验
 ├── context-injector.js           # UserPromptSubmit: 智能注入规则
-├── workflow-router.js            # UserPromptSubmit: 工作流路由
+├── skill-router.js            # UserPromptSubmit: 工作流路由
 ├── secret-guard.js               # PreToolUse: 密钥防护
 ├── write-guard.js                # PreToolUse: 文件写入防护
 ├── bash-guard.js                 # PreToolUse: Bash 安全检查
@@ -336,7 +336,7 @@
 | 类别 | Hooks | 触发时机 |
 |------|-------|---------|
 | 会话启动 | session-start.js, project-knowledge.js | 会话启动时 |
-| 用户输入 | context-injector.js, workflow-router.js | 用户输入时 |
+| 用户输入 | context-injector.js, skill-router.js | 用户输入时 |
 | 工具使用前 | secret-guard.js, write-guard.js, bash-guard.js 等 | 工具使用前 |
 | 工具使用后 | cs-guard.js, quality-guard.js, test-reminder.js 等 | 工具使用后 |
 | 会话结束 | build-verify.js, metrics-report.js | 会话结束时 |
@@ -434,7 +434,7 @@ Claude 根据规则执行任务
 - **自动注入规则**：context-injector.js
 - **自动质量检查**：cs-guard.js, quality-guard.js
 - **自动验证**：build-verify.js
-- **自动路由**：workflow-router.js
+- **自动路由**：skill-router.js
 
 ### 9.3 工作流程
 

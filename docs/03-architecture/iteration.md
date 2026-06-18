@@ -236,9 +236,9 @@
 
 ## 自动化迭代工具
 
-### Workflow 工具
+### Skill + Subagent
 
-使用 Workflow 工具实现自动化迭代：
+使用 Skill + Subagent实现自动化迭代：
 
 ```javascript
 // 计划阶段

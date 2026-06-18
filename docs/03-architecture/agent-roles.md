@@ -121,7 +121,7 @@ tools: Read, Grep, Glob, Bash, Edit, Write, mcp__context-mode__ctx_search
 
 ## 角色调用方式
 
-### 在 Workflows 中调用
+### 在 Skills 中调用
 
 ```javascript
 // build.js 中调用 Builder

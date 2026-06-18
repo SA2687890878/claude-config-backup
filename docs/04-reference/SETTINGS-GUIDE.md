@@ -223,7 +223,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ~/.claude/hooks/workflow-router.js",
+            "command": "node ~/.claude/hooks/skill-router.js",
             "timeout": 5
           },
           {

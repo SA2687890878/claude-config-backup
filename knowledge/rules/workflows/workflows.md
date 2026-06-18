@@ -4,9 +4,9 @@
 
 ## ⚠️ 铁律
 
-**收到 `/build`、`/explore`、`/operate` 命令时，必须第一步调用 Workflow 工具，禁止跳过直接编码。**
+**收到 `/build`、`/explore`、`/operate` 命令时，必须第一步调用 Skill 工具，禁止跳过直接编码。**
 
-跳过 Workflow 会：
+跳过 Skill 会：
 - 跳过 Requirement Gate → 需求理解不充分
 - 跳过 Design Gate → 没有检查已有代码
 - 跳过 Code Gate → 没有参考已有模块风格
@@ -14,7 +14,7 @@
 
 ## 路由机制
 
-**路由由 `workflow-router.js` hook 自动处理。** 用户输入包含触发词时，hook 自动注入路由上下文，LLM 遵循注入的提示调用对应 Skill。
+**路由由 `skill-router.js` hook 自动处理。** 用户输入包含触发词时，hook 自动注入路由上下文，LLM 遵循注入的提示调用对应 Skill。
 
 LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 
@@ -25,23 +25,23 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 2. 当前项目信息（技术栈、数据库）
 3. 未完成任务进度（如有 task-state.md）
 
-用户意图"继续工作"时，`workflow-router.js` 自动恢复 task-state.md。
+用户意图"继续工作"时，`skill-router.js` 自动恢复 task-state.md。
 
 ## 触发条件
 
 用户明确要求执行操作时触发。讨论/分析/了解时不触发。
 
-## 触发词 → 命令映射
+## 触发词 → Skill 映射
 
 ### Commands（斜杠命令）
 
-| 触发词 | 命令 | 说明 |
-|--------|------|------|
-| 讨论/设计/方案/探索 | `/explore` | 需求探索、技术调研、方案比较 |
-| 开发/添加/实现/构建 | `/build` | 功能开发全流程（架构→设计→编码→测试） |
-| 修复/bug/报错/排查 | `/operate` | 问题排查、根因分析、性能调优 |
-| 审查/review | `/review` | 多维度代码审查 |
-| 测试/跑测试 | `/test` | 测试执行、失败修复 |
+| 触发词 | 命令 | 对应 Skill | 说明 |
+|--------|------|-----------|------|
+| 讨论/设计/方案/探索 | `/explore` | `/requirements` | 需求探索、技术调研、方案比较 |
+| 开发/添加/实现/构建 | `/build` | `/dev-workflow` | 写计划→执行→验证 |
+| 修复/bug/报错/排查 | `/operate` | `/systematic-debugging` | 问题排查、根因分析 |
+| 审查/review | `/review` | `/review` | 多维度代码审查 |
+| 测试/跑测试 | `/test` | `/test` | 测试执行、失败修复 |
 
 ### Skills（技能）
 
@@ -49,18 +49,14 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 |--------|------|------|
 | 需求分析/需求澄清 | `/requirements` | 需求质询、用户故事 |
 | 架构审查 | `/arch-review` | 架构设计审查 |
-| 代码审查详细流程 | `/code-review-workflow` | 完整代码审查流程 |
 | 开发工作流 | `/dev-workflow` | 写计划、执行计划、并行派发 |
-| 生成测试 | `/generate-tests` | 自动生成测试用例 |
 | 性能调优 | `/perf-tune` | 性能诊断与优化 |
 | 数据库设计 | `/sql-best-practices` | SQL 最佳实践 |
 | 文档生成 | `/docs` | 项目/功能/问题文档 |
 | 系统化调试 | `/systematic-debugging` | 四阶段调试流程 |
-| 测试执行 | `/test-runner` | 测试执行闭环 |
 | 验证门禁 | `/verification-before-completion` | 验证与进度保存 |
-| 对抗审查 | `/adversarial-review` | 多角度对抗性代码审查 |
 | 技能管理 | `/skill-manager` | 技能注册与管理 |
-| 提交/commit/创建工作区/完成分支 | `/commit` | Git 提交与工作空间管理 |
+| 提交/commit | `/commit` | Git 提交与工作空间管理 |
 
 ### 自动触发
 
@@ -83,7 +79,7 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 
 | Hook | 事件 | 触发条件 | 功能 |
 |------|------|---------|------|
-| workflow-router.js | UserPromptSubmit | 所有输入 | 自动路由到对应 workflow |
+| skill-router.js | UserPromptSubmit | 所有输入 | 自动路由到对应 Skill |
 | session-start.js | SessionStart | 会话启动 | 注入 git 状态 + 项目信息 + 任务进度 + 初始化检测 |
 | context-injector.js | UserPromptSubmit | 关键词匹配 | 智能注入 git/token/security 规则 |
 | secret-guard.js | PreToolUse | Write\|Edit | 拦截硬编码密钥 |
