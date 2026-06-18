@@ -17,7 +17,7 @@ const PROJECT_ROOTS = [
   'F:\\Code WorkSpace',
 ];
 
-const CONVERT_SCRIPT = 'C:\\Users\\admin\\.claude\\skills\\sync-source-index\\scripts\\convert-source.ps1';
+const CONVERT_SCRIPT = 'C:\\Users\\admin\\.claude\\skills\\sync\\scripts\\convert-source.ps1';
 const TEMP_BASE = path.join(process.env.TEMP || process.env.USERPROFILE || '', 'claude-source-sync');
 
 // 节流：同一项目 60 秒内不重复触发

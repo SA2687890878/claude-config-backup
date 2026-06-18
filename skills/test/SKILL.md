@@ -4,7 +4,7 @@ description: >
   测试管理 — 当用户说"测试"、"跑测试"、"生成测试"、"测试失败"、"单元测试"时触发。
   自动判断是生成测试还是执行测试。
   不需要用户指定"生成"还是"运行"，agent 自动判断。
-version: 1.0.0
+version: 1.1.0
 ---
 
 # 测试管理
@@ -20,6 +20,7 @@ version: 1.0.0
 | 生成测试（"生成测试"、"写测试"、"单元测试"） | → A. 生成测试 |
 | 执行测试（"跑测试"、"执行测试"、"测试失败"） | → B. 执行测试 |
 | 修复测试（"修复测试"、"测试挂了"） | → C. 修复测试 |
+| 测试覆盖率（"覆盖率"、"cover"） | → D. 测试覆盖率 |
 | 不确定 | → 询问用户 |
 
 ---
@@ -31,8 +32,10 @@ version: 1.0.0
 **核心流程：**
 1. 分析目标代码
 2. 读取 `references/test-patterns.md` 了解测试模式
-3. 读取 `references/code-templates.md` 生成测试骨架
-4. 运行测试验证
+3. 读取 `references/test-frameworks.md` 选择合适的测试框架
+4. 读取 `references/code-templates.md` 生成测试骨架
+5. 读取 `references/test-best-practices.md` 确保符合最佳实践
+6. 运行测试验证
 
 **输出格式：**
 读取 `references/report-template.md` 获取报告格式。
@@ -52,6 +55,9 @@ dotnet test --configuration Release
 npm test
 ```
 
+**失败处理：**
+读取 `references/failure-patterns.md` 了解常见失败模式和修复方法。
+
 **输出格式：**
 读取 `references/report-template.md` 获取报告格式。
 
@@ -62,7 +68,7 @@ npm test
 **适用场景：** 测试失败，需要修复。
 
 **核心流程：**
-1. 分析失败原因
+1. 读取 `references/failure-patterns.md` 分析失败原因
 2. 修复代码或测试
 3. 重新运行验证
 
@@ -71,7 +77,38 @@ npm test
 
 ---
 
+## D. 测试覆盖率
+
+**适用场景：** 用户需要检查测试覆盖率。
+
+**核心流程：**
+1. 读取 `references/test-coverage.md` 了解覆盖率工具
+2. 运行覆盖率检查
+3. 分析覆盖率报告
+4. 提供改进建议
+
+**输出格式：**
+```
+## 测试覆盖率报告
+
+### 覆盖率指标
+- 行覆盖率：X%
+- 分支覆盖率：X%
+- 函数覆盖率：X%
+
+### 未覆盖代码
+- [文件:行号] 代码描述
+
+### 改进建议
+- [建议1]
+- [建议2]
+```
+
+---
+
 ## 测试原则
+
+读取 `references/test-best-practices.md` 获取详细最佳实践。
 
 ### 必须做的
 

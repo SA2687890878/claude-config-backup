@@ -113,7 +113,7 @@ operate.js
   → /arch-review + Design Gate → Architecture.md（验证可行性）
 
 代码有问题？
-  → /adversarial-review → 代码审查报告（修复建议）
+  → /review → 代码审查报告（修复建议）
 
 性能不达标？
   → /perf-tune → 性能报告（对比前后数据）
@@ -304,14 +304,13 @@ Hook Router（workflow-router.js）
      ├─ Test Gate
      └─ 输出：RCA.md, Improvement.md
   ↓
-16 个 Skills（专业能力）
-  ├─ 需求类：requirements
+14 个 Skills（专业能力）
+  ├─ 需求类：requirements, research
   ├─ 设计类：arch-review, sql-best-practices
-  ├─ 开发类：dev-workflow, code-review-workflow
-  ├─ 测试类：generate-tests, test-runner
+  ├─ 开发类：dev-workflow, commit, sync, test
+  ├─ 审查类：review
   ├─ 调试类：systematic-debugging, perf-tune
-  ├─ 知识类：sync-knowledge, sync-source-index
-  └─ 通用类：docs, commit, verification-before-completion, adversarial-review, skill-manager
+  └─ 通用类：docs, verification-before-completion, skill-manager
   ↓
 25 个 Hooks（自动防护）
   ├─ 密钥防护：secret-guard.js
@@ -390,23 +389,23 @@ Day 3: 编码阶段
   👤 用户：审查一下
   
   🤖 Claude：
-    1. /adversarial-review 自动审查
+    1. /review 自动审查
     2. 发现 3 个 HIGH 问题
     3. 给出修复建议
     ✅ 代码质量达标
 
 Day 4: 测试阶段
-  👤 用户：/generate-tests
+  👤 用户：/test
   
   🤖 Claude：
-    1. 生成测试用例
-    2. 覆盖：主流程、异常流程、边界值
-    3. 生成 TestPlan.md
+    1. 自动判断生成测试
+    2. 生成测试用例
+    3. 覆盖：主流程、异常流程、边界值
     
   👤 用户：跑测试
   
   🤖 Claude + Hooks：
-    1. /test-runner 执行测试
+    1. /test 自动判断执行测试
     2. dotnet test 运行
     3. 分析测试结果
     4. Test Gate 检查 ✅
@@ -431,7 +430,7 @@ Day 5: 发布阶段
   ✅ 功能发布完成，经验沉淀
 
 Week 2: 经验升级
-  👤 用户：/sync-knowledge
+  👤 用户：/sync
   
   🤖 Claude：
     1. 读取 learnings.md 中的经验
@@ -483,7 +482,7 @@ metrics-report.js（Stop）
 | 遗漏率 | 40% | 5% | **↓ 87%** |
 
 **原因**：
-- /adversarial-review 自动审查，覆盖所有维度
+- /review 自动审查，覆盖所有维度
 - 标准化 checklist 确保不遗漏
 - 并行审查多个文件，效率高
 

@@ -50,8 +50,8 @@ async function main() {
 
     if (shouldRemind && unsyncedCount > 0) {
       const message = isMonday
-        ? `## 📚 知识同步提醒（每周检查）\n\n发现 **${unsyncedCount}** 条未同步的经验，建议运行 \`/sync-knowledge\` 将经验升级为可复用知识。`
-        : `## 📚 知识同步提醒\n\n发现 **${unsyncedCount}** 条未同步的经验（超过 5 条阈值），建议运行 \`/sync-knowledge\` 避免经验积压。`;
+        ? `## 📚 知识同步提醒（每周检查）\n\n发现 **${unsyncedCount}** 条未同步的经验，建议运行 \`/sync\` 将经验升级为可复用知识。`
+        : `## 📚 知识同步提醒\n\n发现 **${unsyncedCount}** 条未同步的经验（超过 5 条阈值），建议运行 \`/sync\` 避免经验积压。`;
 
       console.log(JSON.stringify({
         additionalContext: message

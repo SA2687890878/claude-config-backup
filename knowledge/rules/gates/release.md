@@ -32,11 +32,11 @@
 
 ## 深度审计（发布前必做）
 
-发布前必须执行 Fuck_My_Shit_Mountain 完整审计：
+发布前必须执行完整审计：
 
 ### 审计执行
 ```bash
-/audit --mode full
+/review
 ```
 
 ### 审计通过条件

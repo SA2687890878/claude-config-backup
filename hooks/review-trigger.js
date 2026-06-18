@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Review Trigger Hook (PostToolUse)
- * 修改 .cs/.vue/.sql/.json 文件后，自动提醒运行 /adversarial-review 进行代码审查
+ * 修改 .cs/.vue/.sql/.json 文件后，自动提醒运行 /review 进行代码审查
  *
  * Stdin:  JSON { tool_name, tool_input }
  * stderr: User-facing reminders
@@ -32,13 +32,13 @@ process.stdin.on('end', () => {
 
     // .cs/.vue/.sql/.env 文件提醒
     if (REVIEW_EXTENSIONS.test(filePath)) {
-      console.error(`\n[Review Trigger] 已修改 ${fileName}，建议运行 \`/adversarial-review\` 进行代码审查。`);
+      console.error(`\n[Review Trigger] 已修改 ${fileName}，建议运行 \`/review\` 进行代码审查。`);
       return;
     }
 
     // 配置文件提醒
     if (CONFIG_FILES.test(filePath)) {
-      console.error(`\n[Review Trigger] 已修改配置文件 ${fileName}，建议运行 \`/adversarial-review\` 进行安全审查。`);
+      console.error(`\n[Review Trigger] 已修改配置文件 ${fileName}，建议运行 \`/review\` 进行安全审查。`);
       return;
     }
   } catch (e) { console.error('[review-trigger] Error:', e.message); }

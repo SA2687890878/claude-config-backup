@@ -227,45 +227,44 @@
 ~/.claude/skills/
 ├── INDEX.md                      # Skills 索引
 ├── requirements/                 # 需求分析
+├── research/                     # 深度调研
 ├── arch-review/                  # 架构审查
 ├── dev-workflow/                 # 开发工作流
-├── code-review-workflow/         # 代码审查
-├── generate-tests/               # 生成测试
-├── test-runner/                  # 测试执行
+├── review/                       # 代码审查与深度审计
+├── test/                         # 测试管理
+├── sync/                         # 同步管理
 ├── systematic-debugging/         # 系统化调试
 ├── perf-tune/                    # 性能调优
 ├── sql-best-practices/           # SQL 最佳实践
 ├── docs/                         # 文档生成
 ├── commit/                       # Git 提交
-├── adversarial-review/           # 对抗审查
 ├── verification-before-completion/ # 验证门禁
-├── sync-knowledge/               # 知识同步
-├── skill-manager/                # 技能管理
-└── sync-source-index/            # 源码索引同步
+└── skill-manager/                # 技能管理
 ```
 
 ### 作用
 - **按需调用**：用户输入 `/skill-name` 时调用
 - **封装流程**：每个 Skill 封装一个完整的工作流程
 - **可复用**：多个项目可以共享同一套 Skills
+- **智能路由**：用户说意图，agent 自动决定策略
 
 ### Skills 分类
 
 | 类别 | Skills | 用途 |
 |------|--------|------|
-| 质量门禁 | verification-before-completion, adversarial-review | 验证、审查 |
-| 开发流程 | dev-workflow, commit, docs | 开发、提交、文档 |
-| 审查 | arch-review, code-review-workflow | 架构审查、代码审查 |
-| 测试 | generate-tests, test-runner | 生成测试、执行测试 |
+| 需求 | requirements, research | 需求分析、深度调研 |
+| 设计 | arch-review, sql-best-practices | 架构审查、SQL 最佳实践 |
+| 开发 | dev-workflow, commit, sync, test | 开发、提交、同步、测试 |
+| 审查 | review | 代码审查与深度审计 |
+| 验证 | verification-before-completion | 验证门禁 |
 | 调试 | systematic-debugging, perf-tune | 调试、性能调优 |
-| 数据库 | sql-best-practices | SQL 最佳实践 |
-| 需求 | requirements | 需求分析 |
-| 索引 | skill-manager, sync-source-index, sync-knowledge | 技能管理、索引同步、知识同步 |
+| 文档 | docs | 文档生成 |
+| 管理 | skill-manager | 技能管理 |
 
 ### 调用方式
 - **斜杠命令**：用户输入 `/skill-name`
 - **触发词**：hook 自动检测触发词并注入上下文
-- **手动调用**：Claude 根据上下文自动选择
+- **智能路由**：用户说意图，agent 自动决定策略
 
 ---
 
@@ -470,10 +469,9 @@ Code Gate 验证（编译 + 审查）
 
 #### 功能测试
 ```
-/generate-tests（生成测试 Skill）
-/test-runner（测试执行 Skill）
+/test（测试管理 Skill）
   ↓
-生成测试代码
+自动判断生成还是执行测试
   ↓
 Test Gate 验证（所有测试通过）
 ```

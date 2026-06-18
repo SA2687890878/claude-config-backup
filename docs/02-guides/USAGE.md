@@ -38,7 +38,7 @@ Claude：[自动进入构建流程]
   → Phase 1: 需求探索（requirements skill）
   → Phase 2: 设计（arch-review skill）→ Design Gate
   → Phase 3: 编码（builder-agent）→ Code Gate
-  → Phase 4: 测试（test-runner skill）→ Test Gate
+  → Phase 4: 测试（test skill）→ Test Gate
   → Phase 5: 验证（verification-before-completion）→ Release Gate
   → 输出：Requirement.md, Architecture.md, Design.md, Code, TestPlan.md
 ```
@@ -201,9 +201,10 @@ Hooks 自动执行：
 
 ```
 你：同步经验
-或：/sync-knowledge
+或：/sync
 
-Claude：[进入知识同步流程]
+Claude：[进入同步管理流程]
+  → 自动判断同步内容
   → 读取 memory/learnings.md
   → 识别未同步的经验
   → 自动分类：engineering / project / business
@@ -213,9 +214,9 @@ Claude：[进入知识同步流程]
   → 输出：同步统计报告
 ```
 
-**触发词**：同步经验、同步知识、更新知识库
+**触发词**：同步、同步经验、同步知识、更新知识库
 
-**命令**：`/sync-knowledge`
+**命令**：`/sync`
 
 ---
 
@@ -282,19 +283,18 @@ Claude：[进入系统化调试流程]
 | Skill | 触发词 | 何时用 |
 |-------|--------|--------|
 | `/requirements` | 需求分析、需求澄清 | 需求不清楚，需要 5W1H 分析 |
+| `/research` | 调研、竞品分析、技术选型 | 需要深度调研 |
 | `/arch-review` | 架构审查、架构设计 | 设计完成，需要审查 |
-| `/code-review-workflow` | 代码审查、review | 代码完成，需要多维度审查 |
+| `/review` | 审查、review、找 bug、审计 | 代码完成，需要审查 |
 | `/sql-best-practices` | 数据库、表、字段 | 处理数据库设计或优化 |
 | `/dev-workflow` | 开发工作流 | 计划 → 执行 → 验证 → 提交 |
-| `/generate-tests` | 生成测试、测试用例 | 需要自动生成测试 |
-| `/test-runner` | 跑测试、执行测试 | 执行测试并分析失败 |
+| `/test` | 测试、跑测试、生成测试 | 测试相关 |
+| `/sync` | 同步、刷新索引、同步经验 | 同步相关 |
 | `/systematic-debugging` | 调试、排查、定位 | 问题难以定位 |
 | `/perf-tune` | 性能、调优、优化 | 性能有问题 |
 | `/docs` | 文档、说明、doc | 生成/更新文档 |
-| `/sync-knowledge` | 同步经验、同步知识 | 经验积累够多，需要升级 |
 | `/commit` | 提交、commit、push | 代码完成，准备提交 |
 | `/verification-before-completion` | 验证、完成前检查 | 任务即将完成 |
-| `/adversarial-review` | 对抗审查、找问题 | 快速自动审查，找所有问题 |
 | `/skill-manager` | 技能管理、skills | 查找/创建/优化 skills |
 
 ---
@@ -303,8 +303,8 @@ Claude：[进入系统化调试流程]
 
 | 工作流 | 触发方式 | 包含 Skills | 输出产物 | 预期时间 |
 |--------|---------|-----------|---------|---------|
-| **explore.js** | `/explore` 或 "讨论" | requirements | Requirement.md, Decision.md | 15-30 分钟 |
-| **build.js** | `/build` 或 "开发" | arch-review, code-review-workflow, dev-workflow, generate-tests, test-runner | Architecture.md, Design.md, Code, TestPlan.md | 4-8 小时（小功能）<br>1-2 天（中功能）<br>3-5 天（大功能） |
+| **explore.js** | `/explore` 或 "讨论" | requirements, research | Requirement.md, Decision.md | 15-30 分钟 |
+| **build.js** | `/build` 或 "开发" | arch-review, review, dev-workflow, test | Architecture.md, Design.md, Code, TestPlan.md | 4-8 小时（小功能）<br>1-2 天（中功能）<br>3-5 天（大功能） |
 | **operate.js** | `/operate` 或 "修复" | systematic-debugging, perf-tune | RCA.md, Improvement.md | 1-2 小时（简单问题）<br>4-6 小时（复杂问题） |
 
 ### 时间估算说明
@@ -349,7 +349,7 @@ Claude：[进入系统化调试流程]
    - 及时修复问题，避免后期大返工
 
 4. **每周同步一次经验**
-   - `/sync-knowledge` 每周一次
+   - `/sync` 每周一次
    - 防止经验积压，知识流失
 
 5. **保存进度，记录决策**
@@ -424,7 +424,7 @@ Claude：[进入系统化调试流程]
    输出：Code + Tests
 
 4. 最终审查
-   你：/adversarial-review
+   你：/review
    输出：审查报告 + 修复
 
 5. 提交
@@ -440,7 +440,7 @@ Claude：[进入系统化调试流程]
    输出：RCA.md
 
 2. 代码审查
-   你：/code-review-workflow
+   你：/review
    输出：审查意见
 
 3. 修复 + 测试

@@ -9,7 +9,8 @@
       "WebSearch",
       "WebFetch(domain:github.com)",
       "Bash(echo \"---EXIT:$?\")",
-      "Bash(gh repo *)"
+      "Bash(gh repo *)",
+      "mcp__context-mode__ctx_fetch_and_index"
     ]
   }
 }

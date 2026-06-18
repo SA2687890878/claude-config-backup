@@ -76,16 +76,15 @@ claude
 
 | 命令 | 用途 | 触发词 |
 |------|------|--------|
-| `/review` | 多维度代码审查 | 审查、review |
-| `/test` | 测试执行、失败修复 | 测试、跑测试 |
-| `/adversarial-review` | 对抗性自动审查 | 代码有问题吗、找问题 |
-| `/code-review-workflow` | 完整代码审查流程 | 代码审查详细流程 |
+| `/review` | 多维度代码审查 | 审查、review、找 bug、审计 |
+| `/test` | 测试执行、失败修复 | 测试、跑测试、生成测试 |
 
 ### 设计与架构
 
 | 命令 | 用途 | 触发词 |
 |------|------|--------|
 | `/requirements` | 需求分析、需求澄清 | 需求分析、需求澄清 |
+| `/research` | 深度调研报告 | 调研、竞品分析、技术选型 |
 | `/arch-review` | 架构设计审查 | 架构审查、架构设计 |
 | `/sql-best-practices` | SQL 最佳实践 | 数据库、表、字段 |
 
@@ -95,14 +94,11 @@ claude
 |------|------|--------|
 | `/commit` | Git 提交与工作空间管理 | 提交、commit、push |
 | `/docs` | 文档生成 | 文档、doc、说明 |
-| `/generate-tests` | 自动生成测试用例 | 生成测试、测试用例 |
-| `/test-runner` | 测试执行闭环 | 跑测试、执行测试 |
+| `/sync` | 同步管理 | 同步、刷新索引、同步经验 |
 | `/systematic-debugging` | 系统化调试流程 | 调试、排查、定位 |
 | `/perf-tune` | 性能诊断与优化 | 性能、调优、优化 |
 | `/dev-workflow` | 写计划→执行→验证→提交 | 开发工作流 |
 | `/verification-before-completion` | 完成前检查 | 验证、完成前检查 |
-| `/sync-knowledge` | Memory → Knowledge 同步 | 同步经验、同步知识 |
-| `/sync-source-index` | 加密源码转换与索引重建 | 同步源码、刷新索引 |
 | `/skill-manager` | 技能注册与管理 | 技能管理、skills |
 
 ---
@@ -112,7 +108,7 @@ claude
 | Workflow | 触发 | 包含 Skills | 输出产物 |
 |----------|------|-----------|---------|
 | **explore.js** | `/explore` 或 "讨论" | requirements | Requirement.md, Decision.md |
-| **build.js** | `/build` 或 "开发" | arch-review, code-review-workflow, dev-workflow, generate-tests, test-runner | Architecture.md, Design.md, Code, TestPlan.md |
+| **build.js** | `/build` 或 "开发" | arch-review, review, dev-workflow, test | Architecture.md, Design.md, Code, TestPlan.md |
 | **operate.js** | `/operate` 或 "修复" | systematic-debugging, perf-tune | RCA.md, Improvement.md |
 
 ---
@@ -216,13 +212,12 @@ Release Gate（发布前）
 | Skill | 用途 |
 |-------|------|
 | `/dev-workflow` | 计划→执行→验证→提交 |
-| `/code-review-workflow` | 完整代码审查流程 |
+| `/review` | 代码审查与深度审计 |
 
 **测试类**
 | Skill | 用途 |
 |-------|------|
-| `/generate-tests` | 自动生成测试用例 |
-| `/test-runner` | 测试执行闭环 |
+| `/test` | 测试管理（自动判断生成还是执行） |
 
 **调试类**
 | Skill | 用途 |
@@ -230,11 +225,10 @@ Release Gate（发布前）
 | `/systematic-debugging` | 四阶段调试流程 |
 | `/perf-tune` | 性能诊断与优化 |
 
-**知识类**
+**同步类**
 | Skill | 用途 |
 |-------|------|
-| `/sync-knowledge` | Memory → Knowledge 同步 |
-| `/sync-source-index` | 加密源码转换与索引重建 |
+| `/sync` | 同步管理（自动判断同步内容） |
 
 **通用类**
 | Skill | 用途 |
@@ -242,7 +236,6 @@ Release Gate（发布前）
 | `/docs` | 项目/功能/问题文档生成 |
 | `/commit` | Git 提交与工作空间管理 |
 | `/verification-before-completion` | 验证与进度保存 |
-| `/adversarial-review` | 多角度对抗性代码审查 |
 | `/skill-manager` | 技能注册与管理 |
 
 ---
@@ -281,7 +274,7 @@ Requirement  Architecture  Code    Git
 ### 代码审查（15-30 分钟）
 
 ```
-/review 或 /adversarial-review
+/review
     ↓
 审查报告 + 修复建议
 ```
@@ -355,10 +348,10 @@ echo '{"tool": "Write", "params": {"file_path": "test.cs"}}' | \
 
 ```bash
 # 检查 Skill 目录
-ls ~/.claude/skills/sync-knowledge/
+ls ~/.claude/skills/sync/
 
 # 检查 INDEX.md 注册
-grep -n "sync-knowledge" ~/.claude/skills/INDEX.md
+grep -n "sync" ~/.claude/skills/INDEX.md
 ```
 
 ### Memory 不保存？

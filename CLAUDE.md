@@ -36,19 +36,26 @@
 项目级 `.claude/` > 全局 `rules/*.md` > 本文件
 
 ## 压缩保留
-当压缩对话时，始终保留：修改文件列表、测试命令、验证结果。
+当压缩对话时，始终保留：
+- 修改文件列表、测试命令、验证结果
+- 关键决策和理由（如果有）
+- 需求偏差记录（如果有）
+- 未解决的问题（如果有）
 
 ## 任务与经验
 - 任务状态/归档规则：见 `~/.claude/knowledge/rules/workflows/task-management.md`
 - 经验沉淀到项目级 `.claude/learnings.md`，跨项目经验到全局 `~/.claude/learnings.md`
 - 模型选择策略：见 `~/.claude/knowledge/rules/tools/model-strategy.md`
 - RTK 使用说明：见 `~/.claude/RTK.md`
+- Session 总结模板：见 `~/.claude/rules/workflows/session-summary-template.md`
 
 ## 核心规则（每次加载）
 @rules/tools/code-access.md
 @rules/quality/gates.md
 @rules/quality/verification.md
 @rules/tools/token-optimization.md
+@rules/quality/question-bank.md
+@rules/quality/deviation-detection.md
 
 ## 知识库索引
 @knowledge/MEMORY.md

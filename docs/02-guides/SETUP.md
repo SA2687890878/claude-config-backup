@@ -97,8 +97,8 @@ cp ~/.claude/settings.example.json ~/.claude/settings.json
 |-------|------|
 | `commit` | Git 提交信息生成 |
 | `docs` | 文档生成 |
-| `sync-knowledge` | Memory → Knowledge 同步 |
-| `adversarial-review` | 对抗性代码审查 |
+| `sync` | 同步管理 |
+| `review` | 代码审查与深度审计 |
 | ... | 见 `skills/INDEX.md` |
 
 ### 6. 项目初始化
@@ -291,18 +291,18 @@ tail -100 ~/.claude/hooks/.log  # 如果有日志文件
 
 ### 问题 2：Skills 找不到
 
-**症状**：输入 `/sync-knowledge` 无反应
+**症状**：输入 `/sync` 无反应
 
 **排查步骤**：
 ```bash
 # 1. 检查 skills 目录
-ls ~/.claude/skills/sync-knowledge/
+ls ~/.claude/skills/sync/
 
 # 2. 检查 SKILL.md 格式
-cat ~/.claude/skills/sync-knowledge/SKILL.md | head -10
+cat ~/.claude/skills/sync/SKILL.md | head -10
 
 # 3. 检查 INDEX.md 注册
-grep -n "sync-knowledge" ~/.claude/skills/INDEX.md
+grep -n "sync" ~/.claude/skills/INDEX.md
 ```
 
 ### 问题 3：Memory 不保存

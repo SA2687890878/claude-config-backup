@@ -57,9 +57,9 @@
 │                                                                  │
 │  Requirement    Design        Coding        Testing              │
 │  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐       │
-│  │requirements│ │arch-review│ │code-review│ │generate-  │       │
-│  │           │ │sql-best-  │ │-workflow  │ │tests      │       │
-│  │           │ │practices  │ │dev-workflow│ │test-runner│       │
+│  │requirements│ │arch-review│ │review     │ │test       │       │
+│  │research    │ │sql-best-  │ │dev-workflow│ │           │       │
+│  │           │ │practices  │ │           │ │           │       │
 │  └───────────┘ └───────────┘ └───────────┘ └───────────┘       │
 │                                                                  │
 │  Troubleshooting   Shared                                       │
@@ -128,12 +128,13 @@
 │
 ├── skills/（技能 - 专业能力）
 │   ├── requirements/      → Requirement
+│   ├── research/          → Requirement
 │   ├── arch-review/       → Design
 │   ├── sql-best-practices/→ Design
-│   ├── code-review-workflow/ → Coding
+│   ├── review/            → Coding
 │   ├── dev-workflow/      → Coding
-│   ├── generate-tests/    → Testing
-│   ├── test-runner/       → Testing
+│   ├── test/              → Testing
+│   ├── sync/              → Sync
 │   ├── systematic-debugging/ → Troubleshooting
 │   ├── perf-tune/         → Troubleshooting
 │   ├── docs/              → Shared
@@ -191,21 +192,19 @@
 ├── skills/（技能 - 按需调用）
 │   ├── INDEX.md               → Skills 索引
 │   ├── requirements/          → 需求分析
+│   ├── research/              → 深度调研
 │   ├── arch-review/           → 架构审查
 │   ├── dev-workflow/          → 开发工作流
-│   ├── code-review-workflow/  → 代码审查
-│   ├── generate-tests/        → 生成测试
-│   ├── test-runner/           → 测试执行
+│   ├── review/                → 代码审查与深度审计
+│   ├── test/                  → 测试管理
+│   ├── sync/                  → 同步管理
 │   ├── systematic-debugging/  → 系统化调试
 │   ├── perf-tune/             → 性能调优
 │   ├── sql-best-practices/    → SQL 最佳实践
 │   ├── docs/                  → 文档生成
 │   ├── commit/                → Git 提交
-│   ├── adversarial-review/    → 对抗审查
 │   ├── verification-before-completion/ → 验证门禁
-│   ├── sync-knowledge/        → 知识同步
-│   ├── skill-manager/         → 技能管理
-│   └── sync-source-index/     → 源码索引同步
+│   └── skill-manager/         → 技能管理
 │
 ├── agents/（Agent - 按需调用）
 │   ├── builder-agent.md       → 设计/开发/测试 Agent
@@ -240,7 +239,7 @@
     │   │   └─→ Code Gate 检查（dotnet build）
     │   │   └─→ 输出 Code
     │   │
-    │   ├─→ Phase 4: 测试（调用 test-runner skill）
+    │   ├─→ Phase 4: 测试（调用 test skill）
     │   │   └─→ Test Gate 检查（dotnet test）
     │   │   └─→ 输出 TestPlan.md
     │   │
