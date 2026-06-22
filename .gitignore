@@ -60,3 +60,5 @@ context-mode/
 settings.json.bak
 
 /paste-cache/
+
+/image-cache/
