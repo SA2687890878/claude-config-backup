@@ -21,3 +21,5 @@
 | [rules-architecture](rules-architecture.md) | Rules架构设计：核心规则+参考规则分离 |
 | [knowledge-sync-method](knowledge-sync-method.md) | 知识同步方法：项目经验如何提炼到全局 |
 | [index-design](index-design.md) | 索引设计原则：区分给Claude读取和给人看的 |
+| [hooks-architecture](hooks-architecture.md) | Prompt Hook vs Command Hook 适用边界 |
+| [mattpocock-integration](mattpocock-integration.md) | mattpocock/skills 吸收方法论 |
