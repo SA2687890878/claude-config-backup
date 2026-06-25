@@ -1,13 +1,16 @@
 ---
 name: skill-manager
 description: >
-  Skill 管理 — 路由到"查找 skill"、"创建 skill"、"优化 skill"、"评估 skill"四条分支。
-  当用户说 /skill-manager、找 skill、创建 skill、写 skill、优化 skill、
-  评估 skill、benchmark、eval、find a skill、skill 怎么写时触发。
-version: 2.0.0
+  This skill should be used when the user asks to "find a skill", "create a skill",
+  "write a skill", "optimize a skill", "improve skill description", "evaluate a skill",
+  "benchmark a skill", "test a skill", or mentions /skill-manager, skill 怎么写,
+  找 skill, 创建 skill, 优化 skill, 评估 skill.
+version: 3.0.0
 ---
 
 # Skill 管理
+
+管理 Claude Code skills 的全生命周期：查找、创建、优化、评估。
 
 ## 路由
 
@@ -31,7 +34,7 @@ npx skills find [query]
 
 ### 呈现
 
-找到后：skill 名称和功能 + 安装命令 + 详情链接（skills.sh）。
+找到后呈现：skill 名称 + 功能简述 + 安装命令 + 详情链接（skills.sh）。
 
 ### 安装
 
@@ -41,53 +44,145 @@ bash /path/to/skill/scripts/install-skill.sh <owner/repo@skill-name>
 
 ### 未找到
 
-确认没匹配 → 用通用能力直接帮忙 → 建议自建。
+确认没匹配 → 用通用能力直接帮忙 → 建议自建（跳转到 B. 创建）。
+
+### 完成标准
+
+- [ ] 搜索结果已呈现（或确认未找到）
+- [ ] 用户确认是否安装
+- [ ] 安装后验证 skill 可触发
 
 ---
 
 ## B. 创建
 
-### 判断是否该创建
+### Step 1: 判断是否该创建
 
-- ✅ 技术不直觉显而易见、跨项目引用、模式通用、别人受益
-- ❌ 一次性方案、标准实践已有文档、项目特定约定放 CLAUDE.md
+**应该创建：**
+- 技术不直觉显而易见、跨项目引用、模式通用、别人受益
+- 同样的代码/流程被反复重写
+- 需要确定性可靠性（脚本化）
 
-### 目录结构
+**不应该创建：**
+- 一次性方案
+- 标准实践已有文档
+- 项目特定约定（放 CLAUDE.md）
+
+### Step 2: 规划内容
+
+分析具体用例，识别需要的资源：
+- **scripts/** — 需要确定性可靠性的可执行代码
+- **references/** — 需要时加载的补充文档
+- **assets/** — 输出用的模板/图标等
+
+### Step 3: 创建目录结构
+
+```bash
+mkdir -p skills/skill-name/{references,scripts}
+touch skills/skill-name/SKILL.md
+```
 
 读取 `references/skill-structure.md` 了解官方规范。
 
-### Description 最佳实践
+### Step 4: 编写 SKILL.md
 
-- 包含中英文触发词
-- 包含 `/command-name` 形式
-- 包含自然语言触发短语
-- 简洁但完整——用于语义匹配
+**Frontmatter 规范：**
+- `name`：skill 名称（必填）
+- `description`：第三人称，包含具体触发短语（必填）
+- `version`：语义化版本（可选）
 
-### 验证
+**Description 格式（官方规范）：**
+```yaml
+description: >
+  This skill should be used when the user asks to "具体短语1",
+  "具体短语2", "具体短语3". Include exact phrases users would say
+  that should trigger this skill.
+```
+
+**写作风格：** 全文使用祈使句/不定式（动词开头），不用第二人称。
+
+**正确：**
+```
+读取 references/patterns.md 了解详细模式。
+运行 dotnet build 验证编译。
+```
+
+**错误：**
+```
+你应该读取 references/patterns.md。
+你需要运行 dotnet build。
+```
+
+**精简度：** SKILL.md 正文控制在 1,500-2,000 词。详细内容推到 references/。
+
+### Step 5: 验证
 
 1. `/skill-name` 能触发
 2. 自然语言描述意图能自动发现
 3. `allowed-tools` 覆盖所需工具
+4. references/ 中的文件都被 SKILL.md 引用
+5. 无重复信息（SKILL.md 和 references/ 不重复）
+
+### 完成标准
+
+- [ ] SKILL.md 有有效的 YAML frontmatter（name + description）
+- [ ] description 使用第三人称，包含具体触发短语
+- [ ] 正文使用祈使句，1,500-2,000 词
+- [ ] 详细内容在 references/ 中
+- [ ] 所有引用的文件存在
+- [ ] `/skill-name` 能触发
 
 ---
 
 ## C. 优化
 
-### 评估
+### Step 1: 评估现状
 
-读取现有 skill → 识别问题（描述不精确？触发不准确？内容冗余？）
+读取现有 skill → 按以下维度检查：
 
-### 优化描述
+| 维度 | 检查项 |
+|------|--------|
+| **触发** | description 是否包含用户实际会说的短语？ |
+| **精简** | SKILL.md 是否超过 3,000 词？是否有内容该推到 references/？ |
+| **风格** | 是否使用祈使句？是否有第二人称？ |
+| **完成标准** | 每个阶段是否有明确的完成标准？ |
+| **反模式** | 是否告诉 agent 不要做什么？ |
+| **引用** | references/ 文件是否都被引用？是否有未引用的文件？ |
 
-描述是触发的关键信号：关键词密度（用户实际说什么？）→ 去掉噪音词 → 加遗漏触发短语。
+### Step 2: 优化 Description
 
-### 迭代
+描述是触发的关键信号。
+
+**优化流程：**
+1. 列出用户实际会说的短语（中英文）
+2. 去掉噪音词（"的"、"了"、"一下"）
+3. 加遗漏的触发短语
+4. 确保第三人称格式
+
+### Step 3: 优化正文
+
+**No-op 测试：** 每句话过一遍——删掉它，agent 行为会变吗？
+- 变了 → 保留
+- 没变 → 这是 no-op，删掉
+
+**Completion criteria：** 每个阶段加完成标准，防止 agent 提前收工。
+
+**Anti-patterns：** 每个阶段加"不要做什么"。
+
+### Step 4: 自动优化
+
+运行 `scripts/improve_description.py` 自动优化描述触发准确率。
+
+### Step 5: 迭代
 
 修改 → 测试多组意图 → 确认无误触发 → 重复。
 
-### 自动优化
+### 完成标准
 
-运行 `scripts/improve_description.py` 自动优化描述触发准确率。
+- [ ] 评估维度已逐项检查
+- [ ] description 已优化（触发短语 + 第三人称）
+- [ ] 正文已优化（no-op 测试 + completion criteria + anti-patterns）
+- [ ] 优化后验证通过
 
 ---
 
@@ -115,3 +210,25 @@ bash /path/to/skill/scripts/install-skill.sh <owner/repo@skill-name>
 | `scripts/improve_description.py` | 优化描述 |
 | `scripts/quick_validate.py` | 快速验证 |
 | `scripts/package_skill.py` | 打包 skill |
+
+### 完成标准
+
+- [ ] eval 测试已运行
+- [ ] 评分报告已生成
+- [ ] 改进点已识别
+- [ ] 迭代优化已执行
+
+---
+
+## 参考文件
+
+### Skill 结构
+- **`references/skill-structure.md`** — 官方目录结构和 SKILL.md 格式规范
+
+### 评估工具
+- **`references-eval/grader-prompt.md`** — 评分标准
+- **`references-eval/comparator-prompt.md`** — 盲比模板
+- **`references-eval/analyzer-prompt.md`** — 改进分析模板
+
+### 脚本
+- **`scripts/`** — 自动化工具（eval、优化、打包）
