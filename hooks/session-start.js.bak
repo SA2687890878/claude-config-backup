@@ -12,7 +12,6 @@ const fs = require('fs');
 const path = require('path');
 
 const HOME = process.env.USERPROFILE || process.env.HOME || '';
-const METRICS_DIR = path.join(HOME, '.claude', 'metrics', 'daily');
 
 // 已知项目根目录 → 项目信息（按优先级排序，先匹配先生效）
 const KNOWN_PROJECTS = [
@@ -54,42 +53,6 @@ function readTaskState(cwd) {
     }
   } catch (_) {}
   return null;
-}
-
-function getMetricsSuggestions() {
-  try {
-    if (!fs.existsSync(METRICS_DIR)) return [];
-    const files = fs.readdirSync(METRICS_DIR).filter(f => f.endsWith('.json')).sort().reverse();
-    if (files.length < 3) return [];
-    const recentFiles = files.slice(0, 7);
-    const aggregated = {};
-    let totalCalls = 0;
-    for (const file of recentFiles) {
-      try {
-        const data = JSON.parse(fs.readFileSync(path.join(METRICS_DIR, file), 'utf8'));
-        totalCalls += data.trackedCalls || 0;
-        for (const [tool, stats] of Object.entries(data.tools || {})) {
-          if (!aggregated[tool]) aggregated[tool] = 0;
-          aggregated[tool] += stats.count || 0;
-        }
-      } catch (_) {}
-    }
-    const suggestions = [];
-    const sorted = Object.entries(aggregated).sort((a, b) => b[1] - a[1]);
-    if (sorted.length > 0) {
-      const [topTool, topCount] = sorted[0];
-      const avgPerDay = Math.round(topCount / recentFiles.length);
-      if (topTool === 'Edit' && avgPerDay > 30) suggestions.push(`Edit 调用频率高（日均 ${avgPerDay} 次）。考虑：是否在反复修改同一文件？`);
-      if (topTool === 'Agent' && avgPerDay > 10) suggestions.push(`Agent 调用频率高（日均 ${avgPerDay} 次）。参考 workflow-agent-usage-principles。`);
-      if (topTool === 'WebSearch' && avgPerDay > 5) suggestions.push(`WebSearch 调用频率高（日均 ${avgPerDay} 次）。考虑用 ctx_index 持久化。`);
-    }
-    const hasReview = aggregated['review'] || 0;
-    const hasEdit = aggregated['Edit'] || 0;
-    if (hasEdit > 50 && hasReview === 0) suggestions.push('过去一周有大量代码修改但没有运行 /review。建议定期审查。');
-    const avgDaily = Math.round(totalCalls / recentFiles.length);
-    if (avgDaily > 100) suggestions.push(`日均追踪调用 ${avgDaily} 次，token 消耗较高。`);
-    return suggestions;
-  } catch (_) { return []; }
 }
 
 function readStdin() {
@@ -177,17 +140,6 @@ function readStdin() {
       sections.push(taskState);
       sections.push('');
       sections.push('> 检测到未完成任务。用户说"继续工作"时，请读取上述进度并恢复。');
-    }
-
-    // === 5. 周度度量优化建议 ===
-    const suggestions = getMetricsSuggestions();
-    if (suggestions.length > 0) {
-      sections.push('');
-      sections.push('## 📈 度量优化建议');
-      sections.push('> 基于最近 7 天的使用数据');
-      for (const s of suggestions) {
-        sections.push('- ' + s);
-      }
     }
 
     if (sections.length > 0) {
