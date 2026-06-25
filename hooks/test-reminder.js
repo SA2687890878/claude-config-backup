@@ -19,6 +19,11 @@ process.stdin.on('end', () => {
     if (!/\.cs$/i.test(filePath)) return;
     if (/[\\/](Tests?|Test)[\\/]/i.test(filePath)) return; // 测试文件本身不提示
 
+    // 只在修改超过 50 行时才提示
+    const content = (input.tool_input && (input.tool_input.content || input.tool_input.new_string)) || '';
+    const lineCount = content ? content.split('\n').length : 0;
+    if (lineCount < 50) return;
+
     // 向上找最近的 csproj
     let dir = path.dirname(filePath);
     let csprojDir = null;

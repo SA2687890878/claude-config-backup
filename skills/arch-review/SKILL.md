@@ -1,11 +1,11 @@
 ---
 name: arch-review
 description: >
-  架构审查 — 以工程经理视角审查 .NET/WPF/SQL Server/PostgreSQL 架构方案，在写代码之前发现风险。
-  当用户说 /arch-review、架构审查、架构评审、帮我看看这个方案、
-  这个设计合理吗、技术方案评审时触发。
+  This skill should be used when the user asks to "架构审查", "架构评审",
+  "帮我看看这个方案", "这个设计合理吗", "技术方案评审", "architecture review",
+  or mentions /arch-review.
 model: sonnet
-version: 1.0.0
+version: 2.0.0
 ---
 
 # 架构审查

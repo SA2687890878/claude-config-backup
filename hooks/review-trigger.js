@@ -25,6 +25,11 @@ process.stdin.on('end', () => {
     const filePath = (input.tool_input && input.tool_input.file_path) || '';
     if (!filePath) return;
 
+    // 只在修改超过 50 行时才提示
+    const content = (input.tool_input && (input.tool_input.content || input.tool_input.new_string)) || '';
+    const lineCount = content ? content.split('\n').length : 0;
+    if (lineCount < 50) return;
+
     const fileName = path.basename(filePath);
 
     // 测试文件不提醒

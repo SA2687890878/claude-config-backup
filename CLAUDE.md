@@ -58,4 +58,4 @@
 ## 知识库索引
 @knowledge/MEMORY.md
 
-@RTK.md
+@rules/tools/RTK.md

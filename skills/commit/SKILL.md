@@ -1,9 +1,9 @@
 ---
 name: commit
 description: >
-  Git 提交与工作空间管理 — 自动生成提交信息、管理工作区、完成分支。
-  当用户说 /commit、提交、git commit、创建工作区、worktree、完成分支时触发。
-version: 2.0.0
+  This skill should be used when the user asks to "提交", "commit", "git commit",
+  "创建工作区", "worktree", "完成分支", "merge", or mentions /commit.
+version: 3.0.0
 ---
 
 # Git 提交与工作空间管理

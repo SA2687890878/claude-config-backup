@@ -1,10 +1,10 @@
 ---
 name: docs
 description: >
-  统一生成与维护项目文档，覆盖三种范围：项目级（docs/project）、功能级（docs/features）、
-  问题排查级（docs/issues）。只产出文档，不写业务代码。
-  当用户提到项目文档、文档中心、功能文档、需求文档、排查文档、问题记录时触发。
-version: 2.0.0
+  This skill should be used when the user asks to "项目文档", "文档中心", "功能文档",
+  "需求文档", "排查文档", "问题记录", "generate docs", "write documentation",
+  or mentions /docs.
+version: 3.0.0
 ---
 
 # 文档中心（docs）

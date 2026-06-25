@@ -1,10 +1,10 @@
 ---
 name: dev-workflow
 description: >
-  开发工作流 — 路由到"写计划"、"执行计划"、"并行派发"、"压缩模式"四条分支。
-  当用户说 /dev-workflow、写计划、执行计划、并行派发、开发计划、
-  implementation plan、subagent 开发、caveman mode、压缩模式时触发。
-version: 2.0.0
+  This skill should be used when the user asks to "write a plan", "execute a plan",
+  "parallel dispatch", "写计划", "执行计划", "并行派发", "开发计划",
+  "implementation plan", "caveman mode", "压缩模式", or mentions /dev-workflow.
+version: 3.0.0
 ---
 
 # 开发工作流
@@ -35,6 +35,20 @@ version: 2.0.0
 
 读取 `references/plan-details.md` 了解完整流程和自检清单。
 
+### 完成标准
+
+- [ ] Phase 0 文档发现已完成（API 真实存在已确认）
+- [ ] 每个 task 有明确的输入/输出和预期行为
+- [ ] 每个 task 粒度为 2-5 分钟
+- [ ] 无 TBD/TODO 占位符
+- [ ] 文件结构映射已完成
+
+### 反模式
+
+❌ 不要在没有确认 API 存在的情况下写 task。
+❌ 不要写超过 10 分钟粒度的 task。
+❌ 不要在计划里写实现细节（代码）——只写行为。
+
 ---
 
 ## B. 执行计划
@@ -47,6 +61,20 @@ version: 2.0.0
 5. 碰到阻塞立即停下求助
 
 读取 `references/execution-details.md` 了解 subagent 模式、每阶段验证和模型选择。
+
+### 完成标准
+
+- [ ] 所有 task 标记为 completed
+- [ ] 每个 task 的验证已通过（编译 + 测试）
+- [ ] dotnet build 退出码 == 0
+- [ ] dotnet test 退出码 == 0
+- [ ] 无回归（现有测试全部通过）
+
+### 反模式
+
+❌ 不要跳过 task 验证直接进入下一个。
+❌ 不要在 task 失败时继续执行后续 task。
+❌ 不要修改计划来"凑完成"——如果 task 不合理，停下跟用户讨论。
 
 ---
 
@@ -62,6 +90,18 @@ version: 2.0.0
 - 每个 agent 得到：具体范围 + 明确目标 + 约束 + 预期输出
 - agent 返回后：读摘要 → 验证不冲突 → 运行完整测试 → 集成变更
 
+### 完成标准
+
+- [ ] 所有 agent 已返回结果
+- [ ] 变更之间无冲突
+- [ ] 完整测试套件通过
+- [ ] 变更已集成到主分支
+
+### 反模式
+
+❌ 不要在有共享状态的问题域之间并行。
+❌ 不要跳过冲突检查直接集成。
+
 ---
 
 ## D. 压缩模式
@@ -74,3 +114,12 @@ version: 2.0.0
 - 关闭：`stop caveman` 或 `normal mode`
 
 读取 `references/caveman-details.md` 了解压缩规则和强度定义。
+
+---
+
+## 参考文件
+
+- **`references/plan-details.md`** — 写计划完整流程和自检清单
+- **`references/execution-details.md`** — 执行计划 subagent 模式和每阶段验证
+- **`references/caveman-details.md`** — 压缩模式规则和强度定义
+- **`references/subagent-pattern.md`** — Subagent 派发模式

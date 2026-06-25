@@ -1,10 +1,9 @@
 ---
 name: test
 description: >
-  测试管理 — 当用户说"测试"、"跑测试"、"生成测试"、"测试失败"、"单元测试"时触发。
-  自动判断是生成测试还是执行测试。
-  不需要用户指定"生成"还是"运行"，agent 自动判断。
-version: 1.1.0
+  This skill should be used when the user asks to "测试", "跑测试", "生成测试",
+  "测试失败", "单元测试", "run tests", "generate tests", or mentions /test.
+version: 2.0.0
 ---
 
 # 测试管理

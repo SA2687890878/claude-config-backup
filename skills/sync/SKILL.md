@@ -1,10 +1,9 @@
 ---
 name: sync
 description: >
-  同步管理 — 当用户说"同步"、"同步经验"、"同步源码"、"刷新索引"、"重新索引"时触发。
-  自动判断同步内容。
-  不需要用户指定"经验"还是"源码"，agent 自动判断。
-version: 1.1.0
+  This skill should be used when the user asks to "同步", "同步经验", "同步源码",
+  "刷新索引", "重新索引", "sync", "reindex", or mentions /sync.
+version: 2.0.0
 ---
 
 # 同步管理

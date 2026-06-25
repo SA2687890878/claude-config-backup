@@ -1,13 +1,10 @@
 ---
 name: sql-best-practices
 description: >
-  SQL 最佳实践 — 路由到"SQL Server"、"PostgreSQL"、"SQLite"、"数据库变更"四条分支。
-  覆盖查询性能、索引策略、Schema 设计、连接管理、数据库变更（DB-first + 原生 SQL）。
-  当用户说 /sql-best-practices、SQL 最佳实践、数据库优化、查询优化、
-  索引优化、SQL Server 优化、PostgreSQL 优化、SQLite 优化、
-  慢查询、数据库性能、数据库变更、迁移、migration、scaffold、
-  改表、加字段、建表时触发。
-version: 2.0.0
+  This skill should be used when the user asks to "SQL 最佳实践", "数据库优化",
+  "查询优化", "索引优化", "慢查询", "数据库性能", "数据库变更", "迁移",
+  "migration", "scaffold", "改表", "加字段", "建表", or mentions /sql-best-practices.
+version: 3.0.0
 ---
 
 # SQL 最佳实践

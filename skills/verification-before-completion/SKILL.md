@@ -1,11 +1,10 @@
 ---
 name: verification-before-completion
 description: >
-  验证与进度保存 — 在声称工作完成之前，必须先运行验证命令并确认输出。
-  包含进度保存功能，支持跨 session 工作恢复。
-  当用户说 /verification-before-completion、验证、确认完成、
-  检查一下、测试一下、能提交了吗、保存进度、保存经验时触发。
-version: 2.0.0
+  This skill should be used when the user asks to "验证", "确认完成", "检查一下",
+  "测试一下", "能提交了吗", "保存进度", "保存经验", "verify", "save progress",
+  or mentions /verification-before-completion.
+version: 3.0.0
 ---
 
 # 验证优先
