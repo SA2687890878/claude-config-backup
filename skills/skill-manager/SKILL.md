@@ -222,8 +222,9 @@ description: >
 
 ## 参考文件
 
-### Skill 结构
+### Skill 结构与编写
 - **`references/skill-structure.md`** — 官方目录结构和 SKILL.md 格式规范
+- **`references/skill-writing-discipline.md`** — Skill 编写纪律：description 规范、写作风格、completion criteria、no-op test
 
 ### 评估工具
 - **`references-eval/grader-prompt.md`** — 评分标准

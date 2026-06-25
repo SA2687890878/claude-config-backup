@@ -1,9 +1,10 @@
 ---
 name: review
 description: >
-  代码审查与深度审计 — 当用户说"审查"、"review"、"找 bug"、"审计"、"代码有问题吗"、"帮我看看"时触发。
-  自动分析变更类型和规模，选择合适的审查策略。
-version: 1.0.0
+  This skill should be used when the user asks to "review", "审查", "找 bug",
+  "审计", "代码有问题吗", "帮我看看", "code review", or mentions /review.
+  Automatically analyzes change type and scale to select the appropriate review strategy.
+version: 2.0.0
 ---
 
 # 代码审查与深度审计
@@ -32,6 +33,33 @@ version: 1.0.0
 2. 自动选择审查策略（见下方"按变更类型选择策略"）
 3. 执行审查：读取 `references/checklist.md`，按分类逐项检查
 4. 输出报告：读取 `references/report-template.md`
+
+**双轴审查（重要）：** 审查报告必须分两个独立轴，不合并排序：
+
+| 轴 | 检查内容 | 来源 |
+|----|---------|------|
+| **Standards（规范）** | 代码是否符合项目编码规范 | `references/checklist.md` + `references/dotnet-checklist.md` |
+| **Spec（需求）** | 代码是否匹配原始需求/PRD/用户要求 | 需求文档或用户对话 |
+
+**为什么分两轴：** 一个 change 可以 Standards pass + Spec fail（代码规范但功能不对），反过来也行。合并排序会掩盖问题。
+
+**报告格式：**
+```
+### Standards 轴
+[规范符合性发现]
+
+### Spec 轴
+[需求匹配度发现]
+
+### 汇总
+- Standards: N 个发现，最严重的是 [X]
+- Spec: N 个发现，最严重的是 [Y]
+```
+
+**完成标准：**
+- [ ] 两个轴都已检查（或 Spec 轴标注"无需求文档"）
+- [ ] 报告按双轴分开呈现
+- [ ] 每个发现有具体的代码位置和规范来源
 
 **按变更类型选择策略：**
 

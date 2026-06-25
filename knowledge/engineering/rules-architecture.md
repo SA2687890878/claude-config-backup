@@ -84,3 +84,4 @@ cat ~/.claude/knowledge/rules/code-access/encryption.md
 - 核心规则：放在 rules/ 目录，内容精简
 - 参考规则：放在 knowledge/rules/ 目录，内容详细
 - 核心规则中包含参考规则的路径，方便按需加载
+
