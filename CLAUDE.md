@@ -52,8 +52,10 @@
 @rules/tools/code-access.md
 @rules/quality/gates.md
 @rules/quality/verification.md
-@rules/tools/token-optimization.md
-@rules/quality/question-bank.md
+
+## 按需规则（场景触发时加载）
+- Token 优化：见 @rules/tools/token-optimization.md
+- 问题澄清：见 @rules/quality/question-bank.md
 
 ## 知识库索引
 @knowledge/MEMORY.md
