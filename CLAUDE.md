@@ -55,7 +55,7 @@
 
 ## 按需规则（场景触发时加载）
 - Token 优化：见 @rules/tools/token-optimization.md
-- 问题澄清：见 @knowledge/rules/quality/question-bank.md
+- 问题澄清：需求不明确时，读取 `~/.claude/knowledge/rules/quality/question-bank.md`
 
 ## 知识库索引
 @knowledge/MEMORY.md
