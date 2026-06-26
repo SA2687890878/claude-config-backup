@@ -16,8 +16,6 @@ paths:
 - 阻塞检测：`sp_who2` 或 `sys.dm_exec_requests`
 - 参数嗅探：`OPTION (RECOMPILE)` 或 `OPTIMIZE FOR UNKNOWN`
 
-> 完整 SQL 诊断脚本已索引：`ctx_search(source: "sqlserver-snippets")`
-
 ## EF Core
 - `UseSqlServer()` 在 `AddDbContext` 中配置
 - 不支持 `ILike`，用 `LIKE` + `EF.Functions.Collate`

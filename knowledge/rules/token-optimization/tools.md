@@ -27,9 +27,3 @@
 **判断方法**：先试 `codegraph_files`，返回空或报错则源码加密，切换 SQLite 索引。
 
 **禁止**：Read 整个 .cs 文件来理解结构。
-
-## How to apply
-
-- 加密项目：优先使用 SQLite 索引
-- 可读项目：优先使用 CodeGraph
-- 判断方法：先试 codegraph_files，返回空则切换 SQLite 索引

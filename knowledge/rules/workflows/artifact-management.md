@@ -84,19 +84,3 @@ Release Gate → 检查所有产物 + 风险评估
 | Knowledge | `~/.claude/knowledge/project/` | 从 Memory 升级 | 跨项目复用 |
 
 **同步方向**：Artifact → Memory learnings.md → Knowledge project/
-
----
-
-## 最佳实践
-
-**DO ✅**
-- 每个功能都生成 Requirement.md — 需求可追溯
-- 复杂功能生成 Architecture.md — 设计可复用
-- 问题修复生成 RCA.md — 避免重复踩坑
-- 产物提交到 git — 版本控制
-- 定期归档 — 保持目录整洁
-
-**DON'T ❌**
-- 不要跳过 Requirement.md — 否则需求凭记忆
-- 不要只写代码不写文档 — 否则无法复用
-- 不要在 Artifact 中记录敏感信息 — 特别是 API Key

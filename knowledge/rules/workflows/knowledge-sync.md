@@ -75,100 +75,19 @@ Knowledge（工程级可复用知识）
 ### 4. 同步示例
 
 **learnings.md 中的经验**：
-```markdown
-## 2026-06-15 16:30 - [特性] 实现用户导出功能
+- "大数据量导出用流式处理" → 升级到 `knowledge/engineering/performance.md`
+- "IAsyncEnumerable<T> 避免内存溢出" → 升级到 `knowledge/engineering/dotnet-best-practices.md`
+- "导出时捕获快照" → 升级到 `knowledge/project/<project-name>/export-patterns.md`
 
-### 学到的模式
-- 大数据量导出不能一次性加载，需要分页 + 流式写入
-- 使用 `IAsyncEnumerable<T>` 避免内存溢出
-- 导出时需要捕获快照（防止中途有新增记录导致数据重复）
-```
-
-**同步判断**：
-- "大数据量导出用流式处理" → **通用工程知识** → 升级到 `knowledge/engineering/performance.md`
-- "IAsyncEnumerable<T> 避免内存溢出" → **通用工程知识** → 升级到 `knowledge/engineering/dotnet-best-practices.md`
-- "导出时捕获快照" → **项目特定知识** → 升级到 `knowledge/project/<project-name>/export-patterns.md`
-
-**同步后的 knowledge/engineering/performance.md**：
-```markdown
-# 性能优化最佳实践
-
-## 大数据导出
-
-### 问题
-一次性加载大数据量会导致内存溢出。
-
-### 解决方案
-使用流式处理 + 分页加载：
-- .NET：`IAsyncEnumerable<T>` + `yield return`
-- 数据库：`Skip()` + `Take()` 分页
-- 文件写入：流式写入，不缓存全部数据
-
-### 示例代码
-```csharp
-public async IAsyncEnumerable<User> GetUsersStreamAsync()
-{
-    var pageSize = 1000;
-    var page = 0;
-    while (true)
-    {
-        var users = await _db.Users
-            .Skip(page * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
-        if (!users.Any()) break;
-        foreach (var user in users)
-            yield return user;
-        page++;
-    }
-}
-```
-
-### 经验来源
-- 项目：OTD.PCS.WebBackend
-- 日期：2026-06-15
-- 问题：用户导出 100 万行时内存峰值 3GB
-- 修复后：内存稳定在 200MB 以下
-```
-
-**learnings.md 中标记**：
-```markdown
-## 2026-06-15 16:30 - [特性] 实现用户导出功能
-
-### 学到的模式
-- 大数据量导出不能一次性加载，需要分页 + 流式写入 **[已同步到 knowledge/engineering/performance.md]**
-- 使用 `IAsyncEnumerable<T>` 避免内存溢出 **[已同步到 knowledge/engineering/dotnet-best-practices.md]**
-- 导出时需要捕获快照 **[已同步到 knowledge/project/<project-name>/export-patterns.md]**
-```
+**learnings.md 中标记**：在经验条目后添加 `[已同步到 knowledge/xxx/yyy.md]`
 
 ### 5. Knowledge 文件结构
 
-```
-~/.claude/knowledge/
-├── engineering/                           # 工程规范
-│   ├── performance.md                     # 性能优化
-│   ├── dotnet-best-practices.md           # .NET 最佳实践
-│   ├── sql-best-practices.md              # SQL 最佳实践
-│   ├── testing-patterns.md                # 测试模式
-│   └── code-index-strategy.md             # 代码索引策略
-├── project/                               # 项目特定知识
-│   ├── <project-name>/
-│   │   ├── api-contract.md                # API 约定
-│   │   ├── database-schema.md             # 数据库设计
-│   │   ├── common-patterns.md             # 常用模式
-│   │   ├── entity-mapping.md              # 实体映射
-│   │   └── export-patterns.md             # 导出模式
-│   └── <another-project>/
-│       └── ...
-└── business/                              # 业务知识
-    ├── order-workflow.md                  # 订单流程
-    ├── refund-policy.md                   # 退款政策
-    └── terminology.md                     # 术语表
-```
+见 `~/.claude/knowledge/MEMORY.md` 总索引。
 
 ## 最佳实践
 
-### DO ✅
+### DO
 
 - **定期同步**：每周或每完成大功能后同步一次
 - **标记已同步**：在 learnings.md 中标记，避免重复
@@ -176,7 +95,7 @@ public async IAsyncEnumerable<User> GetUsersStreamAsync()
 - **分类清晰**：判断是工程知识还是项目知识
 - **更新而非新建**：如果 Knowledge 文件已存在相关内容，更新而非新建
 
-### DON'T ❌
+### DON'T
 
 - **不要全部同步**：只同步可复用的经验
 - **不要删除 learnings.md**：标记为"已同步"，保留原记录
@@ -185,21 +104,5 @@ public async IAsyncEnumerable<User> GetUsersStreamAsync()
 
 ## 查询机制
 
-**查询 Knowledge**：
-```bash
-# 使用 ctx_search 查询
-mcp__context-mode__ctx_search({
-  queries: ["大数据导出", "IAsyncEnumerable"],
-  source: "knowledge"
-})
-
-# 或使用 Grep
-Grep({ pattern: "IAsyncEnumerable", path: "~/.claude/knowledge/" })
-```
-
-**查询 Memory**：
-```bash
-# SessionStart 时自动加载 learnings.md
-# 或手动读取
-Read({ file_path: "~/.claude/projects/<project>/memory/learnings.md" })
-```
+- **查询 Knowledge**：使用 `ctx_search` 或 `Grep` 搜索 `~/.claude/knowledge/`
+- **查询 Memory**：SessionStart 时自动加载 learnings.md，或手动读取

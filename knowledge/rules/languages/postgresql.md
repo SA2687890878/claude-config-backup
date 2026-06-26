@@ -16,8 +16,6 @@ paths:
 - 全表扫描：`pg_stat_user_tables` 的 `seq_scan` vs `idx_scan`
 - 慢查询：`pg_stat_statements` 扩展（需启用）
 
-> 完整 SQL 诊断脚本已索引：`ctx_search(source: "postgresql-snippets")`
-
 ## EF Core
 - `UseNpgsql()` 在 `AddDbContext` 中配置
 - 支持 `ILike`：`EF.Functions.ILike(x.Name, "%keyword%")`

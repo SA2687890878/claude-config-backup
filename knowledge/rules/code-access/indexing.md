@@ -6,9 +6,9 @@
 
 | 特性 | 说明 |
 |------|------|
-| **速度** | ⚡ 毫秒级（本地 SQLite 查询） |
+| **速度** | 毫秒级（本地 SQLite 查询） |
 | **用途** | 类/方法/接口/属性/调用链定位 |
-| **加密项目** | ✅ 通过 Roslyn 编译期提取 |
+| **加密项目** | 通过 Roslyn 编译期提取 |
 | **优势** | 快、精准、资源消耗小 |
 | **劣势** | 不存储源码、只存储符号信息 |
 
@@ -40,9 +40,9 @@ powershell -ExecutionPolicy Bypass -File "C:\Users\admin\.claude\tools\sqlite-in
 
 | 特性 | 说明 |
 |------|------|
-| **速度** | 🐌 需要初始化（首次约 30 秒） |
+| **速度** | 需要初始化（首次约 30 秒） |
 | **用途** | 代码结构图谱、源码读取、完整调用链 |
-| **加密项目** | ✅ 通过 node.exe 白名单读明文 |
+| **加密项目** | 通过 node.exe 白名单读明文 |
 | **优势** | 能读源码、图谱完整、支持影响分析 |
 | **劣势** | 资源消耗大、需要初始化 |
 
@@ -77,9 +77,9 @@ mcp__codegraph__codegraph_files({ path: "src/..." })
 
 | 特性 | 说明 |
 |------|------|
-| **速度** | 🐌 需要索引（首次） |
+| **速度** | 需要索引（首次） |
 | **用途** | 文档索引、语义搜索、批量命令执行 |
-| **加密项目** | ⚠️ JavaScript 沙箱读乱码，Shell 模式读明文 |
+| **加密项目** | JavaScript 沙箱读乱码，Shell 模式读明文 |
 | **优势** | 支持语义搜索、可索引任意内容、批量执行 |
 | **劣势** | JavaScript 沙箱不能读加密文件 |
 
@@ -88,7 +88,6 @@ mcp__codegraph__codegraph_files({ path: "src/..." })
 - 索引和搜索代码片段
 - 获取网页内容并索引
 - 批量执行命令并分析结果
-- 语义搜索（比 SQLite 索引更智能）
 
 **命令模板：**
 ```javascript
@@ -108,9 +107,6 @@ mcp__context-mode__ctx_batch_execute({
   ],
   queries: ["search term"]
 })
-
-// 执行命令（用 Shell 模式）
-mcp__context-mode__ctx_execute({ language: "shell", code: "node -e \"...\"" })
 ```
 
 ## How to apply
