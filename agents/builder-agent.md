@@ -3,6 +3,11 @@ name: builder
 description: 当用户需要设计、开发、测试、代码审查或文档生成时使用此 agent。典型场景包括实现新功能、审查代码变更、生成测试、创建文档、验证构建。详见 agent 正文中的"何时调用"部分。
 model: inherit
 color: green
+skills:
+  - dev-workflow
+  - review
+  - test
+  - verification-before-completion
 tools: Read, Grep, Glob, Bash, Edit, Write, mcp__context-mode__ctx_search
 ---
 

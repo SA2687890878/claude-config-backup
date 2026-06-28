@@ -3,6 +3,9 @@ name: operator
 description: 当用户需要排查问题、分析性能、探索代码或分析日志时使用此 agent。典型场景包括调试 bug、定位性能瓶颈、梳理调用链、分析错误日志。详见 agent 正文中的"何时调用"部分。
 model: inherit
 color: red
+skills:
+  - systematic-debugging
+  - perf-tune
 tools: Read, Grep, Glob, Bash, mcp__context-mode__ctx_search
 ---
 

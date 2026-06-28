@@ -94,8 +94,10 @@ function ensureFile(filePath, header) {
     // 保留相对路径（相对于项目根目录）
     const relativePath = filePath.replace(projectInfo.projectRoot, '').replace(/^[/\\]/, '');
 
-    // 构建条目
-    const entry = `## ${dateStr}\n- 修改: \`${relativePath}\`\n\n`;
+    // 构建条目（包含修改摘要）
+    const summary = toolInput.summary || toolInput.description || '';
+    const summaryLine = summary ? ` - ${summary}` : '';
+    const entry = `## ${dateStr}\n- 修改: \`${relativePath}\`${summaryLine}\n\n`;
 
     if (projectInfo.projectDir) {
       // 写入项目级 learnings.md
