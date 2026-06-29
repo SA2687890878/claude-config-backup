@@ -46,7 +46,6 @@
 - 任务状态/归档规则：见 `~/.claude/knowledge/rules/workflows/task-management.md`
 - 经验沉淀到项目级 `.claude/learnings.md`，跨项目经验到全局 `~/.claude/memory/learnings.md`
 - 模型选择策略：见 `~/.claude/knowledge/rules/tools/model-strategy.md`
-- RTK 使用说明：见 `~/.claude/rules/tools/rtk.md`
 
 ## 核心规则（每次加载）
 @rules/tools/code-access.md
