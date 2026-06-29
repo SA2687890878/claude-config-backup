@@ -60,4 +60,4 @@
 ## 知识库索引
 @knowledge/MEMORY.md
 
-@rules/tools/rtk.md
+@RTK.md
