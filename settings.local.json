@@ -12,5 +12,85 @@
       "Bash(gh repo *)",
       "mcp__context-mode__ctx_fetch_and_index"
     ]
+  },
+  "statusLine": {
+    "command": "ccstatusline-zh",
+    "padding": 0,
+    "refreshInterval": 10,
+    "type": "command"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/session-start.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/project-knowledge.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/knowledge-sync-reminder.js"] }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/workflow-router.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/context-injector.js"] }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/secret-guard.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/write-guard.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/encrypted-write-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/impact-guard.js"], "if": "Edit(*.cs)" }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/bash-guard.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/commit-gate.js"] }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/cs-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/quality-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/logic-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/test-reminder.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/sqlite-index-update.js"], "if": "Write(*.cs)|Edit(*.cs)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/learning-recorder.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/vue-guard.js"], "if": "Write(*.vue)|Edit(*.vue)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/source-sync-update.js"], "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)" },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/review-trigger.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/artifact-index-update.js"] }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/git-commit-review.js"] }
+        ]
+      },
+      {
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/metrics-collector.js"] }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/build-verify.js"] },
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/metrics-report.js"] },
+          { "type": "command", "command": "powershell", "args": ["-ExecutionPolicy", "Bypass", "-File", "C:/Users/admin/.claude/hooks/notify.ps1"] }
+        ]
+      }
+    ]
   }
 }
