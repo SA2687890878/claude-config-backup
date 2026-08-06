@@ -39,6 +39,8 @@
 | [cross-project.md](03-architecture/cross-project.md) | 跨项目工作流 |
 | [review-audit.md](03-architecture/review-audit.md) | 审查审计机制 |
 | [iteration.md](03-architecture/iteration.md) | 自动迭代机制 |
+| [REASONIX-MIGRATION.md](REASONIX-MIGRATION.md) | Reasonix 迁移评估备忘录（4 宿主兼容矩阵、勘误记录、证据等级说明） |
+| [HARNESS-ENGINEERING-PLAN.md](HARNESS-ENGINEERING-PLAN.md) | 通用 Harness 规划（4 宿主版：七阶段覆盖、分层架构、落地路径） |
 
 ### 系统文档（🔧 维护）
 
@@ -154,11 +156,11 @@
 | 核心理念 | 1 个 | 必读 |
 | 使用指南 | 4 个 | 实操 |
 | 避坑指南 | 1 个 | 避坑 |
-| 参考文档 | 8 个 | 查询 |
+| 参考文档 | 10 个 | 查询 |
 | 系统文档 | 3 个 | 维护 |
 | 模板文档 | 5 个 | 复用 |
-| **总计** | **22 个** | |
+| **总计** | **24 个** | |
 
 ---
 
-**最后更新**：2026-06-17
+**最后更新**：2026-07-27（新增 REASONIX-MIGRATION.md、HARNESS-ENGINEERING-PLAN.md）
