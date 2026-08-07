@@ -4,11 +4,11 @@
     "code-review@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\code-review\\317b8988055b",
-        "version": "317b8988055b",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\code-review\\99dc284733df",
+        "version": "99dc284733df",
         "installedAt": "2026-04-30T07:11:42.803Z",
-        "lastUpdated": "2026-07-01T02:45:34.931Z",
-        "gitCommitSha": "317b8988055b151b694d4e06e5039b3f38dbe425"
+        "lastUpdated": "2026-08-07T01:11:04.878Z",
+        "gitCommitSha": "99dc284733dfbe91e778c123b091a4c0811d2ed2"
       }
     ],
     "code-simplifier@claude-plugins-official": [
@@ -34,11 +34,11 @@
     "context7@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\context7\\317b8988055b",
-        "version": "317b8988055b",
+        "installPath": "C:\\Users\\admin\\.claude\\plugins\\cache\\claude-plugins-official\\context7\\99dc284733df",
+        "version": "99dc284733df",
         "installedAt": "2026-04-30T08:15:35.659Z",
-        "lastUpdated": "2026-07-01T02:45:34.928Z",
-        "gitCommitSha": "317b8988055b151b694d4e06e5039b3f38dbe425"
+        "lastUpdated": "2026-08-07T01:11:04.857Z",
+        "gitCommitSha": "99dc284733dfbe91e778c123b091a4c0811d2ed2"
       }
     ],
     "custom-agents@local": [
