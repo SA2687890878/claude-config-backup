@@ -12,10 +12,10 @@
 
 ## Think-in-Code
 
-能在代码中处理的数据不要读入上下文。大文件用 `ctx_execute_file`，多文件用 `ctx_execute`，持久化文档用 `ctx_index` + `ctx_search`。
+能在代码中处理的数据不要读入上下文。大文件/日志用 `ctx_execute_file`，多文件用 `ctx_execute`，多命令批量+检索用 `ctx_batch_execute`，持久化文档用 `ctx_index` + `ctx_search`。会话事件自动记忆（ctx_stats）价值不大，跨会话知识以 memory/learnings.md 为准。
 
 ## 详细参考
 
-- RTK 使用：`~/.claude/knowledge/rules/token-optimization/rtk.md`
+- RTK 使用：`~/.claude/RTK.md`
 - 工具选择：`~/.claude/knowledge/rules/token-optimization/tools.md`
 - Think-in-Code：`~/.claude/knowledge/rules/token-optimization/thinking.md`
