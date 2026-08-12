@@ -3,10 +3,6 @@
     "context-mode": {
       "command": "context-mode",
       "args": []
-    },
-    "codegraph": {
-      "command": "node",
-      "args": ["C:\\Users\\admin\\.claude\\hooks\\codegraph-wrapper.js"]
     }
   }
 }

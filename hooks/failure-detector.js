@@ -137,6 +137,17 @@ function generateMessage(count, signatures) {
   ].join('\n');
 }
 
+// 输出消息：stderr 给用户看，additionalContext 注入 Claude 上下文（PostToolUse 协议）
+function emitContext(msg) {
+  process.stderr.write('\n' + msg + '\n');
+  console.log(JSON.stringify({
+    hookSpecificOutput: {
+      hookEventName: 'PostToolUse',
+      additionalContext: msg
+    }
+  }));
+}
+
 // ============================================================
 // 主逻辑
 // ============================================================
@@ -176,16 +187,16 @@ function generateMessage(count, signatures) {
         count
       });
 
-      // 2+ 次失败时注入上下文
+      // 2+ 次失败时注入上下文（stderr 给用户 + additionalContext 给 Claude）
       if (count >= 2) {
         const msg = generateMessage(count, recentSignatures.slice(-3));
-        process.stderr.write('\n' + msg + '\n');
+        emitContext(msg);
       }
     } else {
       // 成功：如果之前有失败，输出突破确认
       const prevCount = readCounter();
       if (prevCount >= 2) {
-        process.stderr.write(`\n[failure-detector] 突破成功，连续失败 ${prevCount} 次后解决。建议复盘：刚才卡了 ${prevCount} 次，根因是什么？\n`);
+        emitContext(`[failure-detector] 突破成功，连续失败 ${prevCount} 次后解决。建议复盘：刚才卡了 ${prevCount} 次，根因是什么？`);
       }
       writeCounter(0);
     }

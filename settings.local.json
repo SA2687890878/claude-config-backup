@@ -5,7 +5,6 @@
       "Bash(winget install *)",
       "Bash(npm list *)",
       "Bash(npm install *)",
-      "mcp__exa-search__web_search_exa",
       "WebSearch",
       "WebFetch(domain:github.com)",
       "Bash(echo \"---EXIT:$?\")",
@@ -25,7 +24,8 @@
         "hooks": [
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/session-start.js"] },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/project-knowledge.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/knowledge-sync-reminder.js"] }
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/knowledge-sync-reminder.js"] },
+          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/sessionstart.mjs"] }
         ]
       }
     ],
@@ -33,7 +33,8 @@
       {
         "hooks": [
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/skill-router.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/context-injector.js"] }
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/context-injector.js"] },
+          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/userpromptsubmit.mjs"] }
         ]
       }
     ],
@@ -60,8 +61,6 @@
         "matcher": "Write|Edit",
         "hooks": [
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/cs-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/quality-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/logic-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/test-reminder.js"], "if": "Write(*.cs)|Edit(*.cs)" },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/sqlite-index-update.js"], "if": "Write(*.cs)|Edit(*.cs)" },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/learning-recorder.js"] },
@@ -74,12 +73,18 @@
       {
         "matcher": "Bash",
         "hooks": [
+          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/failure-detector.js"] },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/git-commit-review.js"] }
         ]
       },
       {
         "hooks": [
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/metrics-collector.js"] }
+        ]
+      },
+      {
+        "hooks": [
+          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/posttooluse.mjs"] }
         ]
       }
     ],
@@ -88,7 +93,15 @@
         "hooks": [
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/build-verify.js"] },
           { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/metrics-report.js"] },
-          { "type": "command", "command": "powershell", "args": ["-ExecutionPolicy", "Bypass", "-File", "C:/Users/admin/.claude/hooks/notify.ps1"] }
+          { "type": "command", "command": "powershell", "args": ["-ExecutionPolicy", "Bypass", "-File", "C:/Users/admin/.claude/hooks/notify.ps1"] },
+          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/stop.mjs"] }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/precompact.mjs"] }
         ]
       }
     ]

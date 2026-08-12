@@ -8,6 +8,25 @@
 const fs = require('fs');
 const path = require('path');
 
+// 会话级注入去重：同一会话内同一规则只注入一次，
+// 避免多轮对话反复命中关键词重复注入规则，浪费 token
+const CACHE_DIR = path.join(process.env.USERPROFILE || process.env.HOME || '', '.claude', '.cache', 'context-injector');
+
+function loadInjected(sessionId) {
+  try {
+    const f = path.join(CACHE_DIR, sessionId + '.json');
+    if (fs.existsSync(f)) return JSON.parse(fs.readFileSync(f, 'utf8'));
+  } catch (e) { /* 读取失败视为未注入 */ }
+  return [];
+}
+
+function saveInjected(sessionId, names) {
+  try {
+    fs.mkdirSync(CACHE_DIR, { recursive: true });
+    fs.writeFileSync(path.join(CACHE_DIR, sessionId + '.json'), JSON.stringify(names));
+  } catch (e) { /* 写入失败不影响主流程 */ }
+}
+
 function readStdin() {
   return new Promise((resolve) => {
     let data = '';
@@ -25,6 +44,8 @@ async function main() {
 
     const input = JSON.parse(raw);
     const prompt = input.prompt || '';
+    // 会话标识：优先 session_id，退而求其次用转录文件路径
+    const sessionId = input.session_id || input.transcript_path || 'default';
 
     // 规则配置：关键词 → 文件路径 + 最大行数
     const rules = [
@@ -37,7 +58,7 @@ async function main() {
       {
         name: 'Token Optimization',
         keywords: /codegraph|search\.ps1|sqlite[-_]?index|代码索引|token.{0,3}优化|rtk\s+(gain|proxy|discover)/i,
-        path: 'tools/token-optimization.md',
+        path: 'token-optimization/tools.md',
         maxLines: 40
       },
       {
@@ -52,10 +73,15 @@ async function main() {
     const matched = rules.filter(r => r.keywords.test(prompt));
     if (matched.length === 0) process.exit(0);
 
+    // 会话级去重：跳过本会话已注入过的规则，避免重复注入浪费 token
+    const injected = loadInjected(sessionId);
+    const fresh = matched.filter(r => !injected.includes(r.name));
+    if (fresh.length === 0) process.exit(0);
+
     const rulesDir = path.join(process.env.USERPROFILE || process.env.HOME || '', '.claude', 'knowledge', 'rules');
     const contexts = [];
 
-    for (const rule of matched) {
+    for (const rule of fresh) {
       const rulePath = path.join(rulesDir, rule.path);
 
       if (fs.existsSync(rulePath)) {
@@ -73,6 +99,8 @@ async function main() {
       console.log(JSON.stringify({
         additionalContext: contexts.join('\n\n---\n\n')
       }));
+      // 记录本次已注入的规则，供会话内去重
+      saveInjected(sessionId, [...injected, ...fresh.map(r => r.name)]);
     }
   } catch (e) {
     console.error('[context-injector] Error:', e.message);

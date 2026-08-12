@@ -66,6 +66,21 @@ const DANGEROUS_PATTERNS = [
     msg: 'git clean -f 会删除未跟踪文件',
     level: 'block'
   },
+  {
+    re: /\bgit\s+push\b(?![^\n]*--force-with-lease)[^\n]*--force\b/gi,
+    msg: 'git push --force 会覆盖远端提交历史（如需强制推送请用 --force-with-lease）',
+    level: 'block'
+  },
+  {
+    re: /\bgit\s+push\b[^\n]*?\s(?<![\/-])(?:main|master|develop)\b/gi,
+    msg: '推送到受保护分支（main/master/develop）——CLAUDE.md 禁止直接 push',
+    level: 'block'
+  },
+  {
+    re: /\bgit\s+reset\s+--hard\b/gi,
+    msg: 'git reset --hard 会丢失所有未提交更改',
+    level: 'block'
+  },
 ];
 
 // ===== Main =====
@@ -80,16 +95,17 @@ process.stdin.on('end', () => {
     const command = (input.tool_input && input.tool_input.command) || '';
     if (!command) return;
 
-    // 跳过 rtk 命令（由 rtk 自身处理）
-    if (/^\s*rtk\s/.test(command)) return;
+    // rtk 包装命令：剥离 rtk 前缀后用原始命令做安全检查，防止绕过危险拦截
+    // 例：git checkout -- . 被 rtk 重写为 "rtk git checkout -- ." 后仍需拦截
+    const checkCmd = command.replace(/^\s*rtk\s+(?:proxy\s+)?/, '');
 
     // 跳过安全的 git 子命令（不跳过危险操作，让 DANGEROUS_PATTERNS 拦截）
-    if (/^\s*git\s+(?:status|log|diff|branch|show|remote|fetch|pull|stash\s+list)\b/.test(command)) return;
+    if (/^\s*git\s+(?:status|log|diff|branch|show|remote|fetch|pull|stash\s+list)\b/.test(checkCmd)) return;
 
     // 检查危险模式
     const found = [];
     for (const pattern of DANGEROUS_PATTERNS) {
-      const match = command.match(pattern.re);
+      const match = checkCmd.match(pattern.re);
       if (match) {
         found.push({ msg: pattern.msg, level: pattern.level });
       }
