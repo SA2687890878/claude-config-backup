@@ -64,3 +64,10 @@ settings.json.bak
 /image-cache/
 /.reasonix/
 /reasonix.toml
+
+# 临时文件与 git worktree 隔离工作区
+.tmp/
+worktrees/
+
+# RTK 备份（含代理 token 配置，不入库）
+*.bak-rtk
