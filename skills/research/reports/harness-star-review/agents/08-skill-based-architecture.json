@@ -1,0 +1,31 @@
+{
+  "repo": "WoJiSama/skill-based-architecture",
+  "one_liner": "一个'生产 skill 的 meta-skill'：盘点任意代码库，把散落的规则/工作流/踩坑经验蒸馏成可路由、可验证、可持续维护的项目级 skill，并内建'经验→规则→skill'的任务时自动捕获闭环",
+  "core_mechanism": "三层机制：(1) 一次性迁移——scaffold-downstream.sh 只读盘点目标仓库规则来源，按证据推导 direct/folder/broad 结构，预览 CREATE/PRESERVE/CONFLICT 后 apply 并语义合并；(2) 任务时经验捕获——Task Closure 的 AAR（至少过 2/3 门槛：可重复/代价高/代码看不出）、verified-failure（红转绿证明后直写 canonical owner，无需等重复）、重复完成流程的 proactive workflow-distillation 提议；(3) 持续维护——routing.yaml 路由单一事实源、smoke-test 等校验脚本、update-upstream 只升级结构不覆盖下游知识。核心原则：激活优于存储、结构服务于内容、下游知识优先于上游模板",
+  "key_components": [
+    "scripts/scaffold-downstream.sh（1466 行，迁移物化器，唯一写路径）",
+    "WORKFLOW.md（Quick Start 命令入口）",
+    "SKILL.md（路由器，17 条核心原则 + 10 条反模式）",
+    "templates/skill/workflows/{task-closure,rule-update}/*.md（经验→规则闭环）",
+    "templates/skill/routing.yaml + scripts/{smoke-test,sync-routing,audit-orphans}.sh",
+    ".claude-plugin/marketplace.json + plugin.json（两命令安装）",
+    "templates/hooks/{session-start,hooks.json}（SessionStart 重注入）"
+  ],
+  "harness_value": "补上用户'经验/纠错→规则→skill'的自动化缺口：任务边界不再手动提炼——AAR 强制按门槛筛选，故障红转绿后直写最近 canonical owner 并立即激活，同一根因重复出现触发'激活修复或升级为机器门禁'；每条记录必须落在任务路径上改变下一步动作（activation over storage），正好解决 learnings.md 沉淀后不被激活、同类 bug 再踩的问题。全局个人偏好归到用户现有 ~/.claude/memory/learnings.md，边界清晰互补",
+  "overlap": "与现有 stack 互补为主：context-mode/ctx_index 是存储层，SBA 提供缺失的激活层+工作流层+校验层，可并存；codegraph 可加速 profile-project 盘点。重叠点：SBA 会生成薄壳入口（CLAUDE.md/AGENTS.md）和自有 SessionStart hook，与用户已配置 hooks 潜在重复；对全局 harness 整体迁移会侵入全局 rules/*.md 和自建 skills——不建议整体迁移",
+  "integration_difficulty": "medium",
+  "integration_path": "分两步：(1) 项目级接入（主路径）：/plugin marketplace add + /plugin install，对 pcs.webbackend 等真实项目跑 Quick Start 盘点→预览→apply→smoke-test；之后经验捕获由 task-closure/rule-update 自动接管。(2) 全局闭环（轻量采纳）：不迁移 ~/.claude 本身，只把 rule-update 流程（Recording Threshold 2/3 门槛 + verified-failure 直写 + activate 校验）复刻进自建 skill 或 dev-workflow，让 agent 任务收尾时把 learnings.md 新条目按门槛蒸馏进 rules/*.md 并验证激活。Windows：脚本 bash 在 Git Bash 可运行，session-start hook 依赖 python3 需确认在 PATH",
+  "risks": [
+    "语义蒸馏仍是 agent 判断，脚本只校验结构不保证语义正确，faithful rewrite 依赖人工语义复核",
+    "仓库很年轻（2026-04-08 创建，4 个月），单人主力维护",
+    "全量采纳过重：1466 行 scaffold + conformance 断言 + 9-phase 迁移，对小项目过度设计（官方推荐渐进式）",
+    "无内建 learnings.md 摄入：闭环只在任务时触发，存量经验需手工迁移",
+    "对全局 harness 整体迁移有侵入风险（重写入口为薄壳，与现有 20+ skills 冲突）",
+    "依赖 GitHub marketplace 网络安装；CRLF 脚本在原生 Linux 报错，仅 Git Bash 验证过"
+  ],
+  "verdict": "worth-considering",
+  "evidence": [
+    "https://github.com/WojiSama/skill-based-architecture",
+    "README.md、SKILL.md、WORKFLOW.md、templates/skill/workflows/**、docs/plans/**、examples/simple-repo/EXPECTED-SHAPE.md"
+  ]
+}

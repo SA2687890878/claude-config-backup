@@ -1,0 +1,30 @@
+{
+  "repo": "OthmanAdi/planning-with-files",
+  "one_liner": "把计划从对话上下文搬到磁盘（task_plan.md/findings.md/progress.md），用 Claude Code 钩子每回合自动重注入、崩溃后自动恢复的文件化计划系统（v3.10.0，MIT，417 项测试）",
+  "core_mechanism": "项目根维护 3 个 markdown：task_plan.md（阶段+Status: pending/in_progress/complete）、findings.md（需求/研究/决策/错误）、progress.md（会话日志/测试结果）。SKILL.md frontmatter 注册 5 钩子：UserPromptSubmit 每回合重注入计划头（~330 token）、PreToolUse 注入短计划头、PostToolUse 提醒更新进度、Stop 校验完成（gated 模式可阻止停止）、PreCompact 压缩前提醒落盘。会话恢复靠 session-catchup.py 读 ~/.claude/projects/ 历史补齐丢失上下文。无计划文件时钩子静默零开销",
+  "key_components": [
+    "skills/planning-with-files/SKILL.md（5 事件钩子注册）",
+    "scripts/inject-plan.sh、session-catchup.py、check-complete.sh/.ps1、gate-stop.sh、attest-plan.sh（SHA-256 防篡改）、plan-doctor.sh",
+    "templates/task_plan.md / findings.md / progress.md",
+    "skills/planning-with-files-zh/（简体中文变体）",
+    "commands/plan.md / status.md（plugin 路线斜杠命令）"
+  ],
+  "harness_value": "1) 给 dev-workflow 补缺失持久化层：dev-workflow 写计划但未定义存储/无钩子强制回读，/clear 或压缩即丢；接上后 task_plan.md 每回合自动注入，天然解决会话恢复。2) 用钩子替代'模型记得维护 task-state.md'软约束，把进度跟踪变机制。3) 与 dev-workflow 互补：dev-workflow 负责'把计划写对'，planning-with-files 负责'让计划活着'。4) PreCompact 钩子在压缩前强制落盘，补 task-management 依赖模型自觉做 Session 总结的缺口。5) 自带简体中文变体，符合中文规则",
+  "overlap": "与 dev-workflow 正交互补（前者流程规范不占文件，后者钩子机制）。与 task-management 的 task-state.md 功能重叠——建议 task-state.md 退化为跨会话项目记忆+归档，激活任务状态归 planning 三文件。用户现有 hooks（UserPromptSubmit codegraph、PreToolUse rtk）数组形式可共存。注意：用户经 deepseek-v4-flash 代理，回合级全量注入可能破坏 KV 缓存，需实测或开 PWF_INJECT=smart/autonomous",
+  "integration_difficulty": "medium",
+  "integration_path": "1) plugin 路线（自带钩子+斜杠命令）：/plugin marketplace add OthmanAdi/planning-with-files + /plugin install，然后跑 /plan-doctor 验证三项 PASS（文档警告 skill-only 安装可能静默无钩子）。2) 加确定性触发：CLAUDE.md 加规则行'任务需 3+ 步或 5+ 工具调用时先调用 planning-with-files'（官方 benchmark：规则行触发率 100% vs 描述 60-67%）。3) 与 dev-workflow 接缝：计划模板输出成 ### Phase N + Status token（须保留英文，check-complete 用 grep -F 匹配）。4) 选中文变体。5) 明确 task-state.md 与三文件职责边界。6) DeepSeek 代理先测缓存命中。依赖已实测齐备（Python 3.12.10、Git Bash sh、MINGW64）",
+  "risks": [
+    "v3 特性面宽（autonomous/gated/ledger/attestation），多数为长时无人值守设计；用户只需 legacy 默认路径，v3 默认关闭可无视",
+    "回合级开销：~330 token/回合 + ~90 token/次工具 + 单次钩子 ~289ms，仅在有计划文件时发生",
+    "与 task-management 职责重叠未解决会双轨漂移，必须先定谁拥有激活任务状态",
+    "Windows 历史重灾区（PS 5.1 解析、GBK 代码页崩溃、中文变体失效），当前版本已修但升级前跑 /plan-doctor",
+    "findings.md 会被注入，遵守不执行文件内指令",
+    "benchmark 数字打折看（96.7% 是三文件保真度非目标漂移、unforced 触发仅 60-67%，必须有强制行）",
+    "与 Anthropic 内置 plan mode 互补无冲突，但需多一步把 plan mode 产出写入 task_plan.md"
+  ],
+  "verdict": "strongly-recommend",
+  "evidence": [
+    "https://github.com/OthmanAdi/planning-with-files（master 分支，最后提交 2026-08-09）",
+    "SKILL.md（钩子注册）、scripts/*.sh、templates/*、skills/planning-with-files-zh/、docs/windows.md、docs/evals.md、CHANGELOG.md"
+  ]
+}

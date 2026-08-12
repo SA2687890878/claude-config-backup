@@ -1,0 +1,34 @@
+{
+  "repo": "thedotmack/claude-mem",
+  "one_liner": "Claude Code 的全自动跨会话记忆插件：用 hooks 无感捕获每次工具调用，AI 压缩为结构化记忆，新会话启动时自动注入历史上下文",
+  "core_mechanism": "注册 Setup + 5 个生命周期 hooks（SessionStart/UserPromptSubmit/PostToolUse/Stop/SessionEnd）。PostToolUse 每次工具调用经 fire-and-forget HTTP 送入本地常驻 worker（Bun 托管 Express），worker 用 Claude haiku（默认，可切 Gemini/OpenRouter 免费模型）异步把工具调用压成带 title/narrative/facts/concepts/type 六分类 observation 存入 SQLite+FTS5。SessionStart 自动注入最近 50 条 observation 紧凑索引（渐进式披露，约 800 tokens），agent 按需用 MCP 工具 search→timeline→get_observations 三层拉详情。Stop 时再生成会话总结",
+  "key_components": [
+    "plugin/hooks/hooks.json（Setup 版本检查 + 5 生命周期 hook）",
+    "scripts/context-hook.js（SessionStart 注入最近 N 条 observation）",
+    "scripts/save-hook.js（PostToolUse 捕获，含 skip 列表与 <private> 隐私标签）",
+    "scripts/summary-hook.js（Stop 会话总结）",
+    "scripts/worker-service.cjs（Bun 常驻 worker：Express + SSE + Claude Agent SDK 异步压缩队列）",
+    "src/services/sqlite/SessionStore.ts + SessionSearch.ts（SQLite+FTS5）",
+    "scripts/mcp-server.cjs（search/timeline/get_observations 三层搜索）",
+    "mem-search skill（skill 版渐进式搜索）"
+  ],
+  "harness_value": "最大增量是【自动注入】：SessionStart 自动把上次会话决策/修复索引塞进新会话上下文，context-mode 是纯检索（需 agent 主动 ctx_search）不自动注入——本质差异。第二是【AI 结构化压缩】：工具调用压成六分类 observation，context-mode 存原文 chunk 不压缩。第三是【会话级总结】可作 learnings.md 素材。对'新会话忘记上次决策/修过什么 bug'的痛点有效",
+  "overlap": "三层重叠：①捕获层 context-mode 已用 hooks 自动捕获 26 类事件，同会话被双写；②存储层都是本地 SQLite+FTS5；③检索层 ctx_search（BM25+多策略）≈ MCP search。差异定位：context-mode 检索优先+原文保留，claude-mem 注入优先+AI 压缩。与 learnings.md 不冲突互补，但内容会重叠（都是 learned）",
+  "integration_difficulty": "medium",
+  "integration_path": "1) npx claude-mem install（要求 Node>=20，自动装 Bun、uv/Python3.13）；2) 设 CLAUDE_MEM_MODE=code--zh，provider 先用 Gemini 免费 key 试点避免消耗订阅额度；3) 与现有 context-mode hooks 共存测试（确认 PostToolUse/SessionStart hook 数组不冲突、进程启动延迟可接受）；4) 试点 1-2 周用 viewer 看 token 成本；5) 噪音/成本不可接受则卸载（数据在 ~/.claude-mem/ 可整体删）",
+  "risks": [
+    "Token/API 成本：每次工具调用触发一次 haiku 压缩 + 每次 Stop 一次总结，活跃会话累计不小",
+    "AI 压缩失真：工具调用→haiku 提取会丢细节、可能幻觉，原文不保留（context-mode 优势）",
+    "自动注入噪声：SessionStart 强制塞 50 条索引污染新会话首 prompt",
+    "Hook 链加重：用户已有 context-mode + bash-guard + RTK hook，再叠 claude-mem 的 PostToolUse 与 SessionStart",
+    "Windows 依赖重：Node20+/Bun/uv+Python3.13/可选 Chroma 多运行时，常驻 worker 进程",
+    "与 context-mode 三层重复，双写冗余",
+    "演进风险：v13.4.0 版本迭代快且架构多次重构，升级可能破坏现有 hook 配置"
+  ],
+  "verdict": "worth-considering",
+  "evidence": [
+    "https://github.com/thedotmack/claude-mem（README）",
+    "https://docs.claude-mem.ai/architecture/overview、/hooks、/database、/configuration、/progressive-disclosure、/worker-service、/search-architecture",
+    "https://docs.claude-mem.ai/architecture-evolution"
+  ]
+}

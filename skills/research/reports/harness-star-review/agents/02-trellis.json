@@ -1,0 +1,29 @@
+{
+  "repo": "mindfold-ai/Trellis",
+  "one_liner": "跨 21 个 AI 编码平台的项目层工程化框架：把规范、任务、记忆持久化为仓库内文件（.trellis/），用 hook 注入到任意 agent 会话",
+  "core_mechanism": "4 阶段任务循环（Plan→Implement→Verify→Finish）+ Hook 驱动的上下文注入。集成到 Claude Code 是三个 Python hook：SessionStart 会话概览+journal、UserPromptSubmit 每轮注入 <workflow-state> breadcrumb（workflow.md 单一事实来源）、PreToolUse(Task/Agent) 子代理启动注入 implement.jsonl/check.jsonl。核心哲学：behavior controlled by code not prompt。有 context_injection 字节预算（per-file 32KB/artifact 64KB/total 128KB，超限降级 index lines）、mem 会话记忆引擎、channel 并行 worker（OOM guard）",
+  "key_components": [
+    ".trellis/spec/（团队规范）、.trellis/tasks/（prd/design/implement/task.json/implement.jsonl/check.jsonl）、.trellis/workspace/（journal 轮转）",
+    ".claude/hooks/（session-start.py / inject-subagent-context.py / inject-workflow-state.py）",
+    ".claude/agents/（trellis-implement/check/research）、.claude/skills/（brainstorm/before-dev/update-spec 等）",
+    "packages/core/src/mem + task + channel、npm CLI @mindfoldhq/trellis"
+  ],
+  "harness_value": "不装整体，借鉴 4 个机制：(1) UserPromptSubmit 每轮注入 workflow-state breadcrumb（用户 hooks 无 per-turn 状态注入，最大空白）；(2) 子代理上下文预算机制（字节上限+超限降级 index lines，防 prompt 爆炸）；(3) Windows UTF-8 hook 处理（stdin/stdout/stderr reconfigure utf-8，中文用户可直接抄的模板）；(4) 任务目录结构（prd/design/implement/check.jsonl 分离，可作 dev-workflow 输出格式参考）。哲学：context 注入由代码控制而非 prompt、workflow.md 单一事实来源",
+  "overlap": "重叠度高：mem↔context-mode MCP；brainstorm 一次一问↔requirements skill；implement/check↔dev-workflow+build agent；update-spec↔learnings.md；任务状态↔task-management.md。互补处：Trellis 是项目级（每 repo .trellis/），用户是全局 harness（~/.claude/）；用户多平台需求弱",
+  "integration_difficulty": "medium",
+  "integration_path": "不推荐直接 `npm i -g @mindfoldhq/trellis`（覆盖/合并 settings.json、与现有 hooks 冲突、依赖 python3）。选摘路径：(1) 抄 inject-workflow-state.py 的 UTF-8 reconfigure 模式；(2) 增加 UserPromptSubmit hook 注入 workflow-state；(3) 子代理 skill 实现 context_injection 字节预算（复用 ctx_execute 统计）；(4) 对照 .trellis/tasks/ 改良 dev-workflow 产物格式。全部重写实现而非复制 AGPL 代码",
+  "risks": [
+    "AGPL-3.0 许可证，直接复制进版本化 harness 若对团队分发会触发 copyleft",
+    "版本极早期（npm 0.6.14），6.5 个月冲到 1.39 万 star 但 npm 月下载仅约 1.96 万、releases API 空——营销热度与实际采用证据有落差",
+    "settings.json 冲突：hooks 单文件，与用户现有 hooks 抢占同一批事件",
+    "重依赖 Node>=18 + Python>=3.9，缺 Python 会静默失效",
+    "复杂度高（repo 242MB、单 hook 20-37KB），对自建 harness 引入面过大",
+    "与用户现有 stack 高度重叠，边际价值是理念增量而非能力缺口"
+  ],
+  "verdict": "worth-considering",
+  "evidence": [
+    "https://github.com/mindfold-ai/Trellis、README.md、README_CN.md、.trellis/config.yaml、.claude/settings.json、.claude/hooks/*.py",
+    "api.github.com/repos/mindfold-ai/Trellis（13872 stars/771 forks/AGPL-3.0/pushed 2026-08-11）",
+    "api.npmjs.org/downloads/point/last-month/@mindfoldhq/trellis（19616 次/月）"
+  ]
+}

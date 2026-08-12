@@ -1,0 +1,33 @@
+{
+  "repo": "haddock-development/claude-reflect-system",
+  "one_liner": "Claude Code 自改进技能系统：Stop hook 读取会话 transcript，从用户纠错中提取学习信号并写回 SKILL.md，实现「纠正一次、永不重犯」的持续学习",
+  "core_mechanism": "Stop hook（hook-stop.sh）从 stdin JSON 取 transcript_path，调用 reflect.py 编排 5 步：load_transcript 解析 JSONL → extract_signals.py 用 15+ 正则按 HIGH/MEDIUM/LOW 三档提取纠错/认可/建议 → present_review.py 交互式 diff 审批 → update_skill.py 做时间戳备份 + PyYAML 校验后把 Critical Corrections/Best Practices/Considerations 追加进 ~/.claude/skills/{skill}/SKILL.md → git commit。下次会话 skill 加载时纠正自动注入。默认纯本地正则零 API 成本；可选 --semantic 调 claude -p 做多语言语义增强",
+  "key_components": [
+    "reflect/scripts/hook-stop.sh（Stop hook 入口）",
+    "reflect/scripts/reflect.py（编排主流程）",
+    "reflect/scripts/extract_signals.py（JSONL 解析 + 15+ 正则信号提取，置信度>=0.8 HIGH/>=0.6 MEDIUM/其余 LOW）",
+    "reflect/scripts/semantic_detector.py（可选 claude -p 语义增强）",
+    "reflect/scripts/update_skill.py（YAML 安全追加 + 时间戳备份）",
+    "reflect/scripts/present_review.py（交互式 diff 审批）",
+    "reflect/scripts/meta_learning.py（v1.3.0 被动记录 A/M/S 反馈）",
+    "reflect/SKILL.md（/reflect 命令）"
+  ],
+  "harness_value": "直接补上用户想要的「经验→纠正行为」闭环：纠错一次→反思→写入对应 skill 的 Critical Corrections→下次会话行为自动改变。默认零成本（纯本地正则）、隐私友好、MIT、约 2K LOC 可读可改，自带备份/git 回滚/交互审批。可把 general 信号落到通用 skill，替代手写 learnings.md 的纠错部分",
+  "overlap": "与 context-mode 互补：context-mode 捕获 26 类事件供检索但不改变行为；reflect-system 把纠正注入 skill 指令层改变下次行为，分层不冲突。与手动 learnings.md 重叠但自动化。hook 层需共存测试（多个 Stop hook 叠加执行）。默认英文正则对中文纠错基本无效，与用户简体中文环境冲突最大",
+  "integration_difficulty": "medium",
+  "integration_path": "1) cp -r reflect ~/.claude/skills/；2) pip install pyyaml，确认 python3 在 PATH（Windows 无 python3 需建别名或改脚本）；3) settings.local.json 追加 Stop hook 指向 hook-stop.sh；4) 在 extract_signals.py 补中文正则（如 不要用X，用Y）适配简体纠错，或启用 --semantic；5) 先会话内 /reflect 手动验证（hook 自动模式无 TTY 时 review 会 EOF 失败）；6) 可选 /reflect-on 开启自动；7) 验证 .state/ 与 reflect-hook.log",
+  "risks": [
+    "auto 模式缺陷：Stop hook 无交互 TTY，present_review 的 input() 遇 EOF 抛异常，有信号时 reflect.py 返回 1、学习不落地——自动闭环半残，需改 hook 只自动追加 HIGH 信号或改手动",
+    "空输入默认 approve（pipe 空 stdin 时无确认自动批准），误写风险",
+    "Windows 官方不支持：README 明写 macOS/Linux (Windows untested)",
+    "默认 15+ 正则以英文/德语为主，无中文模式；semantic 支持多语言但需显式开启且有 token 成本",
+    "项目年轻且活跃度低：12 commits，最后提交 2026-01-17（约 7 个月前），209 stars，单维护者",
+    "update_skill 用 yaml.dump 重建整个 frontmatter，可能改动既有 skill 格式",
+    "被更成熟方案覆盖：claude-mem 与 context-mode 自动记忆可部分替代"
+  ],
+  "verdict": "worth-considering",
+  "evidence": [
+    "https://github.com/haddock-development/claude-reflect-system",
+    "cdn.jsdelivr.net/gh/...@master/README.md、reflect/SKILL.md、reflect/scripts/*.py、reflect/references/signal-patterns.md"
+  ]
+}

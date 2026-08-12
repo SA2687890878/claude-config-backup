@@ -233,4 +233,75 @@ deploy/                           # 适配层（唯一绑定宿主的地方）
 
 ---
 
+## 10. Hooks 裁剪决策（26 → 6）
+
+> 2026-07-27 讨论结论。依据：26 个 hooks 逐行精读 + 4 宿主兼容矩阵（第七节）+ 用户偏好（按需加载、渐进披露、索引、不写一大堆）。
+
+### 10.1 判断框架（四问）
+
+| 问题 | 答"是" | 答"否" |
+|---|---|---|
+| 1. 它在"阻止坏事"还是"提醒做事"？ | 阻止坏事 → hook（确定性） | 提醒做事 → 规则/技能（按需） |
+| 2. 它是"每次事件必执行"还是"需要时才想起"？ | 每次 → hook | 需要时 → 渐进披露 |
+| 3. 宿主原生有等价物？（LSP / skill 索引 / 内置面板） | 有 → 不写 hook | 无 → 考虑 hook |
+| 4. 每次跑的成本（延迟 + 注入 token）配得上收益？ | 配得上 → 保留 | 配不上 → 转按需 |
+
+**核心原则**：hooks 是唯一"每次事件都执行"的机制，与省 token 目标冲突。因此 hooks 应是最少的组件，只留给"不得不确定性执行"的事；规则和技能才是主力。
+
+### 10.2 保留清单（6 个）
+
+| Hook | 事件 | 理由 |
+|---|---|---|
+| secret-guard.js | PreToolUse Write/Edit | 安全拦截，漏执行 = 密钥泄露事故，fail-closed |
+| bash-guard.js | PreToolUse Bash | 安全拦截（rm -rf / DROP TABLE / force push） |
+| commit-gate.js | PreToolUse Bash | 受保护分支、破坏性 git 操作拦截（push 类 pre-commit 管不到） |
+| write-guard.js | PreToolUse Write/Edit | 写入位置白名单 |
+| session-start.js | SessionStart | 每会话一次：注入索引/摘要（渐进披露），详情按需读 |
+| build-verify.js | Stop | 每会话一次：编译/测试报告，验证铁律的确定性落地 |
+
+### 10.3 下沉 git hooks（1 个，跨宿主兜底）
+
+| Hook | 去向 | 理由 |
+|---|---|---|
+| git-commit-review.js | git pre-commit（`guard check-git` + 密钥扫描） | 提交内容检查属 git 语义，任何宿主 commit 都触发，`--no-verify` 也有兜底 |
+
+### 10.4 转规则/技能（12 个，按需加载）
+
+| Hook | 去向 |
+|---|---|
+| impact-guard.js | CLAUDE.md 规则一行："编辑 .cs 前先查调用链影响" |
+| test-reminder.js | dev-workflow 规则（每步验证，已存在，删除重复） |
+| review-trigger.js | review skill 铁律（>50 行强制双轴审查，已存在） |
+| cs-guard.js 质量/逻辑部分 | 按需技能 `/check-cs`（或仅大文件 Write 时触发） |
+| skill-router.js | 宿主原生 skill 索引（4 宿主均支持 description 匹配） |
+| context-injector.js | 宿主原生指令分层加载（4 宿主均支持） |
+| project-knowledge.js | knowledge 索引 + 按需读 |
+| knowledge-sync-reminder.js | sync skill（按需） |
+| learning-recorder.js | sync skill / 宿主 memory（按需） |
+| metrics-collector.js | 宿主内置用量面板（Reasonix v1.19.5+）或按需脚本 |
+| metrics-report.js | 同上 |
+| notify.ps1 | 宿主原生 Notification 事件 |
+
+### 10.5 删除（4 个）
+
+| Hook | 原因 |
+|---|---|
+| artifact-index-update.js | 坏的：读 input.tool/input.params（实际是 tool_name/tool_input），从未生效 |
+| quality-guard.js | 旧版，cs-guard 合并版已含全部功能（重复注册，每次写 .cs 跑 3 遍） |
+| logic-guard.js | 同上 |
+| cs-guard.js 语法部分 | 宿主 LSP diagnostics 原生覆盖（4 宿主均有） |
+
+### 10.6 加密专用（3 个，本机退役，加密环境再启用）
+
+encrypted-write-guard.js / sqlite-index-update.js / source-sync-update.js
+
+### 10.7 收益
+
+- **省 token**：写 .cs 时 hook 调用从 5-6 个（含 3 遍重复 cs-guard）降到 1-2 个
+- **4 宿主兼容**：转规则类恰好依赖 UserPromptSubmit 注入 / PreToolUse 改写（Reasonix 下失效），转规则后全宿主通吃
+- **确定性不降级**：安全类保留 hook（fail-closed），纪律类由验证铁律（rules/quality/verification.md）兜底
+- **符合用户偏好**：渐进披露、按需加载、不写一大堆
+
+---
+
 *本规划基于 docs/REASONIX-MIGRATION.md 的查证结论，所有宿主能力均有官方文档/实测证据支撑。*

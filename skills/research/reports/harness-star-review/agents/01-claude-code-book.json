@@ -1,0 +1,30 @@
+{
+  "repo": "lintsinghua/claude-code-book",
+  "one_liner": "中文社区目前最系统的 Claude Code 架构深度剖析书——42 万字拆解 Agent Harness 的每个内部设计决策，提炼可迁移到任何 Agent 框架的心智模型",
+  "core_mechanism": "四部分 15 章（基础篇 01-04 / 核心系统篇 05-08 / 高级模式篇 09-12 / 工程实践篇 13-15）+ 4 附录；每章按『设计动机 → 机制拆解 → 权衡分析 → 反模式警告 → 实战练习』展开，全书 139 张 Mermaid 架构图、50+ 个『为什么这样设计』决策分析；中英双语；定位是架构分析而非使用教程",
+  "key_components": [
+    "Ch04 权限管线：四阶段管线、deny 优先铁律、五模式谱系、Bash 三种规则匹配、ResolveOnce 原子竞争",
+    "Ch07 上下文管理：有效窗口公式、四级渐进压缩（Snip→MicroCompact→Collapse→AutoCompact）、断路器模式、双阶段提示（analysis丢弃/summary保留）、压缩后 token 预算",
+    "Ch08 钩子系统：26 个生命周期事件、JSON 响应协议、六层优先级、异步钩子、PreToolUse 在权限管线之后",
+    "Ch14 Plan 模式与结构化工作流：先想后做哲学、计划文件三层恢复、调度系统、后台任务",
+    "Ch15 构建自己的 Agent Harness：六步实现路线图 + 架构教训（循环依赖/功能开关分层/断路器/四层可观测性）",
+    "附录 B/C：50+ 工具×12 类清单、89 个功能标志速查"
+  ],
+  "harness_value": "(1) Ch04 讲清权限管线四阶段纵深防御、deny 最高优先——用户近期 auto mode classifier 拦截可被解释；(2) Ch08 的 26 事件表验证用户『26→6 hooks 裁剪』；(3) Ch07 四级压缩+断路器+压缩保留清单呼应 CLAUDE.md『压缩保留』；(4) Ch15 架构教训可反哺 HARNESS-ENGINEERING-PLAN.md；(5) 附录 C 89 功能标志是官方文档给不了的隐藏能力地图",
+  "overlap": "Ch08 钩子、Ch11 技能、Ch06 记忆、Ch01 范式、Ch10 协调器与用户已有高度重叠（约 5-6 章）；其余章节新认知密度仍高",
+  "integration_difficulty": "low",
+  "integration_path": "零集成成本，纯阅读：git clone 到本地离线读（WebFetch 被拦但 clone 可用）。选择性精读 Ch04/07/08/14/15，浏览 Ch06/09/11/12；每章吃透『设计决策分析』+『反模式警告』两节；把反模式提炼成 harness 决策检查清单对照更新 HARNESS-ENGINEERING-PLAN.md；附录 B/C 作配置时速查",
+  "risks": [
+    "过时风险：基于 2026-03 版架构分析，附录 C 功能标志与工具清单最易过时",
+    "42 万字篇幅大，全精读成本高",
+    "配套代码为内嵌 TypeScript（面向从零自建运行时），用户是配置者，Ch15 实操价值有限",
+    "CC BY-NC-SA 4.0 非商业许可",
+    "定位架构分析，具体参数仍以官方文档为准"
+  ],
+  "verdict": "strongly-recommend",
+  "evidence": [
+    "https://github.com/lintsinghua/claude-code-book（README）",
+    "本地 clone：C:/Users/admin/AppData/Local/Temp/claude-code-book/（已抽样精读 Ch07 全文、Ch15、Ch04/06/08/09/11/12 要点）",
+    "用户 docs/HARNESS-ENGINEERING-PLAN.md（用于重叠度评估）"
+  ]
+}

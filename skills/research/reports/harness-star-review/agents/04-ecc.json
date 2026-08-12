@@ -1,0 +1,30 @@
+{
+  "repo": "affaan-m/ECC",
+  "one_liner": "跨 21+ 平台（Claude Code/Codex/OpenCode/Cursor/Hermes/OpenClaw/Kimi/Gemini）的 agent harness 性能优化系统——五类组件分层（Skills/Agents/Rules/Hooks/Instincts）+ Memory Vault 跨 harness 记忆 + 大量命令与技能库（287 skills）",
+  "core_mechanism": "五类组件按职责分层，控制上下文行为：Skills 按需加载（TDD/安全审查/深度研究等 287 个）、Agents 隔离 worker（规划/实现/审查）、Rules 持久标准（始终加载需选择性安装）、Hooks 在模型上下文外运行、Instincts 带置信度从真实会话学习模式。Memory Vault 把记忆存为 Markdown（ecc.memory.v1），项目 .ecc/memory/ + 用户 ~/.ecc/memory/，fail-closed gitignore，跨 harness 共享。Continuous Learning v2（instincts）：/instinct-status、/instinct-export、/evolve 聚类成 skill，ECC_INSTINCT_RELEVANCE_RANKING 按 stack 匹配提权。token 优化：/context-budget、MAX_THINKING_TOKENS、CLAUDE_AUTOCOMPACT_PCT_OVERRIDE、CLAUDE_CODE_SUBAGENT_MODEL=haiku、keep<80 tools",
+  "key_components": [
+    "skills/（287 个）、agents/、rules/、hooks/hooks.json（PreToolUse/PostToolUse 等）、commands/",
+    "ecc_dashboard.py（41KB 仪表盘）、ecc2/、research/、scripts/、integrations/（21 平台适配器）",
+    "Memory Vault：.ecc/memory/ + ~/.ecc/memory/（ecc.memory.v1 Markdown）、ecc-memory-mcp（可选）",
+    "ecc-universal（npm CLI）、ecc-agentshield（安全扫描，GitHub Action）",
+    "ECC Pro + GitHub App（商业化）"
+  ],
+  "harness_value": "不整体装，作为蓝图借鉴：1) 五大概念分层（Skills 按需/Agents 隔离/Rules 持久/Hooks 上下文外/Instincts 带置信度）是清晰的职责划分模型，直接可对照用户 HARNESS-ENGINEERING-PLAN 补缺层；2) Memory Vault 的 Markdown 可移植记忆格式 + fail-closed gitignore 设计，跨 harness 共享思路可借鉴；3) token 优化具体参数（CLAUDE_CODE_SUBAGENT_MODEL=haiku、AUTOCOMPACT_PCT、MAX_THINKING_TOKENS、context-budget）可直接采纳；4) instincts/evolve 机制与用户'经验→skill'自动化需求相关（类似 SBA，但带置信度排序）",
+  "overlap": "高度重叠：Memory Vault↔context-mode 记忆+learnings.md；/plan /code-review↔dev-workflow/review skill；/learn /skill-create↔skill 沉淀；instincts/evolve↔经验→skill 自动化；token 优化↔RTK/context-mode；hooks↔用户 hooks。差异：ECC 是跨 21 平台巨型全家桶，用户只需 Claude Code 单平台",
+  "integration_difficulty": "medium",
+  "integration_path": "不推荐整体 /plugin install ecc@ecc（49MB、287 skills、hooks 与现有冲突、要求 Claude Code v2.1.0+）。轻量采纳：(1) 读 docs/token-optimization.md 采纳 token 设置（MAX_THINKING_TOKENS/SUBAGENT_MODEL/AUTOCOMPACT）；(2) 借鉴五类组件分层重审用户 HARNESS-ENGINEERING-PLAN 的层划分；(3) 参考 Memory Vault 的 Markdown 格式设计用户记忆存储规范；(4) 选择性摘取 1-2 个 skill（如 search-first、context-budget）对照。全部摘理念不复制（规模大且营销导向）",
+  "risks": [
+    "真实性存疑：23.9万 star/3.6万 fork/7 个月项目极不寻常，README 用自建 api.ecc.tools/badge/stars 统计（官方 badge 端点），有刷量/营销嫌疑；star 数不能作为可信度依据",
+    "商业化导向：ECC Pro + GitHub App + ecc.tools/pricing，免费版功能可能被引导向付费",
+    "规模过大：49MB、287 skills、21 平台适配器、单 hook 内联几十 KB node 脚本，对用户'最少代码'哲学是过度工程",
+    "与用户现有 stack 高度重叠，边际价值是理念增量",
+    "要求 Claude Code v2.1.0+，hooks 插件自动加载，手动复制 hooks.json 会 double-fire",
+    "维护跟进成本高：版本迭代快、CHANGELOG 10KB"
+  ],
+  "verdict": "worth-considering",
+  "evidence": [
+    "https://github.com/affaan-m/ECC（README 112KB、metadata：239679 stars/36380 forks/MIT/2026-01-18 创建/49MB）",
+    "raw.githubusercontent.com/affaan-m/ECC/main/README.md、hooks/hooks.json、CLAUDE.md",
+    "ctx_fetch_and_index 抓取 183 sections（已索引知识库，source: ECC）"
+  ]
+}

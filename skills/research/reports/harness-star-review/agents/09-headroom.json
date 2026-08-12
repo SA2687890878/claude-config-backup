@@ -1,0 +1,32 @@
+{
+  "repo": "headroomlabs-ai/headroom",
+  "one_liner": "面向 AI Agent 的上下文压缩层——在 API 传输层（本地 HTTP 代理）对进入 LLM 的全部内容做内容感知压缩，library / proxy / MCP server 三形态，主打 JSON 60-95% 削减、编码 15-20%、可逆压缩（CCR）",
+  "core_mechanism": "本地起 OpenAI/Anthropic 兼容代理（默认 8787），把 ANTHROPIC_BASE_URL 指向它；每个 /v1/messages 请求走 CacheAligner→ContentRouter→按内容类型选压缩器（SmartCrusher 压 JSON 数组、Log/Search/Tabular/Diff 压结构化文本、CodeCompressor 压 AST、Kompress 用 ModernBERT/ONNX 压散文），原稿存入本地 CCR 库并注入 headroom_retrieve 工具供 LLM 按需取回。默认 coding profile 用 cache 模式只压每轮增量保住 provider prefix cache；代码默认 passthrough、文件读取无损、近 2 轮受保护。另有 output token reduction（HEADROOM_OUTPUT_SHAPER=1）、headroom learn（失败挖掘→CLAUDE.local.md）、跨 agent 记忆",
+  "key_components": [
+    "headroom/compression/（detector.py、universal.py、handlers/json_handler.py、code_handler.py）",
+    "headroom/transforms/kompress_compressor.py（Kompress ML，ONNX INT8，首次自动下载）",
+    "headroom/proxy/ + headroom/cli/proxy.py（本地代理）",
+    "headroom/providers/claude/install.py、runtime.py（headroom wrap claude 包装器）",
+    "headroom/ccr 与 mcp 工具（headroom_compress/retrieve/stats）",
+    "crates/headroom-*（Rust 核心：magika 内容检测、ONNX runtime）"
+  ],
+  "harness_value": "增量价值：① 对话历史压缩——长会话累积 history 可压 56-81%，RTK 和 context-mode 都不处理历史，这是最实增量；② Output token reduction（削模型回写客套/复述）——三层中独此一家；③ 对未走沙箱的内容在传输层自动压缩（grep 结果/API 响应/未用 ctx_execute 的 bash 输出/子 agent 输出）；④ headroom learn 自动挖失败模式写 CLAUDE.local.md，且识别 RTK 截断导致 agent 重跑命令的循环并生成护栏。重复面：JSON/日志工具输出压缩与 context-mode 目标重叠，context-mode 已把工具输出压到 2%，headroom 在已压缩内容上几乎无增量；编码场景代码默认 passthrough，核心内容省不到。净判断：第三层（传输层），非完全重复，但增量小于其宣传的 15-20%",
+  "overlap": "三层位不同、串联不并列：RTK 在 bash stdout 捕获层（进对话前），context-mode 在工具执行层（沙箱内处理），headroom 在 API 传输层（发给 LLM 前）。与 RTK 无冲突且有官方互认（headroom 曾自带 rtk/lean-ctx，dashboard 读 RTK 统计，learn 检测 RTK 重取循环）。与 context-mode 重叠最大（都削工具输出）但机制相反：context-mode 沙箱内写代码处理+按需检索，headroom 全流量自动内容感知压缩，且额外覆盖 history、文件读取、RAG、回写 token。三者可共存，但工具输出上边际收益递减，净增量集中在 history 与模型回写侧",
+  "integration_difficulty": "medium",
+  "integration_path": "1) pip install \"headroom-ai[proxy]\"（Python 3.10+，Windows 已有 win_amd64 wheel）；2) 首次启动从 cdn.pyke.io 下 ONNX Runtime、从 HF 下 kompress-v2-base，可先 HEADROOM_DISABLE_KOMPRESS=1 headroom proxy 只跑结构压缩跳过模型；3) 起代理 headroom proxy --port 8787、headroom doctor 验证；4) 给 Claude Code 指路 ANTHROPIC_BASE_URL=http://127.0.0.1:8787 claude（建议 shell 或 settings.json env 层手动设，不用 headroom wrap claude，它对已有 RTK+context-mode harness 侵入最小）；5) 要回写削减再 HEADROOM_OUTPUT_SHAPER=1；6) 想更激进切 HEADROOM_SAVINGS_PROFILE=balanced/agent-90；7) 撤销：删 env var + 停进程",
+  "risks": [
+    "三层叠加收益递减：RTK+context-mode 已把大量内容挡在上下文外，headroom 在编码场景官方宣传才 15-20%，对已压缩栈实际净增量更小，主要集中 history 与回写侧",
+    "保真风险：balanced/agent-90 激进 profile 是有损 + ML 压缩（agent-90 强制 10% keep-ratio 压 Kompress），可能丢细节；默认 coding profile 保守但对应增量也小",
+    "新依赖与维护成本：Python 3.10+ + onnxruntime + transformers tokenizer + HF 模型下载（数百 MB），仓库每日高强度迭代、Windows 专属修复频繁",
+    "常驻进程单点：代理需持续运行，代理宕机时 Claude Code 请求直接失败（fail-open 只覆盖 /v1/compress 单端点）",
+    "默认不压缩代码 = 编码场景核心内容没省到；grep 结果（compact 格式）明确不压、短消息<300 token 不压",
+    "公司网络/SSL 环境下模型与 ONNX Runtime 下载可能失败",
+    "商业化 OSS：Apache 2.0 无碍，但有托管版销售导向"
+  ],
+  "verdict": "worth-considering",
+  "evidence": [
+    "https://github.com/headroomlabs-ai/headroom、README.md、docs/how-compression-works、docs/limitations、docs/proxy、docs/mcp、docs/ccr、docs/benchmarks",
+    "huggingface.co/chopratejas/kompress-v2-base",
+    "本地克隆 C:/Users/admin/AppData/Local/Temp/headroom-clone（README、docs、pyproject.toml、providers/claude/install.py、CHANGELOG；HEAD 2026-08-11 仍活跃）"
+  ]
+}

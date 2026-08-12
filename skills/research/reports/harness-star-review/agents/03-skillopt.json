@@ -1,0 +1,29 @@
+{
+  "repo": "microsoft/SkillOpt",
+  "one_liner": "把技能文档当作「可训练文本权重」，用轨迹驱动编辑 + 留出验证门禁来优化冻结 LLM agent 的技能，并提供面向本地 coding agent 的「夜间自进化」部署伴侣 SkillOpt-Sleep",
+  "core_mechanism": "核心是把 CLAUDE.md/SKILL.md/best_skill.md 当作可训练文本：优化器对打分后的轨迹做有界增/删/改编辑，候选技能仅在留出验证集（held-out gate）上严格优于当前版本才被接受。研究侧：rollout→reflect→aggregate→select→update→gate 六阶段循环，带 epoch 级 slow-update 与 meta-skill 防遗忘；部署侧（SkillOpt-Sleep）：harvest 历史会话→mine 重复任务→replay 打分→consolidate→gate→stage→adopt，live 文件只在显式 adopt 时改动，部署后零额外推理调用",
+  "key_components": [
+    "skillopt/（研究引擎）：trainer/reflect/optimizer（rewrite/select/clip/slow_update/meta_skill）/gate",
+    "skillopt_sleep/（部署引擎，零依赖研究代码）：harvest/mine/rollout/consolidate/gate/staging/cycle/judges",
+    "plugins/claude-code/：commands/skillopt-sleep.md、hooks/on-session-end.sh、skills/skillopt-sleep/SKILL.md、scripts/sleep.sh",
+    "六个内置 benchmark + 新增 benchmark 约 100 行 adapter",
+    "多后端（claude_code_exec 实际是 claude -p）、ckpt/ 的 best_skill.md 产物示例"
+  ],
+  "harness_value": "直接命中「skills 质量靠人工迭代」痛点：SkillOpt-Sleep 可自动 harvest ~/.claude 会话→挖掘重复任务→重放→留出验证门禁→生成带备份的 CLAUDE.md/SKILL.md 修改提案，解决 learnings 沉淀中最难的「改对还是改坏」验证问题（无门禁可 -52.8 分崩塌，门禁兜底为有界回撤）。官方 Claude Code 插件 /skillopt-sleep 可零成本 mock dry-run；--target-skill-path 可指向用户自建 skills 的 SKILL.md；handoff 后端不花额外 API key",
+  "overlap": "与 context-mode auto-memory 部分重叠（都读会话）但定位互补：context-mode 捕获+检索（recall），SkillOpt 验证门禁下整合（consolidation）。与 learnings.md 重叠度最高（learnings 是人工半自动，Sleep 是自动化+门禁版），可互补（learnings 作为 --preferences 注入）。与 RTK/codegraph/opencli 基本无冲突",
+  "integration_difficulty": "medium",
+  "integration_path": "1) Python 3.10+；2) git clone 或 pip install skillopt；3) /plugin marketplace add + /plugin install skillopt-sleep@skillopt-sleep；4) 先 /skillopt-sleep dry-run（mock 零花费）验证管道；5) 真实优化用 --backend handoff 或 --backend claude；6) --target-skill-path 定向优化指定 skill、--preferences 注入 house rules；7) 检查提案 report.md 后手动 adopt，或 schtasks 定时",
+  "risks": [
+    "预览品质：SkillOpt-Sleep 是 preview，v0.2.0 首个发布，工程成熟度未定",
+    "收益仅在重复任务+硬性正确信号+提升空间时成立；开放 coding 工作流 skill 只能 soft LLM judge，噪声大、收益不确定",
+    "研究引擎对用户现有 skill 不可直接用：需改造为带 split 和 evaluator 的 benchmark 形态",
+    "真实后端把会话内容发给 provider，敏感项目需 mock 或人工审查任务文件",
+    "环境依赖 Python 3.10+，GitHub 直连慢需镜像",
+    "强模型（Claude）收益预期偏保守（+6.0 vs 弱模型 +11.9）"
+  ],
+  "verdict": "worth-considering",
+  "evidence": [
+    "https://github.com/microsoft/SkillOpt、docs/sleep/README.md、docs/sleep/RESULTS.md、plugins/claude-code/README.md",
+    "arxiv.org/abs/2605.23904"
+  ]
+}

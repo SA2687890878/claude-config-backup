@@ -1,0 +1,31 @@
+{
+  "repo": "GanyuanRan/Aegis",
+  "one_liner": "一套跨 Claude Code/Codex/Cursor 等多宿主的多技能方法包（Aegis Method Pack），用 baseline-first、evidence-verified、drift-checked 三道工序约束 agent，让'完成'必须附新鲜证据、未覆盖范围和残余风险",
+  "core_mechanism": "进程内技能驱动，无独立看门狗/守护进程。SessionStart hook（Windows 用 run-hook.cmd）注入 using-aegis 热路径；executing-plans 在首次写文件前记录 TaskStartSnapshot（root/HEAD/分支/脏状态/worktree），先读基线再改、缺基线暂停；long-task-continuation 维护 checkpoint、证据包与每 slice DriftCheckDraft；verification-before-completion 是唯一完成收口聚合器，输出 L0/L1/L2 收据和证据槽（action/result/scope/uncovered/residual/confidence A|B|C）。明确不授予 GateDecision/完成权威，只是 advisory evidence",
+  "key_components": [
+    "skills/using-aegis/SKILL.md（路由热路径）",
+    "skills/executing-plans/SKILL.md（TaskStartSnapshot、Complexity Budget）",
+    "skills/long-task-continuation/SKILL.md（checkpoint/resume/drift，禁止 gate-passed 决策）",
+    "skills/verification-before-completion/SKILL.md（证据槽+L0/L1/L2 收据）",
+    "skills/anti-entropy-governance/SKILL.md（删除安全、Data Destruction Guard）",
+    "hooks/session-start + run-hook.cmd（SessionStart 注入，Windows 可用）",
+    "scripts/aegis-workspace.py、aegis-doctor.py"
+  ],
+  "harness_value": "1) 基线优先操作化：TaskStartSnapshot 记录 git 真实基线，缺基线显式暂停，比 gates.md Task Contract 更可执行；2) 证据验证具体化为证据槽模板+置信度 A|B|C+覆盖/未覆盖+残余风险，明令'先声称完成再验证'为禁止项，与退出码为王互补（退出码只是 action/result，Aegis 额外强制 scope 与 residual 维度）；3) drift-checked：每 slice 回答 7 个漂移问题，决策只允许 continue/pause-for-user/needs-baseline-readback/needs-verification/blocked，禁止 gate-passed；4) 防自欺同源：禁止'测试全绿即完成'、删除需显式 scoped 确认",
+  "overlap": "高度重叠但更精细：verification.md 的退出码为王≈Aegis 证据槽 action/result，但补上 coverage/residual/confidence 分级；gates.md Task Contract/完成声明与 Aegis TaskIntentDraft/Goal Closure 同构。差异：Aegis 自认非权威，与用户规则一样依赖 agent 自律。命名冲突：用户已有同名 verification-before-completion skill",
+  "integration_difficulty": "medium",
+  "integration_path": "1) git clone 至 plugins/aegis，跑 aegis-doctor.py --write-config 验证，接 SessionStart hook；2) 只摘三件套：verification-before-completion + long-task-continuation + executing-plans，其余按需；3) 把 gates.md 字段映射到 Aegis 词汇避免双轨；4) 采纳最小可迁移物：TaskStartSnapshot 基线记录→证据槽收据→每 slice DriftCheckDraft，作对现有 rules 的增强而非整体替换；5) 重命名/合并同名 verification-before-completion skill",
+  "risks": [
+    "重型仪式：medium+ 任务要求写全套记录，与用户'轻量验证、最少代码'哲学冲突，易仪式膨胀",
+    "非权威无外部执行：与用户 gates/verification 同属 agent 自律层，不防 model 幻觉，不替代退出码为王的事实核验",
+    "benchmark 证据偏软：契约通过率 61.67%→93.33% 是内部技术评审非独立人工评审，Claude Code 宿主组 release-level smoke 仍 pending",
+    "与现有技能/规则重叠+命名冲突，接入易双轨制和提示词膨胀",
+    "维护负担：RELEASE-NOTES 200KB、版本迭代快（2.7.6）",
+    "Windows 兼容性中等：主脚本 bash/python，session-start 有 .cmd 但完整流程依赖 Python"
+  ],
+  "verdict": "worth-considering",
+  "evidence": [
+    "https://github.com/GanyuanRan/Aegis",
+    "本地克隆 C:/Users/admin/.claude/worktrees/aegis-research/（skills/*.md、hooks/session-start）"
+  ]
+}
