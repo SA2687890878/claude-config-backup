@@ -17,6 +17,7 @@
 
 | Skill | 触发词 | 说明 |
 |-------|--------|------|
+| `/design` | 架构设计、功能设计、技术方案、怎么实现 | 技术方案产出（衔接需求→评审→开发） |
 | `/arch-review` | 架构审查、方案评审 | 架构设计审查 |
 | `/sql-best-practices` | 数据库、表、字段、迁移 | SQL 最佳实践 |
 
@@ -59,9 +60,9 @@
 
 ## Skills 统计
 
-- **总计**：14 个 Skills
+- **总计**：15 个 Skills
 - **需求阶段**：2 个
-- **设计阶段**：2 个
+- **设计阶段**：3 个
 - **开发阶段**：4 个
 - **审查阶段**：1 个
 - **发布阶段**：1 个
@@ -73,7 +74,7 @@
 | Gate | 触发的 Skills |
 |------|--------------|
 | **Requirement Gate** | `/requirements`, `/research` |
-| **Design Gate** | `/arch-review`, `/sql-best-practices` |
+| **Design Gate** | `/design`, `/arch-review`, `/sql-best-practices` |
 | **Code Gate** | `/review` |
 | **Test Gate** | `/test` |
 | **Release Gate** | `/review`, `/verification-before-completion` |

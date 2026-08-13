@@ -151,3 +151,15 @@
 
 **创建**：2026-08-13
 **状态**：P0-P3 已执行，P4 已评估收掉（UTF-8/PreCompact 跳过，SkillOpt-Sleep 备选）。迭代主线完成，进入观察验证期。
+
+**补充吸收（2026-08-13）**——来源：腾讯 TAB Harness 实战文章：
+- P1 ✅ 新增 `/design` skill（技术方案产出，补"架构设计/功能设计"缺口，衔接 requirements→design→arch-review→dev-workflow）
+- P2 ✅ `gates.md` 防自欺节加两行：连续打回 ≥3 次熔断暂停；下游不改上游、只提阻塞项
+- 备选（等真实任务数据再评估）：软/硬门禁分级、门禁基线差集（B−A）
+
+**补充吸收（2026-08-13 第二轮）**——来源：5 篇 AI Coding/Harness 文章（企业微信 Skill 94% / Harness 落地规范 / Vibe→AI 原生 / Graph Engineering / 老项目上下文）：
+- ✅ `code-access.md` 加定位漏斗（意图消歧→模块定位→脚本搜索→调用链→确认）
+- ✅ `learnings.md` 加漂移检测（被引用源变化→复核条目时效）
+- ✅ `verification.md` 加落盘判定；`gates.md` 加红线分级 + 触发即停 + 工作图/角色图
+- ✅ `/design` 加方案状态流转（draft/ready/done）；`dev-workflow` 加并行三把尺子
+- 备选：audit 自检 skill（决策清单固化为打分审计，偏重，延后评估）
