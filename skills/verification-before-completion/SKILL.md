@@ -27,6 +27,23 @@ version: 3.0.0
 
 跳过任何一步 = 说谎，不是验证。
 
+## 完成收据
+
+宣称完成时附证据槽（依据 Aegis 理念，补充 scope/uncovered/residual/confidence 维度）：
+
+```text
+[候选完成]
+action: 跑了什么命令
+result: 结果是什么
+scope: 验证覆盖了什么
+uncovered: 没覆盖什么（诚实列出）
+residual: 剩余风险
+confidence: A|B|C（对结论的信心）
+```
+
+- 缺 scope/uncovered = 只报结果不报覆盖，视为不完整
+- confidence 依据：A=退出码+完整输出确认；B=部分验证+已知缺口；C=推测未运行
+
 读取 `references/verification-details.md` 了解常见验证要求和红旗信号。
 
 ---

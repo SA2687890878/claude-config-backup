@@ -1,5 +1,11 @@
 # pcs.webbackend 项目经验
 
+> 沉淀标准（SBA 三件套，见 dev-workflow skill 收尾环节）：
+> - Recording Threshold：可重复 / 代价高 / 代码看不出 ≥2 条才写入
+> - verified-failure：本次故障红转绿（修好）的教训，直写最近规则 owner，不等重复
+> - activate：每条经验必须落在任务路径上改变下一步动作，答不上来不沉淀
+> - 记忆是线索非结论：引用前验证（grep/codegraph 确认仍存在）；时间写绝对日期
+
 ## 加密文件修改
 
 ### 禁止的操作

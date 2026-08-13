@@ -40,7 +40,10 @@ intent: 用户要什么
 acceptance: 怎么算成功（可验证条件）
 forbidden: 不能做什么
 verify_commands: 用什么命令验证
+baseline: 首次写文件前的 git 基线（HEAD/分支/脏状态）——缺基线时暂停，先记录再改
 ```
+
+> baseline 依据 Aegis TaskStartSnapshot：先记真实基线再动手，防止"改着改着不知道动了什么"。
 
 ### 完成声明
 

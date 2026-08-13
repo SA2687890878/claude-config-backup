@@ -70,6 +70,19 @@ version: 3.0.0
 - [ ] dotnet test 退出码 == 0
 - [ ] 无回归（现有测试全部通过）
 
+### 经验沉淀（收尾，SBA 三件套）
+
+任务完成、结果验证后，按三件套决定是否沉淀经验到 `learnings.md`：
+
+1. **Recording Threshold（2/3 门槛）**——只有满足 ≥2 条才沉淀：
+   - 可重复（同类情况会再遇到）
+   - 代价高（踩了损失大）
+   - 代码看不出（不看记录会再犯）
+2. **verified-failure 直写**——本次故障红转绿（从失败修到通过）的教训，直接写最近的规则 owner（`rules/*.md` 或对应 skill），不等重复发生
+3. **activate 校验**——每条经验必须能回答"落在任务路径上改变哪一步动作"；答不上来 = 不沉淀。同根因再犯 → 提示升级为机器门禁（hook/guard）
+
+**沉淀位置**：项目级 `.claude/learnings.md`；跨项目经验到全局 `~/.claude/learnings.md`。格式见 verification-before-completion skill 的 memory-save-details。
+
 ### 反模式
 
 ❌ 不要跳过 task 验证直接进入下一个。

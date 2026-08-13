@@ -3,6 +3,7 @@
 > 规划日期：2026-07-27
 > 目标宿主：Claude Code / OpenAI Codex / GitHub Copilot / Reasonix
 > 依据：本仓库 26 hooks + 33 rules + 20 skills 逐行精读；4 宿主官方文档核实（见 docs/REASONIX-MIGRATION.md 第七节矩阵）
+> 架构认知补充（2026-08-13）：精读 claude-code-book Ch04/07/08/14/15 提炼的决策检查清单见 [HARNESS-DECISION-CHECKLIST.md](HARNESS-DECISION-CHECKLIST.md)，本计划第 1 节设计原则与其对照过，无冲突。
 
 ---
 
@@ -291,9 +292,12 @@ deploy/                           # 适配层（唯一绑定宿主的地方）
 | logic-guard.js | 同上 |
 | cs-guard.js 语法部分 | 宿主 LSP diagnostics 原生覆盖（4 宿主均有） |
 
-### 10.6 加密专用（3 个，本机退役，加密环境再启用）
+### 10.6 加密专用（3 个，保留）
 
 encrypted-write-guard.js / sqlite-index-update.js / source-sync-update.js
+
+> 2026-08-13 更正：原写"本机退役（无加密）"假设需修正——本机未装加密软件，但 harness 跨电脑复用，
+> 其他电脑可能装加密软件；这 3 个 hook 是 code-access 铁律的落地机制（写加密 .cs 前警告 + SQLite 索引更新 + 源码同步），保留以兼容加密环境。
 
 ### 10.7 收益
 
