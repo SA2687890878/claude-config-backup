@@ -18,6 +18,7 @@
 - **必须运行命令**：不能声称成功但没有实际运行
 - **必须给出证据**：实际运行的命令和返回内容
 - **落盘判定**：长跑命令/commit 的成功证据 = 落盘产物（如 `git log -1 hash` 更新），不依赖 stdout/agent 转述
+- **失败分 A/B/C 类**：A 代码 bug → 回实现阶段修；B 验证设计错 → 修订验证计划；C 脚本/时序 → 阶段内自修重试 ≤2 轮，编译自修复上限 3 轮。防 AI 越改越乱死循环
 - **收据必须完整**：完成声明附 证据槽 = action/result/scope/uncovered/residual/confidence(A|B|C)
   - action：跑了什么命令；result：结果是什么
   - scope：验证覆盖了什么；uncovered：没覆盖什么（诚实列出）

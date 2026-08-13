@@ -43,7 +43,7 @@ version: 2.0.0
 | 轴 | 检查内容 | 来源 |
 |----|---------|------|
 | **Standards（规范）** | 代码是否符合项目编码规范 | `references/checklist.md` + `references/dotnet-checklist.md` |
-| **Spec（需求）** | 代码是否匹配原始需求/PRD/用户要求 | 需求文档或用户对话 |
+| **Spec（需求）** | 代码是否匹配原始需求/PRD/用户要求；抓"无需求依据的改动"（越界到需求之外、凭语义联想自作主张） | 需求文档或用户对话 |
 
 **为什么分两轴：** 一个 change 可以 Standards pass + Spec fail（代码规范但功能不对），反过来也行。合并排序会掩盖问题。
 

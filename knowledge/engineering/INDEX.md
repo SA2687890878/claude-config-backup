@@ -6,6 +6,7 @@
 
 | 文件 | 说明 |
 |------|------|
+| [ai-coding-articles](ai-coding-articles.md) | 6 篇 AI Coding/Harness 文章精华沉淀（含吸收总账） |
 | [dgclient-encryption-mechanism](dgclient-encryption-mechanism.md) | DGClient加密机制：进程级白名单 |
 | [index-system-division](index-system-division.md) | 三套索引系统分工：SQLite/CodeGraph/context-mode |
 | [workflow-agent-usage-principles](workflow-agent-usage-principles.md) | 工作流中何时用agent、何时直接用工具 |
