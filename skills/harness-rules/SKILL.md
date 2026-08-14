@@ -35,7 +35,7 @@ version: 2.0.0
 详细:`.claude/rules/tools/code-access.md`
 
 ## Token 原则
-能在代码中处理的数据不进上下文;跨会话知识以 memory/learnings.md 为准。
+能在代码中处理的数据不进上下文;跨会话知识以 memory/learnings.md 为准;工具输出优先 markdown 摘要(表格/要点,约 1/10 token,如 rtk --md),不灌原始 JSON。
 详细:`.claude/rules/tools/token-optimization.md`
 
 ---

@@ -111,6 +111,11 @@ version: 3.0.0
 | 不带主键的批量 UPDATE / DELETE | 先评估影响行数（SELECT 预览），确认后执行 |
 | DROP / DELETE / TRUNCATE / 批量 DML | 硬拦截，改软删除或人工执行，必要时先备份 |
 
+**执行纪律（落盘判定）：**
+- 每次 DDL/DML 执行记录到 `changelog.sql`（时间/操作/目的），留痕可回滚
+- 高危操作强制 dry-run（`SELECT` 预览或事务内回滚）
+- 高频变更操作建议封装成留痕 CLI（如 `db-exec` 唯一入口：高危关键字硬拦截 + 强制先写 changelog + dry-run），替代 AI 每次现写 DB 脚本
+
 ### Step 2: Scaffold 更新模型
 
 ```bash
