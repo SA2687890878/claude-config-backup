@@ -25,7 +25,4 @@
   - residual：剩余风险；confidence：对结论的信心等级
   - 缺 scope/uncovered = 只报结果不报覆盖范围，视为不完整
 
-## 详细参考
-
-- 验证流程：`~/.claude/knowledge/rules/verification/flow.md`
-- 验证纪律：`~/.claude/knowledge/rules/verification/discipline.md`
+- 验证纪律与失败分类已内联于本文，无外部引用文件

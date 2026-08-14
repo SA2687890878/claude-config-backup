@@ -160,7 +160,7 @@ version: 2.0.0
 
 **适用场景：** 请求 subagent 审查。
 
-**读取：** `references/request-review.md`
+**读取：** `references/request-review.md`；启动子代理对抗审查时，对抗提示词模板见 `references/adversarial-prompt.md`
 
 ---
 

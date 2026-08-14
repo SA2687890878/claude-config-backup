@@ -230,6 +230,7 @@ description: >
 - **`references-eval/grader-prompt.md`** — 评分标准
 - **`references-eval/comparator-prompt.md`** — 盲比模板
 - **`references-eval/analyzer-prompt.md`** — 改进分析模板
+- **`references-eval/schemas.md`** — eval 数据结构的 JSON Schema 定义（grader/comparator 输出的数据结构约束）
 
 ### 脚本
 - **`scripts/`** — 自动化工具（eval、优化、打包）

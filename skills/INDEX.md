@@ -65,7 +65,9 @@
 |-------|--------|------|
 | `/harness-agents` | 角色、builder、operator、分工 | 双角色协作模型（开发 vs 运维诊断） |
 | `/harness-rules` | 规则、禁令、质量门、红线 | 全局规则第一层 |
+| `/harness-audit` | harness 体检、体系审计、技能库体检 | Harness 体系 7 维度审计 |
 | `/knowledge-index` | 知识库、经验、memory、learnings | 知识库导航 |
+| `/save-memory` | 保存经验、记录一下、保存进度 | 经验与进度管理 |
 | `/skill-manager` | 技能管理、skills、找 skill | 技能注册与管理 |
 
 ### 🌐 外部工具
@@ -83,10 +85,10 @@
 
 ## Skills 统计
 
-- **总计**：28 个
+- **总计**：30 个
 - 需求阶段：2 | 设计阶段：3 | 探索与分析：2 | 开发阶段：5
 - 审查阶段：2 | 发布阶段：1 | 运维阶段：3
-- 角色与知识管理：4 | 外部工具：6
+- 角色与知识管理：6 | 外部工具：6
 
 ## Quality Gates 对应
 

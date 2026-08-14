@@ -33,7 +33,7 @@
 - 详细规则：见 `@rules/tools/code-access.md`
 
 ## 规则优先级
-项目级 `.Codex/` > 全局 `rules/*.md` > 本文件
+项目级 `.claude/` > 全局 `rules/*.md` > 本文件
 
 ## 压缩保留
 当压缩对话时，始终保留：
@@ -43,9 +43,9 @@
 - 未解决的问题（如果有）
 
 ## 任务与经验
-- 任务状态/归档规则：见 `~/.Codex/knowledge/rules/workflows/task-management.md`
-- 经验沉淀到项目级 `.Codex/learnings.md`，跨项目经验到全局 `~/.Codex/memory/learnings.md`
-- 模型选择策略：见 `~/.Codex/knowledge/rules/tools/model-strategy.md`
+- 任务状态/归档规则：见 `~/.claude/knowledge/rules/workflows/task-management.md`
+- 经验沉淀到项目级 `.claude/learnings.md`，跨项目经验到全局 `~/.claude/memory/learnings.md`
+- 模型选择策略：见 `~/.claude/knowledge/rules/tools/model-strategy.md`
 
 ## 核心规则（每次加载）
 @rules/tools/code-access.md
@@ -54,7 +54,7 @@
 
 ## 按需规则（场景触发时加载）
 - Token 优化：见 @rules/tools/token-optimization.md
-- 问题澄清：需求不明确时，读取 `~/.Codex/knowledge/rules/quality/question-bank.md`
+- 问题澄清：需求不明确时，读取 `~/.claude/knowledge/rules/quality/question-bank.md`
 
 ## 知识库索引
 @knowledge/MEMORY.md

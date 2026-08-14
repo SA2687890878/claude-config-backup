@@ -95,6 +95,7 @@ Task 4: 验证 + 装配 + QA
 
 ### Task 4: 验证 + 装配 + QA
 
+- **prompt 文件**：`prompts/task4_assembly.md`
 - **工具**：`{TOOLSDIR}/dr_tools.py`
 - **步骤**：
   1. `validate-all-chapters` — 批量验证
