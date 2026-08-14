@@ -1,6 +1,6 @@
 {
   "quick": {
-    "min_chapters": 5,
+    "min_chapters": 6,
     "min_paragraphs": 4,
     "max_chars": 15000
   },

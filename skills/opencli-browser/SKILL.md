@@ -1,6 +1,7 @@
 ---
 name: opencli-browser
-description: Use when an agent needs to drive a real Chrome window via opencli — inspect a page, fill forms, click through logged-in flows, or extract data ad-hoc. Covers the selector-first target contract, compound form fields, stale-ref handling, network capture, and the agent-native envelopes the CLI returns. Not for writing adapters — see opencli-adapter-author for that.
+description: >
+  Drive a real Chrome window via opencli: inspect pages, fill forms, click through flows, extract data.
 allowed-tools: Bash(opencli:*), Read, Edit, Write
 ---
 
@@ -9,6 +10,8 @@ allowed-tools: Bash(opencli:*), Read, Edit, Write
 The first reader of this CLI is an agent, not a human. Every subcommand returns a structured envelope that tells you exactly what matched, how confident the match is, and what to do if it didn't. Lean on those envelopes — do not guess.
 
 This skill is for **driving a live browser** to accomplish an agent task. If you are building a reusable adapter under `~/.opencli/clis/<site>/` use `opencli-adapter-author` instead.
+
+> **Shell 说明**：示例默认 bash 语法。DSH 默认终端为 PowerShell 7：`\` 行续符 → 改用反引号（`` ` ``）或单行书写；`&&` 可用（PS7+）；管道中的 `grep` → `Select-String`；`2>file` 重定向可用。opencli 命令本身跨 shell 通用。
 
 ---
 
@@ -74,7 +77,9 @@ Bound sessions have no OpenCLI idle-close timer; the binding lasts until `unbind
 
 ## Sitemaps
 
-If `browser open` or `browser analyze` returns `sitemap.available: true`, switch to `opencli-browser-sitemap` before continuing a multi-step site flow. The sitemap is prior context for pages, actions, workflows, APIs, and pitfalls; it is not truth. If the browser state disagrees with the sitemap, trust the browser and mark the sitemap stale via `opencli-sitemap-author`.
+`browser analyze <url>` classifies a site (anti-bot vendor, real-data API candidates, pattern A/B/C/D, nearest adapter, next step). If `browser open` or `browser analyze` reports `sitemap.available: true` (sitemap context present), switch to `opencli-browser-sitemap` before continuing a multi-step site flow. The sitemap is prior context for pages, actions, workflows, APIs, and pitfalls; it is not truth. If the browser state disagrees with the sitemap, trust the browser and mark the sitemap stale per `opencli-browser-sitemap`'s health write-back step.
+
+> 注：`sitemap.available` 等 sitemap 字段以 `opencli browser analyze --help` 与实际输出为准；若当前版本输出无该字段，按 `opencli-browser-sitemap` 的 Lookup Order 主动探测 `~/.opencli/sites/<site>/sitemap/`。
 
 ---
 
@@ -312,6 +317,12 @@ opencli browser hn open "https://news.ycombinator.com" \
   && opencli browser hn click 3
 ```
 
+PowerShell 7 等价（`\` 续行不适用，写单行即可）：
+
+```powershell
+opencli browser hn open "https://news.ycombinator.com" && opencli browser hn state && opencli browser hn click 3
+```
+
 **Bad — each line is a fresh shell, refs from call 1 are already forgotten when call 2 runs.** (Only a problem if you rely on shell-scoped state; browser refs themselves persist in-page, but interleaving unrelated shells invites races.) Prefer `&&` when the steps are meant to be atomic.
 
 **Never** chain a write and then an immediate `state` without a `wait` if the action causes a network round-trip — you will snapshot the pre-response DOM and make bad decisions off stale data.
@@ -439,6 +450,5 @@ normal DOM `state`, or navigate/bind directly to the iframe URL when possible.
 ## See also
 
 - `opencli-adapter-author` — turning what you just figured out into a reusable `~/.opencli/clis/<site>/<command>.js`.
-- `opencli-browser-sitemap` — consuming site sitemap context while driving a browser task.
-- `opencli-sitemap-author` — creating or updating sitemap knowledge when you discover a durable path or stale entry.
+- `opencli-browser-sitemap` — consuming site sitemap context while driving a browser task; also owns marking stale entries (health write-back).
 - `opencli-autofix` — when an existing adapter breaks, this skill walks you through `--trace retain-on-failure` evidence and filing a fix.

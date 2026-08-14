@@ -1,44 +1,27 @@
 ---
-description: 从 GitHub 拉取 deep-research skill 最新代码
+description: 更新 research skill（从 GitHub 上游 deep-research 同步）
 ---
 
 <command-instruction>
-你是一个自动更新工具。你的任务是从 GitHub 拉取 deep-research skill 的最新代码，不需要版本检查，不需要用户确认。
+本 skill 安装在 `~/.claude/skills/research/`。`~/.claude` 整体是 git worktree（分支 `harness_v2`，remote 为 claude-config-backup）。
 
-## 执行流程
+## 更新方式
 
-### Step 1 — 定位 skill 目录
+### 方式 A — 上游 deep-research 更新（推荐）
 
-通过以下路径查找 skill 目录：
-- `find ~/.opencode/skills -name "VERSION" -path "*/deep-research/*"`
-- `find ~/.config/opencode/skills -name "VERSION" -path "*/deep-research/*"`
-- 或检查当前工作目录是否就是 skill 根目录（存在 VERSION 文件）
+本 skill 源自 github.com/hoolulu/deep-research。上游有新版本时：
 
-如果找不到 → 提示"找不到 deep-research skill 目录"，给出手动克隆命令后退出。
+1. `git clone https://github.com/hoolulu/deep-research $env:TEMP\deep-research`
+2. 对比临时目录与 `~/.claude/skills/research/`，**手动合并**差异（本目录含 DSH/Claude 适配改动，禁止整体覆盖）
+3. 完成后删除临时目录
 
-### Step 2 — 检查 git 仓库
+### 方式 B — 配置备份同步
 
-确认目录是 git 仓库（存在 `.git` 目录）。如果不是 → 用 `git clone` 克隆到临时目录再复制过来。
+仅同步备份仓库时：`git -C ~/.claude pull`
 
-### Step 3 — 直接拉取最新代码
+### 方式 C — 本地未改动时的快速替换
 
-**不需要读取 VERSION，不需要比较版本，不需要用户确认。** 直接执行：
-
-```
-git pull origin main
-```
-
-如果 pull 失败（网络、冲突等）→ 提示"更新失败: {具体原因}"后退出。
-
-### Step 4 — 完成
-
-提示已更新到最新版本。
-
-### 输出示例
-
-```
-[✓] 已从 main 分支拉取最新代码
-```
+若本目录无本地定制（与上游 hash 一致），可整体替换后重跑本 skill 的校验。
 </command-instruction>
 
 <user-request>
@@ -47,5 +30,5 @@ $ARGUMENTS
 
 ---
 ```
-deep-research by hoolulu · github.com/hoolulu/deep-research
+research skill 更新助手 · 上游 github.com/hoolulu/deep-research
 ```

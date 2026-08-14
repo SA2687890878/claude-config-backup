@@ -31,7 +31,7 @@
 - [ ] 连接池配置合理
 - [ ] 大数据量查询有分页
 
-## 2.5 SQL Server Schema（老项目 `F:\Code WorkSpace\`）
+## 2.5 SQL Server Schema（老项目，如本机 `F:\Code WorkSpace\`）
 
 - [ ] 表设计满足第三范式（除非有明确反范式理由）
 - [ ] 索引策略合理（主键、外键、常用查询字段）
@@ -41,7 +41,7 @@
 - [ ] IDENTITY 列使用 `SCOPE_IDENTITY()`
 - [ ] 避免盲目使用 `NOLOCK` 提示
 
-## 2.6 PostgreSQL Schema（新项目 `F:\OTD Code WorkSpace\`）
+## 2.6 PostgreSQL Schema（新项目，如本机 `F:\OTD Code WorkSpace\`）
 
 - [ ] 表设计满足第三范式（除非有明确反范式理由）
 - [ ] 索引策略合理（主键、外键、常用查询字段）

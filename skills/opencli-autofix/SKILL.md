@@ -1,6 +1,7 @@
 ---
 name: opencli-autofix
-description: Automatically fix broken OpenCLI adapters when commands fail. Load this skill when an opencli command fails — it guides you through collecting a trace artifact, patching the adapter, retrying, and filing an upstream GitHub issue after a verified fix. Works with any AI agent.
+description: >
+  Fix broken OpenCLI adapters when commands fail: collect trace, patch, retry, file upstream issue.
 allowed-tools: Bash(opencli:*), Bash(gh:*), Read, Edit, Write
 ---
 
@@ -132,7 +133,7 @@ Use `opencli browser` to inspect the live website. **Never use the broken adapte
 
 ```bash
 # Open the page and inspect current DOM
-opencli browser open https://example.com/target-page && opencli browser state
+opencli browser fix open https://example.com/target-page && opencli browser fix state
 
 # Look for elements that match the adapter's intent
 # Compare the snapshot with what the adapter expects
@@ -142,7 +143,7 @@ opencli browser open https://example.com/target-page && opencli browser state
 
 ```bash
 # Open page with network interceptor, then trigger the action manually
-opencli browser open https://example.com/target-page && opencli browser state
+opencli browser fix open https://example.com/target-page && opencli browser fix state
 
 # Interact to trigger API calls
 opencli browser click <N> && opencli browser network

@@ -12,8 +12,8 @@
 
 ## 修改前必须做
 
-1. 查调用方：READABLE 用 `codegraph_callers`；ENCRYPTED 用 `search.ps1 -Callers "Class.Method"`
-2. 查影响范围：READABLE 用 `codegraph_impact`；ENCRYPTED 用 `search.ps1 -Callees`
+1. 查调用方：READABLE 用 `codegraph_explore`（DSH）/ `semantic_search`（Claude），查询"X 的调用方"；ENCRYPTED 用 `search.ps1 -Callers "Class.Method"`
+2. 查影响范围：READABLE 用 `codegraph_explore`（一次调用返回调用路径与影响面）；ENCRYPTED 用 `search.ps1 -Callees`
 3. 确认改动是否会影响其他模块
 4. 确认是否需要同步修改调用方
 5. 确认改动后如何验证

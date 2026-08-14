@@ -1,8 +1,7 @@
 ---
 name: research
 description: >
-  深度调研报告生成 — 多 agent 并行协作、自动获取最新数据、多语言输出、内置质量检查。
-  当用户说 /research、调研、竞品分析、技术选型、深度调研、research report 时触发。
+  深度调研报告:多 agent 并行、自动获取最新数据、多语言输出。触发:调研、竞品分析、技术选型、research。
 version: 3.0.0
 updated: 2026-06-08
 risk: medium
@@ -190,8 +189,8 @@ Scrapling 抓取 → 失败回退 → webfetch
 - 质量标准完整版：`RULES.md`
 - 分类标准：`TYPES.md`
 - 三档模式参数：`profiles.json`
-- 语言映射表：`references/language-mapping.md`
-- 编码规范详情：`references/encoding-spec.md`
+- 语言映射表：`tools/lang_config.py`（用法见 RULES.md）
+- 编码规范详情：见上文"跨平台编码规范"表 + `RULES.md` 编码洁净条款（原 references/ 文件已内联，不再存在）
 
 ---
 

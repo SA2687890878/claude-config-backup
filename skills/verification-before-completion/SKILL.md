@@ -1,9 +1,7 @@
 ---
 name: verification-before-completion
 description: >
-  This skill should be used when the user asks to "验证", "确认完成", "检查一下",
-  "测试一下", "能提交了吗", "保存进度", "保存经验", "verify", "save progress",
-  or mentions /verification-before-completion.
+  完成前验证:"验证"、"确认完成"、"能提交了吗"、"verify"。
 version: 3.0.0
 ---
 

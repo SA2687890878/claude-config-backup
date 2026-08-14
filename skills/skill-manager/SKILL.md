@@ -1,10 +1,7 @@
 ---
 name: skill-manager
 description: >
-  This skill should be used when the user asks to "find a skill", "create a skill",
-  "write a skill", "optimize a skill", "improve skill description", "evaluate a skill",
-  "benchmark a skill", "test a skill", or mentions /skill-manager, skill 怎么写,
-  找 skill, 创建 skill, 优化 skill, 评估 skill.
+  技能管理:找 skill、创建 skill、优化 skill、评估 skill、skill 怎么写。
 version: 3.0.0
 ---
 
@@ -39,7 +36,10 @@ npx skills find [query]
 ### 安装
 
 ```bash
-bash /path/to/skill/scripts/install-skill.sh <owner/repo@skill-name>
+# skills.sh 生态安装（通用）
+npx skills install <owner/repo@skill-name>
+# 手动安装到本环境（~/.claude/skills/<name>/SKILL.md，受 git worktree 管理）
+# DSH 环境也可走插件体系：dsh plugin add <plugin>
 ```
 
 ### 未找到

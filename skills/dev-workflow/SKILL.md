@@ -1,9 +1,7 @@
 ---
 name: dev-workflow
 description: >
-  This skill should be used when the user asks to "write a plan", "execute a plan",
-  "parallel dispatch", "写计划", "执行计划", "并行派发", "开发计划",
-  "implementation plan", "caveman mode", "压缩模式", or mentions /dev-workflow.
+  开发计划编写与执行、并行派发:"写计划"、"执行计划"、"并行派发"、"开发计划"、"implementation plan"。
 version: 3.0.0
 ---
 

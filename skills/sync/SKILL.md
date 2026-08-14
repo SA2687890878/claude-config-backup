@@ -1,8 +1,7 @@
 ---
 name: sync
 description: >
-  This skill should be used when the user asks to "同步", "同步经验", "同步源码",
-  "刷新索引", "重新索引", "sync", "reindex", or mentions /sync.
+  同步经验/源码/索引:"同步"、"刷新索引"、"重新索引"、"sync"、"reindex"。
 version: 2.0.0
 ---
 

@@ -1,9 +1,7 @@
 ---
 name: perf-tune
 description: >
-  This skill should be used when the user asks to "性能调优", "性能优化", "慢查询",
-  "性能问题", "响应很慢", "CPU 高", "内存泄漏", "数据库卡", "performance tuning",
-  or mentions /perf-tune.
+  性能调优与优化:慢查询、性能问题、响应很慢、CPU 高、内存泄漏、数据库卡("performance tuning")。
 version: 3.0.0
 model: sonnet
 ---
@@ -28,11 +26,10 @@ model: sonnet
 - **资源高** — CPU/内存/磁盘IO/网络，哪个？
 - **吞吐低** — 并发多少？目标多少？
 
-判断数据库类型：
-- `F:\Code WorkSpace\` 下的项目 → SQL Server
-- `F:\OTD Code WorkSpace\` 下的项目 → PostgreSQL
+判断数据库类型（**代码优先**，路径仅作本机辅助）：
 - 代码中 `UseSqlServer()` → SQL Server
 - 代码中 `UseNpgsql()` → PostgreSQL
+- 本机路径参考（仅当代码无明确连接配置时）：`F:\Code WorkSpace\` → SQL Server、`F:\OTD Code WorkSpace\` → PostgreSQL
 
 ## Step 2: 测量
 

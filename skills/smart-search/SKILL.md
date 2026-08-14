@@ -1,9 +1,11 @@
 ---
 name: smart-search
-description: 基于 opencli 命令的智能搜索路由器。当用户想要使用 OpenCLI、CLI 或 API 搜索、查询、查找或研究信息时，尤其是涉及指定网站、社交媒体、技术资料、新闻、购物、旅游、求职、金融或中文内容时，务必使用此 skill
+description: >
+  基于 opencli 的智能搜索路由器:网站、社交媒体、技术资料、新闻、购物、旅游、求职、金融、中文内容搜索。
+allowed-tools: Bash(opencli:*), Read
 ---
 
-# 智能搜索路由器
+# smart-search
 
 根据话题和场景，将查询路由到最佳的 opencli 搜索源。此 skill 的核心目标不是记忆命令，而是先定位数据源，再让 Agent 通过 `opencli` 自己读取实时帮助，避免文档漂移。
 

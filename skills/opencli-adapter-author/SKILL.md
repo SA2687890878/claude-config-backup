@@ -1,6 +1,7 @@
 ---
 name: opencli-adapter-author
-description: Use when writing an OpenCLI adapter for a new site or adding a new command to an existing site. Guides end-to-end from first recon through field decoding, adapter coding, and verify. Replaces opencli-oneshot / opencli-explorer. For ad-hoc browser driving (no adapter), see opencli-browser instead; for a top-level orientation to opencli, see opencli-usage.
+description: >
+  Write OpenCLI adapters for new sites or new commands, end-to-end from recon to verified code. For ad-hoc browser driving see opencli-browser.
 allowed-tools: Bash(opencli:*), Read, Edit, Write, Grep
 ---
 
@@ -9,6 +10,8 @@ allowed-tools: Bash(opencli:*), Read, Edit, Write, Grep
 你是要给一个站点写 adapter 的 agent。这份 skill 目标：**从零到通过 `opencli browser verify` 的 30 分钟内闭环**。
 
 全程用现有工具：`opencli browser *` / `opencli doctor` / `opencli browser init` / `opencli browser verify`。没有新命令。
+
+> **Shell 说明**：示例默认 bash 语法（含 `awk`、`&&`、`\` 续行）。DSH 默认终端为 PowerShell 7：`\` 续行 → 反引号或单行；`awk`/`grep` 管道 → `Select-String` 或 `ForEach-Object`；`&&` 可用（PS7+）。opencli 命令本身跨 shell 通用。
 
 调试浏览器型 adapter 时，优先直接带上 `--trace on --keep-tab true --window foreground`。`--trace on` 每轮都落 trace artifact，`summary.md` 是失败/成功复盘入口；`--keep-tab true --window foreground` 让 tab lease 保留且浏览器窗口在前台，方便核对最终页面状态。
 

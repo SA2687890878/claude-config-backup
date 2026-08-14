@@ -1,6 +1,7 @@
 ---
 name: opencli-browser-sitemap
-description: Use when driving a website with opencli browser and sitemap context is available, requested, or needed to avoid blind navigation. Guides agents to consume site sitemap files lazily, choose adapter/browser fallback paths, resume from state signatures, and mark stale sitemap entries without trusting them over live browser state.
+description: >
+  Sitemap-aware opencli browsing: consume sitemaps lazily, pick adapter/browser fallbacks, avoid blind navigation.
 allowed-tools: Bash(opencli:*), Read, Edit, Write, Grep
 ---
 

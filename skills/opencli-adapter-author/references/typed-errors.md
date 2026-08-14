@@ -220,7 +220,7 @@ if (!/id="postlist"/.test(html)) throw new EmptyResultError('1point3acres thread
 
 ## 7. 已经 grandfathered 的旧 adapter
 
-repo 里仍有相当数量的 `CliError('HTTP_ERROR')` / `Math.max(1, Math.min(...))` 式的旧写法，被 [`scripts/typed-error-lint-baseline.json`](../../../scripts/typed-error-lint-baseline.json) 圈住（baseline 只允许减、不允许加）。**新写 adapter 必须按本文档**；旧 adapter 不强制立刻迁移，但碰到时顺手收一条是欢迎的——清掉一条 baseline 自然下降一条，gate 不会卡。
+repo 里仍有相当数量的 `CliError('HTTP_ERROR')` / `Math.max(1, Math.min(...))` 式的旧写法，被 [`scripts/typed-error-lint-baseline.json`](../../../scripts/typed-error-lint-baseline.json) 圈住（baseline 只允许减、不允许加；本机未安装该脚本时以本文档为准手动判断旧写法）。**新写 adapter 必须按本文档**；旧 adapter 不强制立刻迁移，但碰到时顺手收一条是欢迎的——清掉一条 baseline 自然下降一条，gate 不会卡。
 
 ---
 

@@ -1,8 +1,7 @@
 ---
 name: commit
 description: >
-  This skill should be used when the user asks to "提交", "commit", "git commit",
-  "创建工作区", "worktree", "完成分支", "merge", or mentions /commit.
+  Git 提交与工作区管理:"提交"、"commit"、"git commit"、"merge"、"worktree"。
 version: 3.0.0
 ---
 

@@ -5,10 +5,11 @@
 ### Step 1: 读取 learnings.md
 
 ```javascript
-// 读取当前项目的 learnings.md
-const projectPath = process.cwd()
-const projectName = projectPath.replace(/:/g, '-').replace(/[\/\\]/g, '-')
-const learningsPath = `~/.claude/projects/${projectName}/memory/learnings.md`
+// 读取 learnings（按优先级）：
+// 1. ~/.claude/memory/learnings.md —— 跨项目经验（权威源，knowledge-index 布局）
+// 2. ~/.claude/learnings.md —— 项目经验（pcs.webbackend 等）
+// 3. ~/.claude/projects/${projectName}/memory/learnings.md —— 仅 Claude Code 历史会话布局，存在才读
+const learningsPath = `~/.claude/memory/learnings.md`
 const learningsContent = Read(learningsPath)
 ```
 

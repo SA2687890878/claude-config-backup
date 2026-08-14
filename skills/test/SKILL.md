@@ -1,8 +1,7 @@
 ---
 name: test
 description: >
-  This skill should be used when the user asks to "测试", "跑测试", "生成测试",
-  "测试失败", "单元测试", "run tests", "generate tests", or mentions /test.
+  测试:自动判断生成还是执行("测试"、"跑测试"、"生成测试"、"测试失败"、"单元测试")。
 version: 2.0.0
 ---
 

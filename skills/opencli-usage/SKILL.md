@@ -1,6 +1,7 @@
 ---
 name: opencli-usage
-description: Use at the start of any OpenCLI session — this is the top-level map of what `opencli` can do, how to discover adapters, what flags and output formats are universal, and which specialized skill to load next. Point here when an agent asks "what can opencli do?" or "how do I find the right command?".
+description: >
+  Top-level map of opencli: capabilities, adapter discovery, universal flags, and which skill to load next.
 allowed-tools: Bash(opencli:*), Read
 ---
 
@@ -47,7 +48,7 @@ Electron desktop apps (cursor, codex, chatwise, discord-app, doubao-app, antigra
 ```bash
 opencli list                    # table, grouped by site
 opencli list -f json            # machine-readable; pipe to jq or your agent
-opencli list | grep -i twitter  # find commands for a specific site
+opencli list -f json | Select-String -Pattern twitter   # PowerShell 找指定站点
 opencli <site> --help           # see that site's commands + flags
 opencli <site> <command> --help # see positional args and command-specific flags
 ```

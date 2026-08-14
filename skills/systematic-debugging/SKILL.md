@@ -1,9 +1,7 @@
 ---
 name: systematic-debugging
 description: >
-  This skill should be used when the user asks to "debug", "diagnose", "fix a bug",
-  "排查", "调试", "找 bug", "为什么报错", "测试失败", "安全模式", "安全评估",
-  "安全扫描", or mentions /systematic-debugging, debug, 排查, 报错.
+  系统化调试与排查:"debug"、"排查"、"调试"、"为什么报错"、"测试失败"、"安全扫描"。
 version: 3.0.0
 ---
 
@@ -277,3 +275,4 @@ version: 3.0.0
 - **`references/command-guard-details.md`** — 危险命令完整列表
 - **`references/modification-assessment-details.md`** — 修改评估流程
 - **`references/security-scan-details.md`** — 安全扫描流程
+- **`references/failure-patterns-detection.md`** — 失败模式检测（SPINNING/EXPLORING/MIXED）与判定标准

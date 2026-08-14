@@ -47,6 +47,7 @@ public Result Function(Input input) => expected;
 
 ```bash
 git add src/path/file.cs tests/path/test.cs
-git commit -m "feat: add specific feature"
+git commit -m "[新增] 具体功能描述"
 ```
+> 提交格式遵循 `commit` skill：`[类型] 中文描述`（类型枚举：新增/修复/文档/重构/优化/测试/配置/回滚），禁止英文 Conventional Commits 与 scope（如 feat(api):）。
 ````

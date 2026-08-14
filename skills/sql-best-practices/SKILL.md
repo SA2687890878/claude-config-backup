@@ -1,9 +1,7 @@
 ---
 name: sql-best-practices
 description: >
-  This skill should be used when the user asks to "SQL 最佳实践", "数据库优化",
-  "查询优化", "索引优化", "慢查询", "数据库性能", "数据库变更", "迁移",
-  "migration", "scaffold", "改表", "加字段", "建表", or mentions /sql-best-practices.
+  SQL 与数据库最佳实践:查询优化、索引优化、迁移、改表、加字段("慢查询"、"scaffold")。
 version: 3.0.0
 ---
 

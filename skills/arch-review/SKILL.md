@@ -1,9 +1,7 @@
 ---
 name: arch-review
 description: >
-  This skill should be used when the user asks to "架构审查", "架构评审",
-  "帮我看看这个方案", "这个设计合理吗", "技术方案评审", "architecture review",
-  or mentions /arch-review.
+  架构审查与技术方案评审:"架构审查"、"方案评审"、"这个设计合理吗"、"技术方案评审"、"architecture review"。
 model: sonnet
 version: 2.0.0
 ---

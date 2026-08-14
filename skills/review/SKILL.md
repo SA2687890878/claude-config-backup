@@ -1,9 +1,7 @@
 ---
 name: review
 description: >
-  This skill should be used when the user asks to "review", "审查", "找 bug",
-  "审计", "代码有问题吗", "帮我看看", "code review", or mentions /review.
-  Automatically analyzes change type and scale to select the appropriate review strategy.
+  代码审查与审计:自动按变更规模选择策略。"审查"、"找 bug"、"审计"、"code review"。
 version: 2.0.0
 ---
 
@@ -13,7 +11,7 @@ version: 2.0.0
 
 **用户说"审查"，agent 自动决定策略。**
 
-**铁律：变更 > 50 行必须启动独立子代理做对抗性审查。** 主 agent 完成初轮审查后，必须启动至少 2 个子代理分别从 Standards 和 Spec 轴独立审查，交叉验证后输出最终报告。不允许主 agent 独自完成全部审查工作——子代理的独立视角能发现主审查遗漏的深层问题（已验证：1413 行审查中初轮遗漏 12/23 个发现）。
+**铁律：子代理对抗审查按变更规模分级——变更 > 200 行必须启动 ≥2 个独立子代理；50-200 行至少 1 个。** 主 agent 完成初轮审查后，启动子代理独立审查（50-200 行 ≥1 个；>200 行 ≥2 个，分别从 Standards 和 Spec 轴独立审查），交叉验证后输出最终报告。不允许主 agent 独自完成全部审查工作——子代理的独立视角能发现主审查遗漏的深层问题（已验证：1413 行审查中初轮遗漏 12/23 个发现）。
 
 ## 路由
 
@@ -34,9 +32,9 @@ version: 2.0.0
 1. 确定范围：`git diff` 获取变更
 2. 自动选择审查策略（见下方"按变更类型选择策略"）
 3. **主 agent 执行初审**：读取 `references/checklist.md`，按分类逐项检查
-4. **启动子代理对抗审查**：变更 > 50 行时，启动至少 2 个独立子代理，分别从 Standards 轴和 Spec 轴做独立审查，与主 agent 互不通信，各自输出发现
+4. **启动子代理对抗审查**：变更 50-200 行时启动 1 个独立子代理；> 200 行时启动至少 2 个独立子代理（分别从 Standards 轴和 Spec 轴），与主 agent 互不通信，各自输出发现
 5. **交叉验证**：汇总主 agent + 各子代理的发现，去重、排序、交叉验证
-6. 输出报告：读取 `references/report-template.md`
+6. 输出报告：读取 `references/report-format.md`（共享报告规则 → `templates/audit-report.md`）；快速审查的简版结构参考 `references/report-template.md`
 
 **双轴审查（重要）：** 审查报告必须分两个独立轴，不合并排序：
 
@@ -70,7 +68,7 @@ version: 2.0.0
 | 变更规模 | 策略 | 读取 |
 |----------|------|------|
 | < 50 行 | 快速审查 | `references/quick-review.md` |
-| 50-200 行 | 标准审查 | `references/checklist.md` |
+| 50-200 行 | 标准审查（含 1 个子代理对抗） | `references/checklist.md` |
 | > 200 行 | 深度审查 | `references/execute-review.md` |
 | 涉及 auth/crypto/database | 安全审查 | `references/dotnet-checklist.md` |
 | 涉及 test 文件 | 测试审查 | `references/checklist.md` |

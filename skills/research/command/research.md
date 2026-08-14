@@ -3,10 +3,10 @@ description: Deep research on any topic — generates professional-grade reports
 ---
 
 <command-instruction>
-Load and follow the `deep-research` skill exactly.
+Load and follow the `research` skill exactly.
 
 ```text
-skill(name="deep-research")
+skill(name="research")
 ```
 
 Parse `$ARGUMENTS` to determine the research topic and optional mode flags:
