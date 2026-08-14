@@ -9,32 +9,69 @@
       "WebFetch(domain:github.com)",
       "Bash(echo \"---EXIT:$?\")",
       "Bash(gh repo *)",
-      "mcp__context-mode__ctx_fetch_and_index"
+      "mcp__context-mode__ctx_fetch_and_index",
+      "Bash(bunx dsh *)"
     ]
-  },
-  "statusLine": {
-    "command": "ccstatusline-zh",
-    "padding": 0,
-    "refreshInterval": 10,
-    "type": "command"
   },
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/session-start.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/project-knowledge.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/knowledge-sync-reminder.js"] },
-          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/sessionstart.mjs"] }
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/session-start.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/project-knowledge.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/knowledge-sync-reminder.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "C:/Users/admin/.bun/bin/bun.exe",
+            "args": [
+              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/sessionstart.mjs"
+            ]
+          }
         ]
       }
     ],
     "UserPromptSubmit": [
       {
         "hooks": [
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/skill-router.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/context-injector.js"] },
-          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/userpromptsubmit.mjs"] }
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/skill-router.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/context-injector.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "C:/Users/admin/.bun/bin/bun.exe",
+            "args": [
+              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/userpromptsubmit.mjs"
+            ]
+          }
         ]
       }
     ],
@@ -42,17 +79,55 @@
       {
         "matcher": "Write|Edit",
         "hooks": [
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/secret-guard.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/write-guard.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/encrypted-write-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/impact-guard.js"], "if": "Edit(*.cs)" }
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/secret-guard.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/write-guard.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/encrypted-write-guard.js"
+            ],
+            "if": "Write(*.cs)|Edit(*.cs)"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/impact-guard.js"
+            ],
+            "if": "Edit(*.cs)"
+          }
         ]
       },
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/bash-guard.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/commit-gate.js"] }
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/bash-guard.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/commit-gate.js"
+            ]
+          }
         ]
       }
     ],
@@ -60,49 +135,159 @@
       {
         "matcher": "Write|Edit",
         "hooks": [
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/cs-guard.js"], "if": "Write(*.cs)|Edit(*.cs)" },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/test-reminder.js"], "if": "Write(*.cs)|Edit(*.cs)" },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/sqlite-index-update.js"], "if": "Write(*.cs)|Edit(*.cs)" },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/learning-recorder.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/vue-guard.js"], "if": "Write(*.vue)|Edit(*.vue)" },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/source-sync-update.js"], "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)" },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/review-trigger.js"] }
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/cs-guard.js"
+            ],
+            "if": "Write(*.cs)|Edit(*.cs)"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/test-reminder.js"
+            ],
+            "if": "Write(*.cs)|Edit(*.cs)"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/sqlite-index-update.js"
+            ],
+            "if": "Write(*.cs)|Edit(*.cs)"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/learning-recorder.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/vue-guard.js"
+            ],
+            "if": "Write(*.vue)|Edit(*.vue)"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/source-sync-update.js"
+            ],
+            "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/review-trigger.js"
+            ]
+          }
         ]
       },
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/failure-detector.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/git-commit-review.js"] }
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/failure-detector.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/git-commit-review.js"
+            ]
+          }
         ]
       },
       {
         "hooks": [
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/metrics-collector.js"] }
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/metrics-collector.js"
+            ]
+          }
         ]
       },
       {
         "hooks": [
-          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/posttooluse.mjs"] }
+          {
+            "type": "command",
+            "command": "C:/Users/admin/.bun/bin/bun.exe",
+            "args": [
+              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/posttooluse.mjs"
+            ]
+          }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/build-verify.js"] },
-          { "type": "command", "command": "node", "args": ["C:/Users/admin/.claude/hooks/metrics-report.js"] },
-          { "type": "command", "command": "powershell", "args": ["-ExecutionPolicy", "Bypass", "-File", "C:/Users/admin/.claude/hooks/notify.ps1"] },
-          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/stop.mjs"] }
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/build-verify.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/metrics-report.js"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "powershell",
+            "args": [
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "C:/Users/admin/.claude/hooks/notify.ps1"
+            ]
+          },
+          {
+            "type": "command",
+            "command": "C:/Users/admin/.bun/bin/bun.exe",
+            "args": [
+              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/stop.mjs"
+            ]
+          }
         ]
       }
     ],
     "PreCompact": [
       {
         "hooks": [
-          { "type": "command", "command": "C:/Users/admin/.bun/bin/bun.exe", "args": ["D:/nvm/v25.8.0/node_modules/context-mode/hooks/precompact.mjs"] }
+          {
+            "type": "command",
+            "command": "C:/Users/admin/.bun/bin/bun.exe",
+            "args": [
+              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/precompact.mjs"
+            ]
+          }
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline-zh",
+    "padding": 0,
+    "refreshInterval": 10
   }
 }
