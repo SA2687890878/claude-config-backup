@@ -7,6 +7,15 @@ version: 3.0.0
 
 # 需求探索与质询
 
+## 先读任务栈
+
+**执行任何操作前，先确认当前活跃任务：**
+
+1. 读 `~/.claude/tasks/active.json`
+2. 如果 active 为空 → 新建任务：生成 task_id → 写入 active.json（stage=requirements, product_path=docs/features/{task_id}/）
+3. 如果 active 非空且 stage=requirements → 继续，从 `{product_path}/` 读已有需求文档（如有）
+4. 如果 active 非空且 stage != requirements → 提示用户："当前任务在 [stage] 阶段，要新建需求需先完成或切换"
+
 ## 路由
 
 | 意图 | 分支 |
@@ -32,16 +41,17 @@ version: 3.0.0
 2. **提出澄清问题** — 一次一个，理解目的/约束/成功标准
 3. **提出 2-3 个方向** — 带权衡分析和你的推荐
 4. **确认需求要点** — 按复杂度分节呈现，每节获得用户批准
-5. **产出需求要点** — 保存为 `requirements-<名称>-brainstorm.md`（简版）；详细需求走 B 分支模板
-6. **过渡到实现** — 提示用户：要技术方案 → `/design`；直接开发 → `/dev-pipeline`
+5. **产出需求要点** — 保存为 `{product_path}/requirements.md`（简版走头脑风暴，详版走需求质询模板）
+6. **产物移交** — 更新 active.json：stage=design，写入 links.requirement=`{product_path}/requirements.md`
 
 读取 `references/brainstorming-details.md` 了解完整流程和自检清单。
 
 ### 完成标准
 
 - [ ] 用户确认了需求要点（不是设计）
-- [ ] 需求要点已保存到 `requirements-*.md`
-- [ ] 用户明确说"可以开始实现"或"下一步"（或转 design）
+- [ ] 需求要点已保存到 `{product_path}/requirements.md`
+- [ ] active.json 已更新为 stage=design
+- [ ] 用户明确说"可以开始实现"或"继续"（或自动转 design）
 
 ### 反模式
 
@@ -79,7 +89,7 @@ version: 3.0.0
 
 追问规则："大概"→ 追问具体数字；"用户觉得..."→ 追问"哪个用户？"；"领导要求的"→ 追问原始表述。
 
-**Step 3:** 输出需求文档。保存到 `requirements-[需求名称简写].md`。
+**Step 3:** 输出需求文档。保存到 `{product_path}/requirements.md`。
 
 ### 完成标准
 

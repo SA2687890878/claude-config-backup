@@ -1,62 +1,34 @@
-# 全局规则
+# AGENTS.md
 
-## 环境
-- 简体中文 | Windows + PowerShell
-- .NET 8.0（Web）+ .NET Framework 4.5.2（WPF）| Vue 2
-- SQL Server（老项目）| PostgreSQL（新项目）
+> **规则主体统一在 `CLAUDE.md` 维护，本文件是转发入口，不重复存储。**
+>
+> `AGENTS.md` 是 Codex CLI 的全局指令入口，但 Codex CLI 也能通过 `Read` 工具读取任意文件。
 
-## 项目速查
-| 项目 | 路径 | 数据库 |
-|------|------|--------|
-| pcs.webbackend | `F:/Code WorkSpace/pcs.webbackend/` | SQL Server |
-| pcs.crontabservice | `F:/Code WorkSpace/pcs.crontabservice/` | SQL Server |
-| OTD-* | `F:/OTD Code WorkSpace/` | PostgreSQL |
+## Codex CLI 指南
 
-## 行为原则
-- 多种解释时选最符合上下文的，更简单的方法直接用，真正不确定才问
-- 最少代码解决问题，不做未请求的抽象和灵活性
-- 只改必须改的，匹配现有风格，每行改动追溯到用户请求
-- 多步骤任务列出计划，循环直到验证通过
-- 回答技术问题前先查阅文档/源码，不确定时明确说明
-- 必须使用简体中文回答和思考，编写代码注释和文档也使用简体中文
+Codex CLI 启动时，请先读取 `~/.claude/CLAUDE.md` 获取完整规则。
+本文件只放 Codex 特有的配置差异。
 
-## 核心禁止
-- 禁止 .Result / .Wait()（同步阻塞）
-- 禁止直接 push 到 main/develop
-- 禁止硬编码密钥/密码/token
+## DSH vs Codex 差异速查
 
-## 代码探索（加密项目）
-- **先索引、后 Read** — 直接 Read 整个 .cs 文件是最浪费 token 的路径
-- 加密 .cs 文件：SQLite 索引定位 → CodeGraph 看源码
-- 非加密文件：直接 Read/Grep
-- 影响分析：CodeGraph
-- 详细规则：见 `@rules/tools/code-access.md`
+| 项目 | DSH (CLAUDE.md) | Codex CLI |
+|------|------------------|-----------|
+| 配置入口 | `~/.claude/CLAUDE.md` | `~/.codex/AGENTS.md` + `config.toml` |
+| 模型配置 | `settings.json` | `~/.codex/config.toml` |
+| 规则主体 | `~/.claude/CLAUDE.md` + `rules/` | 从 `CLAUDE.md` 直接 `Read` 读取 |
+| Skills | `~/.claude/skills/` | Skills 系统（本目录结构与 DSH 不同） |
+| Hooks | `~/.claude/hooks/`（settings.json 注册） | 不适用 |
+| 任务栈 | `~/.claude/tasks/active.json` + `.index.json` | 不适用（可用 memory 工具） |
+| 模型 | mimo-v2.5（DSH settings.json） | gpt-5.4（config.toml） |
+| 工具 | DSH 原生 sandbox + MCP | Codex 原生 sandbox |
 
-## 规则优先级
-项目级 `.claude/` > 全局 `rules/*.md` > 本文件
+## 使用 Codex CLI 时的注意
 
-## 压缩保留
-当压缩对话时，始终保留：
-- 修改文件列表、测试命令、验证结果
-- 关键决策和理由（如果有）
-- 需求偏差记录（如果有）
-- 未解决的问题（如果有）
+1. Codex CLI 没有 hooks 系统，`context-injector`/`skill-router` 等自动注入不生效
+2. 首次使用需手动运行：`Read ~/.claude/CLAUDE.md` 获取全局规则
+3. Codex CLI 的 skills 系统路径为 `~/.codex/skills/`，与 DSH 的 `~/.claude/skills/` 不共享
+4. 任务栈 `tasks/active.json` 是纯文件层约定，两个 CLI 都能读写
 
-## 任务与经验
-- 任务状态/归档规则：见 `~/.claude/knowledge/rules/workflows/task-management.md`
-- 经验沉淀到项目级 `.claude/learnings.md`，跨项目经验到全局 `~/.claude/memory/learnings.md`
-- 模型选择策略：见 `~/.claude/knowledge/rules/tools/model-strategy.md`
+---
 
-## 核心规则（每次加载）
-@rules/tools/code-access.md
-@rules/quality/gates.md
-@rules/quality/verification.md
-
-## 按需规则（场景触发时加载）
-- Token 优化：见 @rules/tools/token-optimization.md
-- 问题澄清：需求不明确时，读取 `~/.claude/knowledge/rules/quality/question-bank.md`
-
-## 知识库索引
-@knowledge/MEMORY.md
-
-@RTK.md
+> 最后更新：2026-08-15 | 本文件不维护规则正文，只维护转发入口和差异说明。

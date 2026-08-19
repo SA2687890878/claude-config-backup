@@ -66,6 +66,30 @@ async function main() {
         keywords: /密钥|password|api[-_]?key|secret|credential|token|安全|防护/i,
         path: 'tools/security.md',
         maxLines: 30
+      },
+      {
+        name: 'SQL Server',
+        keywords: /sql\s+server|mssql|sqlconnection|system\.data\.sqlclient|sqlcommand|sqlparameter/i,
+        path: 'languages/sqlserver.md',
+        maxLines: 30
+      },
+      {
+        name: 'PostgreSQL',
+        keywords: /postgresql|postgres|npgsql|pg\s+(database|query)|pgadmin|psql/i,
+        path: 'languages/postgresql.md',
+        maxLines: 30
+      },
+      {
+        name: 'C#',
+        keywords: /\.net|dotnet|c#|async\s+await|task\.run|iasyncenumerable|cancellationtoken|ioc|di\s+container|ef\s+core|entity framework/i,
+        path: 'languages/csharp.md',
+        maxLines: 40
+      },
+      {
+        name: 'Task Stack',
+        keywords: /继续|上次|恢复|切换|暂停|pause|active\.json|任务栈|上次做到哪了/i,
+        path: 'workflows/task-management.md',
+        maxLines: 25
       }
     ];
 

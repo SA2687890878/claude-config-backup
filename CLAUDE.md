@@ -41,11 +41,26 @@
 - 关键决策和理由（如果有）
 - 需求偏差记录（如果有）
 - 未解决的问题（如果有）
+- 当前 active.json 的内容（task_id / stage / product_path）
 
-## 任务与经验
-- 任务状态/归档规则：见 `~/.claude/knowledge/rules/workflows/task-management.md`
-- 经验沉淀到项目级 `.claude/learnings.md`，跨项目经验到全局 `~/.claude/memory/learnings.md`
-- 模型选择策略：见 `~/.claude/knowledge/rules/tools/model-strategy.md`
+## 任务追踪（产物定位、阶段流转）
+- **开始新任务** → 写入 `~/.claude/tasks/active.json`（task_id / stage / product_path / baseline）
+- **推进阶段** → 更新 active.json 的 stage（requirements→design→development→testing→done）
+- **完成/切换** → 从 active.json 移入 `~/.claude/tasks/.index.json`（历史索引）
+- **产物路径** → 始终写入 `{product_path}/`（skill 从 active.json 动态取）
+- **读取** → 优先读 active.json（当前任务）；查历史用 glob `.index.json` 或按 task_id 搜索
+- **全流程编排** → 说"开发XX"自动走五阶段 → skill: `/pipeline-executor`
+- **细节**：见 `~/.claude/rules/quality/gates.md`（Task Contract 模板）
+- **经验沉淀**：项目级 `.claude/learnings.md`，跨项目到 `~/.claude/memory/learnings.md`
+- **模型选择**：见 `~/.claude/knowledge/rules/tools/model-strategy.md`
+
+## 任务流转（自动串联）
+- 每个 skill 完成后，自动加载下一阶段的 skill，不等用户确认
+- 用户明确说"先停"、"等一下"、"pause"时暂停
+- 暂停时：更新 active.json 加 stage=paused + paused_at="当前步骤"
+- 恢复时：读 active.json，从 paused_at 处继续
+- 切换任务：存档当前任务（stage=paused），开新任务
+- 写 daily/project 日志时，附带当前 active.json 的 task_id（如有）
 
 ## 核心规则（每次加载）
 @rules/tools/code-access.md

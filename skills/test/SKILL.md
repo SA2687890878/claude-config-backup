@@ -11,6 +11,15 @@ version: 2.0.0
 
 **用户说"测试"，agent 自动判断是生成还是执行。**
 
+## 先读任务栈
+
+**执行测试前先确认当前任务：**
+
+1. 读 `~/.claude/tasks/active.json`
+2. 确认 active 非空且 stage >= development（如在 requirements/design，提示先开发）
+3. 从 `{product_path}/` 查找关联产物
+4. 更新 active.json 的 stage=testing
+
 ## 路由
 
 | 意图 | 策略 |
@@ -58,6 +67,9 @@ npm test
 
 **输出格式：**
 读取 `references/report-template.md` 获取报告格式。
+
+**产物移交：**
+测试全部通过后，更新 active.json 的 stage=testing（可提交）。
 
 ---
 

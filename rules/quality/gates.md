@@ -28,22 +28,45 @@
 
 ---
 
-## 防自欺机制
+## 任务追踪与 Task Contract
 
-### Task Contract
+**首次写文件（或切换上下文）前，必须先声明 Task Contract。** 这不是可选的防自欺机制，而是**产物定位和阶段流转的锚点**。
 
-复杂任务开始时声明：
+### Task Contract 模板
 
 ```text
 [Task Contract]
-intent: 用户要什么
+task_id: 需求名-YYYYMMDD（唯一标识，如 auth-permission-20260815）
+title: 用户权限模块重构
+stage: requirements|design|development|testing|done|paused
+paused_at: skill名/步骤名（暂停时记录，恢复时从这里继续）
+product_path: docs/features/{task_id}/（所有产物统一放此目录，很重要）
+baseline: git 分支名或 HEAD（改动前基线，防回滚丢失）
 acceptance: 怎么算成功（可验证条件）
 forbidden: 不能做什么
 verify_commands: 用什么命令验证
-baseline: 首次写文件前的 git 基线（HEAD/分支/脏状态）——缺基线时暂停，先记录再改
 ```
 
-> baseline 依据 Aegis TaskStartSnapshot：先记真实基线再动手，防止"改着改着不知道动了什么"。
+### 执行规则
+
+1. **开始新任务** → 创建 active.json，写 task_id + product_path + stage=requirements + baseline
+2. **推进阶段** → 更新 active.json 的 stage（需求→设计→开发→测试→完成）
+3. **产物输出** → 始终写入 `{product_path}/`。设计读 `{product_path}/requirements.md`，开发读 `{product_path}/design.md`
+4. **完成/切换** → active.json 条目移入 `.index.json`，active 归空
+5. **暂停** → 更新 active.json：stage=paused，paused_at=当前skill/步骤名
+6. **恢复** → 读 active.json，从 paused_at 处继续
+7. **切换任务** → 存档当前任务（stage=paused），开新任务
+
+### 索引设计
+
+- `~/.claude/tasks/active.json` — 活跃任务栈，最多 3 个并行任务。支持 paused 状态（暂停但未完成）。**每次都读**（恒定大小，不膨胀）
+- `~/.claude/tasks/.index.json` — 历史索引。**只按需读**，用于查找已完成或暂停任务的产物路径
+
+### 反模式
+
+❌ 跨任务混放产物到同一目录
+❌ 不写 baseline 直接改代码（导致回滚时找不到原始状态）
+❌ 多个任务共享同一个 product_path（产物交叉污染）
 
 ### 完成声明
 

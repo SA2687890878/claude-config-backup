@@ -71,3 +71,9 @@ worktrees/
 
 # RTK 备份（含代理 token 配置，不入库）
 *.bak-rtk
+/skills/_shared/common.md
+/skills/_shared/custom-risks-guide.md
+/skills/_shared/decay-risks.md
+/skills/_shared/remedy-guide.md
+/skills/_shared/source-coverage.md
+/skills/_shared/test-decay-risks.md

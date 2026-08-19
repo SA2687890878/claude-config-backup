@@ -10,7 +10,15 @@
       "Bash(echo \"---EXIT:$?\")",
       "Bash(gh repo *)",
       "mcp__context-mode__ctx_fetch_and_index",
-      "Bash(bunx dsh *)"
+      "Bash(bunx dsh *)",
+      "Bash(pnpm --version)",
+      "Bash(pnpm install *)",
+      "Read(//d/deepseekHarness工作区/**)",
+      "Bash(dsh web *)",
+      "Bash(echo \"启动 PID: $!\")",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //F //PID 8056)",
+      "Bash(dsh --version)"
     ]
   },
   "hooks": {
@@ -139,46 +147,7 @@
             "type": "command",
             "command": "node",
             "args": [
-              "C:/Users/admin/.claude/hooks/cs-guard.js"
-            ],
-            "if": "Write(*.cs)|Edit(*.cs)"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/test-reminder.js"
-            ],
-            "if": "Write(*.cs)|Edit(*.cs)"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/sqlite-index-update.js"
-            ],
-            "if": "Write(*.cs)|Edit(*.cs)"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/learning-recorder.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/vue-guard.js"
-            ],
-            "if": "Write(*.vue)|Edit(*.vue)"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/source-sync-update.js"
+              "C:/Users/admin/.claude/hooks/cs-checks.js"
             ],
             "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)"
           },
@@ -186,8 +155,17 @@
             "type": "command",
             "command": "node",
             "args": [
-              "C:/Users/admin/.claude/hooks/review-trigger.js"
-            ]
+              "C:/Users/admin/.claude/hooks/index-updater.js"
+            ],
+            "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "C:/Users/admin/.claude/hooks/completion-reminder.js"
+            ],
+            "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)|Write(*.sql)|Edit(*.sql)"
           }
         ]
       },

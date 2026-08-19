@@ -33,6 +33,7 @@
 | Skill | 触发词 | 说明 |
 |-------|--------|------|
 | `/dev-pipeline` | 新功能、开发全流程、一键开发 | 需求→设计→开发→测试→验证 全链路编排 |
+| `/pipeline-executor` | 一键、全流程、帮我开发、编排、联动、自动跑完 | **全链路编排调度**：三种模式(auto/review/manual)，说一次"开发XX"自动跑到位 |
 | `/dev-workflow` | 写计划、执行计划、并行派发 | 写计划→执行→验证→提交 |
 | `/commit` | 提交、commit、push | Git 提交与工作空间管理 |
 | `/sync` | 同步、刷新索引、同步经验 | 自动判断同步内容 |
@@ -80,15 +81,16 @@
 | `/opencli-browser-sitemap` | sitemap、站点地图 | 站点地图导航 |
 | `/opencli-adapter-author` | adapter、适配器 | 编写新站点 OpenCLI 适配器 |
 | `/opencli-autofix` | opencli 报错、修复 | 自动修复失效适配器 |
+| `/github-star-organizer` | 整理收藏、star 归类、收藏乱 | GitHub 收藏仓库自动归类到 Starred Lists |
 
 ---
 
 ## Skills 统计
 
-- **总计**：30 个
-- 需求阶段：2 | 设计阶段：3 | 探索与分析：2 | 开发阶段：5
+- **总计**：32 个
+- 需求阶段：2 | 设计阶段：3 | 探索与分析：2 | 开发阶段：6
 - 审查阶段：2 | 发布阶段：1 | 运维阶段：3
-- 角色与知识管理：6 | 外部工具：6
+- 角色与知识管理：6 | 外部工具：7
 
 ## Quality Gates 对应
 
@@ -101,3 +103,5 @@
 | **Release Gate** | `/review`, `/parallel-review`, `/verification-before-completion` |
 
 > 补充：`visualize`（交互式可视化卡片）为 DSH 内置 skill，随工具可用。
+>
+> **编排入口：** `/pipeline-executor` 提供三种编排模式（auto/review/manual），自动串联需求→设计→开发→测试→提交，中间可打断审查。

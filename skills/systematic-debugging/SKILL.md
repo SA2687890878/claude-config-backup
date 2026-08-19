@@ -7,6 +7,16 @@ version: 3.0.0
 
 # 系统化调试
 
+## 先读任务栈
+
+**排查前先确认当前任务：**
+
+1. 读 `~/.claude/tasks/active.json`
+2. 如果 active 非空且有正在排查的 bug → 继续，从 `{product_path}/` 读已有排查记录
+3. 如果是新 bug → 新建任务写入 active.json（stage=debugging, product_path=debug/{bug名}/）
+4. 排查记录写入 `{product_path}/debug-log.md`，根因+修复写入 `{product_path}/root-cause.md`
+5. 修复后更新 active.json 的 stage=testing
+
 ## 核心铁律
 
 **没有根因调查，不允许修复。** 随机修复浪费时间、引入新 bug。

@@ -7,6 +7,16 @@ version: 3.0.0
 
 # 开发工作流
 
+## 先读任务栈
+
+**执行开发前先确认当前任务阶段和设计输入：**
+
+1. 读 `~/.claude/tasks/active.json`
+2. 确认 active 非空且 stage >= design（如 stage=requirements，提示先走 `/design`）
+3. 从 `{product_path}/design.md` 读取技术方案作为开发输入
+4. 如果设计了数据库变更，同时读 `sql-best-practices` 参考
+5. 更新 active.json 的 stage=development
+
 ## 路由
 
 | 意图 | 分支 |
@@ -67,6 +77,10 @@ version: 3.0.0
 - [ ] dotnet build 退出码 == 0
 - [ ] dotnet test 退出码 == 0
 - [ ] 无回归（现有测试全部通过）
+
+### 产物移交
+
+开发完成后更新 active.json 的 stage=testing。
 
 ### 经验沉淀（收尾，SBA 三件套）
 

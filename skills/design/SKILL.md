@@ -11,12 +11,22 @@ version: 1.0.0
 
 链路：`/requirements`（需求）→ **/design（技术方案）** → `/arch-review`（评审）→ `/dev-workflow`（开发）。
 
+## 先读任务栈
+
+**执行任何操作前，先确认当前活跃任务和设计输入：**
+
+1. 读 `~/.claude/tasks/active.json`
+2. 确认 active 非空且 stage >= requirements（如为空或 stage=draft，提示先走 `/requirements`）
+3. 从 `{product_path}/requirements.md` 读取需求文档作为设计输入
+4. 确认当前 task_id 和对话意图匹配（避免读错别的需求文档）
+5. 更新 active.json 的 stage=design
+
 ## 路由
 
 | 意图 | 分支 | 产物 |
 |------|------|------|
-| 系统级：新系统 / 跨模块重构 / 数据库选型 | → A. 架构设计 | `docs/project/architecture.md` |
-| 功能级：单功能 / 接口 / 字段变更 | → B. 功能设计 | `docs/features/{name}/design.md` |
+| 系统级：新系统 / 跨模块重构 / 数据库选型 | → A. 架构设计 | `{product_path}/architecture.md` |
+| 功能级：单功能 / 接口 / 字段变更 | → B. 功能设计 | `{product_path}/design.md` |
 
 ## 硬门
 
@@ -24,7 +34,7 @@ version: 1.0.0
 
 ## 前置
 
-- 先确认有需求文档（`requirements-*.md` 或 `docs/specs/*-design.md`）；没有就先走 `/requirements`。
+- 先确认有需求文档（`{product_path}/requirements.md`）；没有就提示先走 `/requirements`。
 - 不擅改需求文档。发现需求边界不对 → 提阻塞项，回 `/requirements` 改，不在方案里悄悄改需求。
 
 ## 方案状态流转
@@ -41,6 +51,10 @@ version: 1.0.0
 4. **变更清单** — 协议字段、代码层、数据库变更，逐项可溯源到代码落点。
 5. **验证手段** — 每个变更点怎么证明做对了：单测 / 接口测试 / 手工步骤。产生方案的人同时给出验证手段。
 6. **风险与可逆性** — 最坏情况是什么，能否回退。
+7. **产物移交** — 方案通过用户确认后，更新 active.json：
+   - stage=development
+   - links.requirement=`{product_path}/requirements.md`
+   - links.design=`{product_path}/design.md`（或 architecture.md）
 
 ## 语义二分（联想用于搜索，引用用于决策）
 
@@ -60,7 +74,8 @@ version: 1.0.0
 - [ ] 方案已对照需求文档每条验收标准
 - [ ] 影响半径明确（每个改动点可溯源到代码落点）
 - [ ] 每个变更点都有验证手段
-- [ ] 方案保存到对应产物路径
+- [ ] 方案保存到 `{product_path}/` 对应文件
+- [ ] active.json 已更新为 stage=development
 - [ ] 用户明确批准方案（"可以" / "就这样" / "开始"）
 
 ## 反模式

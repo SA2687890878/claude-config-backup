@@ -39,7 +39,7 @@ version: 1.0.0
 
 在功能开发等长流程中,保存当前进度以便下次继续。
 
-**保存位置:** `~/.claude/memory/task-state.md`
+**保存位置:** `~/.claude/tasks/active.json`（优先） + `~/.claude/memory/task-state.md`（遗留兼容）
 
 读取 `references/progress-save-details.md` 了解完整流程。
 
@@ -47,11 +47,10 @@ version: 1.0.0
 
 ## C. 恢复工作
 
-新会话启动时,检查 `~/.claude/memory/task-state.md`。
+新会话启动时，按优先级检查：
 
-如果存在且有未完成任务:
-1. 读取 `~/.claude/memory/task-state.md`
-2. 报告上次进度
-3. 问用户:"要继续吗?"
+1. **`~/.claude/tasks/active.json`**（首选）→ 非空则从上一次的 stage 恢复，产物路径从 links 字段读取
+2. **`~/.claude/tasks/.index.json`** → 有未完成任务则列出最近 5 条让用户选择
+3. **`~/.claude/memory/task-state.md`**（遗留兼容）→ 以上两者都空才检查
 
-用户确认后,按 task-state 的"恢复指令"跳到对应 skill 继续执行。
+用户确认后，按 active.json 的 stage 跳到对应 skill 继续执行。

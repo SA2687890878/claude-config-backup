@@ -11,6 +11,8 @@
 | 质量门禁 | `~/.claude/rules/quality/gates.md` |
 | 验证规则 | `~/.claude/rules/quality/verification.md` |
 | Token 优化 | `~/.claude/rules/tools/token-optimization.md` |
+| 对话严谨标准 | `~/.claude/rules/interaction/rigor-standards.md` |
+| 置信度标注规范 | `~/.claude/rules/interaction/confidence-reporting.md` |
 
 ## 参考规则（按需加载）
 
