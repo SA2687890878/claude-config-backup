@@ -111,6 +111,66 @@ const ROUTES = [
     hint: '触发 /docs 文档生成流程',
   },
   {
+    // 技术方案设计（高频：与 requirements 紧邻，优先级高于通用"方案"）
+    pattern: /(?:技术方案|架构设计|功能设计|怎么实现|出个方案).*(?:一下|吧|看看)?|(?:做|写|出).*(?:技术方案|设计方案)/i,
+    skill: '/design',
+    hint: '触发 /design 技术方案设计（输入 requirements.md → 输出 design.md）',
+  },
+  {
+    // 联网调研
+    pattern: /(?:联网|竞品|技术选型|调研).*(?:一下|吧|报告)|(?:帮我|给我).*(?:调研|research)/i,
+    skill: '/research',
+    hint: '触发 /research 联网深度调研（多 agent 并行）',
+  },
+  {
+    // 智能搜索路由
+    pattern: /(?:智能搜索|opencli|搜一下).*|(?:查一下).*(?:网站|技术资料|最新)/i,
+    skill: '/smart-search',
+    hint: '触发 /smart-search 智能搜索路由',
+  },
+  {
+    // 同步/索引刷新
+    pattern: /(?:同步|刷新索引|重新索引|sync|reindex).*(?:一下|吧)?/i,
+    skill: '/sync',
+    hint: '触发 /sync 同步经验/索引',
+  },
+  {
+    // 深度分析（离线，不联网）
+    pattern: /(?:深度分析|方案对比|风险评估|可行性分析).*(?:一下|吧)?|(?:这个方案|这个设计).*(?:怎么样|如何)/i,
+    skill: '/deep-analysis',
+    hint: '触发 /deep-analysis 离线深度分析（不执行只分析）',
+  },
+  {
+    // 技能管理
+    pattern: /(?:找 skill|创建 skill|优化 skill|skill 管理|技能管理).*/i,
+    skill: '/skill-manager',
+    hint: '触发 /skill-manager 技能管理',
+  },
+  {
+    // Harness 体检
+    pattern: /(?:harness 体检|体系审计|技能库体检|规范检查|audit harness).*/i,
+    skill: '/harness-audit',
+    hint: '触发 /harness-audit Harness 体系体检（7维打分）',
+  },
+  {
+    // 知识库导航
+    pattern: /(?:知识库|经验在哪|文档在哪|怎么沉淀).*/i,
+    skill: '/knowledge-index',
+    hint: '触发 /knowledge-index 知识库导航',
+  },
+  {
+    // 双角色协作
+    pattern: /(?:双角色|builder.*operator|operator.*builder|怎么分工).*|(?:切换|进入).*(?:builder|operator)角色/i,
+    skill: '/harness-agents',
+    hint: '触发 /harness-agents 双角色协作（builder/operator）',
+  },
+  {
+    // GitHub Star 整理
+    pattern: /(?:整理.*GitHub.*收藏|star 归类|starred lists|收藏乱).*/i,
+    skill: '/github-star-organizer',
+    hint: '触发 /github-star-organizer 整理 GitHub 收藏',
+  },
+  {
     // 发布/上线
     pattern: /(?:发布|上线|部署|发布一下).*(?:版本|分支|项目)|准备.*(?:上线|发布)/i,
     skill: '/verification-before-completion',
