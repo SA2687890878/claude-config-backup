@@ -1,7 +1,7 @@
 ---
 name: systematic-debugging
 description: >
-  系统化调试与排查:"debug"、"排查"、"调试"、"为什么报错"、"测试失败"、"安全扫描"。
+  系统化调试与排查:"debug"、"排查"、"调试"、"为什么报错"、"测试失败"、"安全扫描"、"/systematic-debugging"。
 version: 3.0.0
 ---
 

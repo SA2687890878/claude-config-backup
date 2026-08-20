@@ -1,7 +1,7 @@
 ---
 name: knowledge-index
 description: >
-  知识库导航:knowledge/、memory/、learnings 布局,什么场景读哪个文档。触发:知识库、经验、文档在哪、怎么沉淀经验。
+  知识库导航:knowledge/、memory/、learnings 布局,什么场景读哪个文档。触发:知识库、经验、文档在哪、怎么沉淀经验、"/knowledge-index"。
 version: 1.1.0
 ---
 

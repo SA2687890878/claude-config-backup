@@ -1,7 +1,7 @@
 ---
 name: review
 description: >
-  代码审查与审计:自动按变更规模选择策略。"审查"、"找 bug"、"审计"、"code review"。
+  代码审查与审计:自动按变更规模选择策略。"审查"、"找 bug"、"审计"、"code review"、"/review"。
 version: 2.0.0
 ---
 

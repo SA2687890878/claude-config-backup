@@ -1,7 +1,7 @@
 ---
 name: perf-tune
 description: >
-  性能调优与优化:慢查询、性能问题、响应很慢、CPU 高、内存泄漏、数据库卡("performance tuning")。
+  性能调优与优化:慢查询、性能问题、响应很慢、CPU 高、内存泄漏、数据库卡("performance tuning"、"/perf-tune")。
 version: 3.0.0
 model: sonnet
 ---

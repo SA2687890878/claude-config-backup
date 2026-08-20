@@ -1,7 +1,7 @@
 ---
 name: skill-manager
 description: >
-  技能管理:找 skill、创建 skill、优化 skill、评估 skill、skill 怎么写。
+  技能管理:找 skill、创建 skill、优化 skill、评估 skill、skill 怎么写、"/skill-manager"。
 version: 3.0.0
 ---
 
@@ -91,29 +91,7 @@ touch skills/skill-name/SKILL.md
 - `description`：第三人称，包含具体触发短语（必填）
 - `version`：语义化版本（可选）
 
-**Description 格式（官方规范）：**
-```yaml
-description: >
-  This skill should be used when the user asks to "具体短语1",
-  "具体短语2", "具体短语3". Include exact phrases users would say
-  that should trigger this skill.
-```
-
-**写作风格：** 全文使用祈使句/不定式（动词开头），不用第二人称。
-
-**正确：**
-```
-读取 references/patterns.md 了解详细模式。
-运行 dotnet build 验证编译。
-```
-
-**错误：**
-```
-你应该读取 references/patterns.md。
-你需要运行 dotnet build。
-```
-
-**精简度：** SKILL.md 正文控制在 1,500-2,000 词。详细内容推到 references/。
+**Description 格式 / 写作风格 / 精简度：** 读取 `references/skill-writing-discipline.md` 了解官方规范（Description 触发短语、祈使句风格、1,500-2,000 词精简度与 no-op 测试）。
 
 ### Step 5: 验证
 

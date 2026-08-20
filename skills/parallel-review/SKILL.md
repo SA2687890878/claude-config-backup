@@ -1,7 +1,7 @@
 ---
 name: parallel-review
 description: >
-  [已内化] 多维度并行审查策略已并入 review（按规模自动调度），不直接对外触发。触发:已内化→见 review。
+  [已内化] 多维度并行审查策略已并入 review（按规模自动调度），不直接对外触发。触发:已内化→见 review、"/parallel-review"。
 version: 1.0.0
 ---
 

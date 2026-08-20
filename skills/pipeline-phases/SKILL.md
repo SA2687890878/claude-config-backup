@@ -1,7 +1,7 @@
-﻿---
+---
 name: pipeline-phases
 description: >
-  [内部协议] 五阶段内部逻辑定义:需求→设计→开发→测试→验证提交,每阶段过门禁。由 pipeline-executor 调度，不直接对外触发。
+  [内部协议] 五阶段内部逻辑定义:需求→设计→开发→测试→验证提交,每阶段过门禁。由 pipeline-executor 调度，不直接对外触发（"/pipeline-phases"）。
 version: 1.0.0
 ---
 

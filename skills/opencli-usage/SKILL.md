@@ -1,8 +1,9 @@
-﻿---
+---
 name: opencli-usage
 description: >
   ★OpenCLI 入口★ 
-  Top-level map of opencli: capabilities, adapter discovery, universal flags, and which skill to load next.
+  Top-level map of opencli: capabilities, adapter discovery, universal flags, and which skill to load next. 触发:"/opencli-usage"。
+version: 1.0.0
 allowed-tools: Bash(opencli:*), Read
 ---
 

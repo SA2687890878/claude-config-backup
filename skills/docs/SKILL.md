@@ -1,7 +1,7 @@
 ---
 name: docs
 description: >
-  项目文档生成:需求文档、设计文档、API 文档、排查文档("项目文档"、"generate docs")。
+  项目文档生成:需求文档、设计文档、API 文档、排查文档("项目文档"、"generate docs"、"/docs")。
 version: 3.0.0
 ---
 

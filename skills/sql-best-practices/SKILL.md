@@ -1,7 +1,7 @@
 ---
 name: sql-best-practices
 description: >
-  SQL 与数据库最佳实践:查询优化、索引优化、迁移、改表、加字段("慢查询"、"scaffold")。
+  SQL 与数据库最佳实践:查询优化、索引优化、迁移、改表、加字段("慢查询"、"scaffold"、"/sql-best-practices")。
 version: 3.0.0
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: harness-agents
 description: >
-  双角色协作:builder(全栈开发,需求到交付)与 operator(只读运维诊断,输出诊断报告)。触发:角色、builder、operator、怎么分工、诊断报告。
+  双角色协作:builder(全栈开发,需求到交付)与 operator(只读运维诊断,输出诊断报告)。触发:角色、builder、operator、怎么分工、诊断报告、"/harness-agents"。
 version: 1.0.0
 ---
 

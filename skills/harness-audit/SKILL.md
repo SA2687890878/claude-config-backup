@@ -1,9 +1,9 @@
-﻿---
+---
 name: harness-audit
 description: >
   Harness 体系体检:对规则根/Rules/Skills/MCP/流程门禁/工程规范/Commit 做 7 维度
   审计打分(S-D),输出 P0/P1 问题与 Quick Wins。触发词:harness 体检、体系审计、
-  技能库体检、规范检查、audit harness、季度检查。
+  技能库体检、规范检查、audit harness、季度检查、"/harness-audit"。
 version: 1.0.0
 ---
 

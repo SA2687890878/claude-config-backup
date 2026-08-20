@@ -1,8 +1,8 @@
-﻿---
+---
 name: pipeline-executor
 description: >
   ★唯一总入口★ 全链路编排调度:自动串联需求→设计→开发→测试→提交,中间可打断审查,说一次"开发 XX"跑到底。
-  触发:开发XX、一键开发、全流程、帮我开发、按计划执行、编排、pipeline、联动、自动跑完。
+  触发:开发XX、一键开发、全流程、帮我开发、按计划执行、编排、pipeline、联动、自动跑完、"/pipeline-executor"。
 version: 1.0.0
 ---
 

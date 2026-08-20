@@ -1,7 +1,7 @@
 ---
 name: verification-before-completion
 description: >
-  完成前验证:"验证"、"确认完成"、"能提交了吗"、"verify"。
+  完成前验证:"验证"、"确认完成"、"能提交了吗"、"verify"、"/verification-before-completion"。
 version: 3.0.0
 ---
 

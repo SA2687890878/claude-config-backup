@@ -1,7 +1,7 @@
 ---
 name: harness-rules
 description: >
-  全局规则第一层:环境、项目速查、核心禁令、五道门概要,细节按需读 .claude/rules/。触发:规则、禁令、质量门、红线。
+  全局规则第一层:环境、项目速查、核心禁令、五道门概要,细节按需读 .claude/rules/。触发:规则、禁令、质量门、红线、"/harness-rules"。
 version: 2.0.0
 ---
 
