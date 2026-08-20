@@ -2,7 +2,7 @@
 
 使用 review skill 的**隐私模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注个人数据处理、数据最小化、保留、删除、导出、日志、访问边界和隐私相关治理。
 

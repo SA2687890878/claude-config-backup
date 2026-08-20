@@ -2,7 +2,7 @@
 
 使用 review skill 的**架构模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注模块边界、依赖方向、分层、所有权以及系统形状是否支持安全变更。
 

@@ -2,9 +2,7 @@
 """
 Language configuration for Deep Research reports.
 
-Shared template for all Latin-script languages, per-language overrides
-only specify the translated strings. `get_lang_config(lang)` returns
-the merged config.
+Shared structural template for all non-Chinese languages, including RTL and non-Latin languages; per-language overrides specify translated strings. `get_lang_config(lang)` returns the merged config.
 """
 
 CHINESE_NUMERALS = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十',

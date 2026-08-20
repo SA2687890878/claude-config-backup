@@ -1,7 +1,6 @@
 ---
 name: docs
-description: >
-  项目文档生成:需求文档、设计文档、API 文档、排查文档("项目文档"、"generate docs"、"/docs")。
+description: "该技能用于生成需求、设计、API 和排查文档。触发：项目文档、生成文档、API 文档、排查文档、generate docs、/docs。"
 version: 3.0.0
 ---
 
@@ -75,3 +74,25 @@ version: 3.0.0
 - 相关文档
 - 相关代码
 ```
+
+## 反模式
+
+- 不要在 scope 未确定时生成文档。
+- 不要把未读取的项目事实写成文档内容。
+- 不要为了补齐模板编造 API、数据库或部署信息。
+- 不要在文档任务中修改业务代码。
+
+## 阶段门禁
+
+- [ ] scope、受众、输出目录和文档类型已确定。
+- [ ] 对应 reference 与模板已读取，事实来源已标注。
+- [ ] 文档完成结构校验、链接检查和必要的术语统一。
+- [ ] 输出已落盘，且业务代码无变更。
+
+## 完成标准
+
+- [ ] scope 已判定（project / feature / issue），不明确时已先询问
+- [ ] 对应 scope 的 `*-details.md`（流程）+ `*-templates.md`（样例）**两者都已读取**
+- [ ] 文档已生成到指定输出位置（docs/project/ 或 docs/features/{name}/ 或 docs/issues/）
+- [ ] 只生成文档，未写任何业务代码
+- [ ] 项目文档：5 份（README/architecture/api/database/deployment）齐全

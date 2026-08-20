@@ -1,41 +1,26 @@
 # 保存进度详细流程
 
-在功能开发等长流程中，保存当前进度以便下次继续。
+> **主入口：`~/.claude/tasks/active.json`（CLAUDE.md 任务栈）。`memory/task-state.md` 仅遗留兼容，不再作为恢复入口。**
 
 ## 写入
 
-保存到 `memory/task-state.md`：
+保存到 `~/.claude/tasks/active.json`：
 
-```markdown
----
-name: task-state
-description: 当前任务进度状态
-metadata:
-  type: project
----
-
-## 当前任务
-
-- **任务**: [功能名称/bug 描述]
-- **阶段**: [当前在哪个 Phase]
-- **下一步**: [具体要做什么]
-
-## 已完成
-
-- [x] Phase 1: 需求探索 — [简述结果]
-- [x] Phase 2: 实现规划 — [计划文件路径]
-- [ ] Phase 3: 代码实现 — 进行中
-
-## 关键上下文
-
-- 涉及文件：[文件列表]
-- 设计决策：[关键决策]
-- 已知问题：[遇到的问题]
-
-## 恢复指令
-
-下次会话输入"继续工作"即可恢复。
+```json
+{
+  "task_id": "task-<uuid>",
+  "stage": "development|testing|paused",
+  "product_path": "~/projects/<name>/",
+  "paused_at": "当前步骤描述",
+  "context": {
+    "files": ["涉及文件列表"],
+    "decisions": ["关键决策"],
+    "issues": ["已知问题"]
+  }
+}
 ```
+
+**下次恢复时**：读 `active.json` → 从 `paused_at` 处继续。`memory/task-state.md` 仅当 `active.json` 不存在时作为遗留兼容回退。
 
 ## 自动保存
 

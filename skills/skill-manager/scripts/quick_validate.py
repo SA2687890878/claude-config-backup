@@ -19,7 +19,7 @@ def validate_skill(skill_path):
         return False, "SKILL.md not found"
 
     # Read and validate frontmatter
-    content = skill_md.read_text()
+    content = skill_md.read_text(encoding='utf-8')
     if not content.startswith('---'):
         return False, "No YAML frontmatter found"
 
@@ -39,7 +39,11 @@ def validate_skill(skill_path):
         return False, f"Invalid YAML in frontmatter: {e}"
 
     # Define allowed properties
-    ALLOWED_PROPERTIES = {'name', 'description', 'license', 'allowed-tools', 'metadata', 'compatibility'}
+    # 与 skill-structure.md 保持一致：version 是可选字段；其余维护元数据归入 metadata。
+    ALLOWED_PROPERTIES = {
+        'name', 'description', 'version', 'license', 'allowed-tools',
+        'metadata', 'compatibility', 'updated', 'risk', 'author', 'repository'
+    }
 
     # Check for unexpected properties (excluding nested keys under metadata)
     unexpected_keys = set(frontmatter.keys()) - ALLOWED_PROPERTIES

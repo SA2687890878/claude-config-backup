@@ -1,7 +1,6 @@
 ---
 name: harness-rules
-description: >
-  全局规则第一层:环境、项目速查、核心禁令、五道门概要,细节按需读 .claude/rules/。触发:规则、禁令、质量门、红线、"/harness-rules"。
+description: "该技能用于查询 Harness 全局规则、核心禁令、质量门和按需规则入口。触发：规则、禁令、质量门、红线、/harness-rules。"
 version: 2.0.0
 ---
 
@@ -46,3 +45,10 @@ version: 2.0.0
 - 问题澄清题库 → `.claude/knowledge/rules/quality/question-bank.md`
 - 加密文件修改(cherry-pick 流程、switch-case 易错点)→ `~/.claude/learnings.md`
 - 知识库导航 → skill: `knowledge-index`
+
+## 完成标准
+
+- [ ] 用户关心的规则类别已识别（环境 / 禁令 / 质量门 / 代码访问 / Token）
+- [ ] 核心禁令（.Result/.Wait、push main/develop、硬编码密钥）命中即明确标注"违反即事故"
+- [ ] 只给出概要，细节指向对应文件（rules/*.md / knowledge/），未在本文件展开
+- [ ] 无过时/冲突信息：答案与 CLAUDE.md 和 rules/ 一致

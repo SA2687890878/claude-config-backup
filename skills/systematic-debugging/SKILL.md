@@ -1,7 +1,6 @@
 ---
 name: systematic-debugging
-description: >
-  系统化调试与排查:"debug"、"排查"、"调试"、"为什么报错"、"测试失败"、"安全扫描"、"/systematic-debugging"。
+description: "该技能用于系统化调试和排查错误，遵循复现、根因、假设、失败模式检测和验证流程。触发：debug、排查、调试、为什么报错、测试失败、安全扫描、/systematic-debugging。"
 version: 3.0.0
 ---
 
@@ -21,16 +20,17 @@ version: 3.0.0
 
 **没有根因调查，不允许修复。** 随机修复浪费时间、引入新 bug。
 
-> **代码探索铁律**：定位 bug 时先用索引追调用链、最后才 Read。遵循 [`rules/tools/code-access.md`](../../rules/tools/code-access.md)：search.ps1 -Callers/-Callees 是调试追踪首选。
+> **代码探索铁律**：定位 bug 时先用索引追调用链、最后才 Read。遵循 [`~/.claude/rules/tools/code-access.md`](../../rules/tools/code-access.md)：search.ps1 -Callers/-Callees 是调试追踪首选。
 
-## 五个阶段
+## 六个阶段
 
-每个阶段必须完成才能进入下一个。
+每个阶段必须完成才能进入下一个；每次修复失败后还必须完成 Phase 3.5，才能尝试下一个方案。
 
 **Phase 0: 建反馈循环** — 先建一个能稳定复现问题的命令
 **Phase 1: 根因调查** — 读错误、复现、检查变更、收集证据
 **Phase 2: 模式分析** — 找可工作示例、对比差异
 **Phase 3: 假设与测试** — 形成理论、最小化测试
+**Phase 3.5: 失败模式检测** — 识别重复失败、伪切换和方法论切换条件
 **Phase 4: 实现修复** — 创建测试、修复、验证
 
 **3+ 次修复失败 = 架构问题。** 停下，质疑架构，和用户讨论。

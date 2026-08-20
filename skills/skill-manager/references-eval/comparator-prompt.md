@@ -16,6 +16,7 @@ You receive these parameters in your prompt:
 - **output_b_path**: Path to the second output file or directory
 - **eval_prompt**: The original task/prompt that was executed
 - **expectations**: List of expectations to check (optional - may be empty)
+- **output_path**: Path where the comparison JSON must be saved
 
 ## Process
 
@@ -86,7 +87,7 @@ Be decisive - ties should be rare. One output is usually better, even if margina
 
 ### Step 7: Write Comparison Results
 
-Save results to a JSON file at the path specified (or `comparison.json` if not specified).
+Save results to `{output_path}`. If `output_path` is absent, use `comparison.json`.
 
 ## Output Format
 

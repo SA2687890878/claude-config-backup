@@ -1,7 +1,6 @@
 ---
 name: skill-manager
-description: >
-  技能管理:找 skill、创建 skill、优化 skill、评估 skill、skill 怎么写、"/skill-manager"。
+description: "该技能用于查找、创建、优化和评估 Claude Code skills。触发：找 skill、创建 skill、优化 skill、评估 skill、skill 怎么写、/skill-manager。"
 version: 3.0.0
 ---
 
@@ -191,10 +190,17 @@ touch skills/skill-name/SKILL.md
 
 ### 完成标准
 
-- [ ] eval 测试已运行
-- [ ] 评分报告已生成
-- [ ] 改进点已识别
-- [ ] 迭代优化已执行
+- [ ] eval 测试已运行；若依赖 `claude -p` 或外部模型不可用，已记录为未执行而非伪造结果
+- [ ] 评分报告已生成，或已明确记录缺失输入/依赖
+- [ ] 改进点已识别并与具体测试失败关联
+- [ ] 至少完成一轮修改后回归；无回归时保留原描述并说明原因
+
+### 评估反模式
+
+- 不要在没有测试 prompt、eval 输入或模型依赖时声称 benchmark 已通过。
+- 不要把 `--help` 或语法编译结果当作触发效果评估。
+- 不要只优化单个正向触发词而忽略 false trigger。
+- 不要为了达到词数目标机械扩写正文。
 
 ---
 

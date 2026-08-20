@@ -2,7 +2,7 @@
 
 使用 review skill 的**前端状态模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注前端状态管理、组件架构和 UI 数据流。此模式适用于具有浏览器/客户端 UI 的项目。
 

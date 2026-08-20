@@ -2,7 +2,7 @@
 
 使用 review skill 的**文档模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注外部文档、内部文档、设置说明和运维指导是否与代码匹配并减少真实的交付风险。
 

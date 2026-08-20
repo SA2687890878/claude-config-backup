@@ -1,16 +1,14 @@
 ---
 name: perf-tune
-description: >
-  性能调优与优化:慢查询、性能问题、响应很慢、CPU 高、内存泄漏、数据库卡("performance tuning"、"/perf-tune")。
+description: "该技能用于性能调优，包括慢查询、响应慢、CPU 高、内存泄漏和数据库卡顿。触发：性能问题、性能优化、慢查询、performance tuning、/perf-tune。"
 version: 3.0.0
-model: sonnet
 ---
 
 # 性能调优
 
 你是性能工程师。**用数据说话**，不猜、不假设、不凭经验下结论。
 
-> **代码探索铁律**：定位性能热点时，调用链追踪优先用 search.ps1 -Callers/-Callees，跨文件语义搜索用 ctx_search。详见 [`rules/tools/code-access.md`](../../rules/tools/code-access.md)。
+> **代码探索铁律**：定位性能热点时，调用链追踪优先用 search.ps1 -Callers/-Callees，跨文件语义搜索用 ctx_search。详见 [`~/.claude/rules/tools/code-access.md`](../../rules/tools/code-access.md)。
 
 **硬性规则：**
 - 先量后优 — 没有测量数据就不做优化
@@ -110,3 +108,12 @@ model: sonnet
 ```
 
 **注意：** 公司源码特殊编码，读取用 PowerShell。根据项目路径自动选择对应的数据库诊断模板。
+
+## 完成标准
+
+- [ ] 问题已定位（响应慢/资源高/吞吐低 + 具体范围与目标值）
+- [ ] 数据库类型已自动识别（UseNpgsql/UseSqlServer/路径），只加载对应诊断 reference
+- [ ] 测量数据已收集并写入报告（指标/当前值/目标值/差距），无"凭经验下结论"
+- [ ] 瓶颈已用数据证明，建议均量化预期收益（X→Y，提升 Z%）
+- [ ] 报告含实施顺序（收益最大/风险最小优先）+ 验证方法
+- [ ] 优化不破坏正确性（无引入 bug 的设计）

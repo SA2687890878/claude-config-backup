@@ -30,7 +30,7 @@ git rev-parse main
 
 ## 派发 subagent
 
-使用 Agent 工具派发独立的 code reviewer subagent。
+使用 subagent 工具派发独立的 code reviewer；只提供 diff、验收标准和需求依据，不传递实现者上下文。
 
 ## 按严重级别处理反馈
 

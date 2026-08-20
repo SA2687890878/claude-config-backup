@@ -8,7 +8,7 @@
 
 | 文档 | 路径 | 内容 |
 |------|------|------|
-| 需求文档 | `docs/features/{name}/requirement.md` | 用户故事、验收标准、约束条件 |
-| 需求分析 | `docs/features/{name}/analysis.md` | 功能边界、异常场景、数据流 |
-| 设计文档 | `docs/features/{name}/design.md` | 技术方案、代码变更、数据库变更 |
-| 任务清单 | `docs/features/{name}/tasks.md` | 开发任务、测试任务、依赖关系 |
+| 需求文档 | `docs/features/{name}/01-requirement.md` | 用户故事、验收标准、约束条件 |
+| 需求分析 | `docs/features/{name}/02-analysis.md` | 功能边界、异常场景、数据流 |
+| 设计文档 | `docs/features/{name}/03-design.md` | 技术方案、代码变更、数据库变更 |
+| 任务清单 | `docs/features/{name}/04-tasks.md` | 开发任务、测试任务、依赖关系 |

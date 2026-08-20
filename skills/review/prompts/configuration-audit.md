@@ -2,7 +2,7 @@
 
 使用 review skill 的**配置模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注配置正确性、验证、环境分离、功能开关卫生和安全的运行时默认值。
 

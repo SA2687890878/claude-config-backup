@@ -1,8 +1,6 @@
 ---
 name: smart-search
-description: >
-  [搜索路由] 基于 opencli 的智能搜索路由器:网站、社交媒体、技术资料、新闻、购物、旅游、求职、金融、中文内容搜索。触发:搜索路由、opencli 搜索、查一下、"/smart-search"。
-version: 1.0.0
+description: "该技能用于按网站、社交媒体、技术资料、新闻、购物、旅游、求职和金融场景路由搜索。触发：搜索路由、opencli 搜索、查一下、smart search、/smart-search。"
 allowed-tools: Bash(opencli:*), Read
 ---
 
@@ -159,3 +157,11 @@ allowed-tools: Bash(opencli:*), Read
 - **`references/sources-other.md`** — 其他垂直源
 
 只读与当前查询相关的文件，无需全部加载。
+
+## 完成标准
+
+- [ ] 强制预检完成：`opencli list -f yaml` + 候选站点 `-h`（活体确认，非硬编码）
+- [ ] 台账已更新：site / query / count / status 记录在 `~/.opencli/search-budget.json`
+- [ ] 频率上限未破：AI 站点同题 ≤1 次（未被点名不串多 AI 源）；非 AI 站点 ≤2 次
+- [ ] 回答末尾附搜索摘要（网站 / 查询词 / 次数，限频跳过的写明）
+- [ ] 站点不可用/失败时已记录并回退到同类源，未因单源失败中止整个搜索

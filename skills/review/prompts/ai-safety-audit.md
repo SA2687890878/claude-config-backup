@@ -2,7 +2,7 @@
 
 使用 review skill 的**AI安全模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注 AI/LLM 应用风险：提示注入、工具授权、RAG 数据泄露、模型降级、eval 覆盖、幻觉敏感工作流和成本/滥用控制。仅当项目包含 AI、LLM、代理、嵌入、RAG 或模型服务行为时使用此模式。
 

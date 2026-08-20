@@ -79,21 +79,8 @@ public class UserServiceTests : IDisposable
 }
 ```
 
-### 使用 Builder 模式
-```csharp
-public class UserBuilder
-{
-    private int _id = 1;
-    private string _name = "TestUser";
-    
-    public UserBuilder WithId(int id) { _id = id; return this; }
-    public UserBuilder WithName(string name) { _name = name; return this; }
-    public User Build() => new User { Id = _id, Name = _name };
-}
-
-// 使用
-var user = new UserBuilder().WithId(1).WithName("John").Build();
-```
+### Builder 模式
+需要构造复杂测试对象时，使用 `references/code-templates.md` 中的 `UserBuilder` 模板。
 
 ## Mock 使用
 

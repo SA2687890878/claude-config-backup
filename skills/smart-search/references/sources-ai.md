@@ -2,13 +2,6 @@
 
 当用户没有明确指定网站时，先在 `grok`、`doubao`、`gemini` 中选择一个，不要一开始并行跑多个 AI 源。
 
-## 使用规则
-
-1. 先运行 `opencli list -f yaml`
-2. 确认 `grok`、`doubao`、`gemini` 哪些在当前 registry 中可用
-3. 运行 `opencli <site> -h`
-4. 锁定具体子命令后，再运行 `opencli <site> <command> -h`
-
 ## 路由建议
 
 ### grok
@@ -49,12 +42,6 @@
     - `MCP overview and official guidance with sources`
     - `best budget travel destinations in Japan April 2026 compare pros and cons`
     - `TypeScript decorators current status official sources`
-
-## 补充原则
-
-- 先用一个 AI 源拿到初步答案
-- 若答案缺少原始数据、垂直结果或权威来源，再补 1-2 个专用源
-- 不要把 AI 默认源当成命令签名的事实来源；命令细节始终以 `opencli ... -h` 为准
 
 ## 通用写法模板
 

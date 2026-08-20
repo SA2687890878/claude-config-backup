@@ -2,7 +2,7 @@
 
 使用 review skill 的**数据完整性模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注系统在故障、重试、并发和升级下是否保持正确、持久和可恢复的数据。
 

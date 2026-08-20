@@ -1,41 +1,9 @@
 ---
 name: verification-before-completion
-description: >
-  完成前验证:"验证"、"确认完成"、"能提交了吗"、"verify"、"/verification-before-completion"。
+description: "该技能用于在声明完成、提交或交付前执行证据化验证。触发：验证、确认完成、能提交了吗、verify、/verification-before-completion。"
 version: 3.0.0
 ---
 
-# 验证优先
-
-## 核心铁律
-
-**没有新鲜的验证证据，不许宣称完成。**
-
-## 验证流程
-
-在声称任何状态或表达满意之前：
-
-1. **识别** — 什么命令能证明这个结论？
-2. **运行** — 执行完整命令（新鲜、完整）
-3. **读取** — 完整输出，检查退出码，计数失败
-4. **验证** — 输出是否确认结论？
-   - 否 → 陈述实际状态和证据
-   - 是 → 带着证据陈述结论
-5. **然后** — 才能下结论
-
-跳过任何一步 = 说谎，不是验证。
-
-## 完成收据
-
-宣称完成时附证据槽（依据 Aegis 理念，补充 scope/uncovered/residual/confidence 维度）：
-
-```text
-[候选完成]
-action: 跑了什么命令
-result: 结果是什么
-scope: 验证覆盖了什么
-uncovered: 没覆盖什么（诚实列出）
-residual: 剩余风险
 confidence: A|B|C（对结论的信心）
 ```
 
@@ -57,3 +25,25 @@ confidence: A|B|C（对结论的信心）
 
 > 经验沉淀 / 进度保存 / 恢复工作 → 交给 `save-memory` skill("保存经验"、"保存进度"、"继续工作")。
 > 本 skill 只负责"完成前验证"这一个职责。
+
+## 反模式
+
+- 不要用旧输出、缓存或“应该通过”替代新鲜证据。
+- 不要隐藏未覆盖范围、残留风险或失败命令。
+- 不要把 stdout 自述当作落盘事实。
+- 不要在验证未完成时声明任务完成或允许提交。
+
+## 阶段门禁
+
+- [ ] 识别验证目标和范围后再选择命令。
+- [ ] 命令已实际执行并读取完整结果。
+- [ ] 产物、退出码、git 状态或文件存在性已核对。
+- [ ] 收据包含 scope、uncovered、residual 和 confidence。
+
+## 完成标准
+
+- [ ] 验证命令已执行（新鲜、完整输出），未跳过"识别→运行→读取→验证→结论"任一步
+- [ ] 完成收据已填写：action / result / scope / uncovered / residual / confidence 六槽齐全
+- [ ] scope 和 uncovered 已诚实列出（未只报结果不报覆盖）
+- [ ] 证据为可核验的落盘事实（产物文件存在 / 退出码 0 / git log -1），不靠 stdout 自述
+- [ ] confidence 依据明确：A=退出码+完整输出 / B=部分验证+已知缺口 / C=推测未运行

@@ -1,6 +1,6 @@
 ---
 name: github-star-organizer
-description: 整理 GitHub 收藏仓库并自动归类到 Starred Lists。触发：整理我的 GitHub 收藏、star 归类、starred lists、收藏乱、新收藏仓库分类、"/github-star-organizer"。
+description: "该技能用于整理 GitHub 收藏仓库并自动归类到 Starred Lists。触发：整理 GitHub 收藏、star 归类、starred lists、收藏仓库分类、/github-star-organizer。"
 version: 1.0.0
 ---
 

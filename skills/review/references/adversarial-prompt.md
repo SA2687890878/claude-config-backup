@@ -25,7 +25,7 @@
 | `.vue` | `references/vue-checklist.md` |
 | `.sql` | `references/sql-checklist.md` |
 | `*.json` / `*.xml` | `references/config-checklist.md` |
-| 其他 | `references/checklist.md` |
+| 其他 | `references/dotnet-checklist.md` |
 
 ## 严重程度定义
 

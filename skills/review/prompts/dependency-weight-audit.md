@@ -2,7 +2,7 @@
 
 使用 review skill 的**依赖权重模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注依赖是否物有所值 — 不仅仅是已知漏洞，而是每个依赖相对于项目规模是否合理。
 

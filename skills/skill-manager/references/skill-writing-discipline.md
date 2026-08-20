@@ -116,20 +116,4 @@ skill 写完后，每句话过一遍：删掉它，agent 行为会变吗？
 
 ## 验证清单
 
-skill 写完或改完后，逐项检查：
-
-**Structure：**
-- [ ] SKILL.md 有有效的 YAML frontmatter（name + description）
-- [ ] description 使用第三人称，包含具体触发短语
-- [ ] references/ 中的文件都被 SKILL.md 引用
-
-**Content：**
-- [ ] 正文使用祈使句，不用第二人称
-- [ ] 正文 1,500-2,000 词（上限 3,000）
-- [ ] 详细内容在 references/ 中
-- [ ] 无重复信息（SKILL.md 和 references/ 不重复）
-
-**Quality：**
-- [ ] 每个阶段有 completion criteria
-- [ ] 关键阶段有 anti-patterns
-- [ ] 通过 no-op 测试（每句话删掉会影响行为）
+skill 写完或改完后，按以下顺序验证：frontmatter 与 description → references 引用 → 祈使句与词数 → progressive disclosure 去重 → 每阶段 completion criteria 与 anti-patterns → no-op 测试。记录每项结果；未通过项修复后重新验证。

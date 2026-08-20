@@ -2,7 +2,7 @@
 
 使用 review skill 的**可访问性模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注浏览器/客户端 UI 工作流在键盘、屏幕阅读器、响应式、加载、空和错误状态下是否保持可用、可理解和正确。
 

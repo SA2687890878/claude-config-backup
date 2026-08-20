@@ -1,7 +1,6 @@
 ---
 name: research
-description: >
-  [联网重型] 深度调研报告:多 agent 并行、SearXNG 联网获取最新数据、多语言输出。触发:联网调研、竞品分析、技术选型、research。
+description: "该技能用于联网或离线深度调研、竞品分析和技术选型，并生成带来源的报告。触发：联网调研、深度调研、竞品分析、技术选型、research、/research。"
 version: 3.0.0
 updated: 2026-06-08
 risk: medium
@@ -82,20 +81,20 @@ Task 4: 验证 + 装配 + QA
 
 ### Task 2: 数据收集 + 结构化数据池
 
-- **prompt 文件**：`prompts/task2_data_collection.md`
+- **prompt 文件**：`prompts/task2_data_collection.md`（入口：Task 2 数据收集；输出：`{TMPDIR}/data-pool.json` 与 `{TMPDIR}/task2_manifest.json`）
 - **输出**：`{TMPDIR}/data-pool.json` + `{TMPDIR}/task2_manifest.json`
 - **失败重试**：自动重试 1 次
 
 ### Task 3: 并行派发章节撰写
 
-- **prompt 文件**：`prompts/task3_chapter_agent.md`
+- **prompt 文件**：`prompts/task3_chapter_agent.md`（入口：Task 3 并行章节撰写；输出：`{TMPDIR}/chapters/chapter-{N}.md`）
 - **输出**：`{TMPDIR}/chapters/chapter-{N}.md`
 - **并行模式**：所有章节并行撰写
 - **失败处理**：串行重写失败章节
 
 ### Task 4: 验证 + 装配 + QA
 
-- **prompt 文件**：`prompts/task4_assembly.md`
+- **prompt 文件**：`prompts/task4_assembly.md`（入口：Task 4 装配与 QA；工具：`tools/dr_tools.py`；输出：`reports/`）
 - **工具**：`{TOOLSDIR}/dr_tools.py`
 - **步骤**：
   1. `validate-all-chapters` — 批量验证
@@ -134,7 +133,7 @@ Task 4: 验证 + 装配 + QA
 
 ## 搜索链路（已溶 OpenCLI 梯子）
 
-> 选源按 `references/strategy-ladder.md` 梯子：`PUBLIC(1.18) > COOKIE(2.01) ≈ UI(1.92) ≫ PAGE_FETCH(8.41)`，契约优先；`--trace` verify，有 `active.json` 时双写 `{product_path}/opencli-artifacts/`。
+> 选源按 `references/strategy-ladder.md` 梯子：`PUBLIC_API(1.18) > COOKIE_API(2.01) ≈ UI_SELECTOR(1.92) ≫ PAGE_FETCH(8.41) / INTERCEPT(8.69)`，契约优先；`--trace` verify，有 `active.json` 时双写 `{product_path}/opencli-artifacts/`。
 
 ```
 Layer 0 — CLI 内置引擎探测
@@ -192,9 +191,34 @@ Scrapling 抓取 → 失败回退 → webfetch
 - 质量标准完整版：`RULES.md`
 - 分类标准：`TYPES.md`
 - 三档模式参数：`profiles.json`
-- 语言映射表：`tools/lang_config.py`（用法见 RULES.md）
-- 编码规范详情：见上文"跨平台编码规范"表 + `RULES.md` 编码洁净条款（原 references/ 文件已内联，不再存在）
+- 语言映射表：`tools/lang_config.py`（用法见 `RULES.md`）
+- 编码规范详情：见上文“跨平台编码规范”表与 `RULES.md` 编码洁净条款。
+- 资源入口：Task 1–4 的 prompt 文件；Task 4 调用 `tools/dr_tools.py` 输出到 `reports/`。
 
 ---
 
 **Created by [hoolulu](https://github.com/hoolulu)** · [github.com/hoolulu/deep-research](https://github.com/hoolulu/deep-research)
+
+## 反模式
+
+- 不要在未确认联网/离线模式前开始收集资料。
+- 不要把无来源数字或模型推测写成事实结论。
+- 不要跳过 Task 2 数据池、Task 3 章节校验或 Task 4 QA。
+- 不要把失败的工具调用伪装成已完成的搜索或验证。
+
+## 阶段门禁
+
+- [ ] Step 0/0.5 已完成，模式、语言和输出目录已确定。
+- [ ] Task 1 输出 `outline.json`，且大纲可映射到报告章节。
+- [ ] Task 2 输出数据池和 manifest，来源可追溯。
+- [ ] Task 3 每个章节均有文件，失败章节已重写或显式标记。
+- [ ] Task 4 完成验证、装配、引用转换和 QA 后才生成最终报告。
+
+## 完成标准
+
+- [ ] 语言已检测并按该语言输出全部内容（ISO 639-1）
+- [ ] 四条主链路已完成：大纲 → 数据池 → 章节并行 → 装配 QA（Task1-4 全部跑通）
+- [ ] 7 条质量标准全部满足（见上方"质量标准"表）
+- [ ] 章节校验通过（validate-all-chapters），报告装配并生成可信评估
+- [ ] 最终报告保存到 `reports/`，非 ASCII 内容走 UTF-8 文件（未进 shell argv）
+- [ ] 计价达标：quick 8-12min / standard 10-15min / deep 20-30min 内完成对应档

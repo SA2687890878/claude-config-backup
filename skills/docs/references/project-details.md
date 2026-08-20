@@ -14,6 +14,6 @@
 |------|------|------|
 | 项目概述 | `docs/project/README.md` | 简介、技术栈、目录结构、核心模块 |
 | 架构设计 | `docs/project/architecture.md` | 分层说明、依赖关系、模块职责 |
-| API 文档 | `docs/project/api.md` | 接口列表、请求/响应格式、错误码 |
+| 技术栈 | `docs/project/tech-stack.md` | 框架版本、工具链、依赖关系 |
+| 开发规范 | `docs/project/conventions.md` | 命名规范、代码规范、Git 规范、文档规范 |
 | 数据库文档 | `docs/project/database.md` | 表结构、索引、关系、ER 图 |
-| 部署文档 | `docs/project/deployment.md` | 环境要求、配置说明、部署步骤 |

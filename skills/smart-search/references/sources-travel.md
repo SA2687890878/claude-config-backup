@@ -7,12 +7,10 @@
 ### ctrip
 
 - 适用：目的地、景区、酒店、旅行联想搜索
-- 使用前先运行：`opencli ctrip -h`
 
 ### xiaohongshu
 
 - 适用：生活方式、穿搭、美妆、旅行、真实体验
-- 使用前先运行：`opencli xiaohongshu -h`
 
 ## 路由提示
 

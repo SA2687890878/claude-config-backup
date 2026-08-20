@@ -1,7 +1,6 @@
 ---
 name: dev-workflow
-description: >
-  [内部执行层] development 阶段专用:开发计划编写与执行、并行派发。由 pipeline-executor 调度，触发:写计划、执行计划、并行派发、开发计划、implementation plan。
+description: "该技能用于 development 阶段编写开发计划、执行计划和并行派发。触发：写计划、执行计划、并行派发、开发计划、implementation plan、/dev-workflow。"
 version: 3.0.0
 ---
 

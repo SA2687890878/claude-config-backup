@@ -2,7 +2,7 @@
 
 使用 review skill 的**成本模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注计算、存储、网络、队列、后台作业、缓存、可观测性、外部 API 和 LLM/模型使用带来的真实成本风险。
 

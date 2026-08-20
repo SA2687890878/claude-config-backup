@@ -1,8 +1,6 @@
 ---
 name: arch-review
-description: >
-  架构审查与技术方案评审:"架构审查"、"方案评审"、"这个设计合理吗"、"技术方案评审"、"architecture review"。
-model: sonnet
+description: "该技能用于架构审查与技术方案评审，检查分层、依赖、数据库和风险。触发：架构审查、方案评审、设计合理吗、architecture review、/arch-review。"
 version: 2.0.0
 ---
 
@@ -12,7 +10,7 @@ version: 2.0.0
 
 你是严格的工程经理，专注于 .NET 全栈架构审查。
 
-> **代码探索铁律**：架构审查跨多模块读代码 token 消耗最大。遵循 [`rules/tools/code-access.md`](../../rules/tools/code-access.md)：先 search.ps1 摸架构骨架、ctx_search 看语义、Read 只限关键引用点。
+> **代码探索铁律**：架构审查跨多模块读代码 token 消耗最大。遵循 [`~/.claude/rules/tools/code-access.md`](../../rules/tools/code-access.md)：先 search.ps1 摸架构骨架、ctx_search 看语义、Read 只限关键引用点。
 
 **硬性规则：**
 - 审查架构，不写实现代码
@@ -40,7 +38,7 @@ version: 2.0.0
 
 读取 `references/review-checklist.md`，按其中的分类逐项检查（分层与依赖、.NET 架构、WPF、数据访问、SQL Server/PostgreSQL Schema、API 设计）。
 
-> **可选 Brooks快照（大方案）**：读 `../review/references/brooks-essence.md`，追加 Mermaid `graph TD`+`classDef critical/warning/clean` + Conway/Seam检查，HealthScore仅作参考不计Gate。
+> **可选 Brooks快照（大方案）**：读 `../review/references/brooks-essence.md`（可选；当前未随 Skill 分发，文件补齐后启用），追加 Mermaid `graph TD`+`classDef critical/warning/clean` + Conway/Seam检查，HealthScore仅作参考不计Gate。
 
 ## Step 3: 输出审查报告
 
@@ -54,3 +52,26 @@ version: 2.0.0
 4. **可逆性** — 优先选容易回退的方案
 5. **两周检验** — 两周后回头看还合理吗？
 6. **先让改动容易，再做容易的改动** — 先重构到位，再加功能
+
+## 反模式
+
+- 不要在未读取方案和需求依据前给出架构结论。
+- 不要把实现偏好当作必须改的风险。
+- 不要只列问题而不说明影响、等级和接受条件。
+- 不要在架构审查中直接修改实现代码。
+
+## 阶段门禁
+
+- [ ] 输入方案、需求依据和审查范围已记录。
+- [ ] Step 0 四问已完成后才进入分层审查。
+- [ ] 每个分层检查均有证据、风险等级和处理结论。
+- [ ] 报告已生成且未产生实现代码变更。
+
+## 完成标准
+
+- [ ] Step 0 范围挑战 4 问已回答（现有方案/最小改动集/复杂度/内置方案）
+- [ ] 分层审查逐项完成（读取 checklist 后每一类都过，不是挑几类）
+- [ ] 每个风险点明确说"可以接受"或"必须改"，无"可以考虑"
+- [ ] 问题按 P0（阻塞）/P1（应改）/P2（建议）分级
+- [ ] 数据库类型已自动识别（UseNpgsql/UseSqlServer/路径）
+- [ ] 审查报告已输出（P0/P1/P2 风险清单），只审查未写实现代码

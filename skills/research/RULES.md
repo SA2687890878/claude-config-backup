@@ -2,6 +2,16 @@
 
 所有规则按"在哪拦截"标注，违规即降级。
 
+## 术语对照（RULES 阶段 ↔ SKILL.md 主流程 Task）
+
+| RULES.md 拦截点 | 对应 SKILL.md 阶段 |
+|:---------------|:------------------|
+| 阶段1 | Task 1 大纲生成 |
+| 阶段2（含 Step 3/4/5） | Task 2 数据收集 |
+| 阶段2b / 装配 | Task 4 装配（validate→assemble→confidence） |
+| 阶段4 / 章节 agent | Task 3 并行章节撰写 |
+| 阶段5 / 验收 / QA | Task 4 验证与 QA |
+
 ---
 
 ## 阶段1 规则

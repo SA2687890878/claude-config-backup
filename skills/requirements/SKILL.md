@@ -1,7 +1,6 @@
 ---
 name: requirements
-description: >
-  需求分析、需求评审、需求梳理:"需求分析"、"想做一个功能"、"需求不太清楚"、"头脑风暴"、"brainstorm"。
+description: "该技能用于分析、梳理和评审不明确的产品或技术需求。触发：需求分析、需求评审、需求梳理、想做一个功能、头脑风暴、brainstorm、/requirements。"
 version: 3.0.0
 ---
 

@@ -47,7 +47,7 @@ python {TOOLSDIR}/dr_tools.py convert-citations \
 - `target_year`：从 outline.json 的 time_anchor.target_year 读取
 - `生成时间`：当前 `date` 命令值
 - `输出路径`：优先用户指定，无则 `{SKILLDIR}/reports/{LANG}/`
-- `data_limited`：如为 true，报告开头追加醒目标注 `> ⚠️ **数据说明**：本次调研数据来源较为有限（共引用 N 个来源），部分结论基于有限样本，仅供参考。`，并将 QA 的年份密度和段落达标标准各降低 30%
+- `data_limited`：如为 true，报告开头追加醒目标注 `> ⚠️ **数据说明**：本次调研数据来源较为有限（共引用 N 个来源），部分结论基于有限样本，仅供参考。`；年份密度和段落阈值按当前模式下限的 70% 计算，向上取整
 - **总字数在装配后自动计算**，无需提前准备
 
 ## Step 3 — QA 验收
@@ -72,8 +72,8 @@ python {TOOLSDIR}/dr_tools.py year-density <报告> --target-year N # 年份
 
 ☐ **dr_tools.py qa-report 通过**（编码/乱码/标题/元数据/TOC/尾部/年份/字数全部检查；`time_anchor=relaxed` 时年份检查自动豁免）
 ☐ 章节完整性：所有章节存在
-☐ 行数：wc -l ≥ 模式参考值
-☐ 段落数：抽 2 章，每章 ≥ 5 段
+☐ 行数：由 `qa-report` 按当前模式校验
+☐ 段落数：按 `profiles.json` 当前模式的 `min_paragraphs` 校验；抽查 2 章
 ☐ 目录为单层结构：仅包含章级标题，无子节缩进
 ☐ 三段式顺序：报告第 1 行为 `# ` 标题，第 2-6 行内含元数据行（以 `> **元数据**：` 开头），元数据行后紧跟 `## 目录`
 ☐ **路径核验**：报告保存路径属于默认语言子目录（`{SKILLDIR}/reports/{LANG}/`）或用户指定目录，两者之一；既非默认也非用户指定 → 标记"路径异常"不通过
@@ -81,7 +81,7 @@ python {TOOLSDIR}/dr_tools.py year-density <报告> --target-year N # 年份
 ☐ 反方观点：至少 1 处
 ☐ 跨来源归因一致
 
-所有检查（含字数）通过 → 继续。
+机械检查通过后继续处理语义项。
 
 年份密度检查：如果 `time_anchor.mode == "relaxed"`，**跳过 year-density 检查**（指南/教程类主题不要求时效性）。年份密度不达标但其他项目全过 → 加声明继续。
 

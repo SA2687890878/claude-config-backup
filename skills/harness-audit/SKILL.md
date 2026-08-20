@@ -1,9 +1,6 @@
 ---
 name: harness-audit
-description: >
-  Harness 体系体检:对规则根/Rules/Skills/MCP/流程门禁/工程规范/Commit 做 7 维度
-  审计打分(S-D),输出 P0/P1 问题与 Quick Wins。触发词:harness 体检、体系审计、
-  技能库体检、规范检查、audit harness、季度检查、"/harness-audit"。
+description: "该技能用于审计 Harness 规则、Skills、MCP、流程门禁和工程规范，并输出分级问题。触发：Harness 体检、体系审计、技能库体检、规范检查、audit harness、/harness-audit。"
 version: 1.0.0
 ---
 
@@ -41,7 +38,7 @@ version: 1.0.0
 
 ## 新增第8维（可选，不计总体）
 
-**8. 代码健康分**：读 `../review/references/brooks-essence.md`，按 `HealthScore Arch30/Debt25/PR25/Test20 + Pain×Spread表` 快算，落 `{product_path}/health.md` 仅作参考，由 `active.json` 关联。
+**8. 代码健康分**：如文件存在则读 `../review/references/brooks-essence.md`，按 `HealthScore Arch30/Debt25/PR25/Test20 + Pain×Spread表` 快算；文件缺失时跳过并记录未覆盖项，落 `{product_path}/health.md` 仅作参考，由 `active.json` 关联。
 
 ## 打分与输出
 
@@ -63,3 +60,12 @@ version: 1.0.0
 - 只读审计,不修改任何文件
 - 结论必须带证据(文件路径/行号/计数),不凭印象
 - 报告末尾建议修复优先级,由用户拍板后另行执行
+
+## 完成标准
+
+- [ ] 7 个维度逐项审计完成（规则根 / Rules / Skills / MCP / 流程门禁 / 工程规范 / Commit），无漏项
+- [ ] 每维度给出 S/A/B/C/D 得分,总体取加权
+- [ ] 技能库检查完成:frontmatter 合法性、references 断链、孤儿文件、超长 SKILL.md(>500 行)
+- [ ] 抽查 3-5 个核心 skill(描述/引用质量)完成
+- [ ] 报告含 P0(必改) / P1(该改) / Quick Wins(标注预计耗时)
+- [ ] 结论全部带证据,只读审计未修改任何文件

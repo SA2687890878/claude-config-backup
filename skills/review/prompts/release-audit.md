@@ -2,7 +2,7 @@
 
 使用 review skill 的**发布模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注此项目是否可以安全发布、安装、升级和回滚。
 

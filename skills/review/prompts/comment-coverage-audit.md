@@ -2,7 +2,7 @@
 
 使用 review skill 的**注释覆盖模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注文档质量、公共 API 的注释覆盖、过时/误导性注释以及有用文档和不必要噪音之间的平衡。
 

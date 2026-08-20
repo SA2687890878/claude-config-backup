@@ -1,9 +1,6 @@
 ---
 name: opencli-usage
-description: >
-  ★OpenCLI 入口★ 
-  Top-level map of opencli: capabilities, adapter discovery, universal flags, and which skill to load next. 触发:"/opencli-usage"。
-version: 1.0.0
+description: "该技能用于查询 OpenCLI 能力、适配器发现、通用参数和后续专用技能入口。触发：OpenCLI 怎么用、OpenCLI 命令、浏览器自动化、adapter、/opencli-usage。"
 allowed-tools: Bash(opencli:*), Read
 ---
 
@@ -131,4 +128,25 @@ opencli external register my-tool \
     --binary my-tool \
 
 > 站点全表已移，按opencli list -f json活体发现 — 主文件已瘦身至 130 行内
+
+## 反模式
+
+- 不要硬编码站点或适配器清单，始终以 `opencli list -f json` 为准。
+- 不要在 COOKIE、INTERCEPT、UI 或 browser 任务中跳过 bridge 检查。
+- 不要把需要专项 skill 的任务全部堆在入口 Skill 中。
+- 不要绕过 `opencli external` 直接假定本地 CLI 已安装。
+
+## 阶段门禁
+
+- [ ] 目标站点、命令和策略类型已通过活体发现确认。
+- [ ] 命令前置条件已核对，浏览器任务的 doctor 结果已记录。
+- [ ] 已选择专项 skill 或 external CLI 入口，并保留失败降级路径。
+
+## 完成标准
+
+- [ ] 用 `opencli list -f json` 活体发现站点（未硬编码 100+ 站点表）
+- [ ] 已确定目标命令前置条件（PUBLIC 无浏览器 / COOKIE/INTERCEPT/UI 需 Chrome+扩展 / LOCAL 本地）
+- [ ] 浏览器相关任务前已运行 `opencli doctor` 验证 bridge（COOKIE/INTERCEPT/UI/browser 子命令）
+- [ ] 已正确路由到对应专项 skill（opencli-browser / opencli-autofix / opencli-adapter-author / opencli 家族），未重复造轮子
+- [ ] 需要外部 CLI 透传时已走 `opencli external` 而非硬编码本地命令
 

@@ -1,6 +1,6 @@
 # 需求文档模板
 
-按以下结构输出需求文档，保存到 `requirements-[需求名称简写].md`。
+按以下结构输出需求文档，保存到 `{product_path}/requirements.md`。
 
 ```markdown
 # [需求名称]

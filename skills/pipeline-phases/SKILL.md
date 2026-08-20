@@ -1,7 +1,6 @@
 ---
 name: pipeline-phases
-description: >
-  [内部协议] 五阶段内部逻辑定义:需求→设计→开发→测试→验证提交,每阶段过门禁。由 pipeline-executor 调度，不直接对外触发（"/pipeline-phases"）。
+description: "该技能用于定义 pipeline-executor 的需求、设计、开发、测试和验证提交阶段及门禁。触发：pipeline 阶段、阶段门禁、/pipeline-phases。"
 version: 1.0.0
 ---
 
@@ -80,5 +79,14 @@ version: 1.0.0
 ## 自动化提示
 - 跨阶段长任务 → 用 goal 工具持续跟踪,中断后从当前阶段恢复
 - 调研/多路验证 → subagent 并行
-- 变更较大(>100 行)→ 完成后触发 `parallel-review`
+- 变更较大(>100 行)→ 完成后触发 `/review`（自动按规模调度，含多维对抗）
 - 明确禁止:跳过门禁、用部分验证代替完整验证、下游改上游产物(需求/设计/计划)
+
+## 完成标准
+
+- [ ] 五阶段（需求→设计→开发→测试→验证+提交）逐阶段过 Gate，无跳过、无"应该没问题"
+- [ ] 每阶段产物真实落盘到 `{product_path}/`（文件存在，不靠 stdout）
+- [ ] active.json stage 流转正确（requirements→design→development→testing→done，完成移入 .index.json）
+- [ ] Gate 以证据为准：build/test 退出码 == 0、`git log -1` 核验提交
+- [ ] 收尾三件事完成：同步（sync）、沉淀经验（save-memory/learnings）、反馈 token 消耗
+- [ ] 改动文件清单与用户请求一致（无"顺手改"）

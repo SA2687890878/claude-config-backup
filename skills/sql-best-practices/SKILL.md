@@ -1,7 +1,6 @@
 ---
 name: sql-best-practices
-description: >
-  SQL 与数据库最佳实践:查询优化、索引优化、迁移、改表、加字段("慢查询"、"scaffold"、"/sql-best-practices")。
+description: "该技能用于 SQL 与数据库最佳实践，包括查询、索引、迁移、改表和加字段。触发：慢查询、索引优化、数据库迁移、改表、SQL 最佳实践、/sql-best-practices。"
 version: 3.0.0
 ---
 
@@ -144,3 +143,12 @@ dotnet ef dbcontext scaffold "Host=...;Database=..." Npgsql.EntityFrameworkCore.
 ```bash
 dotnet test
 ```
+
+## 完成标准
+
+- [ ] 数据库类型已识别（路径或 UseSqlServer/UseNpgsql/UseSqlite），分支正确
+- [ ] 查询优化建议遵循通用原则（无 SELECT *、分页、EXISTS 优先、参数化禁拼接）
+- [ ] 数据库变更按风险分级执行：高危（DROP/DELETE/TRUNCATE/批量 DML）硬拦截或先备份，中危先讲方案后执行
+- [ ] 每次 DDL/DML 已记录到 `changelog.sql`（时间/操作/目的），高危已 dry-run 预览
+- [ ] Scaffold 后 `dotnet build` 退出码 == 0，模型与数据库结构一致
+- [ ] `dotnet test` 退出码 == 0（无回归）

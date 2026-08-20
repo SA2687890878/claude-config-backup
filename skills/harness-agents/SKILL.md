@@ -1,7 +1,6 @@
 ---
 name: harness-agents
-description: >
-  双角色协作:builder(全栈开发,需求到交付)与 operator(只读运维诊断,输出诊断报告)。触发:角色、builder、operator、怎么分工、诊断报告、"/harness-agents"。
+description: "该技能用于规划 builder 与 operator 双角色协作、职责边界和诊断报告。触发：角色协作、builder、operator、怎么分工、诊断报告、/harness-agents。"
 version: 1.0.0
 ---
 
@@ -100,3 +99,12 @@ version: 1.0.0
 - operator 只读诊断,不直接改代码;修复动作由主会话(或 builder)执行
 - 复杂任务可并行:一个 operator 排查,一个 builder 开发
 - 诊断报告必须给出严重程度分级和风险评估,不能只给结论
+
+## 完成标准
+
+- [ ] 角色已明确（builder 全栈开发 / operator 只读诊断），归属正确不混用
+- [ ] 已用索引系统收集上下文（SQLite 索引 / CodeGraph / ctx_search），不是直接 Read 整文件
+- [ ] 结论带证据（命令输出 / 文件路径 / 行号），加密项目遵守 code-access
+- [ ] operator：只读诊断，未直接改代码；输出含严重程度分级（P0-P3）+ 风险评估
+- [ ] builder：实现后已用实际命令验证（dotnet build / dotnet test），给出证据摘要
+- [ ] 3+ 次修复失败时已质疑架构并与用户讨论，未继续硬修

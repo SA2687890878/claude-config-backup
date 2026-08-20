@@ -37,7 +37,7 @@
 | `/commit` | 提交、commit、push | Git 提交与工作空间管理 |
 | `/sync` | 同步、刷新索引、同步经验 | 自动判断同步内容 |
 
-> 内部执行层（不直接对外）：`/dev-pipeline`（五阶段内部逻辑，由 pipeline-executor 调度）· `/dev-workflow`（development 阶段执行器：写计划/执行计划/并行派发，仅 pipeline 内部调用）
+> 内部执行层（不直接对外）：`/pipeline-phases`（五阶段内部协议，由 pipeline-executor 调度）· `/dev-workflow`（development 阶段执行器：写计划/执行计划/并行派发，仅 pipeline 内部调用）
 
 ### 🔍 审查阶段
 
@@ -77,6 +77,7 @@
 | Skill | 触发词 | 说明 |
 |-------|--------|------|
 | `/smart-search` | 搜索路由、opencli 搜索 | 搜索路由器（research 前置，不含调研） |
+| `/opencli-usage` | opencli 工具地图、adapter | OpenCLI 入口地图（能力/适配器/通用参数/安装） |
 | `/github-star-organizer` | 整理收藏、star 归类、收藏乱 | GitHub 收藏仓库自动归类到 Starred Lists |
 
 ### 📦 已溶：OpenCLI 精华 → `research`/`smart-search`
@@ -91,10 +92,10 @@
 
 ## Skills 统计
 
-- **总计**：28 个（39→28，11归档`archive/`）
+- **总计**：27 个（原40，13归档`archive/`或已内化）
 - 需求阶段：2 | 设计阶段：3 | 探索与分析：2 | 开发阶段：6
 - 审查阶段：1 | 发布阶段：1 | 运维阶段：3
-- 角色与知识管理：6 | 外部工具：6（`smart-search`+`opencli-usage`）
+- 角色与知识管理：6 | 外部工具：3（`smart-search`+`opencli-usage`+`github-star-organizer`）
 
 ## Quality Gates 对应
 
@@ -102,9 +103,9 @@
 |------|--------------|
 | **Requirement Gate** | `/requirements`, `/research` |
 | **Design Gate** | `/design`, `/arch-review`, `/sql-best-practices`, `/deep-analysis` |
-| **Code Gate** | `/review`, `/parallel-review` |
+| **Code Gate** | `/review` |
 | **Test Gate** | `/test` |
-| **Release Gate** | `/review`, `/parallel-review`, `/verification-before-completion` |
+| **Release Gate** | `/review`, `/verification-before-completion` |
 
 > 补充：`visualize`（交互式可视化卡片）为 DSH 内置 skill，随工具可用。
 >

@@ -1,7 +1,6 @@
 ---
 name: review
-description: >
-  代码审查与审计:自动按变更规模选择策略。"审查"、"找 bug"、"审计"、"code review"、"/review"。
+description: "该技能用于代码审查、变更审计和按规模选择审查策略。触发：代码审查、找 bug、审计、code review、review、/review。"
 version: 2.0.0
 ---
 
@@ -31,16 +30,16 @@ version: 2.0.0
 **核心流程：**
 1. 确定范围：`git diff` 获取变更
 2. 自动选择审查策略（见下方"按变更类型选择策略"）
-3. **主 agent 执行初审**：读取 `references/checklist.md`，按分类逐项检查
-4. **启动子代理对抗审查**：变更 50-200 行时启动 1 个独立子代理；> 200 行时启动至少 2 个独立子代理（分别从 Standards 轴和 Spec 轴），与主 agent 互不通信，各自输出发现
+3. **主 agent 执行初审**：按文件类型选择检查清单，逐项检查
+4. **启动子代理对抗审查**：按铁律分级启动（见上方核心原则），与主 agent 互不通信，各自输出发现
 5. **交叉验证**：汇总主 agent + 各子代理的发现，去重、排序、交叉验证
-6. 输出报告：读取 `references/report-format.md`（共享报告规则 → `templates/audit-report.md`）；快速审查的简版结构参考 `references/report-template.md`
+6. 输出报告：读取 `templates/audit-report.md`；按需读取 `templates/issue-card.md` 或 `templates/remediation-plan.md`。
 
 **双轴审查（重要）：** 审查报告必须分两个独立轴，不合并排序：
 
 | 轴 | 检查内容 | 来源 |
 |----|---------|------|
-| **Standards（规范）** | 代码是否符合项目编码规范 | `references/checklist.md` + `references/dotnet-checklist.md` |
+| **Standards（规范）** | 代码是否符合项目编码规范 | 按文件类型路由的检查清单（`.cs`→dotnet/`.vue`→vue/`.sql`→sql/`.json`→config） |
 | **Spec（需求）** | 代码是否匹配原始需求/PRD/用户要求；抓"无需求依据的改动"（越界到需求之外、凭语义联想自作主张） | 需求文档或用户对话 |
 
 **为什么分两轴：** 一个 change 可以 Standards pass + Spec fail（代码规范但功能不对），反过来也行。合并排序会掩盖问题。
@@ -64,17 +63,16 @@ version: 2.0.0
 - [ ] 两个轴都已检查（或 Spec 轴标注"无需求文档"）
 - [ ] 报告按双轴分开呈现
 - [ ] 每个发现有具体的代码位置和规范来源
-- [ ] 报告末尾可选追加"需 Brooks 十二原则深度？→ /brooks-review（二层，不自动触发）"
+- [ ] 报告末尾可选追加"需 Brooks 十二原则深度？→ 读 `references/brooks-essence.md`（当前未随 Skill 分发；仅在该文件补齐后启用） 快扫 R1-R6/T1-T2 + Iron Law（二层，不自动触发）"
 
 **按变更类型选择策略：**
 
 | 变更规模 | 策略 | 读取 |
 |----------|------|------|
 | < 50 行 | 快速审查 | `references/quick-review.md` |
-| 50-200 行 | 标准审查（含 1 个子代理对抗） | `references/checklist.md` |
-| > 200 行 | 深度审查+可选`--brooks`快照(R1-R6/T1-T2, Iron Law) | `references/execute-review.md` + `references/brooks-essence.md` |
+| 50-200 行 | 标准审查（含 1 个子代理对抗） | 按文件类型选择检查清单（见下表） |
+| > 200 行 | 深度审查+可选`--brooks`快照(R1-R6/T1-T2, Iron Law) | `references/execute-review.md` + `references/brooks-essence.md`（当前未随 Skill 分发；仅在该文件补齐后启用） |
 | 涉及 auth/crypto/database | 安全审查 | `references/dotnet-checklist.md` |
-| 涉及 test 文件 | 测试审查 | `references/checklist.md` |
 
 **按文件类型选择检查清单：**
 
@@ -99,7 +97,7 @@ version: 2.0.0
 
 **适用场景：** 变更 > 200 行，需要全面审计。
 
-> **可选 --brooks**：读 `references/brooks-essence.md` 快扫 R1-R6/T1-T2（cap3/维），Findings按Iron Law四段式追加。
+> **可选 --brooks**：读 `references/brooks-essence.md`（当前未随 Skill 分发；仅在该文件补齐后启用） 快扫 R1-R6/T1-T2（cap3/维），Findings按Iron Law四段式追加。
 
 **核心流程：**
 1. 读取 `references/execute-review.md` 了解审查流程
@@ -174,6 +172,20 @@ version: 2.0.0
 **读取：** `references/receiving-feedback-details.md`
 
 ---
+
+## 反模式
+
+- 不要只做自审；按变更规模启动规定数量的独立对抗审查。
+- 不要把 Standards 与 Spec 两条轴合并，避免掩盖需求偏差。
+- 不要报告没有代码位置、证据或规范来源的泛化问题。
+- 不要在未读取对应模板和 rubrics 前输出最终报告。
+
+## 阶段门禁
+
+- [ ] 变更范围与需求依据已确定。
+- [ ] Standards 和 Spec 两轴均已检查，或明确记录 Spec 依据缺失。
+- [ ] 独立审查结果已去重、交叉验证并保留证据。
+- [ ] 输出模板、严重程度、证据和覆盖度要求均已满足。
 
 ## 严重程度定义
 

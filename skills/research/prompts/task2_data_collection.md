@@ -29,12 +29,6 @@
 
 所有层的搜索结果合并去重后进入 Step 4 抓取队列。
 
-**Layer 3 — sources.json 优质源**：读取 `{PROMPTSDIR}/../sources.json`（与 prompts 同级的 skill 根目录），对每个子问题，遍历其中 `lang` 字段匹配 `{LANG}` 的源，用 webfetch 或 Scrapling 抓取搜索结果页。如某源 health check 失败（前面检测结果）则跳过。
-
-**Layer 4 — 免费源补强**：当前 prompt 中 Step 3 定义的 A/B 类免费源。只在 Layer 1-3 结果不足时触发。
-
-所有层的搜索结果合并去重后进入 Step 4 抓取队列。
-
 ## 输入
 - 大纲文件：{TMPDIR}/outline.json
 - 优质源列表：{PROMPTSDIR}/../sources.json（与 prompts 同级的 skill 根目录）
@@ -136,8 +130,7 @@ for p in doc.paragraphs:
 {"task":2,"source_count":N,"fact_count":N,"search_engine":"local_files","fetch_method":"本地读取","data_pool_path":"{TMPDIR}/data-pool.json","cautions_path":"{TMPDIR}/cautions.json","data_limited":false,"searxng_available":false,"exa_available":false,"engines":[]}
 ```
 
-> `source_count` = 本地文件数，`fact_count` = 提取到的事实总数。`data_limited` 固定为 false（用户选择了只看本地）。
-> 对于 check-datapool 的来源数量检查——本地文件场景下 source_count < 8 不标记 data_limited，因为用户选择了纯本地模式。
+> `source_count` = 本地文件数，`fact_count` = 提取到的事实总数。`data_limited` 固定为 false（用户选择了只看本地）。本地模式不以 `source_count < 8` 判定数据受限。
 
 在回答中只输出 data-pool.json 路径。
 
@@ -148,7 +141,7 @@ Step 0 — 工具环境探测（运行时自适应）
    巡检当前可用的所有工具，识别搜索相关工具。**这是关键步骤——agent 必须在此步骤中根据实际可用的工具自适应选择搜索策略。**
 
    1. **扫描工具集**：检查你的工具列表中每个工具的 description 字段，找出搜索相关工具：
-      - **搜索引擎**：description 含 `search` / `web search` / `搜索引擎` / `搜索引擎` 等关键词的工具（如 `websearch`、`searxng`、`web_search` 等）
+      - **搜索引擎**：description 含 `search` / `web search` / `搜索引擎` 等关键词的工具（如 `websearch`、`searxng`、`web_search` 等）
       - **抓取工具**：description 含 `fetch` / `webfetch` / `scrapling` / `抓取` 等关键词的工具（如 `webfetch`、`scrapling_bulk_get` 等）
 
    2. **输出**：根据识别结果，在 manifest 的 `engines` 数组中列出可用的搜索引擎名。
@@ -161,6 +154,10 @@ Step 0 — 工具环境探测（运行时自适应）
 
    **Scrapling MCP 可用性**（已有，在 Step 4 前检测）：
    尝试调用 `scrapling_bulk_get(urls=["https://example.com"], timeout=10, extraction_type="text")` 检测。
+
+Step 1 — 读取大纲与确定搜索范围
+
+读取 `{TMPDIR}/outline.json`，确认 `depth_mode`、`language`、`time_anchor.target_year` 和 `chapters[].sub_questions`；为每个子问题建立搜索任务。
 
 Step 2 — 多源并行搜索（Layer 0-3 同时发出）
 
@@ -357,7 +354,7 @@ URL↔子问题的映射已在 Step 2-4 的搜索过程中确定，无需额外�
 | facts[].src/yr/met/val/u/ctx/url/title | 事实基础字段（url 来源链接，title 文章标题） | ✅ | ✅ | ✅ |
 | facts[].cur | 时效性标记 | ❌ | ✅ | ✅ |
 | facts[].conf | 置信度标记 | ✅ | ✅ | ✅ |
-| facts[].data_type | 数据类型：actual（已公布实际值）/ estimate（考前或截至结果公布前的估算）/ forecast（对未来年份的预测） | ✅ | ✅ | ✅ |
+| facts[].data_type | 数据类型：actual（已公布实际值）/ estimate（截止最新数据的估算）/ forecast（对未来年份的预测） | ✅ | ✅ | ✅ |
 | controversies[].va/vb | 正反方数据值 | ❌ | ✅ | ✅ |
 | ctx 长度上限 | — | ≤80 字 | ≤150 字 | 不限 |
 | 每子问题事实上限 | — | ≤5 条 | ≤8 条 | 不限 |
@@ -366,9 +363,9 @@ URL↔子问题的映射已在 Step 2-4 的搜索过程中确定，无需额外�
 
 **提取规则**：
 1. 严格基于页面内容，禁止推测或虚构
-2. 每提取一条事实，根据其指标性质判断 `data_type`：如果该指标的官方数据在报告生成时尚未公布（如当年录取率、分数线等），标记为 `estimate`；如果是已公布的官方数据（如当年报名人数、政策文件等），标记为 `actual`；如果是对未来年份的预测，标记为 `forecast`。不确定时默认为 `estimate`
+2. 每提取一条事实，根据其指标性质判断 `data_type`：官方数据尚未公布时标记为 `estimate`；已公布的官方数据标记为 `actual`；对未来年份的预测标记为 `forecast`。不确定时默认为 `estimate`
 3. 优先 high-priority 子问题，确保 ≥2 条事实
-3. 同一数据不跨子问题重复引用
+4. 同一数据不跨子问题重复引用
 4. 矛盾数据并排保留
 5. 数值优先提取有单位的明确指标
 6. 每提取一条事实，必须附带 `url` 字段，值为该条数据的来源文章链接（从 Step 2 抓取的原始 URL 中获取，禁止伪造）

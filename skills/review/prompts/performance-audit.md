@@ -2,7 +2,7 @@
 
 使用 review skill 的**性能模式**。
 
-共享设置、覆盖度、报告模板、HTML 和 lint 规则在 `references/report-format.md` 中；在生成报告前加载该参考文件。
+共享设置、覆盖度、报告模板在 `references/report-format.md` 中；在生成报告前加载该参考文件。
 
 关注真实的瓶颈，而不是过早的微优化。
 
