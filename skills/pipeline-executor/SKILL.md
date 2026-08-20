@@ -1,4 +1,4 @@
----
+﻿---
 name: pipeline-executor
 description: >
   ★唯一总入口★ 全链路编排调度:自动串联需求→设计→开发→测试→提交,中间可打断审查,说一次"开发 XX"跑到底。
@@ -8,7 +8,7 @@ version: 1.0.0
 
 # 全链路编排调度（★唯一总入口）
 
-> **唯一对外总入口：用户说"开发XX"必进本 skill。** `dev-pipeline` 定义五阶段内部逻辑（怎么走），`dev-workflow` 为 development 阶段执行器；本 skill 负责阶段间调度（谁先走、谁接谁、什么时候等你确认）。
+> **唯一对外总入口：用户说"开发XX"必进本 skill。** `pipeline-phases` 定义五阶段内部逻辑（怎么走），`dev-workflow` 为 development 阶段执行器；本 skill 负责阶段间调度（谁先走、谁接谁、什么时候等你确认）。
 
 ## 调度契约
 

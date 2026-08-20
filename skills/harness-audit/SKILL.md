@@ -1,4 +1,4 @@
----
+﻿---
 name: harness-audit
 description: >
   Harness 体系体检:对规则根/Rules/Skills/MCP/流程门禁/工程规范/Commit 做 7 维度
@@ -27,7 +27,7 @@ version: 1.0.0
 | 2 | Rules | 是否被 skill 实际引用;有无过时/冲突规则;红线是否可执行(不是口号) |
 | 3 | Skills | description 触发是否准确;有无职责混杂/孤儿文件/重复 skill;引用是否断链 |
 | 4 | MCP/工具 | 是否过度接入;低频 MCP 是否该砍;工具输出是否浪费 token(原始 JSON vs 摘要) |
-| 5 | 流程门禁 | dev-pipeline 各 Gate 是否被跳过;落盘判定是否执行;提交是否有证据 |
+| 5 | 流程门禁 | pipeline-phases 各 Gate 是否被跳过;落盘判定是否执行;提交是否有证据 |
 | 6 | 工程规范 | DB 变更四级分级、commit 格式、代码红线是否一致落地 |
 | 7 | Commit 质量 | 有无 "update"/"fix bug" 模糊提交;commit-msg hook 是否配置 |
 
@@ -35,7 +35,7 @@ version: 1.0.0
 
 1. 读 `~/.claude/skills/` 目录清单,统计 skill 数
 2. 机器检查:frontmatter 合法性、references 断链、孤儿文件、超长 SKILL.md(>500 行)
-3. 抽查 3-5 个核心 skill(dev-pipeline/requirements/review 等)的引用与描述质量
+3. 抽查 3-5 个核心 skill(pipeline-phases/requirements/review 等)的引用与描述质量
 4. 检查规则库(`~/.claude/rules/`)与 knowledge 的引用关系
 5. 逐维度打分 + 输出报告
 

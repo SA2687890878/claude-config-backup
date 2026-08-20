@@ -55,7 +55,7 @@
 - **全流程编排** → 说"开发XX" → 唯一入口 `/pipeline-executor` 自动走五阶段（review 模式默认）
 - **细节**：见 `~/.claude/rules/quality/gates.md`（Task Contract 模板）
 - **经验沉淀**：项目级 `.claude/learnings.md`，跨项目到 `~/.claude/memory/learnings.md`
-- **模型选择**：见 `~/.claude/knowledge/rules/tools/model-strategy.md`
+- **模型选择**：见 `~/.claude/knowledge/rules/tools/model-strategy.md`（当前统一 `mimo-v2.5[1M]`，分工见该文件阶段表）
 
 ## 任务流转（自动串联）
 - 每个 skill 完成后，自动加载下一阶段的 skill，不等用户确认
