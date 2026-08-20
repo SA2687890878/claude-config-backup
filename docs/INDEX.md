@@ -42,6 +42,11 @@
 | [REASONIX-MIGRATION.md](REASONIX-MIGRATION.md) | Reasonix 迁移评估备忘录（4 宿主兼容矩阵、勘误记录、证据等级说明） |
 | [HARNESS-ENGINEERING-PLAN.md](HARNESS-ENGINEERING-PLAN.md) | 通用 Harness 规划（4 宿主版：七阶段覆盖、分层架构、落地路径） |
 | [HARNESS-ITERATION-PLAN.md](HARNESS-ITERATION-PLAN.md) | Harness 迭代升级计划（北极星目标 + 三阶段落地路线：learnings 激活闭环 / 计划持久化 / SkillOpt 试点） |
+| [HARNESS-OPTIMIZATION-DETAILED.md](03-architecture/HARNESS-OPTIMIZATION-DETAILED.md) | ⭐ Harness 优化详细方案（v2.0 已完成：少入口·单协议·强验证·按需加载） |
+| [HARNESS-SKILLS-OPTIMIZATION.md](03-architecture/HARNESS-SKILLS-OPTIMIZATION.md) | ⭐ 技能层优化方案（v2.1 已完成：审查/家族/调研去重·超长瘦身·薄弱补强） |
+| [HARNESS-FUSION-DETAILED.md](03-architecture/HARNESS-FUSION-DETAILED.md) | ⭐ 融合改进方案（v2.2 已完成：Brooks×OpenCLI 二层化·中文门面·主链路挂点） |
+| [HARNESS-ESSENCE-EXTRACTION-DETAILED.md](03-architecture/HARNESS-ESSENCE-EXTRACTION-DETAILED.md) | ⭐ 精华萃取方案（v2.4 超详细当前执行：附录A/B证据表+逐文件diff+Token账+验收脚本） |
+| [HARNESS-AUDIT-2026-08-20.md](HARNESS-AUDIT-2026-08-20.md) | ⭐ 体检与修复方案（v2.5 审计：7维打分 B+·P0/P1+22分钟施工清单） |
 
 ### 系统文档（🔧 维护）
 
@@ -164,4 +169,4 @@
 
 ---
 
-**最后更新**：2026-08-13（新增 HARNESS-ITERATION-PLAN.md）
+**最后更新**：2026-08-20（新增 HARNESS-ESSENCE-EXTRACTION-DETAILED.md v2.3 精华萃取）

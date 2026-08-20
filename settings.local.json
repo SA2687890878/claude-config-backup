@@ -1,271 +1,30 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(gh auth *)",
-      "Bash(winget install *)",
-      "Bash(npm list *)",
-      "Bash(npm install *)",
-      "WebSearch",
-      "WebFetch(domain:github.com)",
-      "Bash(echo \"---EXIT:$?\")",
-      "Bash(gh repo *)",
-      "mcp__context-mode__ctx_fetch_and_index",
-      "Bash(bunx dsh *)",
-      "Bash(pnpm --version)",
-      "Bash(pnpm install *)",
-      "Read(//d/deepseekHarness工作区/**)",
-      "Bash(dsh web *)",
-      "Bash(echo \"启动 PID: $!\")",
-      "Bash(netstat -ano)",
-      "Bash(taskkill //F //PID 8056)",
-      "Bash(dsh --version)"
-    ]
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/session-start.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/project-knowledge.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/knowledge-sync-reminder.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "C:/Users/admin/.bun/bin/bun.exe",
-            "args": [
-              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/sessionstart.mjs"
-            ]
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/skill-router.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/context-injector.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "C:/Users/admin/.bun/bin/bun.exe",
-            "args": [
-              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/userpromptsubmit.mjs"
-            ]
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/secret-guard.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/write-guard.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/encrypted-write-guard.js"
-            ],
-            "if": "Write(*.cs)|Edit(*.cs)"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/impact-guard.js"
-            ],
-            "if": "Edit(*.cs)"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/bash-guard.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/commit-gate.js"
-            ]
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/cs-checks.js"
-            ],
-            "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/index-updater.js"
-            ],
-            "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/completion-reminder.js"
-            ],
-            "if": "Write(*.cs)|Edit(*.cs)|Write(*.vue)|Edit(*.vue)|Write(*.sql)|Edit(*.sql)"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/failure-detector.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/git-commit-review.js"
-            ]
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/metrics-collector.js"
-            ]
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "C:/Users/admin/.bun/bin/bun.exe",
-            "args": [
-              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/posttooluse.mjs"
-            ]
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/build-verify.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "C:/Users/admin/.claude/hooks/metrics-report.js"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "powershell",
-            "args": [
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "C:/Users/admin/.claude/hooks/notify.ps1"
-            ]
-          },
-          {
-            "type": "command",
-            "command": "C:/Users/admin/.bun/bin/bun.exe",
-            "args": [
-              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/stop.mjs"
-            ]
-          }
-        ]
-      }
-    ],
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "C:/Users/admin/.bun/bin/bun.exe",
-            "args": [
-              "D:/nvm/v25.8.0/node_modules/context-mode/hooks/precompact.mjs"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "ccstatusline-zh",
-    "padding": 0,
-    "refreshInterval": 10
-  }
+﻿{
+    "permissions":  {
+                        "allow":  [
+                                      "Bash(gh auth *)",
+                                      "Bash(winget install *)",
+                                      "Bash(npm list *)",
+                                      "Bash(npm install *)",
+                                      "WebSearch",
+                                      "WebFetch(domain:github.com)",
+                                      "Bash(echo \"---EXIT:$?\")",
+                                      "Bash(gh repo *)",
+                                      "mcp__context-mode__ctx_fetch_and_index",
+                                      "Bash(bunx dsh *)",
+                                      "Bash(pnpm --version)",
+                                      "Bash(pnpm install *)",
+                                      "Read(//d/deepseekHarness宸ヤ綔鍖?**)",
+                                      "Bash(dsh web *)",
+                                      "Bash(echo \"鍚姩 PID: $!\")",
+                                      "Bash(netstat -ano)",
+                                      "Bash(taskkill //F //PID 8056)",
+                                      "Bash(dsh --version)"
+                                  ]
+                    },
+    "statusLine":  {
+                       "type":  "command",
+                       "command":  "ccstatusline-zh",
+                       "padding":  0,
+                       "refreshInterval":  10
+                   }
 }

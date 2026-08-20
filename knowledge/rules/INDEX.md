@@ -36,8 +36,7 @@
 ### Token 优化
 | Rule | 路径 |
 |------|------|
-| 工具选择 | `token-optimization/tools.md` |
-| Think-in-Code | `token-optimization/thinking.md` |
+| 完整策略 | `token-optimization/overview.md`（合并 tools.md + thinking.md，单一真源） |
 
 ### 工作流
 | Rule | 路径 |

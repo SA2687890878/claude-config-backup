@@ -77,3 +77,9 @@ worktrees/
 /skills/_shared/remedy-guide.md
 /skills/_shared/source-coverage.md
 /skills/_shared/test-decay-risks.md
+
+# 2026-08-20 Harness audit ¹éµµ
+archive/skills-2026-08-20/
+settings.json.bak-*
+settings.local.json.bak-*
+
