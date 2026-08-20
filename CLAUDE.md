@@ -76,5 +76,8 @@
 
 ## 知识库索引
 @knowledge/MEMORY.md
+@knowledge/rules/INDEX.md
+
+> **规则双轨**：`rules/*.md` 自动加载（核心 6 个，~26 行/个）；`knowledge/rules/` 按需加载（43 个参考规则，见 INDEX.md 二级索引）。
 
 @RTK.md

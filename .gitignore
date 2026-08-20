@@ -1,4 +1,4 @@
-# æ•æ„Ÿä¿¡æ¯
+ï»¿# æ•æ„Ÿä¿¡æ¯
 .credentials.json
 settings.json
 settings.json.bak
@@ -78,13 +78,14 @@ worktrees/
 /skills/_shared/source-coverage.md
 /skills/_shared/test-decay-risks.md
 
-# 2026-08-20 Harness audit ¹éµµ
+# 2026-08-20 Harness audit ï¿½éµµ
 archive/skills-2026-08-20/
 settings.json.bak-*
+settings.local.json
 settings.local.json.bak-*
 
 
-# ÁÙÊ±¹¤¾ß
+# ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 archify_api.json
 archify_readme.md
 parse_archify.py

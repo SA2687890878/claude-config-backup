@@ -99,7 +99,7 @@ version: 3.0.0
 
 追问规则："大概"→ 追问具体数字；"用户觉得..."→ 追问"哪个用户？"；"领导要求的"→ 追问原始表述。
 
-**Step 3:** 输出需求文档。保存到 `{product_path}/requirements.md`。
+**Step 3:** 输出需求文档。保存到 `{product_path}/requirements.md`（模板见 `references/template.md`）。
 
 ### 完成标准
 

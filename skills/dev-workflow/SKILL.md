@@ -43,7 +43,7 @@ version: 3.0.0
 - 禁止占位符：绝不写 TBD、TODO
 - Subagent 报告契约：每个发现必须有来源引用
 
-读取 `references/plan-details.md` 了解完整流程和自检清单。
+读取 `references/plan-details.md` 了解完整流程和自检清单，`references/plan-template.md` 为计划文档模板。
 
 ### 完成标准
 
