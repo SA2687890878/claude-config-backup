@@ -2,20 +2,26 @@
 
 > 核心任务管理规则。CLAUDE.md 引用此文件。
 
-## 路径设计
+## 协议（唯一真源）
 
-所有项目级数据存储在 Claude Code 的 projects 目录下：
-```
-~/.claude/projects/<project-path>/
-├── memory/
-│   ├── MEMORY.md          # auto-memory 索引
-│   ├── learnings.md       # 项目经验（自动+手动写入）
-│   └── task-state.md      # 任务状态
-└── archive/               # 任务归档
-    └── YYYY-MM-DD-分支名.md
-```
+| 协议 | 路径 | 用途 |
+|------|------|------|
+| 主协议 | `~/.claude/tasks/active.json` | 当前任务唯一真源（task_id / stage / product_path / baseline） |
+| 历史索引 | `~/.claude/tasks/.index.json` | 已完成任务索引 |
+| 遗留兼容 | `~/.claude/projects/<path>/memory/task-state.md` | 仅兼容旧会话，不再作为主恢复入口 |
 
-路径转换规则：`C:\Users\admin` → `C--Users-admin`
+路径转换：`C:\Users\admin` → `C--Users-admin`
+
+---
+
+## 任务流转
+
+- **开始** → 写入 `active.json`（stage=requirements）
+- **推进** → 更新 `active.json` 的 stage（requirements→design→development→testing→done）
+- **完成** → 从 `active.json` 移入 `.index.json`，清空 active
+- **产物** → 始终写入 `{product_path}/`（skill 从 active.json 动态取）
+- **恢复** → 只认 `active.json`；历史查 `.index.json`；`task-state.md` 仅当两者皆空时兼容读取
+- **全流程** → 说"开发XX" → 唯一入口 `/pipeline-executor`
 
 ---
 
@@ -45,42 +51,13 @@
 
 ---
 
-## 任务状态管理
+## 遗留兼容（task-state.md）
 
-### 任务状态文件
+> 旧协议，保留兼容，新任务不再以此为主路径。
 
-位置：`~/.claude/projects/<project-path>/memory/task-state.md`
+位置：`~/.claude/projects/<project-path>/memory/task-state.md`（模板保留）
 
-```markdown
-# 当前任务状态
-
-## 基本信息
-- 项目：[项目名]
-- 分支：[当前分支]
-- 开始时间：[开始时间]
-
-## 任务列表
-- [ ] 任务 1
-- [ ] 任务 2
-- [x] 任务 3（已完成）
-
-## 进度记录
-- HH:MM - 完成了什么
-```
-
-### 任务归档
-
-完成一个功能分支时（/commit 的"完成分支"流程），自动归档：
-
-1. 把 `memory/task-state.md` 移动到 `archive/YYYY-MM-DD-分支名.md`
-2. 清空 `memory/task-state.md`（保留模板）
-3. 在归档文件头部添加完成时间
-
-### 恢复任务
-
-新会话启动时，如果用户说"继续工作"：
-1. 读取 `memory/task-state.md`
-2. 报告给用户并询问是否继续
+旧归档：`archive/YYYY-MM-DD-分支名.md`（历史任务归档，已由 `.index.json` 替代）
 
 ---
 
@@ -138,3 +115,4 @@
 ## 详细参考
 
 - Memory → Knowledge 同步机制：`~/.claude/knowledge/rules/workflows/knowledge-sync.md`
+- 质量门禁：`~/.claude/rules/quality/gates.md`

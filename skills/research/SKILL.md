@@ -1,7 +1,7 @@
 ---
 name: research
 description: >
-  深度调研报告:多 agent 并行、自动获取最新数据、多语言输出。触发:调研、竞品分析、技术选型、research。
+  [联网重型] 深度调研报告:多 agent 并行、SearXNG 联网获取最新数据、多语言输出。触发:联网调研、竞品分析、技术选型、research。
 version: 3.0.0
 updated: 2026-06-08
 risk: medium
@@ -132,12 +132,14 @@ Task 4: 验证 + 装配 + QA
 
 ---
 
-## 搜索链路
+## 搜索链路（已溶 OpenCLI 梯子）
+
+> 选源按 `references/strategy-ladder.md` 梯子：`PUBLIC(1.18) > COOKIE(2.01) ≈ UI(1.92) ≫ PAGE_FETCH(8.41)`，契约优先；`--trace` verify，有 `active.json` 时双写 `{product_path}/opencli-artifacts/`。
 
 ```
 Layer 0 — CLI 内置引擎探测
   ↓
-Layer 1 — 大纲建议源 + Layer 2 — 全网补充搜索（并行）
+Layer 1 — 大纲建议源 + Layer 2 — 全网补充搜索（并行，梯子选源）
   ↓
 Layer 3 — sources.json 优质源搜索
   ↓

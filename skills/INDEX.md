@@ -11,7 +11,7 @@
 | Skill | 触发词 | 说明 |
 |-------|--------|------|
 | `/requirements` | 需求分析、需求澄清、头脑风暴 | 需求探索与质询 |
-| `/research` | 调研、竞品分析、技术选型 | 深度调研报告 |
+| `/research` | 联网调研、竞品分析、技术选型 | [联网重型] 深度调研（SearXNG 多agent，需联网） |
 
 ### 🏗️ 设计阶段
 
@@ -32,19 +32,20 @@
 
 | Skill | 触发词 | 说明 |
 |-------|--------|------|
-| `/dev-pipeline` | 新功能、开发全流程、一键开发 | 需求→设计→开发→测试→验证 全链路编排 |
-| `/pipeline-executor` | 一键、全流程、帮我开发、编排、联动、自动跑完 | **全链路编排调度**：三种模式(auto/review/manual)，说一次"开发XX"自动跑到位 |
-| `/dev-workflow` | 写计划、执行计划、并行派发 | 写计划→执行→验证→提交 |
+| `/pipeline-executor` | ★唯一总入口★ 开发XX、一键开发、全流程、帮我开发、编排、pipeline | **全链路编排调度**：三种模式(auto/review/manual)，说一次"开发XX"自动跑到底 |
+| `/test` | 测试、跑测试、生成测试 | 自动判断生成还是执行 |
 | `/commit` | 提交、commit、push | Git 提交与工作空间管理 |
 | `/sync` | 同步、刷新索引、同步经验 | 自动判断同步内容 |
-| `/test` | 测试、跑测试、生成测试 | 自动判断生成还是执行 |
+
+> 内部执行层（不直接对外）：`/dev-pipeline`（五阶段内部逻辑，由 pipeline-executor 调度）· `/dev-workflow`（development 阶段执行器：写计划/执行计划/并行派发，仅 pipeline 内部调用）
 
 ### 🔍 审查阶段
 
 | Skill | 触发词 | 说明 |
 |-------|--------|------|
-| `/review` | 审查、review、找 bug、审计 | 自动选择审查策略（双轴审查） |
-| `/parallel-review` | 并行审查、多维度审查、大改动审查 | 四路子代理并行审查，适用 >100 行变更 |
+| `/review` | 审查、review、找 bug、审计 | 唯一通用入口：自动按规模分级（0-50单/50-200×1对抗/>200×2对抗+四维度） |
+
+> 已内化：`parallel-review` 多维度并行已并入 `review`；Brooks 精华已溶进 `review --brooks`（R1-R6快照）
 
 ### 🚀 发布阶段
 
@@ -75,22 +76,25 @@
 
 | Skill | 触发词 | 说明 |
 |-------|--------|------|
-| `/smart-search` | 搜索、查询、查找、研究 | 基于 opencli 的智能搜索路由器 |
-| `/opencli-usage` | opencli | OpenCLI 顶层使用地图 |
-| `/opencli-browser` | 浏览器操作、网页操作 | 驱动真实 Chrome 窗口 |
-| `/opencli-browser-sitemap` | sitemap、站点地图 | 站点地图导航 |
-| `/opencli-adapter-author` | adapter、适配器 | 编写新站点 OpenCLI 适配器 |
-| `/opencli-autofix` | opencli 报错、修复 | 自动修复失效适配器 |
+| `/smart-search` | 搜索路由、opencli 搜索 | 搜索路由器（research 前置，不含调研） |
 | `/github-star-organizer` | 整理收藏、star 归类、收藏乱 | GitHub 收藏仓库自动归类到 Starred Lists |
+
+### 📦 已溶：OpenCLI 精华 → `research`/`smart-search`
+
+> 策略梯子+双层记忆+verify+限频已溶进 `research/references/strategy-ladder.md` + `smart-search` 台账共享；`opencli-usage` 保留为 `research` 内部地图，原4子能力已归档 `archive/`
+
+### 📚 已溶：Brooks 精华 → `review`/`arch-review`/`harness-audit`
+
+> R1-R6/T1-T6+Iron Law+Pain×Spread+HealthScore 已溶进 `review/references/brooks-essence.md`，`>200PR` 可选 `--brooks` 快照；`harness-audit` 第8维健康分；原6+`_shared` 已归档 `archive/`
 
 ---
 
 ## Skills 统计
 
-- **总计**：32 个
+- **总计**：28 个（39→28，11归档`archive/`）
 - 需求阶段：2 | 设计阶段：3 | 探索与分析：2 | 开发阶段：6
-- 审查阶段：2 | 发布阶段：1 | 运维阶段：3
-- 角色与知识管理：6 | 外部工具：7
+- 审查阶段：1 | 发布阶段：1 | 运维阶段：3
+- 角色与知识管理：6 | 外部工具：6（`smart-search`+`opencli-usage`）
 
 ## Quality Gates 对应
 

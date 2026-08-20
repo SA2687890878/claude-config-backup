@@ -22,7 +22,7 @@
 会话启动
     │
     └─→ SessionStart: session-start.js
-        └─→ 注入 git 状态 + 项目检测 + task-state 恢复
+        └─→ 注入 git 状态 + 项目检测 + 任务恢复（优先 active.json，兼容 task-state.md）
 
 用户输入
     │
@@ -72,7 +72,7 @@ Claude 调用工具（Write/Edit）
 - **功能**：
   - 注入 git 状态（分支、上次提交、未提交改动数）
   - 项目检测（OTD → PostgreSQL / Code WorkSpace → SQL Server）
-  - 任务进度恢复（检查 memory/task-state.md，有未完成任务时注入）
+  - 任务进度恢复（优先 `tasks/active.json`，兼容 `memory/task-state.md`）
 
 ---
 
@@ -90,7 +90,7 @@ Claude 调用工具（Write/Edit）
   - 测试/跑测试 → /test
   - 数据库/表/字段 → /sql-best-practices
   - 保存经验/进度 → /memory-save
-  - 继续工作 → 恢复 task-state.md
+  - 继续工作 → 恢复任务（优先 active.json，兼容 task-state.md）
   - 提交/commit → /commit
   - 文档/doc → /docs
 

@@ -1,7 +1,7 @@
 ---
 name: smart-search
 description: >
-  基于 opencli 的智能搜索路由器:网站、社交媒体、技术资料、新闻、购物、旅游、求职、金融、中文内容搜索。
+  [搜索路由] 基于 opencli 的智能搜索路由器:网站、社交媒体、技术资料、新闻、购物、旅游、求职、金融、中文内容搜索。触发:搜索路由、opencli 搜索、查一下。
 allowed-tools: Bash(opencli:*), Read
 ---
 
@@ -62,6 +62,8 @@ allowed-tools: Bash(opencli:*), Read
 - 记录：「已跳过：<site> 达到频率上限」
 - 优先改用其他同类站点
 - 若没有合适替代源，则直接基于已收集信息回答，并说明覆盖范围与缺口
+
+> **跨agent共享**：台账落 `~/.opencli/search-budget.json`（research多章节并行时共享，供`research` Task3复用）。
 
 ## 查询结束汇报
 

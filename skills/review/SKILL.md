@@ -64,6 +64,7 @@ version: 2.0.0
 - [ ] 两个轴都已检查（或 Spec 轴标注"无需求文档"）
 - [ ] 报告按双轴分开呈现
 - [ ] 每个发现有具体的代码位置和规范来源
+- [ ] 报告末尾可选追加"需 Brooks 十二原则深度？→ /brooks-review（二层，不自动触发）"
 
 **按变更类型选择策略：**
 
@@ -71,7 +72,7 @@ version: 2.0.0
 |----------|------|------|
 | < 50 行 | 快速审查 | `references/quick-review.md` |
 | 50-200 行 | 标准审查（含 1 个子代理对抗） | `references/checklist.md` |
-| > 200 行 | 深度审查 | `references/execute-review.md` |
+| > 200 行 | 深度审查+可选`--brooks`快照(R1-R6/T1-T2, Iron Law) | `references/execute-review.md` + `references/brooks-essence.md` |
 | 涉及 auth/crypto/database | 安全审查 | `references/dotnet-checklist.md` |
 | 涉及 test 文件 | 测试审查 | `references/checklist.md` |
 
@@ -97,6 +98,8 @@ version: 2.0.0
 ## C. 深度审查（25维度）
 
 **适用场景：** 变更 > 200 行，需要全面审计。
+
+> **可选 --brooks**：读 `references/brooks-essence.md` 快扫 R1-R6/T1-T2（cap3/维），Findings按Iron Law四段式追加。
 
 **核心流程：**
 1. 读取 `references/execute-review.md` 了解审查流程

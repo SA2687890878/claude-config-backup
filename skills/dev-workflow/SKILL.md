@@ -1,11 +1,13 @@
 ---
 name: dev-workflow
 description: >
-  开发计划编写与执行、并行派发:"写计划"、"执行计划"、"并行派发"、"开发计划"、"implementation plan"。
+  [内部执行层] development 阶段专用:开发计划编写与执行、并行派发。由 pipeline-executor 调度，触发:写计划、执行计划、并行派发、开发计划、implementation plan。
 version: 3.0.0
 ---
 
-# 开发工作流
+# 开发工作流（内部执行层）
+
+> **内部执行层：development 阶段专用，由 `/pipeline-executor` 调度。** 对外说"开发XX"请走 `/pipeline-executor`，本 skill 仅在 development 阶段内部执行。
 
 ## 先读任务栈
 

@@ -44,12 +44,15 @@
 - 当前 active.json 的内容（task_id / stage / product_path）
 
 ## 任务追踪（产物定位、阶段流转）
+
+> **唯一真源：`~/.claude/tasks/active.json`**（stage 流转 + product_path）；`tasks/.index.json` 为历史索引；`task-state.md` 仅遗留兼容，不再作为恢复入口。
+
 - **开始新任务** → 写入 `~/.claude/tasks/active.json`（task_id / stage / product_path / baseline）
 - **推进阶段** → 更新 active.json 的 stage（requirements→design→development→testing→done）
 - **完成/切换** → 从 active.json 移入 `~/.claude/tasks/.index.json`（历史索引）
 - **产物路径** → 始终写入 `{product_path}/`（skill 从 active.json 动态取）
-- **读取** → 优先读 active.json（当前任务）；查历史用 glob `.index.json` 或按 task_id 搜索
-- **全流程编排** → 说"开发XX"自动走五阶段 → skill: `/pipeline-executor`
+- **读取** → 只认 active.json（当前任务）；查历史用 `.index.json` 或按 task_id 搜索
+- **全流程编排** → 说"开发XX" → 唯一入口 `/pipeline-executor` 自动走五阶段（review 模式默认）
 - **细节**：见 `~/.claude/rules/quality/gates.md`（Task Contract 模板）
 - **经验沉淀**：项目级 `.claude/learnings.md`，跨项目到 `~/.claude/memory/learnings.md`
 - **模型选择**：见 `~/.claude/knowledge/rules/tools/model-strategy.md`

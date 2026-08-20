@@ -39,6 +39,10 @@ version: 1.0.0
 4. 检查规则库(`~/.claude/rules/`)与 knowledge 的引用关系
 5. 逐维度打分 + 输出报告
 
+## 新增第8维（可选，不计总体）
+
+**8. 代码健康分**：读 `../review/references/brooks-essence.md`，按 `HealthScore Arch30/Debt25/PR25/Test20 + Pain×Spread表` 快算，落 `{product_path}/health.md` 仅作参考，由 `active.json` 关联。
+
 ## 打分与输出
 
 每维度 S/A/B/C/D,总体取加权;输出:

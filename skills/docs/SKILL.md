@@ -7,6 +7,8 @@ version: 3.0.0
 
 # 文档中心（docs）
 
+> **产物链路**：可从 `pipeline-executor` 产物自动生成：`{product_path}/requirements.md → 需求文档` / `{product_path}/design.md → 设计文档` / `arch-review.md → 评审文档`。
+
 统一的文档生成 skill。一个入口，三种范围，多套模板。
 
 ## 第一步：判定 scope（路由）

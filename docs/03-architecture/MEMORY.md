@@ -1,6 +1,7 @@
 # Memory 机制详解
 
 > 三层 Memory 设计：自动索引 + 手动经验 + 任务状态
+> ⚠️ 任务主协议已迁移至 `~/.claude/tasks/active.json`（唯一真源），本文 `task-state.md` 相关描述为遗留兼容，新任务以 `active.json` 为准。
 
 ## 架构概览
 

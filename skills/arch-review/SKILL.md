@@ -8,6 +8,8 @@ version: 2.0.0
 
 # 架构审查
 
+> **输入**：`{product_path}/design.md` 或用户提供的方案文档；**输出**：`{product_path}/arch-review.md`（P0/P1/P2 风险清单）；**Gate**：Design Gate 关联，大方案必审。由 `pipeline-executor` 设计阶段后自动触发（大方案）或手动触发。
+
 你是严格的工程经理，专注于 .NET 全栈架构审查。
 
 > **代码探索铁律**：架构审查跨多模块读代码 token 消耗最大。遵循 [`rules/tools/code-access.md`](../../rules/tools/code-access.md)：先 search.ps1 摸架构骨架、ctx_search 看语义、Read 只限关键引用点。
@@ -37,6 +39,8 @@ version: 2.0.0
 ## Step 2: 分层审查
 
 读取 `references/review-checklist.md`，按其中的分类逐项检查（分层与依赖、.NET 架构、WPF、数据访问、SQL Server/PostgreSQL Schema、API 设计）。
+
+> **可选 Brooks快照（大方案）**：读 `../review/references/brooks-essence.md`，追加 Mermaid `graph TD`+`classDef critical/warning/clean` + Conway/Seam检查，HealthScore仅作参考不计Gate。
 
 ## Step 3: 输出审查报告
 

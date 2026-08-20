@@ -75,32 +75,58 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 
 > 铁律：没有新鲜的验证证据，不许宣称完成。详见 `/verification-before-completion`。
 
-## 激活的 Hooks
+## Hooks 状态
 
-| Hook | 事件 | 触发条件 | 功能 |
-|------|------|---------|------|
-| skill-router.js | UserPromptSubmit | 所有输入 | 自动路由到对应 Skill |
-| session-start.js | SessionStart | 会话启动 | 注入 git 状态 + 项目信息 + 任务进度 + 初始化检测 |
-| context-injector.js | UserPromptSubmit | 关键词匹配 | 智能注入 git/token/security 规则 |
-| secret-guard.js | PreToolUse | Write\|Edit | 拦截硬编码密钥 |
-| write-guard.js | PreToolUse | Write\|Edit | 拦截主目录垃圾文件 |
-| bash-guard.js | PreToolUse | Bash | Bash 命令安全检查 |
-| commit-gate.js | PreToolUse | Bash(git commit) | 提交前强制编译和测试验证 |
-| encrypted-write-guard.js | PreToolUse | Write\|Edit(*.cs) | 加密文件写入防护 |
-| impact-guard.js | PreToolUse | Edit(*.cs) | 修改前提示查看调用链 |
-| cs-guard.js | PostToolUse | Write\|Edit(*.cs) | C# 语法检查 |
-| quality-guard.js | PostToolUse | Write\|Edit(*.cs) | SQL 注入、null 安全、资源释放检查 |
-| logic-guard.js | PostToolUse | Write\|Edit(*.cs) | 逻辑错误检查 |
-| vue-guard.js | PostToolUse | Write\|Edit(*.vue) | Vue 代码检查 |
-| test-reminder.js | PostToolUse | Write\|Edit(*.cs) | 提示运行测试 |
-| sqlite-index-update.js | PostToolUse | Write\|Edit(*.cs) | 自动增量更新 SQLite 索引 |
-| git-commit-review.js | PostToolUse | Bash | 阻止 force push、密钥泄露 |
-| review-trigger.js | PostToolUse | Write\|Edit | 代码审查提醒 |
-| artifact-index-update.js | PostToolUse | Write | 自动更新 Artifact INDEX.md |
-| build-verify.js | Stop | 会话结束 | 编译验证报告（非阻断） |
-| notify.ps1 | Stop | 任务完成/等待输入 | Windows Toast 通知 |
-| project-knowledge.js | SessionStart | 会话启动 | 加载项目 learnings |
-| learning-recorder.js | PostToolUse | Write\|Edit | 记录修改到 learnings.md |
-| knowledge-sync-reminder.js | SessionStart | 会话启动 | Memory → Knowledge 同步提醒 |
-| metrics-collector.js | PostToolUse | 关键工具 | 只记录高成本/质量工具 |
-| metrics-report.js | Stop | 会话结束 | 输出简化的度量报告 |
+> Hook 文件位于 `~/.claude/hooks/`。实际激活取决于 harness 配置。
+> 已确认激活：settings.json 中注册的。其余文件存在但需确认是否被 harness 加载。
+
+### 已确认激活
+
+| Hook | 事件 | 功能 |
+|------|------|------|
+| codegraph prompt-hook | UserPromptSubmit | CodeGraph 代码索引（settings.json 注册） |
+
+### 核心流程 Hook（文件存在，需确认激活状态）
+
+| Hook | 事件 | 功能 |
+|------|------|------|
+| skill-router.js | UserPromptSubmit | 自动路由到对应 Skill |
+| session-start.js | SessionStart | 注入 git 状态 + 项目信息 + 任务进度 |
+| context-injector.js | UserPromptSubmit | 关键词匹配注入规则 |
+
+### 安全防护 Hook
+
+| Hook | 事件 | 功能 |
+|------|------|------|
+| secret-guard.js | PreToolUse | 拦截硬编码密钥 |
+| write-guard.js | PreToolUse | 拦截主目录垃圾文件 |
+| bash-guard.js | PreToolUse | Bash 命令安全检查 |
+| commit-gate.js | PreToolUse | 提交前强制编译和测试验证 |
+| encrypted-write-guard.js | PreToolUse | 加密 .cs 文件写入防护 |
+| impact-guard.js | PreToolUse | .cs 修改前提示查看调用链 |
+| git-commit-review.js | PostToolUse | 阻止 force push、密钥泄露 |
+
+### 质量检查 Hook
+
+| Hook | 事件 | 功能 |
+|------|------|------|
+| cs-guard.js | PostToolUse | C# 语法检查 |
+| quality-guard.js | PostToolUse | SQL 注入、null 安全、资源释放检查 |
+| logic-guard.js | PostToolUse | 逻辑错误检查 |
+| vue-guard.js | PostToolUse | Vue 代码检查 |
+| test-reminder.js | PostToolUse | 提示运行测试 |
+| review-trigger.js | PostToolUse | 代码审查提醒 |
+
+### 索引/通知 Hook
+
+| Hook | 事件 | 功能 |
+|------|------|------|
+| sqlite-index-update.js | PostToolUse | 自动增量更新 SQLite 索引 |
+| artifact-index-update.js | PostToolUse | 自动更新 Artifact INDEX.md |
+| project-knowledge.js | SessionStart | 加载项目 learnings |
+| learning-recorder.js | PostToolUse | 记录修改到 learnings.md |
+| knowledge-sync-reminder.js | SessionStart | Memory → Knowledge 同步提醒 |
+| metrics-collector.js | PostToolUse | 只记录高成本/质量工具 |
+| metrics-report.js | Stop | 输出简化度量报告 |
+| build-verify.js | Stop | 编译验证报告（非阻断） |
+| notify.ps1 | Stop | Windows Toast 通知 |

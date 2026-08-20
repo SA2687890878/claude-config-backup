@@ -83,3 +83,9 @@ archive/skills-2026-08-20/
 settings.json.bak-*
 settings.local.json.bak-*
 
+
+# ¡Ÿ ±π§æﬂ
+archify_api.json
+archify_readme.md
+parse_archify.py
+

@@ -14,13 +14,14 @@
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Commands（斜杠命令）                          │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐           │
-│  │ /explore │ │ /build   │ │ /operate │ │ /review  │           │
-│  └──────────┘ └──────────┘ └──────────┘ └──────────┘           │
-│  ┌──────────┐ ┌──────────┐                                     │
-│  │ /test    │ │ /commit  │                                     │
-│  └──────────┘ └──────────┘                                     │
+│                    Skills（斜杠技能 - 唯一总入口）                │
+│  ┌───────────────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐  │
+│  │ /pipeline-executor│ │ /review  │ │ /test    │ │ /commit  │  │
+│  │ ★唯一总入口       │ └──────────┘ └──────────┘ └──────────┘  │
+│  │ 开发XX→五阶段编排 │ ┌──────────┐ ┌───────────────────┐      │
+│  └───────────────────┘ │/systematic│ │/verification-before│     │
+│                        │ debugging │ │   completion     │      │
+│                        └──────────┘ └───────────────────┘      │
 └────────────────────────────┬────────────────────────────────────┘
                              │
                              ▼
@@ -32,10 +33,11 @@
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Skills（技能）                           │
+│                    Skills（对外 / 内部 / 侧挂）                  │
 │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐            │
-│  │  /explore  │ │  /build    │ │  /operate  │            │
-│  │  需求探索    │ │  功能开发    │ │  问题排查    │            │
+│  │/requirements │ │/pipeline-    │ │/systematic-  │            │
+│  │/design       │ │ executor★    │ │ debugging    │            │
+│  │ 需求/设计    │ │ 唯一总入口   │ │ 排障         │            │
 │  └──────────────┘ └──────────────┘ └──────────────┘            │
 └────────────────────────────┬────────────────────────────────────┘
                              │
@@ -109,37 +111,31 @@
 ├── CLAUDE.md（全局指令）
 │   └── 引用 rules/ 和 RTK.md
 │
-├── commands/（斜杠命令 - 简单入口）
-│   ├── explore.md      → /explore（需求探索）
-│   ├── build.md        → /build（功能开发）
-│   ├── operate.md      → /operate（问题排查）
-│   ├── review.md       → /review（代码审查）
-│   ├── test.md         → /test（测试执行）
-│   └── commit.md       → /commit（Git 提交）
+├── skills/（斜杠技能 - 唯一总入口：pipeline-executor）
+│   ├── pipeline-executor.md → ★唯一总入口（开发XX→五阶段编排）
+│   ├── requirements.md      → 需求探索
+│   ├── design.md            → 技术设计
+│   ├── review.md            → 代码审查
+│   ├── test.md              → 测试执行
+│   └── commit.md            → Git 提交
 │
 ├── workflows/（已废弃，保留为空目录）
-│   ├── /explore      → 需求探索流程
-│   ├── /build        → 功能开发流程
-│   └── /operate      → 问题排查流程
+│   └── 已由 pipeline-executor + dev-pipeline/dev-workflow 内部协议替代
 │
 ├── agents/（角色 - 执行单元）
 │   ├── builder-agent.md   → 设计、开发、测试
 │   └── operator-agent.md  → 排查、优化、运维
 │
-├── skills/（技能 - 专业能力）
-│   ├── requirements/      → Requirement
-│   ├── research/          → Requirement
-│   ├── arch-review/       → Design
-│   ├── sql-best-practices/→ Design
-│   ├── review/            → Coding
-│   ├── dev-workflow/      → Coding
-│   ├── test/              → Testing
-│   ├── sync/              → Sync
-│   ├── systematic-debugging/ → Troubleshooting
-│   ├── perf-tune/         → Troubleshooting
-│   ├── docs/              → Shared
-│   ├── commit/            → Shared
-│   └── verification-before-completion/ → Shared
+├── skills/（技能 - 分层：对外/内部/侧挂）
+│   ├── [对外] requirements/      → Requirement
+│   ├── [对外] design/             → Design
+│   ├── [对外] pipeline-executor/  → ★唯一总入口（编排）
+│   ├── [内部] dev-pipeline/       → 五阶段内部逻辑（由 pipeline-executor 调度）
+│   ├── [内部] dev-workflow/       → development 执行器（由 pipeline-executor 调度）
+│   ├── [对外] review/             → Coding
+│   ├── [对外] test/               → Testing
+│   ├── [对外] systematic-debugging/ → Troubleshooting
+│   ├── [侧挂] perf-tune/research/brooks-*/opencli-* → 按需触发
 │
 ├── rules/（核心规则 - 自动加载）
 │   ├── quality/
@@ -224,28 +220,24 @@
 ```
 用户输入 "开发一个设备管理功能"
     │
-    ├─→ skill-router.js 检测到"开发"关键词
-    │   └─→ 注入路由上下文：建议使用 /build
+    ├─→ skill-router 检测到"开发"关键词
+    │   └─→ 路由至 /pipeline-executor（★唯一总入口）
     │
-    ├─→ /build 命令触发 /build 工作流
-    │   ├─→ Phase 1: 需求探索（调用 requirements skill）
-    │   │   └─→ 输出 Requirement.md
+    ├─→ /pipeline-executor 编排五阶段（review 模式默认）
+    │   ├─→ Phase 1: 需求（requirements）→ Gate（模糊必澄清，auto 亦不可跳过）
+    │   │   └─→ 输出 {product_path}/requirements.md + Task Contract
     │   │
-    │   ├─→ Phase 2: 设计（调用 arch-review skill）
-    │   │   └─→ Design Gate 检查
-    │   │   └─→ 输出 Architecture.md, Design.md
+    │   ├─→ Phase 2: 设计（design / arch-review）→ Gate
+    │   │   └─→ 输出 {product_path}/design.md
     │   │
-    │   ├─→ Phase 3: 编码（调用 builder-agent）
-    │   │   └─→ Code Gate 检查（dotnet build）
-    │   │   └─→ 输出 Code
+    │   ├─→ Phase 3: 开发（dev-workflow 内部执行层）→ Gate(build==0)
+    │   │   └─→ 输出 Code，更新 active.json stage=development
     │   │
-    │   ├─→ Phase 4: 测试（调用 test skill）
-    │   │   └─→ Test Gate 检查（dotnet test）
-    │   │   └─→ 输出 TestPlan.md
+    │   ├─→ Phase 4: 测试（test）→ Gate(test==0)
+    │   │   └─→ 输出测试结果，stage=testing
     │   │
-    │   └─→ Phase 5: 验证（verification-before-completion）
-    │       └─→ Release Gate 检查
-    │       └─→ 输出交付物
+    │   └─→ Phase 5: 验证（verification-before-completion）→ Release Gate
+    │       └─→ 用户确认 → commit → 产物归档 → active.json 移入 .index.json
     │
     └─→ build-verify.js (Stop Hook)
         └─→ 编译 + 测试双门禁
@@ -259,8 +251,8 @@
 
 | 组件 | 职责 | 触发方式 | 输出 |
 |------|------|---------|------|
-| **Commands** | 用户入口 | `/命令` | 调用 Skill |
-| **Skills** | 流程编排 | Skill 触发 | 阶段性交付物 |
+| **pipeline-executor** | 唯一总入口 | `开发XX` | 编排五阶段 |
+| **Skills** | 阶段能力 | Skill 触发 | 阶段性交付物 |
 | **Agents** | 任务执行 | Skill 调用 | 分析结果 |
 | **Skills** | 专业能力 | Agent/Skill 调用 | 专业输出 |
 | **Quality Gates** | 质量把关 | 阶段完成时 | 通过/不通过 |
@@ -304,7 +296,8 @@
 
 | 日期 | 版本 | 内容 |
 |------|------|------|
-| 2026-06-16 | 4.0 | 本次优化：核心规则+参考规则分离、knowledge层次化索引、路径修正 |
+| 2026-08-20 | 5.0 | 收口优化：单协议(active.json唯一真源)·单入口(pipeline-executor)·索引瘦身·分层(对外/内部/侧挂) |
+| 2026-06-16 | 4.0 | 核心规则+参考规则分离、knowledge层次化索引、路径修正 |
 | 2026-06-11 | 3.0 | 重构架构图，符合《建设指南》运行模型；新增组件关系图和数据流图 |
 | 2026-06-10 | 2.0 | 添加 skill-router、session-start、build-verify |
 | 2026-06-04 | 1.0 | 初始版本 |
