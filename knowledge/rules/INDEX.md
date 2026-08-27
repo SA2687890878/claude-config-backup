@@ -53,6 +53,8 @@
 | 需求澄清问题库 | `quality/question-bank.md` |
 | 审查清单 | `quality/review-checklist.md` |
 | Hooks 标准 | `quality/hooks-standards.md` |
+| **宪法（一页收口）** | `quality/constitution.md` — 三禁三必须 + 三Gates，按需 |
+| **微清单** | `quality/checklist.md` — Requirement 10行自检，按需 |
 
 ### 工具
 | Rule | 路径 |

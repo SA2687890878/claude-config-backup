@@ -38,11 +38,12 @@ version: 3.0.0
 ### 流程
 
 1. **探索项目上下文** — 检查文件、文档、最近的 commit
-2. **提出澄清问题** — 一次一个，理解目的/约束/成功标准
-3. **提出 2-3 个方向** — 带权衡分析和你的推荐
-4. **确认需求要点** — 按复杂度分节呈现，每节获得用户批准
-5. **产出需求要点** — 保存为 `{product_path}/requirements.md`（简版走头脑风暴，详版走需求质询模板）
-6. **产物移交** — 更新 active.json：stage=design，写入 links.requirement=`{product_path}/requirements.md`
+2. **意图半页（复杂/高改动才写）** — 产出 `{product_path}/intent.md` 半页纸：约束1行/非目标1-3条/安全与权限1行（详见 `references/intent-template.md`，简单需求可跳过）
+3. **提出澄清问题** — 一次一个，理解目的/约束/成功标准
+4. **提出 2-3 个方向** — 带权衡分析和你的推荐
+5. **确认需求要点** — 逐项过 `knowledge/rules/quality/checklist.md` 10行自检，每节获得用户批准
+6. **产出需求要点** — 保存为 `{product_path}/requirements.md`（简版走头脑风暴，详版走需求质询模板）
+7. **产物移交** — 更新 active.json：stage=design，写入 links.requirement=`{product_path}/requirements.md`（如有 intent.md 同步写入 links）
 
 读取 `references/brainstorming-details.md` 了解完整流程和自检清单。
 
