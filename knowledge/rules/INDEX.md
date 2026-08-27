@@ -46,6 +46,7 @@
 | 触发规则 | `workflows/workflows.md` |
 | Git 规范 | `workflows/git.md` |
 | 知识同步 | `workflows/knowledge-sync.md` |
+| **记忆生命周期** | `workflows/memory-lifecycle.md` — 进-留-出，防记忆膨胀省 token |
 
 ### 质量
 | Rule | 路径 |
