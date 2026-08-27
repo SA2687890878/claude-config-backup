@@ -5,6 +5,7 @@
  */
 const path = require('path');
 const fs = require('fs');
+const { findTestProject } = require('./shared-utils');
 
 let data = '';
 process.stdin.on('data', chunk => data += chunk);
@@ -44,29 +45,3 @@ process.stdin.on('end', () => {
     }
   } catch (e) { console.error('[completion-reminder] Error:', e.message); }
 });
-
-function findTestProject(filePath) {
-  let dir = path.dirname(filePath);
-  let csprojDir = null;
-  for (let i = 0; i < 10; i++) {
-    try {
-      if (fs.readdirSync(dir).some(f => f.toLowerCase().endsWith('.csproj'))) { csprojDir = dir; break; }
-    } catch (e) { return null; }
-    const parent = path.dirname(dir);
-    if (parent === dir) return null;
-    dir = parent;
-  }
-  if (!csprojDir) return null;
-  const projectName = path.basename(csprojDir);
-  const parent = path.dirname(csprojDir);
-  try {
-    const siblings = fs.readdirSync(parent, { withFileTypes: true });
-    for (const d of siblings) {
-      if (d.isDirectory() && /\.(tests?|test)$/i.test(d.name) && d.name.toLowerCase().includes(projectName.toLowerCase().split('.')[0])) {
-        const csprojs = fs.readdirSync(path.join(parent, d.name)).filter(f => f.toLowerCase().endsWith('.csproj'));
-        if (csprojs.length > 0) return path.join(parent, d.name, csprojs[0]);
-      }
-    }
-  } catch (e) {}
-  return null;
-}

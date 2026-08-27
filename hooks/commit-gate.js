@@ -18,6 +18,7 @@
 const { execSync, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const { findCsprojUp, findTestProjects } = require('./shared-utils');
 
 function readStdin() {
   return new Promise((resolve) => {
@@ -27,43 +28,6 @@ function readStdin() {
     process.stdin.on('end', () => resolve(data));
     setTimeout(() => resolve(data), 10000);
   });
-}
-
-function findCsprojUp(filePath) {
-  let dir = path.dirname(filePath);
-  for (let i = 0; i < 10; i++) {
-    try {
-      const entries = fs.readdirSync(dir);
-      const csproj = entries.find(f => f.toLowerCase().endsWith('.csproj'));
-      if (csproj) return path.join(dir, csproj);
-    } catch (_) { return null; }
-    const parent = path.dirname(dir);
-    if (parent === dir) return null;
-    dir = parent;
-  }
-  return null;
-}
-
-function findTestProjects(csprojPath) {
-  const dir = path.dirname(csprojPath);
-  const parent = path.dirname(dir);
-  const projectName = path.basename(dir).toLowerCase();
-  const testProjects = [];
-
-  try {
-    const siblings = fs.readdirSync(parent, { withFileTypes: true });
-    for (const s of siblings) {
-      if (!s.isDirectory()) continue;
-      if (/\.(tests?|test)$/i.test(s.name) && s.name.toLowerCase().includes(projectName.split('.')[0])) {
-        const testDir = path.join(parent, s.name);
-        try {
-          const csprojs = fs.readdirSync(testDir).filter(f => f.toLowerCase().endsWith('.csproj'));
-          if (csprojs.length > 0) testProjects.push(path.join(testDir, csprojs[0]));
-        } catch (_) {}
-      }
-    }
-  } catch (_) {}
-  return testProjects;
 }
 
 (async () => {

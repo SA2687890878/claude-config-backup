@@ -11,20 +11,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const { getGitSecurityPatterns } = require('./shared-utils');
 
 // ============================================================
 // Git 命令安全检查
 // ============================================================
 
-const GIT_SECURITY_CHECKS = [
-  { pattern: /git\s+push\s+.*--force/, label: 'Force push detected', severity: 'HIGH', confidence: 95, description: '强制推送可能覆盖其他人的代码', fix: '使用 --force-with-lease 或确认分支是独占的' },
-  { pattern: /git\s+push\s+.*--force-with-lease/, label: 'Force push with lease', severity: 'MEDIUM', confidence: 70, description: '使用 --force-with-lease 比 --force 安全', fix: '确认分支是独占的' },
-  { pattern: /git\s+push\s+.*origin\s+(main|master|develop)/, label: 'Push to protected branch', severity: 'HIGH', confidence: 90, description: '推送到受保护的分支', fix: '使用 Pull Request 流程' },
-  { pattern: /git\s+commit\s+.*-m\s*["'].*(?:password|secret|token|key|credential)/i, label: 'Secret in commit message', severity: 'HIGH', confidence: 85, description: '提交信息中包含敏感词', fix: '不要在提交信息中包含敏感信息' },
-  { pattern: /git\s+commit\s+.*--no-verify/, label: 'Skip commit hooks', severity: 'MEDIUM', confidence: 60, description: '跳过提交钩子', fix: '确保所有钩子都通过' },
-  { pattern: /git\s+reset\s+.*--hard/, label: 'Hard reset detected', severity: 'HIGH', confidence: 90, description: '硬重置会丢失未提交的更改', fix: '确认没有未提交的更改' },
-  { pattern: /git\s+clean\s+.*-f/, label: 'Force clean detected', severity: 'HIGH', confidence: 85, description: '强制清理会删除未跟踪的文件', fix: '确认没有重要的未跟踪文件' },
-];
+// Use shared git security patterns
+const GIT_SECURITY_CHECKS = getGitSecurityPatterns();
 
 // ============================================================
 // 置信度评分

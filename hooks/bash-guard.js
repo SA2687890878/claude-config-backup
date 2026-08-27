@@ -8,6 +8,7 @@
  * stdout: JSON { decision: 'block', reason: '...' }
  */
 const path = require('path');
+const { getGitSecurityPatterns } = require('./shared-utils');
 
 // ===== 危险命令模式 =====
 
@@ -54,34 +55,18 @@ const DANGEROUS_PATTERNS = [
     re: /\bchmod\s+777\b/gi,
     msg: 'chmod 777 赋予所有用户完全权限',
     level: 'block'
-  },
-  // Git 危险操作
-  {
-    re: /\bgit\s+checkout\s+--\s+\./g,
-    msg: 'git checkout -- . 会丢失所有未提交修改',
-    level: 'block'
-  },
-  {
-    re: /\bgit\s+clean\s+-[a-zA-Z]*f[a-zA-Z]*\s+/gi,
-    msg: 'git clean -f 会删除未跟踪文件',
-    level: 'block'
-  },
-  {
-    re: /\bgit\s+push\b(?![^\n]*--force-with-lease)[^\n]*--force\b/gi,
-    msg: 'git push --force 会覆盖远端提交历史（如需强制推送请用 --force-with-lease）',
-    level: 'block'
-  },
-  {
-    re: /\bgit\s+push\b[^\n]*?\s(?<![\/-])(?:main|master|develop)\b/gi,
-    msg: '推送到受保护分支（main/master/develop）——CLAUDE.md 禁止直接 push',
-    level: 'block'
-  },
-  {
-    re: /\bgit\s+reset\s+--hard\b/gi,
-    msg: 'git reset --hard 会丢失所有未提交更改',
-    level: 'block'
-  },
+  }
 ];
+
+// Add git security patterns from shared module
+const gitPatterns = getGitSecurityPatterns();
+for (const pattern of gitPatterns) {
+  DANGEROUS_PATTERNS.push({
+    re: pattern.pattern,
+    msg: pattern.description,
+    level: pattern.level
+  });
+}
 
 // ===== Main =====
 let data = '';
