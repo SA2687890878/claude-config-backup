@@ -71,7 +71,7 @@ ctx_search({ queries: ["encryption"], source: "knowledge" })
 
 **方式 2：通过 Read 工具读取**
 ```bash
-cat ~/.claude/knowledge/rules/code-access/encryption.md
+cat ~/.claude/knowledge/engineering/dgclient-encryption-mechanism.md
 ```
 
 **方式 3：通过 context-injector.js 自动注入**

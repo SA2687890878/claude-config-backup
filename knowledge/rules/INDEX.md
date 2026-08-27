@@ -19,7 +19,7 @@
 ### 代码访问
 | Rule | 路径 |
 |------|------|
-| 加密机制 | `code-access/encryption.md` |
+| 加密机制 | `~/.claude/knowledge/engineering/dgclient-encryption-mechanism.md` |
 | 索引系统 | `code-access/indexing.md` |
 | 写入规则 | `code-access/write-rules.md` |
 | 决策树 | `code-access/decision-tree.md` |

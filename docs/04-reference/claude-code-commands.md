@@ -64,12 +64,12 @@
 
 | 命令 | 说明 | 对应 Skill |
 |------|------|--------------|
-| `/explore` | 需求探索、技术调研、方案比较 | /explore |
-| `/build` | 功能开发全流程 | /build |
-| `/operate` | 问题排查、性能调优 | /operate |
-| `/review` | 多维度代码审查 | - |
-| `/test` | 测试执行、失败修复 | - |
-| `/commit` | Git 提交与工作空间管理 | - |
+| `/pipeline` | 一键全流程（需求→设计→开发→测试→提交） | pipeline-executor |
+| `/requirements` | 需求分析、梳理、评审 | requirements |
+| `/design` | 技术方案、架构设计 | design |
+| `/review` | 多维度代码审查 | review |
+| `/test` | 测试执行、失败修复 | test |
+| `/commit` | Git 提交与工作空间管理 | commit |
 
 ### 2.2 命令格式
 
@@ -92,9 +92,10 @@ argument-hint: [参数提示]
 
 | Skill | 职责 | 输入 | 输出 |
 |--------|------|------|------|------|
-| **Explore** | /explore | 需求探索、技术调研 | 问题 | Requirement.md, Decision.md |
-| **Build** | /build | 架构设计、功能设计、编码、测试 | Requirement | Architecture.md, Code |
-| **Operate** | /operate | 问题排查、日志分析、性能分析 | 故障 | RCA.md, Improvement.md |
+| **requirements** | 需求探索、需求梳理、评审 | 问题/想法 | Requirement.md |
+| **design** | 架构设计、功能设计 | Requirement | Architecture.md, Design.md |
+| **pipeline-executor** | 需求→设计→开发→测试→提交全流程 | Requirement | Code + 测试 + 提交 |
+| **systematic-debugging** | 问题排查、根因分析、性能分析 | 故障 | RCA.md |
 
 ### 3.2 技能格式
 

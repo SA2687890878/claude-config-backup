@@ -124,10 +124,8 @@ Wraps external command-line tools so you can discover + invoke them through the 
 
 ```bash
 opencli external install gh    # auto-install via brew/apt/npm per external-clis.yaml
-opencli external register my-tool \
-    --binary my-tool \
-
-> 站点全表已移，按opencli list -f json活体发现 — 主文件已瘦身至 130 行内
+opencli external register my-tool --binary my-tool   # bring your own binary
+```
 
 ## 反模式
 

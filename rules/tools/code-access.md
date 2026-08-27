@@ -28,7 +28,7 @@ paths:
 
 ## 详细参考
 
-- 加密机制：`~/.claude/knowledge/rules/code-access/encryption.md`
+- 加密机制：`~/.claude/knowledge/engineering/dgclient-encryption-mechanism.md`
 - 索引系统：`~/.claude/knowledge/rules/code-access/indexing.md`
 - 写入规则：`~/.claude/knowledge/rules/code-access/write-rules.md`
 - 决策树：`~/.claude/knowledge/rules/code-access/decision-tree.md`

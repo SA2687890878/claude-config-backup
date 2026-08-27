@@ -22,10 +22,8 @@
 **定位**：Claude 自动维护的知识索引
 
 **生成机制**：
-- `mcp__memory__create_entities` — 创建知识实体
-- `mcp__memory__create_relations` — 建立实体关系
-- `mcp__memory__add_observations` — 添加观察信息
-- MEMORY.md 自动同步为可读索引
+- DSH memory 工具写入（target=key / project / daily 等轨）
+- MEMORY.md 由索引工具同步为可读索引
 
 **示例内容**：
 ```markdown
@@ -47,7 +45,7 @@
 
 **何时触发**：
 - `project-knowledge.js` — SessionStart 时加载
-- `mcp__memory__read_graph` — 会话中主动查询
+- `memory list` — 会话中主动查询
 
 ---
 
@@ -243,7 +241,7 @@ task-state.md 记录了未完成的任务
 
 ## 与 Claude 官方 Memory 的关系
 
-**Claude 官方 Memory**（`mcp__memory__*`）：
+**全局记忆**（DSH memory 工具）：
 - 自动维护
 - 用于 AI 的长期记忆
 - 不涉及项目特定信息
@@ -255,7 +253,7 @@ task-state.md 记录了未完成的任务
 
 **协作关系**：
 ```
-Claude 官方 Memory（全局知识）
+全局记忆（DSH memory，跨会话）
   ↓
 本地 Memory（项目特定知识）
   ↓
@@ -281,7 +279,7 @@ learnings.md（人工经验）+ task-state.md（任务状态）
 **A**: 不会丢失。下次遇到同样问题时，从错误中重新学习就好。learnings.md 是"加速"，不是"必需"。
 
 ### Q: MEMORY.md 可以手动编辑吗？
-**A**: 技术上可以，但不推荐。最好通过 `mcp__memory__*` API 编辑，保持结构一致。
+**A**: 技术上可以，但不推荐。最好通过 memory 工具写入，保持结构一致。
 
 ---
 

@@ -8,7 +8,6 @@
 |------|------|
 | [ai-coding-articles](ai-coding-articles.md) | 6 篇 AI Coding/Harness 文章精华沉淀（含吸收总账） |
 | [dgclient-encryption-mechanism](dgclient-encryption-mechanism.md) | DGClient加密机制：进程级白名单 |
-| [index-system-division](index-system-division.md) | 三套索引系统分工：SQLite/CodeGraph/context-mode |
 | [workflow-agent-usage-principles](workflow-agent-usage-principles.md) | 工作流中何时用agent、何时直接用工具 |
 | [pdftotext-path](pdftotext-path.md) | 本机PDF文本提取工具路径 |
 | [settings-json-paths](settings-json-paths.md) | settings.json中hook路径必须用正斜杠 |

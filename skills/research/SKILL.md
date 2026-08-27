@@ -151,53 +151,22 @@ Scrapling 抓取 → 失败回退 → webfetch
 
 ## 安装配置
 
-### 前置条件
-
-- Python 3.10+
-- Scrapling（可选，自动安装）
-- Playwright（可选，JS 渲染）
-
-### Scrapling MCP 注册
-
-运行 `/research` 时自动检测和安装。手动注册格式：
-
-```json
-{
-  "mcp": {
-    "scrapling": {
-      "type": "local",
-      "command": ["<python-path>", "<mcp-server-script-path>"],
-      "enabled": true
-    }
-  }
-}
-```
+前置条件与 Scrapling 手动注册格式见 `references/install.md`（运行 /research 时自动检测安装）。
 
 ---
 
 ## 跨平台编码规范
 
-| 规则 | 正确做法 | 错误做法 |
-|------|---------|---------|
-| 非 ASCII 文本不进 shell | 用 `write` 工具写文件 | Python argv 传非 ASCII ❌ |
-| 文件读写用 UTF-8 | `encoding='utf-8-sig'` | 依赖 shell 编码 ❌ |
-| 写文件只用 `write` 工具 | UTF-8 无 BOM | PowerShell Set-Content ❌ |
-| Python stdout 设 UTF-8 | `sys.stdout.reconfigure('utf-8')` | 依赖系统默认 ❌ |
+非 ASCII 内容一律用 `write` 工具写 UTF-8 文件，禁止进 shell argv / Python 参数。细节见 `RULES.md` 编码洁净条款。
 
 ---
 
 ## 详细参考
 
-- 质量标准完整版：`RULES.md`
-- 分类标准：`TYPES.md`
-- 三档模式参数：`profiles.json`
-- 语言映射表：`tools/lang_config.py`（用法见 `RULES.md`）
-- 编码规范详情：见上文“跨平台编码规范”表与 `RULES.md` 编码洁净条款。
-- 资源入口：Task 1–4 的 prompt 文件；Task 4 调用 `tools/dr_tools.py` 输出到 `reports/`。
+- 质量标准 / 分类 / 模式参数：`RULES.md`、`TYPES.md`、`profiles.json`
+- 资源入口：`prompts/`（Task 1–4）；Task 4 经 `tools/dr_tools.py` 输出到 `reports/`
 
 ---
-
-**Created by [hoolulu](https://github.com/hoolulu)** · [github.com/hoolulu/deep-research](https://github.com/hoolulu/deep-research)
 
 ## 反模式
 

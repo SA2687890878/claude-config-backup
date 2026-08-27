@@ -173,13 +173,13 @@ git commit -m "[配置] 初始化 Claude Harness Engineering 配置"
 ## 第七步：测试 Workflow
 
 **操作**：
-1. 触发 `/explore` — 检查是否生成 Requirement.md
-2. 触发 `/build` — 检查是否生成 Architecture.md
+1. 触发 `pipeline-executor` 需求阶段 — 检查是否生成 Requirement.md
+2. 触发 `pipeline-executor` 设计阶段 — 检查是否生成 Architecture.md
 3. 修改代码 — 检查 learning-recorder.js 是否记录到 learnings.md
 
 **检查**：
-- [ ] `/explore` 生成 Requirement.md 到 artifacts/
-- [ ] `/build` 生成 Architecture.md 到 artifacts/
+- [ ] `pipeline-executor` 需求阶段生成 Requirement.md 到 artifacts/
+- [ ] `pipeline-executor` 设计阶段生成 Architecture.md 到 artifacts/
 - [ ] 代码修改后 learnings.md 有新增记录
 
 ---

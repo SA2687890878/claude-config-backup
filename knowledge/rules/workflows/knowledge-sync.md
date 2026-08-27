@@ -1,7 +1,6 @@
 # Memory → Knowledge 同步机制
 
-> 项目经验如何升级为工程知识，实现跨项目复用。
-> 这是高级功能，按需加载。
+> 项目经验升级为工程知识，实现跨项目复用。高级功能，按需加载。
 
 ## 三层知识体系
 
@@ -9,100 +8,35 @@
 Memory（项目级会话状态 + 经验）
   ↓ 沉淀
 Knowledge（工程级可复用知识）
-  ├── engineering/（工程规范、工具规范）
+  ├── engineering/（工程规范、工具技巧）
   ├── project/（项目特定知识）
   └── business/（业务知识）
 ```
 
-## Memory 与 Knowledge 的区分
+## Memory vs Knowledge
 
-| 层级 | 位置 | 维护方式 | 生命周期 | 用途 |
-|------|------|---------|---------|------|
-| **Memory** | `<project>/.../memory/` | 自动+手动 | 会话级，完成后归档 | 避免重复踩坑 |
-| **Knowledge** | `~/.claude/knowledge/` | 手动提炼 | 长期维护 | 跨项目复用 |
+| 层级 | 位置 | 生命周期 | 用途 |
+|------|------|---------|------|
+| Memory | 项目 memory/ | 会话级，完成后归档 | 避免重复踩坑 |
+| Knowledge | knowledge/ | 长期维护 | 跨项目复用 |
 
-**区分原则**：
-- **Memory**：项目特定的经验（"这个项目用 XxxTemplate 做聚合"）
-- **Knowledge**：可复用的通用知识（"Repository 模式的最佳实践"）
+区分：项目特定的经验 → Memory；可复用的通用知识 → Knowledge。
 
 ## 同步流程
 
-### 1. 触发时机
+1. 读取 learnings.md
+2. 识别可复用模式
+3. 判断归属：项目特定 → `knowledge/project/<项目>/`；通用 → `engineering/` 或 `business/`
+4. 更新对应的 Knowledge 文件（已存在则更新，不新建）
+5. learnings.md 标记 `[已同步到 knowledge/xxx/yyy.md]`
 
-**自动触发**：
-- 每周：SessionStart 时提示"本周是否需要同步 Memory → Knowledge"
-- 每月：定期审查提示
+## 识别规则
 
-**手动触发**：
-- 用户说"同步经验"、"更新知识库"
-- 完成大型功能时
+- **engineering/**：工具技巧、编码规范、测试模式、性能优化
+- **project/<项目>/**：API 约定、数据库设计、常用模式、实体映射
+- **business/**：业务流程、业务规则、术语表
 
-### 2. 同步步骤
+## 查询
 
-```
-读取 memory/learnings.md
-  ↓
-识别可复用模式
-  ↓ 判断
-是项目特定的？
-  ├─ 是 → 升级到 knowledge/project/<project-name>/
-  └─ 否 → 升级到 knowledge/engineering/ 或 knowledge/business/
-  ↓
-更新对应的 Knowledge 文件
-  ↓
-在 learnings.md 中标记"已同步"
-```
-
-### 3. 识别规则
-
-**升级到 knowledge/engineering/**（工程规范）：
-- 工具使用技巧（"SQLite 索引比 CodeGraph 快 10 倍"）
-- 编码规范（"异步方法必须用 Async 后缀"）
-- 测试模式（"Repository 测试用 InMemory 数据库"）
-- 性能优化（"大数据导出用流式处理"）
-
-**升级到 knowledge/project/<project-name>/**（项目知识）：
-- API 约定（"响应格式统一用 {success, data, message}"）
-- 数据库设计（"所有表必须有 ComId 字段"）
-- 常用模式（"聚合用 XxxTemplate"）
-- 实体映射（"Order → OrderDto 映射规则"）
-
-**升级到 knowledge/business/**（业务知识）：
-- 业务流程（"订单状态机：待支付 → 已支付 → 已发货 → 已完成"）
-- 业务规则（"退款只能在 7 天内申请"）
-- 术语表（"ComId = 租户 ID"）
-
-### 4. 同步示例
-
-**learnings.md 中的经验**：
-- "大数据量导出用流式处理" → 升级到 `knowledge/engineering/performance.md`
-- "IAsyncEnumerable<T> 避免内存溢出" → 升级到 `knowledge/engineering/dotnet-best-practices.md`
-- "导出时捕获快照" → 升级到 `knowledge/project/<project-name>/export-patterns.md`
-
-**learnings.md 中标记**：在经验条目后添加 `[已同步到 knowledge/xxx/yyy.md]`
-
-### 5. Knowledge 文件结构
-
-见 `~/.claude/knowledge/MEMORY.md` 总索引。
-
-## 最佳实践
-
-### DO
-
-- **定期同步**：每周或每完成大功能后同步一次
-- **标记已同步**：在 learnings.md 中标记，避免重复
-- **保留上下文**：同步到 Knowledge 时保留"经验来源"（项目、日期、问题）
-- **分类清晰**：判断是工程知识还是项目知识
-- **更新而非新建**：如果 Knowledge 文件已存在相关内容，更新而非新建
-
-### DON'T
-
-- **不要全部同步**：只同步可复用的经验
-- **不要删除 learnings.md**：标记为"已同步"，保留原记录
-- **不要混淆层级**：项目特定知识不要放到 engineering/
-- **不要遗弃旧 Knowledge**：定期审查和更新 Knowledge 文件
-
-## 查询机制
-
-- **查询 Knowledge**：使用 `ctx_search` 或 `Grep` 搜索 `~/.claude/knowledge/`
-- **查询 Memory**：SessionStart 时自动加载 learnings.md，或手动读取
+- Knowledge：`ctx_search` 或 grep 搜 `knowledge/`
+- Memory：SessionStart 自动加载 learnings.md
