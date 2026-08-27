@@ -3,14 +3,12 @@
 ## 环境
 - 简体中文 | Windows + PowerShell
 - .NET 8.0（Web）+ .NET Framework 4.5.2（WPF）| Vue 2
-- SQL Server（老项目）| PostgreSQL（新项目）
 
 ## 项目速查
-| 项目 | 路径 | 数据库 |
-|------|------|--------|
-| pcs.webbackend | `F:/Code WorkSpace/pcs.webbackend/` | SQL Server |
-| pcs.crontabservice | `F:/Code WorkSpace/pcs.crontabservice/` | SQL Server |
-| OTD-* | `F:/OTD Code WorkSpace/` | PostgreSQL |
+| 项目 | 数据库 |
+|------|--------|
+| `Code WorkSpace` | SQL Server |
+| `OTD Code WorkSpace` | PostgreSQL |
 
 ## 行为原则
 - 多种解释时选最符合上下文的，更简单的方法直接用，真正不确定才问
@@ -71,6 +69,7 @@
 @rules/quality/verification.md
 
 ## 按需规则（场景触发时加载）
+- RTK：重输出/Bash 调试时，读取 `knowledge/rules/tools/rtk.md`
 - Token 优化：见 @rules/tools/token-optimization.md
 - 问题澄清：需求不明确时，读取 `~/.claude/knowledge/rules/quality/question-bank.md`
 
@@ -80,4 +79,4 @@
 
 > **规则双轨**：`rules/*.md` 自动加载（核心 6 个，~26 行/个）；`knowledge/rules/` 按需加载（43 个参考规则，见 INDEX.md 二级索引）。
 
-@RTK.md
+> @RTK.md 已搬至 `knowledge/rules/tools/rtk.md` 按需加载（见上节）。

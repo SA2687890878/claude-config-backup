@@ -372,7 +372,7 @@
 ### 目录命名规则
 - 路径转换：`C:\Users\admin` → `C--Users-admin`
 - 路径分隔：`/` 或 `\` → `-`
-- 示例：`F:/Code WorkSpace/pcs.crontabservice` → `F--Code-WorkSpace-pcs-crontabservice`
+- 示例：`Code WorkSpace/pcs.crontabservice` → `F--Code-WorkSpace-pcs-crontabservice`（盘符仅用于内部编码，文档不写盘符）
 
 ### 加载方式
 - **自动加载**：`project-knowledge.js` hook 自动加载

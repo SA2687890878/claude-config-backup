@@ -10,11 +10,10 @@
 | Test Gate | 测试完成后 | `knowledge/rules/gates/test.md` |
 | Release Gate | 发布前 | `knowledge/rules/gates/release.md` |
 
-## 工作流集成
+## 工作流集成（现行单轨）
 
-- `/explore` → Requirement Gate
-- `/build` → Design → Code → Test Gate
-- `/operate` → Code → Test Gate
+- `pipeline-executor`：requirements → Requirement Gate → design → Design Gate → dev-workflow → Code Gate → test → Test Gate → verification → Release Gate
+- 单点排查：`/systematic-debugging` / `/perf-tune` → Code/Test Gate
 
 ## 铁律
 

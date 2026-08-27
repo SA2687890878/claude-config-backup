@@ -57,6 +57,7 @@
 ### 工具
 | Rule | 路径 |
 |------|------|
+| RTK（按需） | `tools/rtk.md` — 重输出/Bash 调试，`rtk gain/proxy` |
 | 模型策略 | `tools/model-strategy.md` |
 | 安全规则 | `tools/security.md` |
 

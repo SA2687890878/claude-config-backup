@@ -32,6 +32,7 @@ paths:
 - 索引系统：`~/.claude/knowledge/rules/code-access/indexing.md`
 - 写入规则：`~/.claude/knowledge/rules/code-access/write-rules.md`
 - 决策树：`~/.claude/knowledge/rules/code-access/decision-tree.md`
+- 重输出压缩：`~/.claude/knowledge/rules/tools/rtk.md`（按需：Bash 日志/大输出才读）
 
 ## 反模式（禁止）
 

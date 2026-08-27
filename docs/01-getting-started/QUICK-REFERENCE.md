@@ -62,15 +62,15 @@ claude
 
 ---
 
-## 📋 Commands 速查
+## 📋 Commands 速查（现行单轨）
 
-### 开发类
+### 开发类（唯一总入口）
 
 | 命令 | 用途 | 触发词 |
 |------|------|--------|
-| `/explore` | 需求探索、技术调研、方案比较 | 讨论、设计、方案、探索 |
-| `/build` | 功能开发全流程（设计→编码→测试） | 开发、添加、实现、构建 |
-| `/operate` | 问题排查、根因分析、性能调优 | 修复、bug、报错、排查 |
+| `/pipeline-executor` | 全链路编排（需求→设计→开发→测试→提交） | 开发XX、一键开发、全流程、帮我开发 |
+| `/requirements` | 需求探索与澄清 | 讨论、需求、方案、头脑风暴 |
+| `/design` | 技术方案设计 | 技术方案、怎么实现、架构设计 |
 
 ### 测试与审查
 
@@ -103,13 +103,13 @@ claude
 
 ---
 
-## 🔄 Skills 速查
+## 🔄 Skills 速查（现行单轨）
 
 | Skill | 触发 | 输入 | 输出产物 |
 |----------|------|-----------|---------|
-| requirements + research | `/explore` 或 "讨论" | requirements | Requirement.md, Decision.md |
-| arch-review + dev-workflow + review + test | `/build` 或 "开发" | arch-review, review, dev-workflow, test | Architecture.md, Design.md, Code, TestPlan.md |
-| systematic-debugging + perf-tune | `/operate` 或 "修复" | systematic-debugging, perf-tune | RCA.md, Improvement.md |
+| requirements (+research) | `/requirements` 或 “讨论/需求” | requirements | Requirement.md, Decision.md |
+| pipeline-executor | `/pipeline-executor` 或 “开发XX” | 自动串五阶段 | Requirement→Design→Code→Tests |
+| systematic-debugging + perf-tune | “修复/bug/慢” | debugging/perf-tune | RCA.md, Improvement.md |
 
 ---
 
@@ -257,18 +257,18 @@ Release Gate（发布前）
 ### 新功能开发（1-2 小时）
 
 ```
-/explore → /arch-review → /build → /commit
-    ↓           ↓          ↓        ↓
-Requirement  Architecture  Code    Git
-    .md          .md        +Tests
+/requirements → /design → /pipeline-executor → /commit
+    ↓              ↓            ↓              ↓
+Requirement   Architecture  Code+Tests       Git
+    .md          .md
 ```
 
 ### Bug 修复（30 分钟-1 小时）
 
 ```
-/operate → /review → /commit
-    ↓          ↓          ↓
-   RCA.md  修复建议    Git commit
+/systematic-debugging → /review → /commit
+    ↓                      ↓          ↓
+   RCA.md              修复建议    Git commit
 ```
 
 ### 代码审查（15-30 分钟）
@@ -472,4 +472,4 @@ chmod -R 755 ~/.claude/
 
 ---
 
-**最后更新**：2026-06-15
+**最后更新**：2026-08-27（v2.0：旧三流 /explore/build/operate 下线，改为 pipeline-executor 单轨）

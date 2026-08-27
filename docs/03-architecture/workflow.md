@@ -1,152 +1,37 @@
-# Skill + Subagent 体系
+# Harness 交付流水
 
-> 基于《Harness Engineering 建设指南》构建的 Skill + Subagent 体系
+> **归档**：旧版 `/explore /build /operate` 三流已下线，归档见 `docs/archive/workflow-20260611.md`（2026-06-11）。现行单轨：`pipeline-executor`。
 
----
-
-## 概述
-
-根据指南要求，架构已从 Workflow 工具编排改为 Skill + Subagent 模式：
-
-| Skill | 职责 | 触发命令 |
-|--------|------|------|
-| **Explore** | 需求沟通、需求澄清、技术调研、方案比较 | /explore |
-| **Build** | 架构设计、功能设计、数据库设计、API 设计、编码、测试 | /build |
-| **Operate** | 问题排查、日志分析、SQL 分析、性能分析、根因分析 | /operate |
-
----
-
-## Explore 工作流
-
-### 职责
-- 需求沟通
-- 需求澄清
-- 技术调研
-- 方案比较
-
-### 输入
-- 问题描述
-
-### 输出
-- Requirement.md
-- Decision.md
-
-### 阶段
-1. **需求探索** — 5W1H 分析、需求质询、边界确认
-2. **方案设计** — 技术调研、多方案对比、架构设计
-3. **决策记录** — 记录决策理由、约束条件、验收标准
-
-### 触发词
-讨论、设计、方案、探索、头脑风暴
-
----
-
-## Build 工作流
-
-### 职责
-- 架构设计
-- 功能设计
-- 数据库设计
-- API 设计
-- 编码
-- 测试
-
-### 输入
-- Requirement（需求文档）
-
-### 输出
-- Architecture.md
-- Design.md
-- Code
-- TestPlan.md
-
-### 阶段
-1. **架构设计** — 技术方案、模块划分、依赖分析
-2. **详细设计** — API 设计、数据库设计、接口定义
-3. **编码实现** — 按设计文档实现代码
-4. **代码审查** — 多维度审查代码质量
-5. **测试验证** — 编译测试、回归验证
-
-### 质量门禁
-- Design Gate（设计完成后）
-- Code Gate（编码完成后）
-- Test Gate（测试完成后）
-
-### 触发词
-开发、添加、实现、构建
-
----
-
-## Operate 工作流
-
-### 职责
-- 问题排查
-- 日志分析
-- SQL 分析
-- 性能分析
-- 根因分析
-
-### 输入
-- 故障描述
-
-### 输出
-- RCA.md
-- Improvement.md
-
-### 阶段
-1. **问题定位** — 收集信息、复现问题、定位代码
-2. **根因分析** — 分析代码逻辑、数据流、异常场景
-3. **修复实施** — 实施修复、TDD 验证
-4. **验证闭环** — 编译测试、回归验证、文档记录
-
-### 质量门禁
-- Code Gate（修复完成后）
-- Test Gate（测试完成后）
-
-### 触发词
-修复、bug、报错、排查、优化、慢、性能
-
----
-
-## 工作流执行流程
+## 现行流水
 
 ```
-用户输入
-    ↓
-skill-router.js (Hook)
-    ↓ 检测触发词
-    ↓ 注入路由上下文
-    ↓
-对应 Command (/explore, /build, /operate)
-    ↓
-对应 Skill (/explore, /build, /operate)
-    ↓
-Phase 1 → Phase 2 → Phase 3 → ...
-    ↓
-Quality Gate 检查
-    ↓
-输出交付物
+用户说“开发XX/帮我开发/一键开发”
+  → /pipeline-executor（唯一总入口，auto/review/manual 三模式）
+    → requirements → Design Gate
+    → design (+arch-review) → Design Gate
+    → dev-workflow (development 阶段执行) → Code Gate
+    → test → Test Gate
+    → verification-before-completion → Release Gate → /commit
 ```
 
----
+## 你的 7 项日常怎么走
 
-## 与旧工作流的对比
+| 你的日常 | 实际走的 skill | 进度 |
+|---------|---------------|------|
+| 需求沟通/讨论 | `/requirements` (+`/research` 按需) | Requirement Gate |
+| 架构/功能设计 | `/design` (+`/arch-review` 按需) | Design Gate |
+| 功能开发 | `/pipeline-executor` 自动串五阶段 | Code Gate |
+| 功能测试 | `/test` | Test Gate |
+| 问题排查 | `/systematic-debugging` / `/perf-tune` | Code/Test Gate |
 
-| 旧工作流 | 新工作流 | 变化 |
-|---------|---------|------|
-| feature-development.js | /build | 合并 |
-| bug-fix.js | /operate | 合并 |
-| perf-optimize.js | /operate | 合并 |
-| code-review.js | - | 移除（用 /review 命令） |
-| test-runner.js | - | 移除（用 /test skill） |
-| - | /explore | 新增 |
+## 产物
 
----
+- 需求→设计→代码→测试，每阶段产物以 `active.json` 的 `product_path` 为准（`~/.claude/tasks/active.json` 唯一真源）。
+- 阶段推进：更新 `active.json stage`，完成归档到 `tasks/.index.json`。
 
-## 更新记录
+## 关联
 
-| 日期 | 版本 | 内容 |
-|------|------|------|
-| 2026-06-11 | 3.0 | 重构为 3 个工作流，符合《建设指南》要求 |
-| 2026-06-10 | 2.0 | 添加 5 个 workflow |
-| 2026-06-04 | 1.0 | 初始版本 |
+- 总入口：`skills/INDEX.md` 的 `/pipeline-executor ★唯一总入口`
+- 架构：`03-architecture/ARCHITECTURE.md`
+- 门禁：`rules/quality/gates.md` + `knowledge/rules/gates/*`
+- 压缩：`RTK.md`（重输出用 RTK 代理，已按需加载）

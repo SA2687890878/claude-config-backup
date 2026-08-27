@@ -9,19 +9,16 @@
 
 ---
 
-## 产物清单（按工作流）
+## 产物清单（现行单轨：pipeline-executor 五阶段 + 单点）
 
-| 工作流 | 产物 | 必须性 | 验证标准 |
-|--------|------|--------|---------|
-| `/explore` | Requirement.md | 必须 | 通过 Requirement Gate + 用户确认 |
-| `/explore` | Decision.md | 可选 | 架构师确认 |
-| `/build` | Architecture.md | 推荐 | 通过 Design Gate |
-| `/build` | Design.md | 推荐 | 通过 Design Gate |
-| `/build` | Code | 强制 | 通过 Code Gate |
-| `/build` | TestPlan.md | 推荐 | 测试覆盖 100% |
-| `/build` | CodeReview Results | 强制 | 通过 Code Gate |
-| `/operate` | RCA.md | 推荐 | 根因确认 + 修复验证 |
-| `/operate` | Improvement.md | 可选 | 改进建议 |
+| 阶段/入口 | 产物 | 必须性 | 验证标准 |
+|-----------|------|--------|---------|
+| requirements | Requirement.md | 必须 | 通过 Requirement Gate + 用户确认 |
+| requirements | Decision.md | 可选 | 架构师确认 |
+| design | Architecture.md / Design.md | 推荐 | 通过 Design Gate |
+| dev-workflow | Code + CodeReview Results | 强制 | 通过 Code Gate |
+| test | TestPlan.md + Tests | 推荐 | 测试覆盖 100% |
+| debugging/perf | RCA.md / Improvement.md | 按需 | 根因确认 + 修复验证 |
 
 ---
 

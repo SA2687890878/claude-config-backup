@@ -34,7 +34,7 @@
 | [ARCHITECTURE.md](03-architecture/ARCHITECTURE.md) | 系统架构图 + 组件关系 + 数据流 |
 | [HOOKS.md](03-architecture/HOOKS.md) | Hook 工作原理 + 触发时机 |
 | [TOKEN-SAVINGS.md](03-architecture/TOKEN-SAVINGS.md) | Token 节省机制说明 |
-| [workflow.md](03-architecture/workflow.md) | 完整工作流说明 |
+| [workflow.md](03-architecture/workflow.md) | 交付流水（现行单轨 pipeline-executor，旧三流已归档） |
 | [agent-roles.md](03-architecture/agent-roles.md) | Agent 角色定义 |
 | [cross-project.md](03-architecture/cross-project.md) | 跨项目工作流 |
 | [review-audit.md](03-architecture/review-audit.md) | 审查审计机制 |
@@ -169,4 +169,4 @@
 
 ---
 
-**最后更新**：2026-08-20（新增 HARNESS-ESSENCE-EXTRACTION-DETAILED.md v2.3 精华萃取）
+**最后更新**：2026-08-27（v2.0 瘦身：HARNESS-ENGINEERING 759→78 行；workflow 归档；QUICK/gates 现行单轨；RTK 按需化）

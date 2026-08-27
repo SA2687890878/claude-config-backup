@@ -2,9 +2,9 @@
 
 > 触发词映射唯一定义处。CLAUDE.md 引用此文件。详细流程见各 command 文件。
 
-## 铁律
+## 铁律（现行单轨）
 
-**收到 `/build`、`/explore`、`/operate` 命令时，必须第一步调用 Skill 工具，禁止跳过直接编码。**
+**收到 `pipeline-executor` 或单点 Skill 调用时，必须第一步走对应 Skill，禁止跳过直接编码。**
 
 跳过 Skill 会：
 - 跳过 Requirement Gate → 需求理解不充分
@@ -33,13 +33,14 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 
 ## 触发词 → Skill 映射
 
-### Commands（斜杠命令）
+### Commands（现行单轨）
 
 | 触发词 | 命令 | 对应 Skill | 说明 |
 |--------|------|-----------|------|
-| 讨论/设计/方案/探索 | `/explore` | `/requirements` | 需求探索、技术调研、方案比较 |
-| 开发/添加/实现/构建 | `/build` | `/dev-workflow` | 写计划→执行→验证 |
-| 修复/bug/报错/排查 | `/operate` | `/systematic-debugging` | 问题排查、根因分析 |
+| 开发XX/一键开发/全流程 | `/pipeline-executor` | 编排五阶段 | 唯一总入口，自动过 Requirement→Design→Code→Test→Release |
+| 讨论/需求/方案 | `/requirements` | `/requirements` | 需求探索与澄清 |
+| 技术方案/怎么实现 | `/design` | `/design` | 方案设计 |
+| 修复/bug/报错 | `/systematic-debugging` | `/systematic-debugging` | 问题排查、根因分析 |
 | 审查/review | `/review` | `/review` | 多维度代码审查 |
 | 测试/跑测试 | `/test` | `/test` | 测试执行、失败修复 |
 
