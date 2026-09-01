@@ -32,8 +32,9 @@
 | 文档 | 用途 |
 |------|------|
 | [ARCHITECTURE.md](03-architecture/ARCHITECTURE.md) | 系统架构图 + 组件关系 + 数据流 |
-| [HOOKS.md](03-architecture/HOOKS.md) | Hook 工作原理 + 触发时机 |
-| [TOKEN-SAVINGS.md](03-architecture/TOKEN-SAVINGS.md) | Token 节省机制说明 |
+| [CURRENT-STATUS.md](CURRENT-STATUS.md) | 当前实现、配置和自动化边界（优先依据） |
+| [HOOKS.md](03-architecture/HOOKS.md) | Hook 工作原理 + 触发时机（设计/历史参考） |
+| [TOKEN-SAVINGS.md](03-architecture/TOKEN-SAVINGS.md) | Token 节省机制说明（目标/估算） |
 | [workflow.md](03-architecture/workflow.md) | 交付流水（现行单轨 pipeline-executor，旧三流已归档） |
 | [agent-roles.md](03-architecture/agent-roles.md) | Agent 角色定义 |
 | [cross-project.md](03-architecture/cross-project.md) | 跨项目工作流 |

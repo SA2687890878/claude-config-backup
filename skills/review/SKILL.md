@@ -63,7 +63,7 @@ version: 2.0.0
 - [ ] 两个轴都已检查（或 Spec 轴标注"无需求文档"）
 - [ ] 报告按双轴分开呈现
 - [ ] 每个发现有具体的代码位置和规范来源
-- [ ] 报告末尾可选追加"需 Brooks 十二原则深度？→ 读 `references/brooks-essence.md`（当前未随 Skill 分发；仅在该文件补齐后启用） 快扫 R1-R6/T1-T2 + Iron Law（二层，不自动触发）"
+- [ ] 报告末尾可选追加"需 Brooks 十二原则深度？→ 读 `references/brooks-essence.md`（按需加载） 快扫 R1-R6/T1-T2 + Iron Law（二层，不自动触发）"
 
 **按变更类型选择策略：**
 
@@ -71,7 +71,7 @@ version: 2.0.0
 |----------|------|------|
 | < 50 行 | 快速审查 | `references/quick-review.md` |
 | 50-200 行 | 标准审查（含 1 个子代理对抗） | 按文件类型选择检查清单（见下表） |
-| > 200 行 | 深度审查+可选`--brooks`快照(R1-R6/T1-T2, Iron Law) | `references/execute-review.md` + `references/brooks-essence.md`（当前未随 Skill 分发；仅在该文件补齐后启用） |
+| > 200 行 | 深度审查+可选`--brooks`快照(R1-R6/T1-T2, Iron Law) | `references/execute-review.md` + `references/brooks-essence.md`（按需加载） |
 | 涉及 auth/crypto/database | 安全审查 | `references/dotnet-checklist.md` |
 
 **按文件类型选择检查清单：**
@@ -82,6 +82,9 @@ version: 2.0.0
 | `.vue` | `references/vue-checklist.md` |
 | `.sql` | `references/sql-checklist.md` |
 | `*.json` / `*.xml` | `references/config-checklist.md` |
+| 设备/PLC/标刻/SDK/TX/RX | `references/device-integration.md` |
+| 日志/Serilog/OpenObserve/traceId | `knowledge/rules/quality/logging-observability.md` |
+| 三花/PCS 日志链路、设备状态、SDK 交互 | `knowledge/project/sanhua/pcs-logging.md` + `knowledge/project/sanhua/pcs-device.md` |
 
 ---
 
@@ -97,7 +100,7 @@ version: 2.0.0
 
 **适用场景：** 变更 > 200 行，需要全面审计。
 
-> **可选 --brooks**：读 `references/brooks-essence.md`（当前未随 Skill 分发；仅在该文件补齐后启用） 快扫 R1-R6/T1-T2（cap3/维），Findings按Iron Law四段式追加。
+> **可选 --brooks**：读 `references/brooks-essence.md`（按需加载） 快扫 R1-R6/T1-T2（cap3/维），Findings按Iron Law四段式追加。
 
 **核心流程：**
 1. 读取 `references/execute-review.md` 了解审查流程

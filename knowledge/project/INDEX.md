@@ -6,6 +6,7 @@
 
 | 项目 | 路径 | 索引文件 |
 |------|------|---------|
+| sanhua | 三花/PCS 数采项目 | `project/sanhua/INDEX.md` ✅ |
 | otd.pcs.webbackend | `E:\Code WorkSpace\otd.pcs.webbackend\` | `project/otd.pcs.webbackend.md` ✅ |
 | pcs-web-frontend | 追溯平台前端（路径待定） | `project/pcs-web-frontend.md` ✅ — 触发词：追溯平台前端 / PCS 前端 / 客户选择器 / 物品选择器 / 部门产线工位 / Element Plus |
 | pcs.crontabservice | `E:\Code WorkSpace\pcs.crontabservice\` | 待建 |

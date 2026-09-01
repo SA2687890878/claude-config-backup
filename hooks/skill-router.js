@@ -26,11 +26,11 @@ function readStdin() {
 // 注意：只匹配"执行意图"，不匹配纯讨论/分析
 const ROUTES = [
   {
-    // 继续工作 → 恢复 task-state
+    // 继续工作 → 恢复当前任务
     pattern: /继续(工作|上次|开发|实现|做)|上次做到哪|进度|恢复/i,
     skill: null,
     action: 'restore-task-state',
-    hint: '检查 memory/task-state.md 恢复上次进度',
+    hint: '读取 tasks/active.json 恢复当前任务',
   },
   {
     // 全流程编排（新：放在第一优先级，避免被单 skill 抢走）
@@ -45,10 +45,10 @@ const ROUTES = [
     hint: '触发 /requirements 需求探索流程',
   },
   {
-    // 功能开发
+    // 功能开发：统一进入全流程总入口
     pattern: /(?:开发|添加|实现|写一个|写个|新建).*(?:功能|接口|页面|模块|服务|组件)|(?:帮我|给我).*(?:开发|实现|添加)/i,
-    skill: '/dev-workflow',
-    hint: '触发 /dev-workflow 开发工作流',
+    skill: '/pipeline-executor',
+    hint: '触发 /pipeline-executor 全链路编排调度',
   },
   {
     // 架构评审

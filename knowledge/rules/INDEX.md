@@ -52,6 +52,7 @@
 ### 质量
 | Rule | 路径 |
 |------|------|
+| 日志与可观测性 | `quality/logging-observability.md` |
 | 需求澄清问题库 | `quality/question-bank.md` |
 | 审查清单 | `quality/review-checklist.md` |
 | Hooks 标准 | `quality/hooks-standards.md` |
@@ -69,6 +70,7 @@
 | Rule | 路径 |
 |------|------|
 | C# | `languages/csharp.md` |
+| WPF | `languages/wpf.md` |
 | JavaScript | `languages/javascript.md` |
 | Vue | `languages/vue.md` |
 | SQL Server | `languages/sqlserver.md` |

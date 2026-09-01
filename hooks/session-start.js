@@ -44,16 +44,14 @@ function detectProject(cwd) {
   return null;
 }
 
-function readTaskState(cwd) {
-  // 从 cwd 动态生成项目目录名
-  const projectPath = cwd.replace(/:/g, '-').replace(/[\/\\]/g, '-');
-  const taskStatePath = path.join(HOME, '.claude', 'projects', projectPath, 'memory', 'task-state.md');
+function readActiveTask() {
+  const activePath = path.join(HOME, '.claude', 'tasks', 'active.json');
   try {
-    if (fs.existsSync(taskStatePath)) {
-      return fs.readFileSync(taskStatePath, 'utf8');
-    }
-  } catch (_) {}
-  return null;
+    if (!fs.existsSync(activePath)) return null;
+    const data = JSON.parse(fs.readFileSync(activePath, 'utf8'));
+    const tasks = Array.isArray(data.active) ? data.active : [];
+    return tasks.find(task => task && task.task_id) || null;
+  } catch (_) { return null; }
 }
 
 function getMetricsSuggestions() {
@@ -167,16 +165,16 @@ function readStdin() {
       sections.push('  ```');
     }
 
-    // === 4. 任务进度恢复 ===
-    const taskState = readTaskState(cwd);
-    if (taskState && taskState.includes('- [ ]')) {
-      // 有未完成的任务
+    // === 4. 当前任务恢复（唯一真源：active.json） ===
+    const activeTask = readActiveTask();
+    if (activeTask) {
       sections.push('');
-      sections.push('## ⏳ 上次未完成的任务');
-      sections.push('');
-      sections.push(taskState);
-      sections.push('');
-      sections.push('> 检测到未完成任务。用户说"继续工作"时，请读取上述进度并恢复。');
+      sections.push('## ⏳ 当前任务');
+      sections.push(`- 任务：${activeTask.title || activeTask.task_id}`);
+      sections.push(`- 阶段：${activeTask.stage || '(未设置)'}`);
+      sections.push(`- 产物：${activeTask.product_path || '(未设置)'}`);
+      if (activeTask.paused_at) sections.push(`- 断点：${activeTask.paused_at}`);
+      sections.push('> 需要恢复时读取 active.json 与对应 product_path，不读取旧 task-state.md。');
     }
 
     // === 5. 周度度量优化建议 ===

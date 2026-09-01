@@ -17,7 +17,8 @@ version: 2.0.0
 1. 读 `~/.claude/tasks/active.json`
 2. 确认 active 非空且 stage >= development（如在 requirements/design，提示先开发）
 3. 从 `{product_path}/` 查找关联产物
-4. 更新 active.json 的 stage=testing
+4. 涉及三花/PCS 数采、设备、标刻、SDK 时，读取 `knowledge/project/sanhua/pcs-test-matrix.md`
+5. 更新 active.json 的 stage=testing
 
 ## 路由
 

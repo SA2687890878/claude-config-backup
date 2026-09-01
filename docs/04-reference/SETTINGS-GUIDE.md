@@ -1,6 +1,6 @@
-# Harness Engineering: Settings.json 配置指南
+# Harness Engineering: settings.json 配置指南
 
-> 详细的 settings.json 字段说明和配置示例
+> 配置示例与维护参考，不代表当前运行配置。当前 Hook/模型/权限以 `settings.json` 实际内容为准；先读 `docs/CURRENT-STATUS.md`。
 
 **版本**：v1.0.0 | **最后更新**：2026-06-15
 

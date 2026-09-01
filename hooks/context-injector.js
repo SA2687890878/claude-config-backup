@@ -58,7 +58,7 @@ async function main() {
       {
         name: 'Token Optimization',
         keywords: /codegraph|search\.ps1|sqlite[-_]?index|代码索引|token.{0,3}优化|rtk\s+(gain|proxy|discover)/i,
-        path: 'token-optimization/tools.md',
+        path: 'token-optimization/overview.md',
         maxLines: 40
       },
       {
@@ -84,6 +84,24 @@ async function main() {
         keywords: /\.net|dotnet|c#|async\s+await|task\.run|iasyncenumerable|cancellationtoken|ioc|di\s+container|ef\s+core|entity framework/i,
         path: 'languages/csharp.md',
         maxLines: 40
+      },
+      {
+        name: 'WPF',
+        keywords: /wpf|xaml|mvvm|dispatcher|propertychanged\.fody|communitytoolkit\.mvvm/i,
+        path: 'languages/wpf.md',
+        maxLines: 45
+      },
+      {
+        name: 'Logging and Observability',
+        keywords: /日志|serilog|openobserve|trace.?id|correlation.?id|调用链|可观测性/i,
+        path: 'quality/logging-observability.md',
+        maxLines: 40
+      },
+      {
+        name: 'Sanhua PCS',
+        keywords: /三花|pcs\s*(数采|设备|标刻|日志|测试)|markdata|com_id|act_name|条码|工单|标刻指令|设备反馈|分区表/i,
+        path: '../project/sanhua/INDEX.md',
+        maxLines: 50
       },
       {
         name: 'Task Stack',

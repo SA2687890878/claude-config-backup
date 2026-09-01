@@ -91,8 +91,8 @@
 - **Git 冲突**：git status 找冲突文件 → 解 `<<<<<<<` 标记 → git add → 继续合并
 - **权限问题**：Windows `icacls`；Linux/Mac `chmod`；Git `core.fileMode false`
 - **Token 用尽**：`/cost` 看消耗 → `/compact` 压缩 → 保存进度后重启恢复
-- **继续上次工作**：说"继续工作"，自动读 task-state.md 恢复
-- **Hook 报警**：按提示修——SQL 注入→参数化、Null→判空、资源→using
+- **继续上次工作**：若 `settings.json` 已注册 `session-start.js`/`skill-router.js`，说“继续工作”后读取 `tasks/active.json` 恢复；否则手动调用对应 Skill
+- **Hook 报警**：仅以当前 `settings.json` 已注册的 Hook 为准；按实际提示修复 SQL 注入、Null、资源等问题
 
 ## 更新记录
 

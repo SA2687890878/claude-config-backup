@@ -20,12 +20,12 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 
 ## 新会话启动
 
-`session-start.js` hook 自动注入：
+如 `settings.json` 已注册 `session-start.js`，它会注入：
 1. Git 状态摘要（分支、上次提交、未提交改动）
 2. 当前项目信息（技术栈、数据库）
-3. 未完成任务进度（如有 task-state.md）
+3. `tasks/active.json` 中的当前任务
 
-用户意图"继续工作"时，`skill-router.js` 自动恢复 task-state.md。
+用户意图“继续工作”时，只有在 `settings.json` 已注册 `skill-router.js` 的前提下才会自动路由；恢复依据为 `tasks/active.json`，旧 `task-state.md` 不再作为主协议。
 
 ## 触发条件
 
@@ -85,49 +85,24 @@ LLM 不需要记住触发词表——hook 会告诉它该走哪个流程。
 
 | Hook | 事件 | 功能 |
 |------|------|------|
-| codegraph prompt-hook | UserPromptSubmit | CodeGraph 代码索引（settings.json 注册） |
+| codegraph prompt-hook | UserPromptSubmit | CodeGraph 代码索引 |
+| session-start.js | SessionStart | Git、项目和 active.json 任务摘要 |
+| skill-router.js | UserPromptSubmit | 自然语言路由到 pipeline/专项 Skill |
+| context-injector.js | UserPromptSubmit | 规则按需注入并按会话去重 |
+| secret-guard.js / write-guard.js | PreToolUse | 写入密钥和主目录文档防护 |
+| bash-guard.js / commit-gate.js | PreToolUse | 危险命令和 C# 提交前验证 |
+| completion-reminder.js / index-updater.js | PostToolUse | 大变更完成提醒与索引/经验更新 |
 
-### 核心流程 Hook（文件存在，需确认激活状态）
-
-| Hook | 事件 | 功能 |
-|------|------|------|
-| skill-router.js | UserPromptSubmit | 自动路由到对应 Skill |
-| session-start.js | SessionStart | 注入 git 状态 + 项目信息 + 任务进度 |
-| context-injector.js | UserPromptSubmit | 关键词匹配注入规则 |
-
-### 安全防护 Hook
+### 保留但未接线的 Hook
 
 | Hook | 事件 | 功能 |
 |------|------|------|
-| secret-guard.js | PreToolUse | 拦截硬编码密钥 |
-| write-guard.js | PreToolUse | 拦截主目录垃圾文件 |
-| bash-guard.js | PreToolUse | Bash 命令安全检查 |
-| commit-gate.js | PreToolUse | 提交前强制编译和测试验证 |
-| encrypted-write-guard.js | PreToolUse | 加密 .cs 文件写入防护 |
-| impact-guard.js | PreToolUse | .cs 修改前提示查看调用链 |
-| git-commit-review.js | PostToolUse | 阻止 force push、密钥泄露 |
+| encrypted-write-guard.js | PreToolUse | 加密源码写入防护 |
+| impact-guard.js | PreToolUse | C# 修改影响提醒 |
+| cs-guard.js / quality-guard.js | PostToolUse | C# 语法和质量检查 |
+| metrics-report.js | Stop | 度量报告 |
+| build-verify.js | Stop | 构建/测试提醒（当前非阻断） |
 
-### 质量检查 Hook
+### 其他 Hook 说明
 
-| Hook | 事件 | 功能 |
-|------|------|------|
-| cs-guard.js | PostToolUse | C# 语法检查 |
-| quality-guard.js | PostToolUse | SQL 注入、null 安全、资源释放检查 |
-| logic-guard.js | PostToolUse | 逻辑错误检查 |
-| vue-guard.js | PostToolUse | Vue 代码检查 |
-| test-reminder.js | PostToolUse | 提示运行测试 |
-| review-trigger.js | PostToolUse | 代码审查提醒 |
-
-### 索引/通知 Hook
-
-| Hook | 事件 | 功能 |
-|------|------|------|
-| sqlite-index-update.js | PostToolUse | 自动增量更新 SQLite 索引 |
-| artifact-index-update.js | PostToolUse | 自动更新 Artifact INDEX.md |
-| project-knowledge.js | SessionStart | 加载项目 learnings |
-| learning-recorder.js | PostToolUse | 记录修改到 learnings.md |
-| knowledge-sync-reminder.js | SessionStart | Memory → Knowledge 同步提醒 |
-| metrics-collector.js | PostToolUse | 只记录高成本/质量工具 |
-| metrics-report.js | Stop | 输出简化度量报告 |
-| build-verify.js | Stop | 编译验证报告（非阻断） |
-| notify.ps1 | Stop | Windows Toast 通知 |
+未接线脚本只作为候选实现，不代表运行时会执行。启用前必须先验证输入协议、成本、误报和失败行为。
