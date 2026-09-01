@@ -2,7 +2,6 @@
 
 ## 环境
 - 简体中文 | Windows + PowerShell
-- .NET 8.0（Web）+ .NET Framework 4.5.2（WPF）| Vue 2
 
 ## 项目速查
 | 项目 | 数据库 |
@@ -67,16 +66,23 @@
 @rules/tools/code-access.md
 @rules/quality/gates.md
 @rules/quality/verification.md
+@rules/frontend/ui-redlines.md
 
 ## 按需规则（场景触发时加载）
 - RTK：重输出/Bash 调试时，读取 `knowledge/rules/tools/rtk.md`
 - Token 优化：见 @rules/tools/token-optimization.md
 - 问题澄清：需求不明确时，读取 `~/.claude/knowledge/rules/quality/question-bank.md`
+- 前端 UI：涉及前端/页面/组件/弹窗/表格/表单时，读取 `knowledge/rules/frontend/ui-rules.md`
+- **追溯平台前端**：用户提到"追溯平台前端 / PCS 前端 / 客户选择器 / 物品选择器 / 部门产线工位 / Element Plus"时，读取 `knowledge/project/pcs-web-frontend.md`
+
+## 开局分类门禁（收到任务先分类，再动手）
+- 命中前端 / UI / 追溯平台前端 → 先读对应规则文件（`knowledge/rules/frontend/ui-rules.md` / `knowledge/project/pcs-web-frontend.md`）再进入实现
+- **未读即回退**：准备直接实现而尚未读对应规则 = 违反门禁，必须先读规则再继续
 
 ## 知识库索引
 @knowledge/MEMORY.md
 @knowledge/rules/INDEX.md
 
-> **规则双轨**：`rules/*.md` 自动加载（核心 6 个，~26 行/个）；`knowledge/rules/` 按需加载（43 个参考规则，见 INDEX.md 二级索引）。
+> **规则双轨**：`rules/*.md` 自动加载（核心 7 个，~26 行/个）；`knowledge/rules/` 按需加载（参考规则，见 INDEX.md 二级索引）。
 
 > @RTK.md 已搬至 `knowledge/rules/tools/rtk.md` 按需加载（见上节）。

@@ -13,6 +13,7 @@
 | Token 优化 | `~/.claude/rules/tools/token-optimization.md` |
 | 对话严谨标准 | `~/.claude/rules/interaction/rigor-standards.md` |
 | 置信度标注规范 | `~/.claude/rules/interaction/confidence-reporting.md` |
+| 前端 UI 红线 | `~/.claude/rules/frontend/ui-redlines.md` |
 
 ## 参考规则（按需加载）
 
@@ -72,3 +73,15 @@
 | Vue | `languages/vue.md` |
 | SQL Server | `languages/sqlserver.md` |
 | PostgreSQL | `languages/postgresql.md` |
+
+### 前端 UI
+| Rule | 路径 | 触发词 |
+|------|------|--------|
+| UI 查证清单 | `frontend/ui-rules.md` | 前端 / UI / 页面 / 组件 / Vue / 弹窗 / 表格 / 表单 / 交互 / 视觉 |
+| 设计分级 | `frontend/design-taste.md` | 设计 / 风格 / 效果图 / 美化 / 视觉风格 / Design Taste |
+| 追溯平台前端 | `../project/pcs-web-frontend.md` | **追溯平台前端 / PCS 前端 / 客户选择器 / 物品选择器 / 部门产线工位 / Element Plus** |
+
+### 需求
+| Rule | 路径 | 触发词 |
+|------|------|--------|
+| 需求评审方法论 | `requirements/requirements-analysis.md` | 需求评审 / 需求梳理 / 需求讨论 / 方案取舍 / 影响分析 / 验收条件 |

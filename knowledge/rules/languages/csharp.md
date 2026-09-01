@@ -37,3 +37,9 @@ UTF-8 BOM（EF BB BF）是正常文本，不是乱码。
 - 写 .cs 文件用 `[IO.File]::WriteAllText` 指定编码，不用 `Set-Content`
 - 从 git 恢复编码损坏文件：`git cat-file -p HEAD:path/file.cs > path/file.cs`
 - **DGClient 加密文件写入规则** → 详见 `rules/tools/code-access.md`
+
+## 工程纪律
+- 控制器薄层：业务逻辑放单一职责 Service，Controller 只做参数绑定与响应
+- 多表写入 / 状态切换：明确事务与幂等；异常走统一响应与日志
+- 组织级查询 / 写入必须绑定已验证用户 `com_id`，不信任客户端覆盖（见上"多租户"）
+- 日志不泄露敏感信息（密钥 / Token / 密码 / 连接字符串）
